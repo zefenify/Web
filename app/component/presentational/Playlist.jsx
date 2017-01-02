@@ -10,12 +10,12 @@ import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
 const PlaylistContainer = withTheme(styled(Link)`
   position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 0 0 25%;
   min-height: 25vh;
   padding: 0 1em;
   margin-bottom: 3em;
-  display: flex;
-  flex-direction: column;
   text-decoration: none;
   color: inherit;
 

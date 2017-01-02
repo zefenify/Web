@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
 import flatten from 'lodash/flatten';
 import cloneDeep from 'lodash/cloneDeep';
+import sortBy from 'lodash/sortBy';
+import reverse from 'lodash/reverse';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
@@ -59,13 +61,14 @@ class ArtistContainer extends Component {
   afterFetch({ data, included }) {
     const { initialQueue } = store.getState();
 
-    const albums = data.relationships.album.map((albumId) => {
+    // sorting by `album.album_year` [ascending order] -> reversing
+    const albums = reverse(sortBy(data.relationships.album.map((albumId) => {
       const album = cloneDeep(included.album[albumId]);
       album.relationships.track = track(album.relationships.track.map(trackId => included.track[trackId]), included);
       album.album_cover = included.s3[album.album_cover];
 
       return album;
-    });
+    }), album => album.album_year));
 
     const tracks = track(data.relationships.track.map(trackId => included.track[trackId]), included);
     const flattenSongs = flatten(albums.map(album => album.relationships.track));

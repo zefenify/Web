@@ -1,2 +1,1 @@
-# Wolf-Cola
-Nothing to see here, move along...
+![Wolf Cola](https://raw.githubusercontent.com/moe-szyslak/Wolf-Cola/master/Wolf-Cola.png "Wolf Cola")

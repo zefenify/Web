@@ -1,1 +1,1 @@
-![Wolf Cola](https://raw.githubusercontent.com/moe-szyslak/Wolf-Cola/master/Wolf-Cola.png "Wolf Cola")
+![Wolf Cola](https://raw.githubusercontent.com/utopiaio/wolf-cola/master/artwork/Wolf-Cola.png "Wolf Cola")

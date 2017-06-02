@@ -45,3 +45,32 @@
  *   loading: Boolean,
  * }
  */
+
+/* global window */
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+
+const store = createStore(
+  combineReducers({ /* reducers go here */ }),
+  {
+    theme: 'dark',
+    queue: [],
+    history: [],
+    match: [],
+    saved: [],
+    playlist: [],
+    crossfade: 0,
+    remaining: false,
+    artworkFull: false,
+    playing: false,
+    shuffle: false,
+    repeat: 'ALL',
+    current: null,
+    online: false,
+    loading: false,
+  },
+  window.devToolsExtension
+    ? compose(applyMiddleware(/* middlewares go here, Saga <HandsUpEmoji /> */), window.devToolsExtension())
+    : applyMiddleware(),
+);
+
+module.exports = store;

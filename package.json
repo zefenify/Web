@@ -4,5 +4,39 @@
     "a": "./node_modules/.bin/webpack --json | webpack-bundle-size-analyzer",
     "d": "./node_modules/.bin/webpack --progress --colors",
     "p": "NODE_ENV='production' ./node_modules/.bin/webpack -p --progress --colors"
+  },
+  "dependencies": {
+    "animejs": "^2.0.2",
+    "axios": "^0.16.1",
+    "localforage": "^1.5.0",
+    "lodash": "^4.17.4",
+    "normalize.css": "^7.0.0",
+    "notie": "^4.3.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.15.3",
+    "reselect": "^3.0.1",
+    "styled-components": "^2.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.5",
+    "precss": "^1.4.0",
+    "sass-loader": "^6.0.5",
+    "style-loader": "^0.18.1",
+    "webpack": "^2.6.1",
+    "webpack-bundle-size-analyzer": "^2.7.0",
+    "webpack-dev-server": "^2.4.5"
   }
 }

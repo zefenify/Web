@@ -5,6 +5,9 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
+import 'normalize.css';
+import 'app/scss/wolf-cola.scss';
+
 import store from 'app/redux/store';
 import { WolfColaContainer, ControlsContainer, NavListContainer, NavContainer, ListContainer } from 'app/components/styled/WolfCola';
 import { lightTheme, darkTheme } from 'app/config/theme';
@@ -19,8 +22,7 @@ class WolfCola extends Component {
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      const { theme } = store.getState();
-      this.setState(() => ({ theme: theme === 'light' ? lightTheme : darkTheme }));
+      this.setState(() => ({ theme: store.getState().theme === 'light' ? lightTheme : darkTheme }));
     });
   }
 

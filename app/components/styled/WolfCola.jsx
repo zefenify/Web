@@ -12,30 +12,35 @@ const WolfColaContainer = styled.div`
 
 const ControlsContainer = styled.div`
   flex: 0 0 70px;
-  background-color: ${props => props.theme.background};
+  background-color: ${props => props.theme.controlBackground};
+  color: ${props => props.theme.controlText};
   display: flex;
   flex-direction: row;
+  border: 1px solid red;
 `;
 
 const NavListContainer = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: row;
-  background-color: ${props => props.theme.background};
 `;
 
 const NavContainer = styled.div`
   flex: 0 0 200px;
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.background};
+  background-color: ${props => props.theme.navbarBackground};
+  color: ${props => props.theme.navbarText};
+  border: 1px solid green;
 `;
 
 const ListContainer = styled.div`
   flex: 1 0 80%;
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.background};
+  background-color: ${props => props.theme.listBackground};
+  color: ${props => props.theme.listText};
+  border: 1px solid pink;
 `;
 
 module.exports = {

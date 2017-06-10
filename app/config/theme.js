@@ -42,8 +42,8 @@ module.exports = {
     primary: PINK_1,
 
     navbarBackground: WHITE_2,
-    navbarText: MUTE_4,
-    navbarTextActive: WHITE_1,
+    navbarText: MUTE_3,
+    navbarTextActive: MUTE_2,
 
     listBackground: WHITE_1,
     listBackgroundHover: DARK_4,

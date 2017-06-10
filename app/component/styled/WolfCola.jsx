@@ -37,7 +37,7 @@ const NavContainer = styled.div`
 `;
 
 const ListContainer = styled.div`
-  flex: 1 0 80%;
+  flex: 1 1 80%;
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.listBackground};

@@ -28,6 +28,7 @@ const NavListContainer = styled.div`
 const NavContainer = styled.div`
   flex: 0 0 200px;
   height: calc(100vh - 70px);
+  padding-bottom: 1em;
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.navbarBackground};

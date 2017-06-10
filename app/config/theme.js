@@ -46,8 +46,8 @@ module.exports = {
     navbarTextActive: WHITE_1,
 
     listBackground: WHITE_1,
-    listBackgroundHover: MUTE_2,
-    listDivider: MUTE_2,
+    listBackgroundHover: DARK_4,
+    listDivider: DARK_4,
     listText: MUTE_8,
     listTextMute: MUTE_5,
     listTextActive: PINK_1,

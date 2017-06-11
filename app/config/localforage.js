@@ -7,6 +7,7 @@ const config = {
   LF_STORE: {
     THEME: 'THEME',
     VOLUME: 'VOLUME',
+    REPEAT: 'REPEAT',
   },
 };
 

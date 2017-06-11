@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, number } from 'prop-types';
+import { func, string, number } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
@@ -7,6 +7,7 @@ import { ControlsContainer } from 'app/component/styled/WolfCola';
 import Range from 'app/component/styled/Range';
 
 import { SET_VOLUME } from 'app/redux/constant/volume';
+import { SET_REPEAT } from 'app/redux/constant/repeat';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
@@ -85,7 +86,7 @@ const VolumeContainer = styled.div`
   }
 `;
 
-const Control = ({ volume, setVolume, muteVolume, maxVolume }) => (
+const Control = ({ repeat, volume, setRepeat, setVolume, muteVolume, maxVolume }) => (
   <ControlsContainer>
     <NowPlayingContainer>Now Playing</NowPlayingContainer>
 
@@ -107,9 +108,12 @@ const Control = ({ volume, setVolume, muteVolume, maxVolume }) => (
           <i className="icon-skip-forward" />
         </div>
 
-        <div className="control-container active">
+        <div
+          className={`control-container ${repeat === 'OFF' ? '' : 'active'}`}
+          onClick={setRepeat}
+        >
           <i className="icon-reload" />
-          <div className="controller-state">1</div>
+          <div className="controller-state" style={{ opacity: repeat === 'ONE' ? 1 : 0 }}>1</div>
         </div>
       </MusicControls>
 
@@ -136,19 +140,26 @@ const Control = ({ volume, setVolume, muteVolume, maxVolume }) => (
 );
 
 Control.propTypes = {
+  repeat: string,
   volume: number,
   setVolume: func.isRequired,
   muteVolume: func.isRequired,
   maxVolume: func.isRequired,
+  setRepeat: func.isRequired,
 };
 
 Control.defaultProps = {
+  repeat: 'OFF',
   volume: 1,
 };
 
 module.exports = connect(state => ({
+  repeat: state.repeat,
   volume: state.volume,
 }), dispatch => ({
+  setRepeat() {
+    dispatch({ type: SET_REPEAT });
+  },
   setVolume(e) {
     dispatch({ type: SET_VOLUME, payload: Number.parseFloat(e.target.value) });
   },

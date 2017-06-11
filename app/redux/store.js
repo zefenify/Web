@@ -52,11 +52,12 @@ import createSagaMiddleware from 'redux-saga';
 
 import theme from 'app/redux/reducer/theme';
 import volume from 'app/redux/reducer/volume';
+import repeat from 'app/redux/reducer/repeat';
 import rootSaga from 'app/redux/saga/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  combineReducers({ theme, volume }),
+  combineReducers({ theme, volume, repeat }),
   {
     theme: 'dark',
     volume: 1,
@@ -70,7 +71,7 @@ const store = createStore(
     // artworkFull: false,
     // playing: false,
     // shuffle: false,
-    // repeat: 'ALL',
+    repeat: 'OFF',
     // current: null,
     // online: false,
     // loading: false,

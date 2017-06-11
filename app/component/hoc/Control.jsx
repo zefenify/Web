@@ -85,57 +85,55 @@ const VolumeContainer = styled.div`
   }
 `;
 
-function Control({ volume, setVolume, muteVolume, maxVolume }) {
-  return (
-    <ControlsContainer>
-      <NowPlayingContainer>Now Playing</NowPlayingContainer>
+const Control = ({ volume, setVolume, muteVolume, maxVolume }) => (
+  <ControlsContainer>
+    <NowPlayingContainer>Now Playing</NowPlayingContainer>
 
-      <MusicControlsContainer>
-        <MusicControls>
-          <div className="control-container active">
-            <i className="icon-shuffle" />
-          </div>
+    <MusicControlsContainer>
+      <MusicControls>
+        <div className="control-container active">
+          <i className="icon-shuffle" />
+        </div>
 
-          <div className="control-container">
-            <i className="icon-skip-back" />
-          </div>
+        <div className="control-container">
+          <i className="icon-skip-back" />
+        </div>
 
-          <div className="control-container">
-            <i className="icon-play" />
-          </div>
+        <div className="control-container">
+          <i className="icon-play" />
+        </div>
 
-          <div className="control-container">
-            <i className="icon-skip-forward" />
-          </div>
+        <div className="control-container">
+          <i className="icon-skip-forward" />
+        </div>
 
-          <div className="control-container active">
-            <i className="icon-reload" />
-            <div className="controller-state">1</div>
-          </div>
-        </MusicControls>
+        <div className="control-container active">
+          <i className="icon-reload" />
+          <div className="controller-state">1</div>
+        </div>
+      </MusicControls>
 
-        <MusicProgress>
-          <small style={{ padding: '0 0.5em 0 8%' }}>XX:XX</small>
-          <Range type="range" min="0" max="100" step="1" />
-          <small style={{ padding: '0 8% 0 0.5em' }}>YY:YY</small>
-        </MusicProgress>
-      </MusicControlsContainer>
+      <MusicProgress>
+        <small style={{ padding: '0 0.5em 0 8%' }}>XX:XX</small>
+        <Range type="range" min="0" max="100" step="1" />
+        <small style={{ padding: '0 8% 0 0.5em' }}>YY:YY</small>
+      </MusicProgress>
+    </MusicControlsContainer>
 
-      <VolumeContainer>
-        <i className="icon-mute" onClick={muteVolume} />
-        <Range
-          type="range"
-          min="0"
-          max="1"
-          step="0.1"
-          value={volume}
-          onChange={e => setVolume(e)}
-        />
-        <i className="icon-volume" onClick={maxVolume} />
-      </VolumeContainer>
-    </ControlsContainer>
-  );
-}
+    <VolumeContainer>
+      <i className="icon-mute" onClick={muteVolume} />
+      <Range
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+        value={volume}
+        onChange={e => setVolume(e)}
+      />
+      <i className="icon-volume" onClick={maxVolume} />
+    </VolumeContainer>
+  </ControlsContainer>
+);
 
 Control.propTypes = {
   volume: number,

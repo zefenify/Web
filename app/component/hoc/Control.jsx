@@ -26,13 +26,35 @@ const MusicControls = styled.div`
   justify-content: center;
   font-size: 1.75em;
 
-  [class^="icon-"] {
-    padding: 0 1em;
+  div.control-container {
+    position: relative;
+    display: flex;
 
     &:hover {
       transform: scale(1.2);
       color: ${props => props.theme.listText};
     }
+
+    &.active {
+      color: ${props => props.theme.primary};
+    }
+
+    .controller-state {
+      position: absolute;
+      top: -0.85em;
+      left: 50%;
+      padding: 0.25em 0.5em;
+      border-radius: 50%;
+      background-color: ${props => props.theme.primary};
+      color: #fff;
+      font-size: 10px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+
+  & [class^="icon-"] {
+    padding: 0 1em;
   }
 `;
 
@@ -64,11 +86,26 @@ function Control() {
 
       <MusicControlsContainer>
         <MusicControls>
-          <i className="icon-shuffle" />
-          <i className="icon-skip-back" />
-          <i className="icon-play" />
-          <i className="icon-skip-forward" />
-          <i className="icon-reload" />
+          <div className="control-container active">
+            <i className="icon-shuffle" />
+          </div>
+
+          <div className="control-container">
+            <i className="icon-skip-back" />
+          </div>
+
+          <div className="control-container">
+            <i className="icon-play" />
+          </div>
+
+          <div className="control-container">
+            <i className="icon-skip-forward" />
+          </div>
+
+          <div className="control-container active">
+            <i className="icon-reload" />
+            <div className="controller-state">1</div>
+          </div>
         </MusicControls>
 
         <MusicProgress>

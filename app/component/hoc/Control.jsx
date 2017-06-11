@@ -41,8 +41,10 @@ const MusicControls = styled.div`
 
     .controller-state {
       position: absolute;
-      top: -0.85em;
+      top: -0.75em;
       left: 50%;
+      width: 16px;
+      height: 16px;
       padding: 0.25em 0.5em;
       border-radius: 50%;
       background-color: ${props => props.theme.primary};

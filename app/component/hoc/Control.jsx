@@ -1,8 +1,12 @@
 import React from 'react';
+import { func, number } from 'prop-types';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import { ControlsContainer } from 'app/component/styled/WolfCola';
 import Range from 'app/component/styled/Range';
+
+import { SET_VOLUME } from 'app/redux/constant/volume';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
@@ -81,7 +85,7 @@ const VolumeContainer = styled.div`
   }
 `;
 
-function Control() {
+function Control({ volume, setVolume, muteVolume, maxVolume }) {
   return (
     <ControlsContainer>
       <NowPlayingContainer>Now Playing</NowPlayingContainer>
@@ -118,12 +122,42 @@ function Control() {
       </MusicControlsContainer>
 
       <VolumeContainer>
-        <i className="icon-mute" />
-        <Range type="range" min="0" max="1" step="0.05" />
-        <i className="icon-volume" />
+        <i className="icon-mute" onClick={muteVolume} />
+        <Range
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value={volume}
+          onChange={e => setVolume(e)}
+        />
+        <i className="icon-volume" onClick={maxVolume} />
       </VolumeContainer>
     </ControlsContainer>
   );
 }
 
-module.exports = Control;
+Control.propTypes = {
+  volume: number,
+  setVolume: func.isRequired,
+  muteVolume: func.isRequired,
+  maxVolume: func.isRequired,
+};
+
+Control.defaultProps = {
+  volume: 1,
+};
+
+module.exports = connect(state => ({
+  volume: state.volume,
+}), dispatch => ({
+  setVolume(e) {
+    dispatch({ type: SET_VOLUME, payload: Number.parseFloat(e.target.value) });
+  },
+  muteVolume() {
+    dispatch({ type: SET_VOLUME, payload: 0 });
+  },
+  maxVolume() {
+    dispatch({ type: SET_VOLUME, payload: 1 });
+  },
+}))(Control);

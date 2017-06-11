@@ -51,13 +51,15 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import theme from 'app/redux/reducer/theme';
+import volume from 'app/redux/reducer/volume';
 import rootSaga from 'app/redux/saga/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  combineReducers({ theme }),
+  combineReducers({ theme, volume }),
   {
     theme: 'dark',
+    volume: 1,
     // queue: [],
     // history: [],
     // match: [],

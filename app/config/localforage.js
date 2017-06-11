@@ -6,6 +6,7 @@ const config = {
   DESCRIPTION: 'Wolf Cola: The right music player for closure',
   LF_STORE: {
     THEME: 'THEME',
+    VOLUME: 'VOLUME',
   },
 };
 

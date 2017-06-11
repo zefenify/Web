@@ -31,6 +31,7 @@ const MusicControls = styled.div`
   align-items: flex-end;
   justify-content: center;
   font-size: 1.75em;
+  padding-bottom: 0.2em;
 
   div.control-container {
     position: relative;
@@ -47,15 +48,15 @@ const MusicControls = styled.div`
 
     .controller-state {
       position: absolute;
-      top: -0.75em;
+      top: -0.5em;
       left: 50%;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       padding: 0.25em 0.5em;
       border-radius: 50%;
       background-color: ${props => props.theme.primary};
       color: #fff;
-      font-size: 10px;
+      font-size: 9px;
       margin: 0 auto;
       text-align: center;
     }

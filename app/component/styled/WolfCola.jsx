@@ -16,7 +16,6 @@ const ControlsContainer = styled.div`
   color: ${props => props.theme.controlText};
   display: flex;
   flex-direction: row;
-  border: 1px solid red;
 `;
 
 const NavListContainer = styled.div`
@@ -42,7 +41,6 @@ const ListContainer = styled.div`
   flex-direction: column;
   background-color: ${props => props.theme.listBackground};
   color: ${props => props.theme.listText};
-  border: 1px solid pink;
 `;
 
 module.exports = {

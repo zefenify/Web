@@ -48,29 +48,36 @@
 
 /* global window */
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
+import theme from 'app/redux/reducer/theme';
+import rootSaga from 'app/redux/saga/sagas';
+
+const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  combineReducers({ /* reducers go here */ }),
+  combineReducers({ theme }),
   {
     theme: 'dark',
-    queue: [],
-    history: [],
-    match: [],
-    saved: [],
-    playlist: [],
-    crossfade: 0,
-    remaining: false,
-    artworkFull: false,
-    playing: false,
-    shuffle: false,
-    repeat: 'ALL',
-    current: null,
-    online: false,
-    loading: false,
+    // queue: [],
+    // history: [],
+    // match: [],
+    // saved: [],
+    // playlist: [],
+    // crossfade: 0,
+    // remaining: false,
+    // artworkFull: false,
+    // playing: false,
+    // shuffle: false,
+    // repeat: 'ALL',
+    // current: null,
+    // online: false,
+    // loading: false,
   },
   window.devToolsExtension
-    ? compose(applyMiddleware(/* middlewares go here, Saga <HandsUpEmoji /> */), window.devToolsExtension())
-    : applyMiddleware(),
+    ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension())
+    : applyMiddleware(sagaMiddleware),
 );
+
+sagaMiddleware.run(rootSaga);
 
 module.exports = store;

@@ -2,15 +2,34 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import 'normalize.css';
+import 'app/static/icoMoon/style.css';
 import 'app/scss/wolf-cola.scss';
 
 import store from 'app/redux/store';
-import { WolfColaContainer, ControlsContainer, NavListContainer, NavContainer, ListContainer } from 'app/components/styled/WolfCola';
+import { WolfColaContainer, NavListContainer, NavContainer, ListContainer } from 'app/component/styled/WolfCola';
+import Divider from 'app/component/styled/Divider';
+import { NavLinkStyled } from 'app/component/styled/ReactRouter';
 import { lightTheme, darkTheme } from 'app/config/theme';
+
+import Setting from 'app/component/hoc/Setting';
+import Control from 'app/component/hoc/Control';
+
+const SmallText = styled.small`
+  padding: 1em 0.5em;
+  border-left: 1.25em solid transparent;
+  font-size: 0.75em;
+  margin-top: ${props => props.marginTop ? props.marginTop : '0em'};
+`;
+
+const Brand = styled(Link)`
+  border: 1px solid red;
+  height: 48px;
+`;
 
 class WolfCola extends Component {
   constructor(props) {
@@ -34,14 +53,47 @@ class WolfCola extends Component {
     return (
       <Provider store={store}>
         <ThemeProvider theme={this.state.theme}>
-          <WolfColaContainer>
-            <NavListContainer>
-              <NavContainer>Nav</NavContainer>
-              <ListContainer>List</ListContainer>
-            </NavListContainer>
+          <Router>
+            <WolfColaContainer>
+              <NavListContainer>
+                <NavContainer>
+                  <Brand to="/">
+                    <img src="app/static/image/brand.png" style={{ width: '32px', height: '32px', borderRadius: '3px' }} alt="ArifZefen" />
+                    <span>ArifZefen</span>
+                  </Brand>
 
-            <ControlsContainer>Controls</ControlsContainer>
-          </WolfColaContainer>
+                  <NavLinkStyled to="/search">
+                    <span>Search</span>
+                    <i className="icon-search" style={{ float: 'right' }} />
+                  </NavLinkStyled>
+                  <NavLinkStyled to="/top-songs">Top Songs</NavLinkStyled>
+                  <NavLinkStyled to="/genre">Genre</NavLinkStyled>
+                  <NavLinkStyled to="/ariflist">ArifList</NavLinkStyled>
+                  <NavLinkStyled to="/surprise">Surprise Me</NavLinkStyled>
+
+                  <SmallText marginTop="2em">YOUR MUSIC</SmallText>
+                  <Divider />
+                  <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
+                  <NavLinkStyled to="/songs">Songs</NavLinkStyled>
+
+                  <SmallText marginTop="2em">YOUR PLAYLISTS</SmallText>
+                  <Divider />
+                  <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
+                  <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
+
+                  <SmallText marginTop="2em">SETTINGS</SmallText>
+                  <Divider />
+                  <NavLinkStyled to="/setting">Settings</NavLinkStyled>
+                </NavContainer>
+
+                <ListContainer>
+                  <Route path="/setting" component={Setting} />
+                </ListContainer>
+              </NavListContainer>
+
+              <Control />
+            </WolfColaContainer>
+          </Router>
         </ThemeProvider>
       </Provider>
     );

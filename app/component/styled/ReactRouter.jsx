@@ -12,6 +12,7 @@ const NavLinkStyled = styled(NavLink).attrs({
   font-weight: bold;
   text-decoration: none;
   border-left: 6px solid transparent;
+  cursor: default;
 
   &:hover {
     color: ${props => props.theme.navbarTextActive};

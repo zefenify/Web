@@ -24,6 +24,7 @@ const SmallText = styled.small`
   border-left: 1.25em solid transparent;
   font-size: 0.75em;
   margin-top: ${props => props.marginTop ? props.marginTop : '0em'};
+  cursor: default;
 `;
 
 const Brand = styled(Link)`

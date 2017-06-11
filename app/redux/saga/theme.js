@@ -23,6 +23,7 @@ function* toggleTheme() {
   const nextThemeState = state.theme === 'light' ? 'dark' : 'light';
 
   yield put(theme(nextThemeState));
+
   try {
     yield localforage.setItem(LF_STORE.THEME, nextThemeState);
   } catch (err) {
@@ -36,6 +37,6 @@ function* watchToggleTheme() {
 }
 
 module.exports = {
-  watchToggleTheme,
   themeBootFromLF,
+  watchToggleTheme,
 };

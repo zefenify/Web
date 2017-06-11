@@ -2,12 +2,12 @@
 
 import { all } from 'redux-saga/effects';
 
-import { watchToggleTheme, themeBootFromLF } from 'app/redux/saga/theme';
+import { themeBootFromLF, watchToggleTheme } from 'app/redux/saga/theme';
 
 function* rootSaga() {
   yield all([
-    watchToggleTheme(),
     themeBootFromLF(),
+    watchToggleTheme(),
   ]);
 }
 

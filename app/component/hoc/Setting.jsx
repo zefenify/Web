@@ -3,7 +3,6 @@ import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { themeSelector } from 'app/redux/selector/theme';
 import { SET_THEME } from 'app/redux/constant/theme';
 
 import Button from 'app/component/styled/Button';
@@ -41,7 +40,7 @@ Setting.defaultProps = {
 };
 
 module.exports = connect(state => ({
-  currentTheme: themeSelector(state),
+  currentTheme: state.theme,
 }), dispatch => ({
   toggleTheme() {
     dispatch({ type: SET_THEME });

@@ -27,8 +27,23 @@ const SmallText = styled.small`
 `;
 
 const Brand = styled(Link)`
-  border: 1px solid red;
-  height: 48px;
+  padding-left: 1.25em;
+  min-height: 48px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-decoration: none;
+  color: inherit;
+
+  & > img.brand-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    margin-right: 0.75em;
+  }
 `;
 
 class WolfCola extends Component {
@@ -58,9 +73,10 @@ class WolfCola extends Component {
               <NavListContainer>
                 <NavContainer>
                   <Brand to="/">
-                    <img src="app/static/image/brand.png" style={{ width: '32px', height: '32px', borderRadius: '3px' }} alt="ArifZefen" />
+                    <img src="app/static/image/brand.png" className="brand-image" alt="ArifZefen" />
                     <span>ArifZefen</span>
                   </Brand>
+                  <Divider />
 
                   <NavLinkStyled to="/search">
                     <span>Search</span>

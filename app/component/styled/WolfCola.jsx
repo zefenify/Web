@@ -33,6 +33,7 @@ const NavContainer = styled.div`
   background-color: ${props => props.theme.navbarBackground};
   color: ${props => props.theme.navbarText};
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const ListContainer = styled.div`

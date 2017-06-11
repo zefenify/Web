@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string, number } from 'prop-types';
+import { func, bool, string, number } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
@@ -8,6 +8,7 @@ import Range from 'app/component/styled/Range';
 
 import { SET_VOLUME } from 'app/redux/constant/volume';
 import { SET_REPEAT } from 'app/redux/constant/repeat';
+import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
@@ -86,13 +87,22 @@ const VolumeContainer = styled.div`
   }
 `;
 
-const Control = ({ repeat, volume, setRepeat, setVolume, muteVolume, maxVolume }) => (
+const Control = ({
+  shuffle,
+  repeat,
+  volume,
+  toggleShuffle,
+  setRepeat,
+  setVolume,
+  muteVolume,
+  maxVolume,
+}) => (
   <ControlsContainer>
     <NowPlayingContainer>Now Playing</NowPlayingContainer>
 
     <MusicControlsContainer>
       <MusicControls>
-        <div className="control-container active">
+        <div className={`control-container ${shuffle ? 'active' : ''}`} onClick={toggleShuffle}>
           <i className="icon-shuffle" />
         </div>
 
@@ -140,8 +150,10 @@ const Control = ({ repeat, volume, setRepeat, setVolume, muteVolume, maxVolume }
 );
 
 Control.propTypes = {
+  shuffle: bool,
   repeat: string,
   volume: number,
+  toggleShuffle: func.isRequired,
   setVolume: func.isRequired,
   muteVolume: func.isRequired,
   maxVolume: func.isRequired,
@@ -149,14 +161,19 @@ Control.propTypes = {
 };
 
 Control.defaultProps = {
+  shuffle: false,
   repeat: 'OFF',
   volume: 1,
 };
 
 module.exports = connect(state => ({
+  shuffle: state.shuffle,
   repeat: state.repeat,
   volume: state.volume,
 }), dispatch => ({
+  toggleShuffle() {
+    dispatch({ type: SET_SHUFFLE });
+  },
   setRepeat() {
     dispatch({ type: SET_REPEAT });
   },

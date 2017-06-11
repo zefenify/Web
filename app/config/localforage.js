@@ -8,6 +8,7 @@ const config = {
     THEME: 'THEME',
     VOLUME: 'VOLUME',
     REPEAT: 'REPEAT',
+    SHUFFLE: 'SHUFFLE',
   },
 };
 

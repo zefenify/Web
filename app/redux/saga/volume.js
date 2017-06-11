@@ -15,7 +15,7 @@ function* volumeBootFromLF() {
     yield put(volume(lfVolume));
     Howler.volume(lfVolume);
   } catch (err) {
-    console.warn('Unable to boot volume from LF, setting 1', err);
+    console.warn('Unable to boot volume from LF', err);
   }
 }
 

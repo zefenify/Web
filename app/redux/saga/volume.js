@@ -4,7 +4,7 @@ import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';
 import { Howler } from 'howler';
 
-import { LF_STORE } from 'app/config/localforage.js';
+import { LF_STORE } from 'app/config/localforage';
 import { SET_VOLUME } from 'app/redux/constant/volume';
 
 import { volume } from 'app/redux/action/volume';

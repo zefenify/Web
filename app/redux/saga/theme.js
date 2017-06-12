@@ -3,7 +3,7 @@
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { LF_STORE } from 'app/config/localforage.js';
+import { LF_STORE } from 'app/config/localforage';
 import { SET_THEME } from 'app/redux/constant/theme';
 
 import { theme } from 'app/redux/action/theme';

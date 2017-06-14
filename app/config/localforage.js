@@ -9,6 +9,7 @@ const config = {
     VOLUME: 'VOLUME',
     REPEAT: 'REPEAT',
     SHUFFLE: 'SHUFFLE',
+    CROSSFADE: 'CROSSFADE',
   },
 };
 

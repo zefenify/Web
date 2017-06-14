@@ -1,0 +1,7 @@
+const CROSSFADE = 'CROSSFADE';
+const SET_CROSSFADE = 'SET_CROSSFADE';
+
+module.exports = {
+  CROSSFADE,
+  SET_CROSSFADE,
+};

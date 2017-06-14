@@ -11,7 +11,7 @@ import { crossfade } from 'app/redux/action/crossfade';
 function* crossfadeBootFromLF() {
   try {
     const lfCrossfade = yield localforage.getItem(LF_STORE.CROSSFADE);
-    yield put(crossfade(lfCrossfade));
+    yield put(crossfade(lfCrossfade || 0));
   } catch (err) {
     console.warn('Unable to boot crossfade from LF', err);
   }

@@ -28,32 +28,36 @@ const SettingContainer = styled.div`
   }
 `;
 
-const Setting = ({ currentTheme, currentCrossfade, crossfade, toggleTheme }) => (
-  <SettingContainer>
-    <h1>Settings</h1>
+const Setting = ({ currentTheme, currentCrossfade, crossfade, toggleTheme }) => {
+  const crossfadeMessage = `Crossfade: ${currentCrossfade === 0 ? 'Off' : `${currentCrossfade} Second${currentCrossfade > 1 ? 's' : ''}`}`;
 
-    <Divider />
+  return (
+    <SettingContainer>
+      <h1>Settings</h1>
 
-    <Button style={{ margin: '1em 0 0.5em 0' }} onClick={toggleTheme}>Change Theme</Button>
+      <Divider />
 
-    <small>
-      <span>Current theme is </span><b>{ currentTheme }</b>
-    </small>
+      <Button style={{ margin: '1em 0 0.5em 0' }} onClick={toggleTheme}>Change Theme</Button>
 
-    <div className="crossfade">
-      <h3>Crossfade: { currentCrossfade === 0 ? 'Off' : `${currentCrossfade} Second${currentCrossfade > 1 ? 's' : ''}` }</h3>
+      <small>
+        <span>Current theme is </span><b>{ currentTheme }</b>
+      </small>
 
-      <Range
-        type="range"
-        onChange={e => crossfade(e)}
-        value={currentCrossfade}
-        min="0"
-        max="12"
-        step="1"
-      />
-    </div>
-  </SettingContainer>
-);
+      <div className="crossfade">
+        <h3>{ crossfadeMessage }</h3>
+
+        <Range
+          type="range"
+          onChange={e => crossfade(e)}
+          value={currentCrossfade}
+          min="0"
+          max="12"
+          step="1"
+        />
+      </div>
+    </SettingContainer>
+  );
+};
 
 Setting.propTypes = {
   currentTheme: string,

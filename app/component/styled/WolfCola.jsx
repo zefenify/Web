@@ -25,7 +25,7 @@ const NavListContainer = styled.div`
 `;
 
 const NavContainer = styled.div`
-  flex: 0 0 200px;
+  flex: 0 0 220px;
   height: calc(100vh - 70px);
   padding-bottom: 1em;
   display: flex;

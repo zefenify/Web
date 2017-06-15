@@ -48,7 +48,6 @@ const MusicControls = styled.div`
 
     .controller-state {
       position: absolute;
-      top: -0.5em;
       left: 50%;
       width: 14px;
       height: 14px;
@@ -77,7 +76,7 @@ const MusicProgress = styled.div`
 `;
 
 const VolumeContainer = styled.div`
-  flex: 0 1 150px;
+  flex: 0 1 175px;
   display: flex;
   flex-direction: row;
   align-items: center;

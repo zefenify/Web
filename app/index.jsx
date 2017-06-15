@@ -81,7 +81,7 @@ class WolfCola extends Component {
 
                   <NavLinkStyled to="/search">
                     <span>Search</span>
-                    <i className="icon-search" style={{ float: 'right' }} />
+                    <i className="icon-ion-ios-search-strong" style={{ float: 'right' }} />
                   </NavLinkStyled>
                   <NavLinkStyled to="/top-songs">Top Songs</NavLinkStyled>
                   <NavLinkStyled to="/genre">Genre</NavLinkStyled>

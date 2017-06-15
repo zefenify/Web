@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('fonts/icomoon.woff') format('woff');
+  src: url('fonts/icomoon.woff?8vaals') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -20,72 +20,66 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-image:before {
-  content: "\e010";
+.icon-ion-ios-close-empty:before {
+  content: "\f404";
 }
-.icon-clock:before {
-  content: "\e014";
+.icon-ion-ios-heart-outline:before {
+  content: "\f442";
 }
-.icon-cog:before {
-  content: "\e023";
+.icon-ion-ios-heart:before {
+  content: "\f443";
 }
-.icon-heart:before {
-  content: "\e024";
+.icon-ion-ios-loop-strong:before {
+  content: "\f459";
 }
-.icon-search:before {
-  content: "\e036";
+.icon-ion-ios-more-outline:before {
+  content: "\f469";
 }
-.icon-skip-back:before {
-  content: "\e050";
+.icon-ion-ios-more:before {
+  content: "\f46a";
 }
-.icon-play:before {
-  content: "\e052";
+.icon-ion-ios-musical-notes:before {
+  content: "\f46c";
 }
-.icon-pause:before {
-  content: "\e053";
+.icon-ion-ios-pause-outline:before {
+  content: "\f477";
 }
-.icon-skip-forward:before {
-  content: "\e056";
+.icon-ion-ios-pause:before {
+  content: "\f478";
 }
-.icon-shuffle:before {
-  content: "\e057";
+.icon-ion-ios-play-outline:before {
+  content: "\f487";
 }
-.icon-reload:before {
-  content: "\e080";
+.icon-ion-ios-play:before {
+  content: "\f488";
 }
-.icon-share:before {
-  content: "\e081";
+.icon-ion-ios-plus-empty:before {
+  content: "\f489";
 }
-.icon-arrow-left:before {
-  content: "\e094";
+.icon-ion-ios-search-strong:before {
+  content: "\f4a4";
 }
-.icon-arrow-right:before {
-  content: "\e095";
+.icon-ion-ios-settings-strong:before {
+  content: "\f4a6";
 }
-.icon-arrow-up:before {
-  content: "\e096";
+.icon-ion-ios-shuffle-strong:before {
+  content: "\f4a8";
 }
-.icon-arrow-down:before {
-  content: "\e097";
+.icon-ion-ios-skipbackward-outline:before {
+  content: "\f4aa";
 }
-.icon-volume:before {
-  content: "\e098";
+.icon-ion-ios-skipbackward:before {
+  content: "\f4ab";
 }
-.icon-mute:before {
-  content: "\e099";
+.icon-ion-ios-skipforward-outline:before {
+  content: "\f4ac";
 }
-.icon-plus:before {
-  content: "\e114";
+.icon-ion-ios-skipforward:before {
+  content: "\f4ad";
 }
-.icon-minus:before {
-  content: "\e115";
+.icon-ion-ios-volume-high:before {
+  content: "\f4ce";
 }
-.icon-check:before {
-  content: "\e116";
-}
-.icon-cross:before {
-  content: "\e117";
-}
-.icon-ellipsis:before {
-  content: "\e129";
+.icon-ion-ios-volume-low:before {
+  content: "\f4cf";
 }

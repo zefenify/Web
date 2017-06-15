@@ -103,26 +103,26 @@ const Control = ({
     <MusicControlsContainer>
       <MusicControls>
         <div className={`control-container ${shuffle ? 'active' : ''}`} onClick={toggleShuffle}>
-          <i className="icon-shuffle" />
+          <i className="icon-ion-ios-shuffle-strong" />
         </div>
 
         <div className="control-container">
-          <i className="icon-skip-back" />
+          <i className="icon-ion-ios-skipbackward" />
         </div>
 
         <div className="control-container">
-          <i className="icon-play" />
+          <i className="icon-ion-ios-play" />
         </div>
 
         <div className="control-container">
-          <i className="icon-skip-forward" />
+          <i className="icon-ion-ios-skipforward" />
         </div>
 
         <div
           className={`control-container ${repeat === 'OFF' ? '' : 'active'}`}
           onClick={setRepeat}
         >
-          <i className="icon-reload" />
+          <i className="icon-ion-ios-loop-strong" />
           <div className="controller-state" style={{ opacity: repeat === 'ONE' ? 1 : 0 }}>1</div>
         </div>
       </MusicControls>
@@ -135,7 +135,7 @@ const Control = ({
     </MusicControlsContainer>
 
     <VolumeContainer>
-      <i className="icon-mute" onClick={muteVolume} />
+      <i className="icon-ion-ios-volume-low" style={{ fontSize: '2em' }} onClick={muteVolume} />
       <Range
         type="range"
         min="0"
@@ -144,7 +144,7 @@ const Control = ({
         value={volume}
         onChange={e => setVolume(e)}
       />
-      <i className="icon-volume" onClick={maxVolume} />
+      <i className="icon-ion-ios-volume-high" style={{ fontSize: '2em' }} onClick={maxVolume} />
     </VolumeContainer>
   </ControlsContainer>
 );

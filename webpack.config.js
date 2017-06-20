@@ -15,6 +15,7 @@ const commonPlugins = [
     filename: 'vendor.js',
     minChunks: Infinity,
   }),
+  new webpack.optimize.ModuleConcatenationPlugin(),
 ];
 
 module.exports = {

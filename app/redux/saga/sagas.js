@@ -7,6 +7,7 @@ import { volumeBootFromLF, watchSetVolume } from 'app/redux/saga/volume';
 import { repeatBootFromLF, watchSetRepeat } from 'app/redux/saga/repeat';
 import { shuffleBootFromLF, watchToggleShuffle } from 'app/redux/saga/shuffle';
 import { crossfadeBootFromLF, watchSetCrossfade } from 'app/redux/saga/crossfade';
+import { watchSetPlaying } from 'app/redux/saga/playing';
 
 function* rootSaga() {
   yield all([
@@ -20,6 +21,7 @@ function* rootSaga() {
     watchToggleShuffle(),
     crossfadeBootFromLF(),
     watchSetCrossfade(),
+    watchSetPlaying(),
   ]);
 }
 

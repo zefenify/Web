@@ -7,12 +7,13 @@ import volume from 'app/redux/reducer/volume';
 import repeat from 'app/redux/reducer/repeat';
 import shuffle from 'app/redux/reducer/shuffle';
 import crossfade from 'app/redux/reducer/crossfade';
+import playing from 'app/redux/reducer/playing';
 
 import rootSaga from 'app/redux/saga/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  combineReducers({ theme, volume, repeat, shuffle, crossfade }),
+  combineReducers({ theme, volume, repeat, shuffle, crossfade, playing }),
   {
     theme: 'dark',
     volume: 1,
@@ -24,7 +25,7 @@ const store = createStore(
     crossfade: 0,
     // remaining: false,
     // artworkFull: false,
-    // playing: false,
+    playing: false,
     shuffle: false,
     repeat: 'OFF',
     // current: null,

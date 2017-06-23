@@ -88,6 +88,7 @@ const VolumeContainer = styled.div`
 `;
 
 const Control = ({
+  playing,
   shuffle,
   repeat,
   volume,
@@ -111,7 +112,7 @@ const Control = ({
         </div>
 
         <div className="control-container">
-          <i className="icon-ion-ios-play" />
+          <i className={`icon-ion-ios-${playing ? 'pause' : 'play'}`} />
         </div>
 
         <div className="control-container">
@@ -150,6 +151,7 @@ const Control = ({
 );
 
 Control.propTypes = {
+  playing: bool,
   shuffle: bool,
   repeat: string,
   volume: number,
@@ -161,12 +163,14 @@ Control.propTypes = {
 };
 
 Control.defaultProps = {
+  playing: false,
   shuffle: false,
   repeat: 'OFF',
   volume: 1,
 };
 
 module.exports = connect(state => ({
+  playing: state.playing,
   shuffle: state.shuffle,
   repeat: state.repeat,
   volume: state.volume,

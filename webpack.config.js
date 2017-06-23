@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BabiliPlugin = require('babili-webpack-plugin');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -51,6 +52,11 @@ module.exports = {
             'react',
             ['env', { targets: { browsers: ['safari >= 10'] } }],
           ],
+          env: {
+            production: {
+              presets: ['babili'],
+            },
+          },
         },
       },
 
@@ -90,12 +96,13 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false,
-      },
-    }),
+    new BabiliPlugin(),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   sourceMap: true,
+    //   compress: {
+    //     warnings: false,
+    //   },
+    // }),
   ].concat(commonPlugins) : [
     // add development plugins here
   ].concat(commonPlugins),

@@ -8,7 +8,6 @@ import { repeatBootFromLF, watchSetRepeat } from 'app/redux/saga/repeat';
 import { shuffleBootFromLF, watchToggleShuffle } from 'app/redux/saga/shuffle';
 import { crossfadeBootFromLF, watchSetCrossfade } from 'app/redux/saga/crossfade';
 import { watchSetPlaying } from 'app/redux/saga/playing';
-import { watchSetCurrent } from 'app/redux/saga/current';
 
 function* rootSaga() {
   yield all([
@@ -23,7 +22,6 @@ function* rootSaga() {
     crossfadeBootFromLF(),
     watchSetCrossfade(),
     watchSetPlaying(),
-    watchSetCurrent(),
   ]);
 }
 

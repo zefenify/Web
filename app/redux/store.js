@@ -11,6 +11,7 @@ import playing from 'app/redux/reducer/playing';
 import duration from 'app/redux/reducer/duration';
 import playbackPosition from 'app/redux/reducer/playbackPosition';
 import remaining from 'app/redux/reducer/remaining';
+import songId from 'app/redux/reducer/songId';
 
 import rootSaga from 'app/redux/saga/sagas';
 
@@ -26,6 +27,7 @@ const store = createStore(
     duration,
     playbackPosition,
     remaining,
+    songId,
   }),
   {
     theme: 'dark',
@@ -39,6 +41,7 @@ const store = createStore(
     duration: null,
     playbackPosition: null,
     remaining: false,
+    songId: null,
     // artworkFull: false,
     playing: false,
     shuffle: false,

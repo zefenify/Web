@@ -26,6 +26,7 @@ const wolfCola = {
   crossfadeInProgress: false,
 };
 
+// Howler `load` event will be yielded - so if it's never loaded
 const promiseifyHowlEvent = (howl, eventName) => new Promise((resolve) => {
   if (howl !== null) {
     howl.once(eventName, (e) => {
@@ -34,6 +35,9 @@ const promiseifyHowlEvent = (howl, eventName) => new Promise((resolve) => {
   }
 });
 
+// Emitter - we have PUT in the `end` callback
+// 1. clearing if there's no _next_
+// 2. passing playing key to the song that's fading in
 const howlerEndChannel = key => eventChannel((emitter) => {
   wolfCola[key].once('end', (end) => {
     emitter({ end });
@@ -43,15 +47,19 @@ const howlerEndChannel = key => eventChannel((emitter) => {
   return () => {};
 });
 
+// Channel - listens to end either passes key to next or clears state to "no play"
 function* howlerEnd(key) {
   const channel = yield call(howlerEndChannel, key);
 
+  // we're only taking a single event i.e. { end }
+  // there's no need to clear on `finally | END` as all will be cleared _here_
   yield take(channel);
   wolfCola[wolfCola.playingKey].unload();
   wolfCola[wolfCola.playingKey] = null;
   wolfCola.crossfadeInProgress = false;
 
   // nothing is playing _next_
+  // setting to "no play" sate - duration, playback, playing, current, songId
   if (wolfCola[wolfCola.playingKey === 'current' ? 'next' : 'current'] === null) {
     yield put(duration(0));
     yield put(playbackPosition(0));
@@ -93,7 +101,7 @@ function* play(action) {
         wolfCola.crossfadeInProgress = false;
       });
     }
-  } else if (state.playing === true) {
+  } else if (state.playing === true) { // play triggered while crossfade is in progress
     if (wolfCola.current !== null) {
       wolfCola.current.unload();
       wolfCola.current = null;
@@ -103,48 +111,66 @@ function* play(action) {
     }
   }
 
+  // picking `playingKey`...
   if (wolfCola.current === null && wolfCola.next === null) {
     wolfCola.playingKey = 'current';
   } else {
     wolfCola.playingKey = wolfCola.current === null ? 'current' : 'next';
   }
 
+  // playing the song - each song will have a Single Howler object that'll be
+  // destroyed after each playback - loading all songs (i.e. queue can be costly - I think)
+  // single Howler music approach:
+  // - single song ID whenever it's called
+  // - light [no preparation until asked]
   wolfCola[wolfCola.playingKey] = new Howl({
     src: [action.payload.play.songId],
     html5: true,
     autoplay: true,
   });
 
+  // ethio-telecom
   wolfCola[wolfCola.playingKey].once('loaderror', () => {
     wolfCola.crossfadeInProgress = false;
     console.warn('Current song [loaderror], ላሽ ላሽ');
   });
 
+  // if load doesn't resolve Wolf-Cola won't start
   yield promiseifyHowlEvent(wolfCola[wolfCola.playingKey], 'load');
+  // music loaded, setting duration
   yield put(duration(wolfCola[wolfCola.playingKey].duration()));
+  // setting playing - USING Howler object [autoplay]
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
+  // fork for `end` lister [with channel]
   yield fork(howlerEnd, wolfCola.playingKey);
 
+  // tracker...
   while (wolfCola[wolfCola.playingKey] !== null && wolfCola[wolfCola.playingKey].playing()) {
+    // current playback progress
     yield put(playbackPosition(wolfCola[wolfCola.playingKey].seek()));
 
     if (wolfCola.crossfadeInProgress === false) {
       const stateCheck = yield select();
 
+      // checking for crossfade threshold
       if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
+        // blocking further crossfade checks by turning on progress...
         wolfCola.crossfadeInProgress = true;
+        // fading out the current song...
         wolfCola[wolfCola.playingKey].fade(1, 0, (stateCheck.crossfade * 1000));
 
         // [REPEAT: ONE]
         if (stateCheck.repeat === 'ONE') {
           const nextPlay = wolfCola.playingKey === 'current' ? 'next' : 'current';
 
+          // playing next track on the next `object` of wolfCola...
           wolfCola[nextPlay] = new Howl({
             src: [stateCheck.current.songId],
             html5: true,
             autoplay: true,
           });
 
+          // ethio-telecom
           wolfCola[nextPlay].once('loaderror', () => {
             wolfCola.crossfadeInProgress = false;
             console.warn('Next song [loaderror], ላሽ ላሽ');

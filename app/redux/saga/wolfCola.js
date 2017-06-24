@@ -56,6 +56,8 @@ function* howlerEnd(key) {
     yield put(duration(0));
     yield put(playbackPosition(0));
     yield put(playing(false));
+    yield put(current(null));
+    yield put(songId(null));
   } else {
     // passing the key to the fading-in-ing song creating a _recursive generator_
     // the whole condition continues as if nothing happened

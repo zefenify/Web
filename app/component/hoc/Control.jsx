@@ -9,6 +9,7 @@ import Range from 'app/component/styled/Range';
 import { SET_VOLUME } from 'app/redux/constant/volume';
 import { SET_REPEAT } from 'app/redux/constant/repeat';
 import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
+import { SET_REMAINING } from 'app/redux/constant/remaining';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
@@ -88,10 +89,12 @@ const VolumeContainer = styled.div`
 `;
 
 const Control = ({
+  remaining,
   playing,
   shuffle,
   repeat,
   volume,
+  toggleRemaining,
   toggleShuffle,
   setRepeat,
   setVolume,
@@ -129,9 +132,14 @@ const Control = ({
       </MusicControls>
 
       <MusicProgress>
-        <small style={{ padding: '0 0.5em 0 8%' }}>XX:XX</small>
+        <small style={{ padding: '0 0.5em 0 8%' }}>XX:XX&nbsp;</small>
+
         <Range type="range" min="0" max="100" step="1" />
-        <small style={{ padding: '0 8% 0 0.5em' }}>YY:YY</small>
+
+        <small style={{ padding: '0 8% 0 0.5em' }} onClick={toggleRemaining}>
+          <span style={{ opacity: remaining ? 1 : 0 }}>-&nbsp;</span>
+          YY:YY
+        </small>
       </MusicProgress>
     </MusicControlsContainer>
 
@@ -155,7 +163,9 @@ Control.propTypes = {
   shuffle: bool,
   repeat: string,
   volume: number,
+  remaining: bool,
   toggleShuffle: func.isRequired,
+  toggleRemaining: func.isRequired,
   setVolume: func.isRequired,
   muteVolume: func.isRequired,
   maxVolume: func.isRequired,
@@ -167,6 +177,7 @@ Control.defaultProps = {
   shuffle: false,
   repeat: 'OFF',
   volume: 1,
+  remaining: false,
 };
 
 module.exports = connect(state => ({
@@ -174,9 +185,13 @@ module.exports = connect(state => ({
   shuffle: state.shuffle,
   repeat: state.repeat,
   volume: state.volume,
+  remaining: state.remaining,
 }), dispatch => ({
   toggleShuffle() {
     dispatch({ type: SET_SHUFFLE });
+  },
+  toggleRemaining() {
+    dispatch({ type: SET_REMAINING });
   },
   setRepeat() {
     dispatch({ type: SET_REPEAT });

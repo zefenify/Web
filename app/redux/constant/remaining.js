@@ -1,0 +1,7 @@
+const REMAINING = 'REMAINING';
+const SET_REMAINING = 'SET_REMAINING';
+
+module.exports = {
+  REMAINING,
+  SET_REMAINING,
+};

@@ -10,6 +10,7 @@ const config = {
     REPEAT: 'REPEAT',
     SHUFFLE: 'SHUFFLE',
     CROSSFADE: 'CROSSFADE',
+    REMAINING: 'REMAINING',
   },
 };
 

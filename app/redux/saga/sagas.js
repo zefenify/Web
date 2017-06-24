@@ -10,6 +10,7 @@ import { crossfadeBootFromLF, watchSetCrossfade } from 'app/redux/saga/crossfade
 import { watchSetPlaying } from 'app/redux/saga/playing';
 import { watchSetDuration } from 'app/redux/saga/duration';
 import { watchSetPlaybackPosition } from 'app/redux/saga/playbackPosition';
+import { remainingBootFromLF, watchToggleRemaining } from 'app/redux/saga/remaining';
 
 function* rootSaga() {
   yield all([
@@ -26,6 +27,8 @@ function* rootSaga() {
     watchSetPlaying(),
     watchSetDuration(),
     watchSetPlaybackPosition(),
+    remainingBootFromLF(),
+    watchToggleRemaining(),
   ]);
 }
 

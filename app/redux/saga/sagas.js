@@ -13,6 +13,7 @@ import { watchSetPlaybackPosition } from 'app/redux/saga/playbackPosition';
 import { remainingBootFromLF, watchToggleRemaining } from 'app/redux/saga/remaining';
 import { watchSetSongId } from 'app/redux/saga/songId';
 import { watchSetQueueSet, watchSetQueueAdd, watchSetQueueRemove, watchSetQueueClear } from 'app/redux/saga/queue';
+import { watchSetCurrent } from 'app/redux/saga/current';
 
 function* rootSaga() {
   yield all([
@@ -36,6 +37,7 @@ function* rootSaga() {
     watchSetQueueAdd(),
     watchSetQueueRemove(),
     watchSetQueueClear(),
+    watchSetCurrent(),
   ]);
 }
 

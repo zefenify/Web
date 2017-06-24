@@ -13,6 +13,7 @@ import playbackPosition from 'app/redux/reducer/playbackPosition';
 import remaining from 'app/redux/reducer/remaining';
 import songId from 'app/redux/reducer/songId';
 import queue from 'app/redux/reducer/queue';
+import current from 'app/redux/reducer/current';
 
 import rootSaga from 'app/redux/saga/sagas';
 
@@ -30,6 +31,7 @@ const store = createStore(
     remaining,
     songId,
     queue,
+    current,
   }),
   {
     theme: 'dark',
@@ -48,7 +50,7 @@ const store = createStore(
     playing: false,
     shuffle: false,
     repeat: 'OFF',
-    // current: null,
+    current: null, // current song object, *not* the Howler object
     // online: false,
     // loading: false,
   },

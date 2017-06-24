@@ -117,7 +117,7 @@ function* play(action) {
 
   wolfCola[wolfCola.playingKey].once('loaderror', () => {
     wolfCola.crossfadeInProgress = false;
-    console.warn('loaderror, ላሽ ላሽ');
+    console.warn('Current song [loaderror], ላሽ ላሽ');
   });
 
   yield promiseifyHowlEvent(wolfCola[wolfCola.playingKey], 'load');
@@ -135,13 +135,19 @@ function* play(action) {
         wolfCola.crossfadeInProgress = true;
         wolfCola[wolfCola.playingKey].fade(1, 0, (stateCheck.crossfade * 1000));
 
-        // repeating myself [REPEAT: ONE]
+        // [REPEAT: ONE]
         if (stateCheck.repeat === 'ONE') {
           const nextPlay = wolfCola.playingKey === 'current' ? 'next' : 'current';
+
           wolfCola[nextPlay] = new Howl({
             src: [stateCheck.current.songId],
             html5: true,
             autoplay: true,
+          });
+
+          wolfCola[nextPlay].once('loaderror', () => {
+            wolfCola.crossfadeInProgress = false;
+            console.warn('Next song [loaderror], ላሽ ላሽ');
           });
 
           yield promiseifyHowlEvent(wolfCola[nextPlay], 'load');

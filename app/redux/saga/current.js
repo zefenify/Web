@@ -1,4 +1,3 @@
-/* global window */
 /* eslint no-console: 0 */
 
 import { put, takeEvery } from 'redux-saga/effects';

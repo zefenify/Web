@@ -3,6 +3,7 @@ import { func, bool, string, number } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
+import { human } from 'app/util/time';
 import { ControlsContainer } from 'app/component/styled/WolfCola';
 import Range from 'app/component/styled/Range';
 
@@ -10,6 +11,7 @@ import { SET_VOLUME } from 'app/redux/constant/volume';
 import { SET_REPEAT } from 'app/redux/constant/repeat';
 import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
 import { SET_REMAINING } from 'app/redux/constant/remaining';
+import { PLAY, SEEK } from 'app/redux/constant/wolfCola';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
@@ -89,6 +91,10 @@ const VolumeContainer = styled.div`
 `;
 
 const Control = ({
+  play,
+  seek,
+  duration,
+  playbackPosition,
   remaining,
   playing,
   shuffle,
@@ -114,7 +120,7 @@ const Control = ({
           <i className="icon-ion-ios-skipbackward" />
         </div>
 
-        <div className="control-container">
+        <div className="control-container" onClick={play}>
           <i className={`icon-ion-ios-${playing ? 'pause' : 'play'}`} />
         </div>
 
@@ -132,13 +138,22 @@ const Control = ({
       </MusicControls>
 
       <MusicProgress>
-        <small style={{ padding: '0 0.5em 0 8%' }}>XX:XX&nbsp;</small>
+        <small style={{ padding: '0 0.5em 0 8%' }}>
+          {`${playbackPosition === null ? '0:00' : human(playbackPosition)} `}
+        </small>
 
-        <Range type="range" min="0" max="100" step="1" />
+        <Range
+          type="range"
+          min="0"
+          max={duration}
+          step="1"
+          value={playbackPosition}
+          onChange={e => seek(e)}
+        />
 
         <small style={{ padding: '0 8% 0 0.5em' }} onClick={toggleRemaining}>
           <span style={{ opacity: remaining ? 1 : 0 }}>-&nbsp;</span>
-          YY:YY
+          <span>{`${remaining ? human(duration - playbackPosition) : human(duration)}`}</span>
         </small>
       </MusicProgress>
     </MusicControlsContainer>
@@ -164,12 +179,16 @@ Control.propTypes = {
   repeat: string,
   volume: number,
   remaining: bool,
+  duration: number,
+  playbackPosition: number,
+  seek: func.isRequired,
   toggleShuffle: func.isRequired,
   toggleRemaining: func.isRequired,
   setVolume: func.isRequired,
   muteVolume: func.isRequired,
   maxVolume: func.isRequired,
   setRepeat: func.isRequired,
+  play: func.isRequired,
 };
 
 Control.defaultProps = {
@@ -178,15 +197,31 @@ Control.defaultProps = {
   repeat: 'OFF',
   volume: 1,
   remaining: false,
+  duration: 0,
+  playbackPosition: 0,
 };
 
 module.exports = connect(state => ({
+  duration: state.duration,
+  playbackPosition: state.playbackPosition,
   playing: state.playing,
   shuffle: state.shuffle,
   repeat: state.repeat,
   volume: state.volume,
   remaining: state.remaining,
 }), dispatch => ({
+  seek(e) {
+    dispatch({ type: SEEK, payload: Number.parseInt(e.target.value, 10) });
+  },
+  play() {
+    dispatch({
+      type: PLAY,
+      payload: {
+        play: { songId: 'app/static/song/bs.mp3' },
+        queue: [{ songId: 'app/static/song/ww.mp3' }, { songId: 'app/static/song/bs.mp3' }],
+      },
+    });
+  },
   toggleShuffle() {
     dispatch({ type: SET_SHUFFLE });
   },

@@ -34,6 +34,35 @@ const promiseifyHowlEvent = (howl, eventName) => new Promise((resolve) => {
   }
 });
 
+const howlerEndChannel = key => eventChannel((emitter) => {
+  wolfCola[key].once('end', (end) => {
+    emitter({ end });
+    emitter(END);
+  });
+
+  return () => {};
+});
+
+function* howlerEnd(key) {
+  const channel = yield call(howlerEndChannel, key);
+
+  yield take(channel);
+  wolfCola[wolfCola.playingKey].unload();
+  wolfCola[wolfCola.playingKey] = null;
+  wolfCola.crossfadeInProgress = false;
+
+  // nothing is playing _next_
+  if (wolfCola[wolfCola.playingKey === 'current' ? 'next' : 'current'] === null) {
+    yield put(duration(0));
+    yield put(playbackPosition(0));
+    yield put(playing(false));
+  } else {
+    // passing the key to the fading-in-ing song creating a _recursive generator_
+    // the whole condition continues as if nothing happened
+    wolfCola.playingKey = wolfCola.playingKey === 'current' ? 'next' : 'current';
+  }
+}
+
 function* play(action) {
   const state = yield select();
 
@@ -92,27 +121,7 @@ function* play(action) {
   yield promiseifyHowlEvent(wolfCola[wolfCola.playingKey], 'load');
   yield put(duration(wolfCola[wolfCola.playingKey].duration()));
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
-
-  // CHANNELS...CHANNELS EVERYWHERE!
-  yield fork(function* howlerEnd() {
-    const howlerEndChannel = () => eventChannel((emitter) => {
-      wolfCola[wolfCola.playingKey].once('end', (end) => {
-        emitter({ end });
-        emitter(END);
-      });
-
-      return () => {};
-    });
-
-    const channel = yield call(howlerEndChannel);
-    yield take(channel);
-    wolfCola[wolfCola.playingKey].unload();
-    wolfCola[wolfCola.playingKey] = null;
-    wolfCola.crossfadeInProgress = false;
-    yield put(playing(false));
-    yield put(duration(0));
-    yield put(playbackPosition(0));
-  });
+  yield fork(howlerEnd, wolfCola.playingKey);
 
   while (wolfCola[wolfCola.playingKey] !== null && wolfCola[wolfCola.playingKey].playing()) {
     yield put(playbackPosition(wolfCola[wolfCola.playingKey].seek()));
@@ -123,6 +132,22 @@ function* play(action) {
       if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
         wolfCola.crossfadeInProgress = true;
         wolfCola[wolfCola.playingKey].fade(1, 0, (stateCheck.crossfade * 1000));
+
+        // repeating myself [REPEAT: ONE]
+        if (stateCheck.repeat === 'ONE') {
+          const nextPlay = wolfCola.playingKey === 'current' ? 'next' : 'current';
+          wolfCola[nextPlay] = new Howl({
+            src: [stateCheck.current.songId],
+            html5: true,
+            autoplay: true,
+          });
+
+          yield promiseifyHowlEvent(wolfCola[nextPlay], 'load');
+          yield put(duration(wolfCola[nextPlay].duration()));
+          yield put(playing(wolfCola[nextPlay].playing()));
+          wolfCola[nextPlay].fade(0, 1, (state.crossfade * 1000));
+          yield fork(howlerEnd, nextPlay);
+        }
       }
     }
 

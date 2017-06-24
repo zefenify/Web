@@ -2,13 +2,19 @@ module.exports = {
   /**
    * given duration in seconds returns hour:minute:second
    *
-   * @param {Number} duration `Howl.duration`
+   * @param {Number} duration `Howl.duration` (seconds)
    * @type {String}
    */
   human(duration = 0) {
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration - (hours * 3600)) / 60);
-    const seconds = Math.floor(duration - ((hours * 3600) + (minutes * 60)));
+    const parsedDuration = Number.parseFloat(duration);
+
+    if (Number.isNaN(parsedDuration)) {
+      return '0:00';
+    }
+
+    const hours = Math.floor(parsedDuration / 3600);
+    const minutes = Math.floor((parsedDuration - (hours * 3600)) / 60);
+    const seconds = Math.floor(parsedDuration - ((hours * 3600) + (minutes * 60)));
 
     return `${hours > 0 ? hours : ''}${hours > 0 ? ':' : ''}${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   },

@@ -12,6 +12,7 @@ import duration from 'app/redux/reducer/duration';
 import playbackPosition from 'app/redux/reducer/playbackPosition';
 import remaining from 'app/redux/reducer/remaining';
 import songId from 'app/redux/reducer/songId';
+import queue from 'app/redux/reducer/queue';
 
 import rootSaga from 'app/redux/saga/sagas';
 
@@ -28,11 +29,12 @@ const store = createStore(
     playbackPosition,
     remaining,
     songId,
+    queue,
   }),
   {
     theme: 'dark',
     volume: 1,
-    // queue: [],
+    queue: [],
     // history: [],
     // match: [],
     // saved: [],

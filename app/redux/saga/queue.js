@@ -35,7 +35,7 @@ function* setQueueRemove(action) {
   }
 
   if (songIndex > -1) {
-    yield put(queueRemove({ index: songIndex }));
+    yield put(queueRemove(songIndex));
   }
 }
 

@@ -9,7 +9,7 @@ function queue(state = [], action) {
       return [action.payload, ...state];
 
     case QUEUE_REMOVE:
-      return [...state.slice(0, action.payload.index), ...state.slice(action.payload.index + 1)];
+      return [...state.slice(0, action.payload), ...state.slice(action.payload + 1)];
 
     case QUEUE_CLEAR:
       return [];

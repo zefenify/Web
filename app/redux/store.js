@@ -37,7 +37,8 @@ const store = createStore(
     theme: 'dark',
     volume: 1,
     queue: [],
-    // history: [],
+    // initialQueue: [], // queue of songs to be played [used on repeat `ALL` and queue is empty]
+    // history: [], // where played songs will are pushed [repeat `ONE` will only push once]
     // match: [],
     // saved: [],
     // playlist: [],

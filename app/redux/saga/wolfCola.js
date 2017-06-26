@@ -101,14 +101,20 @@ function* play(action) {
         wolfCola.crossfadeInProgress = false;
       });
     }
-  } else if (state.playing === true) { // play triggered while crossfade is in progress
+  } else if (wolfCola.crossfadeInProgress === true) { // play triggered while crossfade in progress
+    console.log('play while crossfade in progress...');
+
     if (wolfCola.current !== null) {
       wolfCola.current.unload();
       wolfCola.current = null;
-    } else if (wolfCola.next !== null) {
+    }
+
+    if (wolfCola.next !== null) {
       wolfCola.next.unload();
       wolfCola.next = null;
     }
+
+    wolfCola.crossfadeInProgress = false;
   }
 
   // picking `playingKey`...

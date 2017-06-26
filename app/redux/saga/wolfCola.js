@@ -54,6 +54,7 @@ function* howlerEnd(key) {
   // we're only taking a single event i.e. { end }
   // there's no need to clear on `finally | END` as all will be cleared _here_
   yield take(channel);
+  wolfCola[wolfCola.playingKey].off();
   wolfCola[wolfCola.playingKey].unload();
   wolfCola[wolfCola.playingKey] = null;
   wolfCola.crossfadeInProgress = false;
@@ -88,28 +89,32 @@ function* play(action) {
       wolfCola.crossfadeInProgress = true;
       wolfCola.current.fade(1, 0, (state.crossfade * 1000));
       wolfCola.current.once('fade', () => {
+        wolfCola.current.off();
         wolfCola.current.unload();
         wolfCola.current = null;
         wolfCola.crossfadeInProgress = false;
       });
-    } else if (wolfCola.next !== null) {
+    }
+
+    if (wolfCola.next !== null) {
       wolfCola.crossfadeInProgress = true;
       wolfCola.next.fade(1, 0, (state.crossfade * 1000));
       wolfCola.next.once('fade', () => {
+        wolfCola.next.off();
         wolfCola.next.unload();
         wolfCola.next = null;
         wolfCola.crossfadeInProgress = false;
       });
     }
-  } else if (wolfCola.crossfadeInProgress === true) { // play triggered while crossfade in progress
-    console.log('play while crossfade in progress...');
-
+  } else if (wolfCola.crossfadeInProgress === true && state.playing === true) { // play triggered while crossfade in progress
     if (wolfCola.current !== null) {
+      wolfCola.current.off();
       wolfCola.current.unload();
       wolfCola.current = null;
     }
 
     if (wolfCola.next !== null) {
+      wolfCola.next.off();
       wolfCola.next.unload();
       wolfCola.next = null;
     }

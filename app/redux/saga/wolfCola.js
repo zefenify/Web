@@ -19,6 +19,7 @@ import { duration } from 'app/redux/action/duration';
 import { playbackPosition } from 'app/redux/action/playbackPosition';
 import { playing } from 'app/redux/action/playing';
 import { initialQueue } from 'app/redux/action/initialQueue';
+import { historyPush, historyFront } from 'app/redux/action/history';
 
 const wolfCola = {
   playingKey: 'current',
@@ -218,6 +219,17 @@ function* next() {
     yield put(playing(false));
     yield put(current(null));
     return;
+  }
+
+  // PUSH-ing song to history...
+  if (state.current !== null) {
+    const historyIndex = findIndex(song => song.songId === state.current.songId)(state.history);
+
+    if (historyIndex === -1) {
+      yield put(historyPush(state.current));
+    } else {
+      yield put(historyFront(historyIndex));
+    }
   }
 
   // played through the entire queue and repeat is `ALL`

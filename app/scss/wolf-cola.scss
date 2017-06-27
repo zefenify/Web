@@ -18,6 +18,20 @@
  * green: 2ebd59
  */
 
+@font-face {
+  font-family: "Droid Sans Ethiopic";
+  font-style: normal;
+  font-weight: 400;
+  src: url(../static/DroidSansEthiopic/DroidSansEthiopic-Regular.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Droid Sans Ethiopic";
+  font-style: bold;
+  font-weight: 700;
+  src: url(../static/DroidSansEthiopic/DroidSansEthiopic-Bold.woff) format("woff");
+}
+
 body {
   font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Helvetica Neue", "Lucida Grande", sans-serif;
   -webkit-font-smoothing: antialiased !important;
@@ -34,6 +48,10 @@ body {
   box-sizing: border-box;
   transition: all 125ms linear;
   outline: none;
+}
+
+[class*="_am_"] {
+  font-family: "Droid Sans Ethiopic" !important;
 }
 
 h1 {

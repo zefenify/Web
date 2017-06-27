@@ -11,7 +11,6 @@ import playing from 'app/redux/reducer/playing';
 import duration from 'app/redux/reducer/duration';
 import playbackPosition from 'app/redux/reducer/playbackPosition';
 import remaining from 'app/redux/reducer/remaining';
-import songId from 'app/redux/reducer/songId';
 import queue from 'app/redux/reducer/queue';
 import current from 'app/redux/reducer/current';
 import initialQueue from 'app/redux/reducer/initialQueue';
@@ -31,7 +30,6 @@ const store = createStore(
     duration,
     playbackPosition,
     remaining,
-    songId,
     queue,
     current,
     initialQueue,
@@ -50,7 +48,6 @@ const store = createStore(
     duration: 0,
     playbackPosition: 0,
     remaining: false,
-    songId: null,
     // artworkFull: false,
     playing: false,
     shuffle: false,

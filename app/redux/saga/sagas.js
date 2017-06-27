@@ -11,7 +11,6 @@ import { watchSetPlaying } from 'app/redux/saga/playing';
 import { watchSetDuration } from 'app/redux/saga/duration';
 import { watchSetPlaybackPosition } from 'app/redux/saga/playbackPosition';
 import { remainingBootFromLF, watchToggleRemaining } from 'app/redux/saga/remaining';
-import { watchSetSongId } from 'app/redux/saga/songId';
 import { watchSetQueueSet, watchSetQueueAdd, watchSetQueueRemove, watchSetQueueClear } from 'app/redux/saga/queue';
 import { watchSetCurrent } from 'app/redux/saga/current';
 import { watchPlay, watchSeek } from 'app/redux/saga/wolfCola';
@@ -33,7 +32,6 @@ function* rootSaga() {
     watchSetPlaybackPosition(),
     remainingBootFromLF(),
     watchToggleRemaining(),
-    watchSetSongId(),
     watchSetQueueSet(),
     watchSetQueueAdd(),
     watchSetQueueRemove(),

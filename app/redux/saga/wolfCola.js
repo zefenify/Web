@@ -17,7 +17,6 @@ import { queueSet, queueRemove } from 'app/redux/action/queue';
 import { duration } from 'app/redux/action/duration';
 import { playbackPosition } from 'app/redux/action/playbackPosition';
 import { playing } from 'app/redux/action/playing';
-import { songId } from 'app/redux/action/songId';
 import { initialQueue } from 'app/redux/action/initialQueue';
 
 const wolfCola = {
@@ -67,7 +66,6 @@ function* howlerEnd(key) {
     yield put(playbackPosition(0));
     yield put(playing(false));
     yield put(current(null));
-    yield put(songId(null));
   } else {
     // passing the key to the fading-in-ing song creating a _recursive generator_
     // the whole condition continues as if nothing happened

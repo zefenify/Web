@@ -77,13 +77,13 @@ function* howlerEnd(key) {
 
 function* play(action) {
   const state = yield select();
+  const { payload } = action;
 
-  yield put(initialQueue(action.payload.queue));
-  yield put(queueSet(action.payload.queue));
-  // eslint-disable-next-line
-  yield put(queueRemove(findIndex(song => song.songId === action.payload.play.songId)(action.payload.queue)));
-  yield put(current(action.payload.play));
-  yield put(songId(action.payload.play.songId));
+  yield put(initialQueue(payload.queue));
+  yield put(queueSet(payload.queue));
+  yield put(queueRemove(findIndex(song => song.songId === payload.play.songId)(payload.queue)));
+  yield put(current(payload.play));
+  yield put(songId(payload.play.songId));
 
   // checking for crossfade and initializing
   if (wolfCola.crossfadeInProgress === false && state.crossfade > 0 && state.playing === true) {
@@ -137,7 +137,7 @@ function* play(action) {
   // - single song ID whenever it's called
   // - light [no preparation until asked]
   wolfCola[wolfCola.playingKey] = new Howl({
-    src: [action.payload.play.songId],
+    src: [payload.play.songId],
     html5: true,
     autoplay: true,
   });
@@ -203,10 +203,11 @@ function* play(action) {
 }
 
 function* seek(action) {
-  yield put(playbackPosition(action.payload));
+  const { payload } = action;
+  yield put(playbackPosition(payload));
 
   if (wolfCola[wolfCola.playingKey] !== null) {
-    wolfCola[wolfCola.playingKey].seek(action.payload);
+    wolfCola[wolfCola.playingKey].seek(payload);
   }
 }
 

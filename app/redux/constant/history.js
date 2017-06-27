@@ -1,7 +1,9 @@
 const HISTORY_PUSH = 'HISTORY_PUSH';
 const HISTORY_POP = 'HISTORY_POP';
+const HISTORY_FRONT = 'HISTORY_FRONT';
 
 module.exports = {
   HISTORY_PUSH,
   HISTORY_POP,
+  HISTORY_FRONT,
 };

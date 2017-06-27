@@ -15,6 +15,7 @@ import songId from 'app/redux/reducer/songId';
 import queue from 'app/redux/reducer/queue';
 import current from 'app/redux/reducer/current';
 import initialQueue from 'app/redux/reducer/initialQueue';
+import history from 'app/redux/reducer/history';
 
 import rootSaga from 'app/redux/saga/sagas';
 
@@ -34,13 +35,14 @@ const store = createStore(
     queue,
     current,
     initialQueue,
+    history,
   }),
   {
     theme: 'dark',
     volume: 1,
     queue: [],
     initialQueue: [], // queue of songs to be played [used on repeat `ALL` and queue is empty]
-    // history: [], // where played songs will are pushed [repeat `ONE` will only push once]
+    history: [], // where played songs will are pushed [repeat `ONE` will only push once]
     // match: [],
     // saved: [],
     // playlist: [],

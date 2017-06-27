@@ -11,7 +11,6 @@ import { Howl } from 'howler';
 import findIndex from 'lodash/fp/findIndex';
 import random from 'lodash/fp/random';
 
-import { HISTORY_PUSH, HISTORY_POP } from 'app/redux/constant/history';
 import { PLAY, NEXT, PREVIOUS, SEEK } from 'app/redux/constant/wolfCola';
 
 import { current } from 'app/redux/action/current';

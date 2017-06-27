@@ -11,7 +11,7 @@ import { SET_VOLUME } from 'app/redux/constant/volume';
 import { SET_REPEAT } from 'app/redux/constant/repeat';
 import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
 import { SET_REMAINING } from 'app/redux/constant/remaining';
-import { PLAY, SEEK } from 'app/redux/constant/wolfCola';
+import { PLAY, NEXT, SEEK } from 'app/redux/constant/wolfCola';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
@@ -92,6 +92,7 @@ const VolumeContainer = styled.div`
 
 const Control = ({
   play,
+  next,
   seek,
   duration,
   playbackPosition,
@@ -124,7 +125,7 @@ const Control = ({
           <i className={`icon-ion-ios-${playing ? 'pause' : 'play'}`} />
         </div>
 
-        <div className="control-container">
+        <div className="control-container" onClick={next}>
           <i className="icon-ion-ios-skipforward" />
         </div>
 
@@ -174,6 +175,8 @@ const Control = ({
 );
 
 Control.propTypes = {
+  play: func.isRequired,
+  next: func.isRequired,
   playing: bool,
   shuffle: bool,
   repeat: string,
@@ -188,7 +191,6 @@ Control.propTypes = {
   muteVolume: func.isRequired,
   maxVolume: func.isRequired,
   setRepeat: func.isRequired,
-  play: func.isRequired,
 };
 
 Control.defaultProps = {
@@ -217,10 +219,28 @@ module.exports = connect(state => ({
     dispatch({
       type: PLAY,
       payload: {
-        play: { songId: 'app/static/song/bs.mp3' },
-        queue: [{ songId: 'app/static/song/ww.mp3' }, { songId: 'app/static/song/bs.mp3' }],
+        play: { songId: 'app/static/song/00.mp3' },
+        initialQueue: [
+          { songId: 'app/static/song/00.mp3' },
+          { songId: 'app/static/song/01.mp3' },
+          { songId: 'app/static/song/02.mp3' },
+          { songId: 'app/static/song/03.mp3' },
+          { songId: 'app/static/song/04.mp3' },
+          { songId: 'app/static/song/05.mp3' },
+        ],
+        queue: [
+          { songId: 'app/static/song/00.mp3' },
+          { songId: 'app/static/song/01.mp3' },
+          { songId: 'app/static/song/02.mp3' },
+          { songId: 'app/static/song/03.mp3' },
+          { songId: 'app/static/song/04.mp3' },
+          { songId: 'app/static/song/05.mp3' },
+        ],
       },
     });
+  },
+  next() {
+    dispatch({ type: NEXT });
   },
   toggleShuffle() {
     dispatch({ type: SET_SHUFFLE });

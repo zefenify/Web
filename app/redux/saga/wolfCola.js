@@ -6,11 +6,13 @@
  */
 
 import { eventChannel, END, delay } from 'redux-saga';
-import { select, throttle, put, call, fork, take, takeLatest } from 'redux-saga/effects';
+import { select, throttle, put, call, fork, take, takeLatest, takeEvery } from 'redux-saga/effects';
 import { Howl } from 'howler';
 import findIndex from 'lodash/fp/findIndex';
+import random from 'lodash/fp/random';
 
-import { PLAY, SEEK } from 'app/redux/constant/wolfCola';
+import { HISTORY_PUSH, HISTORY_POP } from 'app/redux/constant/history';
+import { PLAY, NEXT, PREVIOUS, SEEK } from 'app/redux/constant/wolfCola';
 
 import { current } from 'app/redux/action/current';
 import { queueSet, queueRemove } from 'app/redux/action/queue';
@@ -52,39 +54,40 @@ function* howlerEnd(key) {
   const channel = yield call(howlerEndChannel, key);
 
   // we're only taking a single event i.e. { end }
-  // there's no need to clear on `finally | END` as all will be cleared _here_
   yield take(channel);
   wolfCola[wolfCola.playingKey].off();
   wolfCola[wolfCola.playingKey].unload();
   wolfCola[wolfCola.playingKey] = null;
   wolfCola.crossfadeInProgress = false;
-
-  // nothing is playing _next_
-  // setting to "no play" sate - duration, playback, playing, current, songId
-  if (wolfCola[wolfCola.playingKey === 'current' ? 'next' : 'current'] === null) {
-    yield put(duration(0));
-    yield put(playbackPosition(0));
-    yield put(playing(false));
-    yield put(current(null));
-  } else {
-    // passing the key to the fading-in-ing song creating a _recursive generator_
-    // the whole condition continues as if nothing happened
-    wolfCola.playingKey = wolfCola.playingKey === 'current' ? 'next' : 'current';
-  }
+  yield put({ type: NEXT });
 }
 
 function* play(action) {
   const state = yield select();
   const { payload } = action;
 
-  yield put(initialQueue(payload.queue));
-  yield put(queueSet(payload.queue));
-  yield put(queueRemove(findIndex(song => song.songId === payload.play.songId)(payload.queue)));
-  yield put(current(payload.play));
-  yield put(songId(payload.play.songId));
+  // skipping state update on `ONE` or single song playlist
+  if (state.current === null || state.current.songId !== payload.play.songId) {
+    yield put(initialQueue(payload.initialQueue));
+    yield put(queueSet(payload.queue));
+    yield put(queueRemove(findIndex(song => song.songId === payload.play.songId)(payload.queue)));
+    yield put(current(payload.play));
+  }
 
-  // checking for crossfade and initializing
-  if (wolfCola.crossfadeInProgress === false && state.crossfade > 0 && state.playing === true) {
+  if (state.crossfade === 0) { // crossfade is off - clearing any Howl event
+    if (wolfCola.current !== null) {
+      wolfCola.current.off();
+      wolfCola.current.unload();
+      wolfCola.current = null;
+    }
+
+    if (wolfCola.next !== null) {
+      wolfCola.next.off();
+      wolfCola.next.unload();
+      wolfCola.next = null;
+    }
+    // 👇 checking for crossfade and initializing. `state.crossfade` is true here
+  } else if (wolfCola.crossfadeInProgress === false && state.playing === true) {
     if (wolfCola.current !== null) {
       wolfCola.crossfadeInProgress = true;
       wolfCola.current.fade(1, 0, (state.crossfade * 1000));
@@ -106,7 +109,8 @@ function* play(action) {
         wolfCola.crossfadeInProgress = false;
       });
     }
-  } else if (wolfCola.crossfadeInProgress === true && state.playing === true) { // play triggered while crossfade in progress
+    // 👇 play triggered while crossfade in progress
+  } else if (wolfCola.crossfadeInProgress === true && state.playing === true) {
     if (wolfCola.current !== null) {
       wolfCola.current.off();
       wolfCola.current.unload();
@@ -165,34 +169,7 @@ function* play(action) {
 
       // checking for crossfade threshold
       if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
-        // blocking further crossfade checks by turning on progress...
-        wolfCola.crossfadeInProgress = true;
-        // fading out the current song...
-        wolfCola[wolfCola.playingKey].fade(1, 0, (stateCheck.crossfade * 1000));
-
-        // [REPEAT: ONE]
-        if (stateCheck.repeat === 'ONE') {
-          const nextPlay = wolfCola.playingKey === 'current' ? 'next' : 'current';
-
-          // playing next track on the next `object` of wolfCola...
-          wolfCola[nextPlay] = new Howl({
-            src: [stateCheck.current.songId],
-            html5: true,
-            autoplay: true,
-          });
-
-          // ethio-telecom
-          wolfCola[nextPlay].once('loaderror', () => {
-            wolfCola.crossfadeInProgress = false;
-            console.warn('Next song [loaderror], ላሽ ላሽ');
-          });
-
-          yield promiseifyHowlEvent(wolfCola[nextPlay], 'load');
-          yield put(duration(wolfCola[nextPlay].duration()));
-          yield put(playing(wolfCola[nextPlay].playing()));
-          wolfCola[nextPlay].fade(0, 1, (state.crossfade * 1000));
-          yield fork(howlerEnd, nextPlay);
-        }
+        yield put({ type: NEXT });
       }
     }
 
@@ -209,6 +186,74 @@ function* seek(action) {
   }
 }
 
+function* next() {
+  const state = yield select();
+
+  // nothing playing - halting...
+  if (state.playing === false) {
+    return;
+  }
+
+  // repeat one whatever was playing...
+  if (state.repeat === 'ONE') {
+    yield put({
+      type: PLAY,
+      payload: {
+        play: state.current,
+        queue: state.queue,
+        initialQueue: state.initialQueue,
+      },
+    });
+
+    return;
+  }
+
+  // end of music - no music left; setting "no music" state...
+  if (state.queue.length === 0 && state.repeat === 'OFF') {
+    wolfCola[wolfCola.playingKey].off();
+    wolfCola[wolfCola.playingKey].unload();
+    wolfCola[wolfCola.playingKey] = null;
+
+    yield put(duration(0));
+    yield put(playbackPosition(0));
+    yield put(playing(false));
+    yield put(current(null));
+    return;
+  }
+
+  // played through the entire queue and repeat is `ALL`
+  if (state.queue.length === 0 && state.repeat === 'ALL') {
+    const nextPlayIndex = state.shuffle ? random(0)(state.initialQueue.length - 1) : 0;
+
+    yield put({
+      type: PLAY,
+      payload: {
+        play: state.initialQueue[nextPlayIndex],
+        queue: state.initialQueue,
+        initialQueue: state.initialQueue,
+      },
+    });
+
+    return;
+  }
+
+  // repeat is `OFF | ALL`, there are items in queue; picking next item according to shuffle...
+  const nextPlayIndex = state.shuffle ? random(0)(state.queue.length - 1) : 0;
+  yield put({
+    type: PLAY,
+    payload: {
+      play: state.queue[nextPlayIndex],
+      queue: state.queue,
+      initialQueue: state.initialQueue,
+    },
+  });
+}
+
+function* previous(action) {
+  // implement after history PUSH / POP is done
+  console.log(action);
+}
+
 function* watchPlay() {
   yield takeLatest(PLAY, play);
 }
@@ -217,7 +262,17 @@ function* watchSeek() {
   yield throttle(250, SEEK, seek);
 }
 
+function* watchNext() {
+  yield takeEvery(NEXT, next);
+}
+
+function* watchPrevious() {
+  yield takeEvery(PREVIOUS, previous);
+}
+
 module.exports = {
   watchPlay,
+  watchPrevious,
+  watchNext,
   watchSeek,
 };

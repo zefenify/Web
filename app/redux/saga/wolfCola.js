@@ -18,6 +18,7 @@ import { duration } from 'app/redux/action/duration';
 import { playbackPosition } from 'app/redux/action/playbackPosition';
 import { playing } from 'app/redux/action/playing';
 import { songId } from 'app/redux/action/songId';
+import { initialQueue } from 'app/redux/action/initialQueue';
 
 const wolfCola = {
   playingKey: 'current',
@@ -77,6 +78,7 @@ function* howlerEnd(key) {
 function* play(action) {
   const state = yield select();
 
+  yield put(initialQueue(action.payload.queue));
   yield put(queueSet(action.payload.queue));
   // eslint-disable-next-line
   yield put(queueRemove(findIndex(song => song.songId === action.payload.play.songId)(action.payload.queue)));

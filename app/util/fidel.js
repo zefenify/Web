@@ -19,6 +19,6 @@ const fidelClassName = (fClass = '_am_') => (hasFidel = false) => hasFidel === t
 
 module.exports = {
   containsFidel,
-  fidelClassName,
+  fidelClassName: fidelClassName(FIDEL_CLASS),
   fidel: compose(fidelClassName(FIDEL_CLASS), containsFidel),
 };

@@ -6,7 +6,7 @@
  */
 
 import { eventChannel, END, delay } from 'redux-saga';
-import { select, throttle, put, call, fork, take, cancel, takeEvery } from 'redux-saga/effects';
+import { select, put, call, fork, take, throttle, takeLatest, takeEvery } from 'redux-saga/effects';
 import { Howl } from 'howler';
 import findIndex from 'lodash/fp/findIndex';
 import random from 'lodash/fp/random';
@@ -26,7 +26,7 @@ const wolfCola = {
   current: null,
   next: null,
   crossfadeInProgress: false,
-  tracker: null,
+  trackerInProgres: false,
 };
 
 // Howler `load` event will be yielded - so if it's never loaded
@@ -67,11 +67,14 @@ function* howlerEnd(key) {
   yield put({ type: NEXT });
 }
 
+// tracker is _impure_ AF, but it's doing its job efficiently as its master made it 😔
 function* tracker() {
-  if (wolfCola.tracker !== null) {
-    yield cancel(wolfCola.tracker);
-    wolfCola.tracker = null;
+  // no need to use `cancel` effect, we'll piggy pack on the current fork
+  if (wolfCola.trackerInProgress === true) {
+    return;
   }
+
+  wolfCola.trackerInProgress = true;
 
   while (wolfCola[wolfCola.playingKey] !== null && wolfCola[wolfCola.playingKey].playing()) {
     // current playback progress
@@ -88,6 +91,8 @@ function* tracker() {
 
     yield call(delay, 1000);
   }
+
+  wolfCola.trackerInProgress = false;
 }
 
 function* play(action) {
@@ -186,7 +191,7 @@ function* play(action) {
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
   // fork for `end` lister [with channel]
   yield fork(howlerEnd, wolfCola.playingKey);
-  wolfCola.tracker = yield fork(tracker);
+  yield fork(tracker);
 }
 
 function* seek(action) {
@@ -352,7 +357,7 @@ function* togglePlayPause() {
   }
 
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
-  wolfCola.tracker = yield fork(tracker);
+  yield fork(tracker);
 }
 
 function* watchPlay() {

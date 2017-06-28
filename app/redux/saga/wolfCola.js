@@ -67,7 +67,7 @@ function* howlerEnd(key) {
 }
 
 /**
- * returns a generator function that'll use it's closure to control whether
+ * returns a generator function that'll use its closure to control whether
  * or not fork request should be accepted or ignored. Easier to test and reason this way?
  *
  * @param  {Boolean} isTrackerInProgress

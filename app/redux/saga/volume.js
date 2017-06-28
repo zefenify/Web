@@ -12,8 +12,8 @@ import { volume } from 'app/redux/action/volume';
 function* volumeBootFromLF() {
   try {
     const lfVolume = yield localforage.getItem(LF_STORE.VOLUME);
-    yield put(volume(lfVolume || 1));
-    Howler.volume(lfVolume || 1);
+    yield put(volume(lfVolume === null ? 1 : lfVolume));
+    Howler.volume(lfVolume === null ? 1 : lfVolume);
   } catch (err) {
     console.warn('Unable to boot volume from LF', err);
   }

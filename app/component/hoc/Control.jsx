@@ -11,7 +11,7 @@ import { SET_VOLUME } from 'app/redux/constant/volume';
 import { SET_REPEAT } from 'app/redux/constant/repeat';
 import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
 import { SET_REMAINING } from 'app/redux/constant/remaining';
-import { PLAY, NEXT, PREVIOUS, SEEK } from 'app/redux/constant/wolfCola';
+import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from 'app/redux/constant/wolfCola';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
@@ -91,7 +91,7 @@ const VolumeContainer = styled.div`
 `;
 
 const Control = ({
-  play,
+  togglePlayPause,
   next,
   previous,
   seek,
@@ -122,7 +122,7 @@ const Control = ({
           <i className="icon-ion-ios-skipbackward" />
         </div>
 
-        <div className="control-container" onClick={play}>
+        <div className="control-container" onClick={togglePlayPause}>
           <i className={`icon-ion-ios-${playing ? 'pause' : 'play'}`} />
         </div>
 
@@ -176,7 +176,7 @@ const Control = ({
 );
 
 Control.propTypes = {
-  play: func.isRequired,
+  togglePlayPause: func.isRequired,
   next: func.isRequired,
   previous: func.isRequired,
   playing: bool,
@@ -213,11 +213,8 @@ module.exports = connect(state => ({
   repeat: state.repeat,
   volume: state.volume,
   remaining: state.remaining,
-}), dispatch => ({
-  seek(e) {
-    dispatch({ type: SEEK, payload: Number.parseInt(e.target.value, 10) });
-  },
-  play() {
+}), dispatch => () => {
+  setTimeout(() => {
     dispatch({
       type: PLAY,
       payload: {
@@ -240,29 +237,38 @@ module.exports = connect(state => ({
         ],
       },
     });
-  },
-  next() {
-    dispatch({ type: NEXT });
-  },
-  previous() {
-    dispatch({ type: PREVIOUS });
-  },
-  toggleShuffle() {
-    dispatch({ type: SET_SHUFFLE });
-  },
-  toggleRemaining() {
-    dispatch({ type: SET_REMAINING });
-  },
-  setRepeat() {
-    dispatch({ type: SET_REPEAT });
-  },
-  setVolume(e) {
-    dispatch({ type: SET_VOLUME, payload: Number.parseFloat(e.target.value) });
-  },
-  muteVolume() {
-    dispatch({ type: SET_VOLUME, payload: 0 });
-  },
-  maxVolume() {
-    dispatch({ type: SET_VOLUME, payload: 1 });
-  },
-}))(Control);
+  }, 1000);
+
+  return {
+    seek(e) {
+      dispatch({ type: SEEK, payload: Number.parseInt(e.target.value, 10) });
+    },
+    togglePlayPause() {
+      dispatch({ type: TOGGLE_PLAY_PAUSE });
+    },
+    next() {
+      dispatch({ type: NEXT });
+    },
+    previous() {
+      dispatch({ type: PREVIOUS });
+    },
+    toggleShuffle() {
+      dispatch({ type: SET_SHUFFLE });
+    },
+    toggleRemaining() {
+      dispatch({ type: SET_REMAINING });
+    },
+    setRepeat() {
+      dispatch({ type: SET_REPEAT });
+    },
+    setVolume(e) {
+      dispatch({ type: SET_VOLUME, payload: Number.parseFloat(e.target.value) });
+    },
+    muteVolume() {
+      dispatch({ type: SET_VOLUME, payload: 0 });
+    },
+    maxVolume() {
+      dispatch({ type: SET_VOLUME, payload: 1 });
+    },
+  };
+})(Control);

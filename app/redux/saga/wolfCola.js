@@ -6,7 +6,7 @@
  */
 
 import { eventChannel, END, delay } from 'redux-saga';
-import { select, put, call, fork, take, throttle, takeLatest, takeEvery } from 'redux-saga/effects';
+import { select, put, call, fork, take, throttle, takeEvery } from 'redux-saga/effects';
 import { Howl } from 'howler';
 import findIndex from 'lodash/fp/findIndex';
 import random from 'lodash/fp/random';
@@ -361,7 +361,7 @@ function* togglePlayPause() {
 }
 
 function* watchPlay() {
-  yield takeEvery(PLAY, play);
+  yield throttle(1000, PLAY, play);
 }
 
 function* watchSeek() {
@@ -369,11 +369,11 @@ function* watchSeek() {
 }
 
 function* watchNext() {
-  yield takeEvery(NEXT, next);
+  yield throttle(1000, NEXT, next);
 }
 
 function* watchPrevious() {
-  yield takeEvery(PREVIOUS, previous);
+  yield throttle(1000, PREVIOUS, previous);
 }
 
 function* watchTogglePlayPause() {

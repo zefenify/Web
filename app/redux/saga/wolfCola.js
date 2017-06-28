@@ -53,7 +53,7 @@ const howlerEndChannel = key => eventChannel((emitter) => {
 // this behavior is taken from Apple Music
 const playingLastHistory = s => s.history.length === 1 && s.current.songId === s.history[0].songId;
 
-// Channel - listens to end either passes key to next or clears state to "no play"
+// Channel - listens to `end` and clears `end`ed song
 function* howlerEnd(key) {
   const channel = yield call(howlerEndChannel, key);
 
@@ -91,7 +91,7 @@ const tracker = (isTrackerInProgress = false) => {
       if (wolfCola.crossfadeInProgress === false) {
         const stateCheck = yield select();
 
-        // checking for crossfade threshold
+        // checking for crossfade threshold...
         if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
           yield put({ type: NEXT });
         }
@@ -133,13 +133,15 @@ function* play(action) {
       wolfCola.next.unload();
       wolfCola.next = null;
     }
-    // 👇 checking for crossfade and initializing. `state.crossfade` is true here
+    // 👇 checking for crossfade and initializing. `state.crossfade` > 0 here
   } else if (wolfCola.crossfadeInProgress === false && state.playing === true) {
     if (wolfCola.current !== null) {
       wolfCola.crossfadeInProgress = true;
       wolfCola.current.fade(1, 0, (state.crossfade * 1000));
+      // firing `off` and clearing `howlerEnd` fork - avoiding double NEXT #3
+      wolfCola.current.off();
+      // on fade completion we'll clear the faded song
       wolfCola.current.once('fade', () => {
-        wolfCola.current.off();
         wolfCola.current.unload();
         wolfCola.current = null;
         wolfCola.crossfadeInProgress = false;
@@ -149,14 +151,14 @@ function* play(action) {
     if (wolfCola.next !== null) {
       wolfCola.crossfadeInProgress = true;
       wolfCola.next.fade(1, 0, (state.crossfade * 1000));
+      wolfCola.next.off();
       wolfCola.next.once('fade', () => {
-        wolfCola.next.off();
         wolfCola.next.unload();
         wolfCola.next = null;
         wolfCola.crossfadeInProgress = false;
       });
     }
-    // 👇 play triggered while crossfade in progress
+    // 👇 `PLAY` triggered while crossfade in progress
   } else if (wolfCola.crossfadeInProgress === true && state.playing === true) {
     if (wolfCola.current !== null) {
       wolfCola.current.off();
@@ -172,6 +174,9 @@ function* play(action) {
 
     wolfCola.crossfadeInProgress = false;
   }
+
+  // resetting to avoid the quick jump when next song is started
+  yield put(playbackPosition(0));
 
   // picking `playingKey`...
   if (wolfCola.current === null && wolfCola.next === null) {

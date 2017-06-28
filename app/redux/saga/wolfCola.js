@@ -49,6 +49,10 @@ const howlerEndChannel = key => eventChannel((emitter) => {
   return () => {};
 });
 
+// checks if there's only one item in the history and the current play matches
+// this behavior is taken from Apple Music
+const playingLastHistory = s => s.history.length === 1 && s.current.songId === s.history[0].songId;
+
 // Channel - listens to end either passes key to next or clears state to "no play"
 function* howlerEnd(key) {
   const channel = yield call(howlerEndChannel, key);
@@ -260,9 +264,51 @@ function* next() {
   });
 }
 
-function* previous(action) {
-  // implement after history PUSH / POP is done
-  console.log(action);
+function* previous() {
+  const state = yield select();
+
+  // nothing playing - halting...
+  if (state.playing === false) {
+    return;
+  }
+
+  // repeat `ONE`
+  // previous triggered while crossfade > playbackPosition
+  if (state.repeat === 'ONE' || state.crossfade > state.playbackPosition) {
+    yield put({
+      type: PLAY,
+      payload: {
+        play: state.current,
+        queue: state.queue,
+        initialQueue: state.initialQueue,
+      },
+    });
+
+    return;
+  }
+
+  // history is empty || the current song being played is the same as the one item in history
+  if (state.history.length === 0 || playingLastHistory(state)) {
+    wolfCola[wolfCola.playingKey].off();
+    wolfCola[wolfCola.playingKey].unload();
+    wolfCola[wolfCola.playingKey] = null;
+
+    yield put(duration(0));
+    yield put(playbackPosition(0));
+    yield put(playing(false));
+    yield put(current(null));
+    return;
+  }
+
+  // witchcraft!
+  yield put({
+    type: PLAY,
+    payload: {
+      play: state.history[0],
+      queue: [state.history[0], ...state.queue],
+      initialQueue: state.initialQueue,
+    },
+  });
 }
 
 function* watchPlay() {

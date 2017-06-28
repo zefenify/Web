@@ -11,7 +11,7 @@ import { SET_VOLUME } from 'app/redux/constant/volume';
 import { SET_REPEAT } from 'app/redux/constant/repeat';
 import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
 import { SET_REMAINING } from 'app/redux/constant/remaining';
-import { PLAY, NEXT, SEEK } from 'app/redux/constant/wolfCola';
+import { PLAY, NEXT, PREVIOUS, SEEK } from 'app/redux/constant/wolfCola';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
@@ -93,6 +93,7 @@ const VolumeContainer = styled.div`
 const Control = ({
   play,
   next,
+  previous,
   seek,
   duration,
   playbackPosition,
@@ -117,7 +118,7 @@ const Control = ({
           <i className="icon-ion-ios-shuffle-strong" />
         </div>
 
-        <div className="control-container">
+        <div className="control-container" onClick={previous}>
           <i className="icon-ion-ios-skipbackward" />
         </div>
 
@@ -177,6 +178,7 @@ const Control = ({
 Control.propTypes = {
   play: func.isRequired,
   next: func.isRequired,
+  previous: func.isRequired,
   playing: bool,
   shuffle: bool,
   repeat: string,
@@ -241,6 +243,9 @@ module.exports = connect(state => ({
   },
   next() {
     dispatch({ type: NEXT });
+  },
+  previous() {
+    dispatch({ type: PREVIOUS });
   },
   toggleShuffle() {
     dispatch({ type: SET_SHUFFLE });

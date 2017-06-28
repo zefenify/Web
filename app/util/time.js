@@ -12,6 +12,11 @@ module.exports = {
       return '0:00';
     }
 
+    // this will be triggered on next and remainder is true
+    if (duration < 0) {
+      return '0:00';
+    }
+
     const hours = Math.floor(parsedDuration / 3600);
     const minutes = Math.floor((parsedDuration - (hours * 3600)) / 60);
     const seconds = Math.floor(parsedDuration - ((hours * 3600) + (minutes * 60)));

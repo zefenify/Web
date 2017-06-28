@@ -26,7 +26,6 @@ const wolfCola = {
   current: null,
   next: null,
   crossfadeInProgress: false,
-  trackerInProgres: false,
 };
 
 // Howler `load` event will be yielded - so if it's never loaded
@@ -67,33 +66,48 @@ function* howlerEnd(key) {
   yield put({ type: NEXT });
 }
 
-// tracker is _impure_ AF, but it's doing its job efficiently as its master made it 😔
-function* tracker() {
-  // no need to use `cancel` effect, we'll piggy pack on the current fork
-  if (wolfCola.trackerInProgress === true) {
-    return;
-  }
+/**
+ * returns a generator function that'll use it's closure to control whether
+ * or not fork request should be accepted or ignored. Easier to test and reason this way?
+ *
+ * @param  {Boolean} isTrackerInProgress
+ * @return {Function}
+ */
+const tracker = (isTrackerInProgress = false) => {
+  let trackerInProgress = isTrackerInProgress;
 
-  wolfCola.trackerInProgress = true;
-
-  while (wolfCola[wolfCola.playingKey] !== null && wolfCola[wolfCola.playingKey].playing()) {
-    // current playback progress
-    yield put(playbackPosition(wolfCola[wolfCola.playingKey].seek()));
-
-    if (wolfCola.crossfadeInProgress === false) {
-      const stateCheck = yield select();
-
-      // checking for crossfade threshold
-      if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
-        yield put({ type: NEXT });
-      }
+  return function* trackerG() {
+    // no need to use `cancel` effect, we'll piggy pack on the current fork
+    if (trackerInProgress === true) {
+      return;
     }
 
-    yield call(delay, 1000);
-  }
+    trackerInProgress = true;
 
-  wolfCola.trackerInProgress = false;
-}
+    while (wolfCola[wolfCola.playingKey] !== null && wolfCola[wolfCola.playingKey].playing()) {
+      // current playback progress
+      yield put(playbackPosition(wolfCola[wolfCola.playingKey].seek()));
+
+      if (wolfCola.crossfadeInProgress === false) {
+        const stateCheck = yield select();
+
+        // checking for crossfade threshold
+        if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
+          yield put({ type: NEXT });
+        }
+      }
+
+      yield call(delay, 1000);
+    }
+
+    trackerInProgress = false;
+  };
+};
+
+// #BOOM #POP-POP
+// it's easier to reason about with an enclosed variable than inside `wolfCola`
+// `wolfCola` will only deal with Howl stuff
+const trackerSaga = tracker(false);
 
 function* play(action) {
   const state = yield select();
@@ -191,7 +205,7 @@ function* play(action) {
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
   // fork for `end` lister [with channel]
   yield fork(howlerEnd, wolfCola.playingKey);
-  yield fork(tracker);
+  yield fork(trackerSaga);
 }
 
 function* seek(action) {
@@ -357,7 +371,7 @@ function* togglePlayPause() {
   }
 
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
-  yield fork(tracker);
+  yield fork(trackerSaga);
 }
 
 function* watchPlay() {

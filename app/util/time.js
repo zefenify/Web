@@ -8,12 +8,8 @@ module.exports = {
   human(duration = 0) {
     const parsedDuration = Number.parseFloat(duration);
 
-    if (Number.isNaN(parsedDuration)) {
-      return '0:00';
-    }
-
     // this will be triggered on next and remainder is true
-    if (duration < 0) {
+    if (Number.isNaN(parsedDuration)) {
       return '0:00';
     }
 

@@ -13,7 +13,7 @@ import { watchSetPlaybackPosition } from 'app/redux/saga/playbackPosition';
 import { remainingBootFromLF, watchToggleRemaining } from 'app/redux/saga/remaining';
 import { watchSetQueueSet, watchSetQueueAdd, watchSetQueueRemove, watchSetQueueClear } from 'app/redux/saga/queue';
 import { watchSetCurrent } from 'app/redux/saga/current';
-import { watchPlay, watchPrevious, watchNext, watchSeek } from 'app/redux/saga/wolfCola';
+import { watchPlay, watchPrevious, watchNext, watchSeek, watchTogglePlayPause } from 'app/redux/saga/wolfCola';
 
 function* rootSaga() {
   yield all([
@@ -41,6 +41,7 @@ function* rootSaga() {
     watchPrevious(),
     watchNext(),
     watchSeek(),
+    watchTogglePlayPause(),
   ]);
 }
 

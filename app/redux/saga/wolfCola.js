@@ -6,12 +6,12 @@
  */
 
 import { eventChannel, END, delay } from 'redux-saga';
-import { select, throttle, put, call, fork, take, takeLatest, takeEvery } from 'redux-saga/effects';
+import { select, throttle, put, call, fork, take, cancel, takeEvery } from 'redux-saga/effects';
 import { Howl } from 'howler';
 import findIndex from 'lodash/fp/findIndex';
 import random from 'lodash/fp/random';
 
-import { PLAY, NEXT, PREVIOUS, SEEK } from 'app/redux/constant/wolfCola';
+import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from 'app/redux/constant/wolfCola';
 
 import { current } from 'app/redux/action/current';
 import { queueSet, queueRemove } from 'app/redux/action/queue';
@@ -26,6 +26,7 @@ const wolfCola = {
   current: null,
   next: null,
   crossfadeInProgress: false,
+  tracker: null,
 };
 
 // Howler `load` event will be yielded - so if it's never loaded
@@ -64,6 +65,29 @@ function* howlerEnd(key) {
   wolfCola[wolfCola.playingKey] = null;
   wolfCola.crossfadeInProgress = false;
   yield put({ type: NEXT });
+}
+
+function* tracker() {
+  if (wolfCola.tracker !== null) {
+    yield cancel(wolfCola.tracker);
+    wolfCola.tracker = null;
+  }
+
+  while (wolfCola[wolfCola.playingKey] !== null && wolfCola[wolfCola.playingKey].playing()) {
+    // current playback progress
+    yield put(playbackPosition(wolfCola[wolfCola.playingKey].seek()));
+
+    if (wolfCola.crossfadeInProgress === false) {
+      const stateCheck = yield select();
+
+      // checking for crossfade threshold
+      if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
+        yield put({ type: NEXT });
+      }
+    }
+
+    yield call(delay, 1000);
+  }
 }
 
 function* play(action) {
@@ -162,23 +186,7 @@ function* play(action) {
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
   // fork for `end` lister [with channel]
   yield fork(howlerEnd, wolfCola.playingKey);
-
-  // tracker...
-  while (wolfCola[wolfCola.playingKey] !== null && wolfCola[wolfCola.playingKey].playing()) {
-    // current playback progress
-    yield put(playbackPosition(wolfCola[wolfCola.playingKey].seek()));
-
-    if (wolfCola.crossfadeInProgress === false) {
-      const stateCheck = yield select();
-
-      // checking for crossfade threshold
-      if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
-        yield put({ type: NEXT });
-      }
-    }
-
-    yield call(delay, 1000);
-  }
+  wolfCola.tracker = yield fork(tracker);
 }
 
 function* seek(action) {
@@ -311,8 +319,44 @@ function* previous() {
   });
 }
 
+function* togglePlayPause() {
+  const state = yield select();
+
+  // nothing to pause play here, halting...
+  if (state.current === null) {
+    return;
+  }
+
+  // pausing...
+  if (state.playing === true) {
+    if (wolfCola.current !== null) {
+      wolfCola.current.pause();
+    }
+
+    if (wolfCola.next !== null) {
+      wolfCola.next.pause();
+    }
+
+    yield put(playing(false));
+
+    return;
+  }
+
+  // playing...
+  if (wolfCola.current !== null) {
+    wolfCola.current.play();
+  }
+
+  if (wolfCola.next !== null) {
+    wolfCola.next.play();
+  }
+
+  yield put(playing(wolfCola[wolfCola.playingKey].playing()));
+  wolfCola.tracker = yield fork(tracker);
+}
+
 function* watchPlay() {
-  yield takeLatest(PLAY, play);
+  yield takeEvery(PLAY, play);
 }
 
 function* watchSeek() {
@@ -327,9 +371,14 @@ function* watchPrevious() {
   yield takeEvery(PREVIOUS, previous);
 }
 
+function* watchTogglePlayPause() {
+  yield takeEvery(TOGGLE_PLAY_PAUSE, togglePlayPause);
+}
+
 module.exports = {
   watchPlay,
   watchPrevious,
   watchNext,
   watchSeek,
+  watchTogglePlayPause,
 };

@@ -19,7 +19,7 @@ import { duration } from 'app/redux/action/duration';
 import { playbackPosition } from 'app/redux/action/playbackPosition';
 import { playing } from 'app/redux/action/playing';
 import { initialQueue } from 'app/redux/action/initialQueue';
-import { historyPush, historyFront } from 'app/redux/action/history';
+import { historyPush, historyPop, historyFront } from 'app/redux/action/history';
 
 const wolfCola = {
   playingKey: 'current',
@@ -319,7 +319,7 @@ function* previous() {
     return;
   }
 
-  // history is empty || the current song being played is the same as the one item in history
+  // history is empty || the current song being played is the same as the *one* item in history
   if (state.history.length === 0 || playingLastHistory(state)) {
     wolfCola[wolfCola.playingKey].off();
     wolfCola[wolfCola.playingKey].unload();
@@ -330,6 +330,13 @@ function* previous() {
     yield put(playing(false));
     yield put(current(null));
     return;
+  }
+
+  // POP-ing song from history...
+  const historyIndex = findIndex(song => song.songId === state.history[0].songId)(state.history);
+
+  if (historyIndex !== -1) {
+    yield put(historyPop(historyIndex));
   }
 
   // witchcraft!

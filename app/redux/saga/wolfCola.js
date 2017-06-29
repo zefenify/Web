@@ -8,7 +8,6 @@
 import { eventChannel, END, delay } from 'redux-saga';
 import { select, put, call, fork, take, throttle, takeEvery } from 'redux-saga/effects';
 import { Howl } from 'howler';
-import findIndex from 'lodash/fp/findIndex';
 import random from 'lodash/fp/random';
 
 import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from 'app/redux/constant/wolfCola';
@@ -117,7 +116,7 @@ function* play(action) {
   if (state.current === null || state.current.songId !== payload.play.songId) {
     yield put(initialQueue(payload.initialQueue));
     yield put(queueSet(payload.queue));
-    yield put(queueRemove(findIndex(song => song.songId === payload.play.songId)(payload.queue)));
+    yield put(queueRemove(payload.queue.findIndex(song => song.songId === payload.play.songId)));
     yield put(current(payload.play));
   }
 
@@ -259,7 +258,7 @@ function* next() {
 
   // PUSH-ing song to history...
   if (state.current !== null) {
-    const historyIndex = findIndex(song => song.songId === state.current.songId)(state.history);
+    const historyIndex = state.history.findIndex(song => song.songId === state.current.songId);
 
     if (historyIndex === -1) {
       yield put(historyPush(state.current));
@@ -333,7 +332,7 @@ function* previous() {
   }
 
   // POP-ing song from history...
-  const historyIndex = findIndex(song => song.songId === state.history[0].songId)(state.history);
+  const historyIndex = state.history.findIndex(song => song.songId === state.history[0].songId);
 
   if (historyIndex !== -1) {
     yield put(historyPop(historyIndex));

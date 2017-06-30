@@ -214,31 +214,6 @@ module.exports = connect(state => ({
   volume: state.volume,
   remaining: state.remaining,
 }), dispatch => () => {
-  setTimeout(() => {
-    dispatch({
-      type: PLAY,
-      payload: {
-        play: { songId: 'app/static/song/00.mp3' },
-        initialQueue: [
-          { songId: 'app/static/song/00.mp3' },
-          { songId: 'app/static/song/01.mp3' },
-          { songId: 'app/static/song/02.mp3' },
-          { songId: 'app/static/song/03.mp3' },
-          { songId: 'app/static/song/04.mp3' },
-          { songId: 'app/static/song/05.mp3' },
-        ],
-        queue: [
-          { songId: 'app/static/song/00.mp3' },
-          { songId: 'app/static/song/01.mp3' },
-          { songId: 'app/static/song/02.mp3' },
-          { songId: 'app/static/song/03.mp3' },
-          { songId: 'app/static/song/04.mp3' },
-          { songId: 'app/static/song/05.mp3' },
-        ],
-      },
-    });
-  }, 1000);
-
   return {
     seek(e) {
       dispatch({ type: SEEK, payload: Number.parseInt(e.target.value, 10) });

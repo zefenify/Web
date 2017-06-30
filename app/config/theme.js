@@ -34,8 +34,8 @@ module.exports = {
     listTextActive: GREEN_1,
 
     controlBackground: DARK_3,
-    controlText: MUTE_1,
-    controlMute: MUTE_3,
+    controlText: WHITE_1,
+    controlMute: MUTE_1,
   },
 
   lightTheme: {
@@ -53,7 +53,7 @@ module.exports = {
     listTextActive: PINK_1,
 
     controlBackground: DARK_4,
-    controlText: MUTE_6,
+    controlText: MUTE_8,
     controlMute: MUTE_7,
   },
 };

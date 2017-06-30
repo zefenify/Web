@@ -21,11 +21,14 @@ const commonPlugins = [
 module.exports = {
   entry: {
     vendor: [
+      'localforage',
       'react',
       'react-dom',
       'react-redux',
       'react-router',
+      'react-router-dom',
       'redux',
+      'redux-saga',
       'reselect',
       'styled-components',
     ],
@@ -81,7 +84,6 @@ module.exports = {
   },
   devtool: PRODUCTION ? 'source-map' : false,
   devServer: {
-    compress: true,
     publicPath: 'http://localhost:8080/build/',
   },
   plugins: PRODUCTION ? [

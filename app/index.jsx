@@ -11,6 +11,7 @@ import 'app/static/icoMoon/style.css';
 import 'app/scss/wolf-cola.scss';
 
 import store from 'app/redux/store';
+import Home from 'app/component/hoc/Home';
 import { WolfColaContainer, NavListContainer, NavContainer, ListContainer } from 'app/component/styled/WolfCola';
 import Divider from 'app/component/styled/Divider';
 import { NavLinkStyled } from 'app/component/styled/ReactRouter';
@@ -90,20 +91,24 @@ class WolfCola extends Component {
 
                   <SmallText marginTop="2em">YOUR MUSIC</SmallText>
                   <Divider />
+
                   <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
                   <NavLinkStyled to="/songs">Songs</NavLinkStyled>
 
                   <SmallText marginTop="2em">YOUR PLAYLISTS</SmallText>
                   <Divider />
+
                   <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
                   <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
 
                   <SmallText marginTop="2em">SETTINGS</SmallText>
                   <Divider />
+
                   <NavLinkStyled to="/setting">Settings</NavLinkStyled>
                 </NavContainer>
 
                 <ListContainer>
+                  <Route exact path="/" component={Home} />
                   <Route path="/setting" component={Setting} />
                 </ListContainer>
               </NavListContainer>

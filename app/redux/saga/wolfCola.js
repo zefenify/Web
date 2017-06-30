@@ -11,6 +11,7 @@ import { Howl } from 'howler';
 import random from 'lodash/fp/random';
 
 import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from 'app/redux/constant/wolfCola';
+import { BASE } from 'app/config/api';
 
 import { current } from 'app/redux/action/current';
 import { queueSet, queueRemove } from 'app/redux/action/queue';
@@ -190,9 +191,10 @@ function* play(action) {
   // - single song ID whenever it's called
   // - light [no preparation until asked]
   wolfCola[wolfCola.playingKey] = new Howl({
-    src: [payload.play.songId],
+    src: [`${BASE}/json/playSong.php?id=${payload.play.songId}`],
     html5: true,
     autoplay: true,
+    format: ['mp3'],
   });
 
   // ethio-telecom

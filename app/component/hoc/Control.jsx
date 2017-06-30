@@ -1,24 +1,67 @@
 import React from 'react';
-import { func, bool, string, number } from 'prop-types';
+import { func, bool, string, number, oneOfType, object } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import { human } from 'app/util/time';
+import { fidel } from 'app/util/fidel';
 import { ControlsContainer } from 'app/component/styled/WolfCola';
 import Range from 'app/component/styled/Range';
 
+import { BASE } from 'app/config/api';
 import { SET_VOLUME } from 'app/redux/constant/volume';
 import { SET_REPEAT } from 'app/redux/constant/repeat';
 import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
 import { SET_REMAINING } from 'app/redux/constant/remaining';
-import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from 'app/redux/constant/wolfCola';
+import { NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from 'app/redux/constant/wolfCola';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
+  max-width: 250px;
+  padding-left: 6px;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  border: 1px solid red;
+
+  .song-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 250px;
+
+    .artwork {
+      flex: 0 0 60px;
+      width: 60px;
+      height: 60px;
+      border-radius: 4px;
+      border: 1px solid rgba(51, 51, 51, 0.25);
+    }
+
+    .song {
+      display: flex;
+      flex-direction: column;
+      padding-left: 6px;
+      flex: 0 0 184px;
+
+      &__name,
+      &__artist {
+        padding: 0;
+        margin: 0;
+        width: 184px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      &__name {
+        margin-bottom: 0.5em;
+        color: ${props => props.theme.controlText};
+      }
+
+      &__artist {
+        color: ${props => props.theme.controlMute};
+      }
+    }
+  }
 `;
 
 const MusicControlsContainer = styled.div`
@@ -91,6 +134,7 @@ const VolumeContainer = styled.div`
 `;
 
 const Control = ({
+  current,
   togglePlayPause,
   next,
   previous,
@@ -110,7 +154,20 @@ const Control = ({
   maxVolume,
 }) => (
   <ControlsContainer>
-    <NowPlayingContainer>Now Playing</NowPlayingContainer>
+    <NowPlayingContainer>
+      {
+        current !== null
+          ? (
+            <div className="song-container">
+              <div className="artwork" style={{ background: `transparent url('${BASE}${current.thumbnail}') 50% 50% / cover no-repeat` }} />
+              <div className="song">
+                <p className={`song__name ${fidel(current.songName)}`}>{ current.songName }</p>
+                <p className={`song__artist ${fidel(current.artistName)}`}>{ current.artistName }</p>
+              </div>
+            </div>
+          ) : ''
+      }
+    </NowPlayingContainer>
 
     <MusicControlsContainer>
       <MusicControls>
@@ -176,6 +233,7 @@ const Control = ({
 );
 
 Control.propTypes = {
+  current: oneOfType([object]),
   togglePlayPause: func.isRequired,
   next: func.isRequired,
   previous: func.isRequired,
@@ -196,6 +254,7 @@ Control.propTypes = {
 };
 
 Control.defaultProps = {
+  current: null,
   playing: false,
   shuffle: false,
   repeat: 'OFF',
@@ -206,6 +265,7 @@ Control.defaultProps = {
 };
 
 module.exports = connect(state => ({
+  current: state.current,
   duration: state.duration,
   playbackPosition: state.playbackPosition,
   playing: state.playing,

@@ -13,7 +13,7 @@ const commonPlugins = [
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: 'vendor.js',
-    minChunks: Infinity,
+    minChunks: 3,
   }),
   new webpack.optimize.ModuleConcatenationPlugin(),
 ];
@@ -82,7 +82,7 @@ module.exports = {
       },
     ],
   },
-  devtool: PRODUCTION ? 'source-map' : false,
+  devtool: PRODUCTION ? 'cheap-source-map' : false,
   devServer: {
     publicPath: 'http://localhost:8080/build/',
   },

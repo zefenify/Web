@@ -273,37 +273,35 @@ module.exports = connect(state => ({
   repeat: state.repeat,
   volume: state.volume,
   remaining: state.remaining,
-}), dispatch => () => {
-  return {
-    seek(e) {
-      dispatch({ type: SEEK, payload: Number.parseInt(e.target.value, 10) });
-    },
-    togglePlayPause() {
-      dispatch({ type: TOGGLE_PLAY_PAUSE });
-    },
-    next() {
-      dispatch({ type: NEXT });
-    },
-    previous() {
-      dispatch({ type: PREVIOUS });
-    },
-    toggleShuffle() {
-      dispatch({ type: SET_SHUFFLE });
-    },
-    toggleRemaining() {
-      dispatch({ type: SET_REMAINING });
-    },
-    setRepeat() {
-      dispatch({ type: SET_REPEAT });
-    },
-    setVolume(e) {
-      dispatch({ type: SET_VOLUME, payload: Number.parseFloat(e.target.value) });
-    },
-    muteVolume() {
-      dispatch({ type: SET_VOLUME, payload: 0 });
-    },
-    maxVolume() {
-      dispatch({ type: SET_VOLUME, payload: 1 });
-    },
-  };
-})(Control);
+}), dispatch => () => ({
+  seek(e) {
+    dispatch({ type: SEEK, payload: Number.parseInt(e.target.value, 10) });
+  },
+  togglePlayPause() {
+    dispatch({ type: TOGGLE_PLAY_PAUSE });
+  },
+  next() {
+    dispatch({ type: NEXT });
+  },
+  previous() {
+    dispatch({ type: PREVIOUS });
+  },
+  toggleShuffle() {
+    dispatch({ type: SET_SHUFFLE });
+  },
+  toggleRemaining() {
+    dispatch({ type: SET_REMAINING });
+  },
+  setRepeat() {
+    dispatch({ type: SET_REPEAT });
+  },
+  setVolume(e) {
+    dispatch({ type: SET_VOLUME, payload: Number.parseFloat(e.target.value) });
+  },
+  muteVolume() {
+    dispatch({ type: SET_VOLUME, payload: 0 });
+  },
+  maxVolume() {
+    dispatch({ type: SET_VOLUME, payload: 1 });
+  },
+}))(Control);

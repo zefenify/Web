@@ -3,17 +3,17 @@ import { func, bool, string, number, oneOfType, object } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import { human } from 'app/util/time';
-import { fidel } from 'app/util/fidel';
-import { ControlsContainer } from 'app/component/styled/WolfCola';
-import Range from 'app/component/styled/Range';
+import { human } from '@app/util/time';
+import { fidel } from '@app/util/fidel';
+import { ControlsContainer } from '@app/component/styled/WolfCola';
+import Range from '@app/component/styled/Range';
 
-import { BASE } from 'app/config/api';
-import { SET_VOLUME } from 'app/redux/constant/volume';
-import { SET_REPEAT } from 'app/redux/constant/repeat';
-import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
-import { SET_REMAINING } from 'app/redux/constant/remaining';
-import { NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from 'app/redux/constant/wolfCola';
+import { BASE } from '@app/config/api';
+import { SET_VOLUME } from '@app/redux/constant/volume';
+import { SET_REPEAT } from '@app/redux/constant/repeat';
+import { SET_SHUFFLE } from '@app/redux/constant/shuffle';
+import { SET_REMAINING } from '@app/redux/constant/remaining';
+import { NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 
 const NowPlayingContainer = styled.div`
   flex: 0 1 250px;

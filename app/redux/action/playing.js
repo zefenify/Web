@@ -1,4 +1,4 @@
-import { PLAYING } from 'app/redux/constant/playing';
+import { PLAYING } from '@app/redux/constant/playing';
 
 function playing(payload) {
   return {

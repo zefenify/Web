@@ -1,4 +1,4 @@
-import { REMAINING } from 'app/redux/constant/remaining';
+import { REMAINING } from '@app/redux/constant/remaining';
 
 function remaining(state = false, action) {
   switch (action.type) {

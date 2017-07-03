@@ -1,6 +1,6 @@
-import compose from 'app/util/compose';
+import compose from '@app/util/compose';
 
-import { FIDEL_CLASS } from 'app/config/fidel';
+import { FIDEL_CLASS } from '@app/config/fidel';
 
 /**
  * given a word checks whether or not it contains a Fidel or not

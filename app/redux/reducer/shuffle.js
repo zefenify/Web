@@ -1,4 +1,4 @@
-import { SHUFFLE } from 'app/redux/constant/shuffle';
+import { SHUFFLE } from '@app/redux/constant/shuffle';
 
 function reducer(state = true, action) {
   switch (action.type) {

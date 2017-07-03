@@ -3,10 +3,10 @@
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { LF_STORE } from 'app/config/localforage';
-import { SET_REPEAT } from 'app/redux/constant/repeat';
+import { LF_STORE } from '@app/config/localforage';
+import { SET_REPEAT } from '@app/redux/constant/repeat';
 
-import { repeat } from 'app/redux/action/repeat';
+import { repeat } from '@app/redux/action/repeat';
 
 function* repeatBootFromLF() {
   try {

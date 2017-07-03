@@ -7,18 +7,18 @@ import { Provider } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
 
 import 'normalize.css';
-import 'app/static/icoMoon/style.css';
-import 'app/scss/wolf-cola.scss';
+import '@app/static/icoMoon/style.css';
+import '@app/scss/wolf-cola.scss';
 
-import store from 'app/redux/store';
-import Home from 'app/component/hoc/Home';
-import { WolfColaContainer, NavListContainer, NavContainer, ListContainer } from 'app/component/styled/WolfCola';
-import Divider from 'app/component/styled/Divider';
-import { NavLinkStyled } from 'app/component/styled/ReactRouter';
-import { lightTheme, darkTheme } from 'app/config/theme';
+import store from '@app/redux/store';
+import Home from '@app/component/hoc/Home';
+import { WolfColaContainer, NavListContainer, NavContainer, ListContainer } from '@app/component/styled/WolfCola';
+import Divider from '@app/component/styled/Divider';
+import { NavLinkStyled } from '@app/component/styled/ReactRouter';
+import { lightTheme, darkTheme } from '@app/config/theme';
 
-import Setting from 'app/component/hoc/Setting';
-import Control from 'app/component/hoc/Control';
+import Setting from '@app/component/hoc/Setting';
+import Control from '@app/component/hoc/Control';
 
 const SmallText = styled.small`
   padding: 1em 0.5em;

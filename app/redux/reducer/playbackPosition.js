@@ -1,4 +1,4 @@
-import { PLAYBACK_POSITION } from 'app/redux/constant/playbackPosition';
+import { PLAYBACK_POSITION } from '@app/redux/constant/playbackPosition';
 
 function playbackPosition(state = null, action) {
   switch (action.type) {

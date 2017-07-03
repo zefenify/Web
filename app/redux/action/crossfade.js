@@ -1,4 +1,4 @@
-import { CROSSFADE } from 'app/redux/constant/crossfade';
+import { CROSSFADE } from '@app/redux/constant/crossfade';
 
 function crossfade(payload) {
   return {

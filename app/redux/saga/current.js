@@ -1,8 +1,8 @@
 import { put, takeEvery } from 'redux-saga/effects';
 
-import { SET_CURRENT } from 'app/redux/constant/current';
+import { SET_CURRENT } from '@app/redux/constant/current';
 
-import { current } from 'app/redux/action/current';
+import { current } from '@app/redux/action/current';
 
 function* setCurrent(action) {
   yield put(current(action.payload));

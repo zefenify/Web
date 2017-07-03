@@ -3,10 +3,10 @@
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { LF_STORE } from 'app/config/localforage';
-import { SET_REMAINING } from 'app/redux/constant/remaining';
+import { LF_STORE } from '@app/config/localforage';
+import { SET_REMAINING } from '@app/redux/constant/remaining';
 
-import { remaining } from 'app/redux/action/remaining';
+import { remaining } from '@app/redux/action/remaining';
 
 function* remainingBootFromLF() {
   try {

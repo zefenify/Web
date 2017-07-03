@@ -2,18 +2,18 @@
 
 import { all } from 'redux-saga/effects';
 
-import { themeBootFromLF, watchToggleTheme } from 'app/redux/saga/theme';
-import { volumeBootFromLF, watchSetVolume } from 'app/redux/saga/volume';
-import { repeatBootFromLF, watchSetRepeat } from 'app/redux/saga/repeat';
-import { shuffleBootFromLF, watchToggleShuffle } from 'app/redux/saga/shuffle';
-import { crossfadeBootFromLF, watchSetCrossfade } from 'app/redux/saga/crossfade';
-import { watchSetPlaying } from 'app/redux/saga/playing';
-import { watchSetDuration } from 'app/redux/saga/duration';
-import { watchSetPlaybackPosition } from 'app/redux/saga/playbackPosition';
-import { remainingBootFromLF, watchToggleRemaining } from 'app/redux/saga/remaining';
-import { watchSetQueueSet, watchSetQueueAdd, watchSetQueueRemove, watchSetQueueClear } from 'app/redux/saga/queue';
-import { watchSetCurrent } from 'app/redux/saga/current';
-import { watchPlay, watchPrevious, watchNext, watchSeek, watchTogglePlayPause } from 'app/redux/saga/wolfCola';
+import { themeBootFromLF, watchToggleTheme } from '@app/redux/saga/theme';
+import { volumeBootFromLF, watchSetVolume } from '@app/redux/saga/volume';
+import { repeatBootFromLF, watchSetRepeat } from '@app/redux/saga/repeat';
+import { shuffleBootFromLF, watchToggleShuffle } from '@app/redux/saga/shuffle';
+import { crossfadeBootFromLF, watchSetCrossfade } from '@app/redux/saga/crossfade';
+import { watchSetPlaying } from '@app/redux/saga/playing';
+import { watchSetDuration } from '@app/redux/saga/duration';
+import { watchSetPlaybackPosition } from '@app/redux/saga/playbackPosition';
+import { remainingBootFromLF, watchToggleRemaining } from '@app/redux/saga/remaining';
+import { watchSetQueueSet, watchSetQueueAdd, watchSetQueueRemove, watchSetQueueClear } from '@app/redux/saga/queue';
+import { watchSetCurrent } from '@app/redux/saga/current';
+import { watchPlay, watchPrevious, watchNext, watchSeek, watchTogglePlayPause } from '@app/redux/saga/wolfCola';
 
 function* rootSaga() {
   yield all([

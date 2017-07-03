@@ -1,4 +1,4 @@
-import { THEME } from 'app/redux/constant/theme';
+import { THEME } from '@app/redux/constant/theme';
 
 function theme(payload) {
   return {

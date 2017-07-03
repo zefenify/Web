@@ -3,10 +3,10 @@
 import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';
 
-import { LF_STORE } from 'app/config/localforage';
-import { SET_CROSSFADE } from 'app/redux/constant/crossfade';
+import { LF_STORE } from '@app/config/localforage';
+import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
 
-import { crossfade } from 'app/redux/action/crossfade';
+import { crossfade } from '@app/redux/action/crossfade';
 
 function* crossfadeBootFromLF() {
   try {

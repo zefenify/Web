@@ -1,4 +1,4 @@
-import { DURATION } from 'app/redux/constant/duration';
+import { DURATION } from '@app/redux/constant/duration';
 
 function duration(state = null, action) {
   switch (action.type) {

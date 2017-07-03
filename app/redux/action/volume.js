@@ -1,4 +1,4 @@
-import { VOLUME } from 'app/redux/constant/volume';
+import { VOLUME } from '@app/redux/constant/volume';
 
 function volume(payload) {
   return {

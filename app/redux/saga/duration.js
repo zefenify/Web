@@ -2,9 +2,9 @@
 
 import { put, takeEvery } from 'redux-saga/effects';
 
-import { SET_DURATION } from 'app/redux/constant/duration';
+import { SET_DURATION } from '@app/redux/constant/duration';
 
-import { duration } from 'app/redux/action/duration';
+import { duration } from '@app/redux/action/duration';
 
 function* setDuration(action) {
   yield put(duration(action.payload));

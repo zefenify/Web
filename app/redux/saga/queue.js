@@ -2,9 +2,9 @@
 
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { SET_QUEUE_SET, SET_QUEUE_ADD, SET_QUEUE_REMOVE, SET_QUEUE_CLEAR } from 'app/redux/constant/queue';
+import { SET_QUEUE_SET, SET_QUEUE_ADD, SET_QUEUE_REMOVE, SET_QUEUE_CLEAR } from '@app/redux/constant/queue';
 
-import { queueSet, queueAdd, queueRemove, queueClear } from 'app/redux/action/queue';
+import { queueSet, queueAdd, queueRemove, queueClear } from '@app/redux/action/queue';
 
 function* setQueueSet(action) {
   yield put(queueSet(action.payload));

@@ -39,7 +39,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    alias: { app: path.resolve(__dirname, 'app/') },
+    alias: { '@app': path.resolve(__dirname, 'app/') },
     extensions: ['.js', '.jsx', '.scss'],
   },
   module: {

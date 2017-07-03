@@ -4,13 +4,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { BASE, FEATURED_ALL } from 'app/config/api';
-import { PLAY } from 'app/redux/constant/wolfCola';
-import store from 'app/redux/store';
+import { BASE, FEATURED_ALL } from '@app/config/api';
+import { PLAY } from '@app/redux/constant/wolfCola';
+import store from '@app/redux/store';
 
-import { fidel } from 'app/util/fidel';
-import api from 'app/util/api';
-import { BoxContainer } from 'app/component/styled/WolfCola';
+import { fidel } from '@app/util/fidel';
+import api from '@app/util/api';
+import { BoxContainer } from '@app/component/styled/WolfCola';
 
 const HomeContainer = styled.div`
   display: flex;

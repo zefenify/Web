@@ -3,10 +3,10 @@
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { LF_STORE } from 'app/config/localforage';
-import { SET_SHUFFLE } from 'app/redux/constant/shuffle';
+import { LF_STORE } from '@app/config/localforage';
+import { SET_SHUFFLE } from '@app/redux/constant/shuffle';
 
-import { shuffle } from 'app/redux/action/shuffle';
+import { shuffle } from '@app/redux/action/shuffle';
 
 function* shuffleBootFromLF() {
   try {

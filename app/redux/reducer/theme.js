@@ -1,4 +1,4 @@
-import { THEME } from 'app/redux/constant/theme';
+import { THEME } from '@app/redux/constant/theme';
 
 function reducer(state = 'light', action) {
   switch (action.type) {

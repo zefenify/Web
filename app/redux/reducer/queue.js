@@ -1,4 +1,4 @@
-import { QUEUE_SET, QUEUE_ADD, QUEUE_REMOVE, QUEUE_CLEAR } from 'app/redux/constant/queue';
+import { QUEUE_SET, QUEUE_ADD, QUEUE_REMOVE, QUEUE_CLEAR } from '@app/redux/constant/queue';
 
 function queue(state = [], action) {
   switch (action.type) {

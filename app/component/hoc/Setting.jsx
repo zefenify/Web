@@ -3,12 +3,12 @@ import { func, string, number } from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { SET_THEME } from 'app/redux/constant/theme';
-import { SET_CROSSFADE } from 'app/redux/constant/crossfade';
+import { SET_THEME } from '@app/redux/constant/theme';
+import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
 
-import Button from 'app/component/styled/Button';
-import Divider from 'app/component/styled/Divider';
-import Range from 'app/component/styled/Range';
+import Button from '@app/component/styled/Button';
+import Divider from '@app/component/styled/Divider';
+import Range from '@app/component/styled/Range';
 
 const SettingContainer = styled.div`
   flex: 1 1 auto;

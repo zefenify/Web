@@ -1,4 +1,4 @@
-import { INITIAL_QUEUE } from 'app/redux/constant/initialQueue';
+import { INITIAL_QUEUE } from '@app/redux/constant/initialQueue';
 
 function initialQueue(payload) {
   return {

@@ -10,16 +10,16 @@ import { select, put, call, fork, take, throttle, takeEvery } from 'redux-saga/e
 import { Howl } from 'howler';
 import random from 'lodash/fp/random';
 
-import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from 'app/redux/constant/wolfCola';
-import { BASE } from 'app/config/api';
+import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { BASE } from '@app/config/api';
 
-import { current } from 'app/redux/action/current';
-import { queueSet, queueRemove } from 'app/redux/action/queue';
-import { duration } from 'app/redux/action/duration';
-import { playbackPosition } from 'app/redux/action/playbackPosition';
-import { playing } from 'app/redux/action/playing';
-import { initialQueue } from 'app/redux/action/initialQueue';
-import { historyPush, historyPop, historyFront } from 'app/redux/action/history';
+import { current } from '@app/redux/action/current';
+import { queueSet, queueRemove } from '@app/redux/action/queue';
+import { duration } from '@app/redux/action/duration';
+import { playbackPosition } from '@app/redux/action/playbackPosition';
+import { playing } from '@app/redux/action/playing';
+import { initialQueue } from '@app/redux/action/initialQueue';
+import { historyPush, historyPop, historyFront } from '@app/redux/action/history';
 
 const wolfCola = {
   playingKey: 'current',

@@ -1,4 +1,4 @@
-import { REPEAT } from 'app/redux/constant/repeat';
+import { REPEAT } from '@app/redux/constant/repeat';
 
 function reducer(state = 'ALL', action) {
   switch (action.type) {

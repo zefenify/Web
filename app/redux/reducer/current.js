@@ -1,4 +1,4 @@
-import { CURRENT } from 'app/redux/constant/current';
+import { CURRENT } from '@app/redux/constant/current';
 
 function current(state = null, action) {
   switch (action.type) {

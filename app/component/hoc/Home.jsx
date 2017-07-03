@@ -8,7 +8,6 @@ import { BASE, FEATURED_ALL } from '@app/config/api';
 import { PLAY } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 
-import { fidel } from '@app/util/fidel';
 import api from '@app/util/api';
 import { BoxContainer } from '@app/component/styled/WolfCola';
 
@@ -102,8 +101,8 @@ class Home extends Component {
                     <i onClick={e => this.playFeatured(e, f)} className={`icon-ion-ios-${f.id === this.state.featuredPlay ? 'pause' : 'play'}`} />
                   </div>
                 </div>
-                <strong className={`${fidel(f.name)} box__title`}>{ f.name }</strong>
-                <p className={`${fidel(f.description)} box__description`}>{ f.description }</p>
+                <strong className="box__title">{ f.name }</strong>
+                <p className="box__description">{ f.description }</p>
                 <small className="box__count">{`${f.songCnt} SONG${Number.parseInt(f.songCnt, 10) > 1 ? 'S' : ''}`}</small>
               </div>
             ))

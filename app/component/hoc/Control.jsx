@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import { human } from '@app/util/time';
-import { fidel } from '@app/util/fidel';
 import { ControlsContainer } from '@app/component/styled/WolfCola';
 import Range from '@app/component/styled/Range';
 
@@ -161,8 +160,8 @@ const Control = ({
             <div className="song-container">
               <div className="artwork" style={{ background: `transparent url('${BASE}${current.thumbnail}') 50% 50% / cover no-repeat` }} />
               <div className="song">
-                <p className={`song__name ${fidel(current.songName)}`}>{ current.songName }</p>
-                <p className={`song__artist ${fidel(current.artistName)}`}>{ current.artistName }</p>
+                <p className="song__name">{ current.songName }</p>
+                <p className="song__artist">{ current.artistName }</p>
               </div>
             </div>
           ) : ''

@@ -11,7 +11,7 @@ import { repeat } from 'app/redux/action/repeat';
 function* repeatBootFromLF() {
   try {
     const lfRepeat = yield localforage.getItem(LF_STORE.REPEAT);
-    yield put(repeat(lfRepeat));
+    yield put(repeat(lfRepeat === null ? 'OFF' : lfRepeat));
   } catch (err) {
     console.warn('Unable to boot repeat from LF', err);
   }

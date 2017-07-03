@@ -11,7 +11,7 @@ import { shuffle } from 'app/redux/action/shuffle';
 function* shuffleBootFromLF() {
   try {
     const lfShuffle = yield localforage.getItem(LF_STORE.SHUFFLE);
-    yield put(shuffle(lfShuffle));
+    yield put(shuffle(lfShuffle === null ? false : lfShuffle));
   } catch (err) {
     console.warn('Unable to boot shuffle from LF', err);
   }

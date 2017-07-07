@@ -20,6 +20,7 @@ import { playbackPosition } from '@app/redux/action/playbackPosition';
 import { playing } from '@app/redux/action/playing';
 import { initialQueue } from '@app/redux/action/initialQueue';
 import { historyPush, historyPop, historyFront } from '@app/redux/action/history';
+import { loading } from '@app/redux/action/loading';
 
 const wolfCola = {
   playingKey: 'current',
@@ -49,6 +50,17 @@ const howlerEndChannel = key => eventChannel((emitter) => {
   return () => {};
 });
 
+const howlerLoadErrorChannel = key => eventChannel((emitter) => {
+  wolfCola[key].once('loaderror', (loadError) => {
+    console.warn('Current song [loaderror], ላሽ ላሽ');
+    wolfCola.crossfadeInProgress = false;
+    emitter({ loadError });
+    emitter(END);
+  });
+
+  return () => {};
+});
+
 // checks if there's only one item in the history and the current play matches
 // this behavior is taken from Apple Music
 const playingLastHistory = s => s.history.length === 1 && s.current.songId === s.history[0].songId;
@@ -64,6 +76,13 @@ function* howlerEnd(key) {
   wolfCola[wolfCola.playingKey] = null;
   wolfCola.crossfadeInProgress = false;
   yield put({ type: NEXT });
+}
+
+function* howlerLoadError(key) {
+  const channel = yield call(howlerLoadErrorChannel, key);
+
+  yield take(channel);
+  yield put(loading(false));
 }
 
 /**
@@ -185,6 +204,8 @@ function* play(action) {
     wolfCola.playingKey = wolfCola.current === null ? 'current' : 'next';
   }
 
+  yield put(loading(true));
+
   // playing the song - each song will have a Single Howler object that'll be
   // destroyed after each playback - loading all songs (i.e. queue can be costly - I think)
   // single Howler music approach:
@@ -198,13 +219,11 @@ function* play(action) {
   });
 
   // ethio-telecom
-  wolfCola[wolfCola.playingKey].once('loaderror', () => {
-    wolfCola.crossfadeInProgress = false;
-    console.warn('Current song [loaderror], ላሽ ላሽ');
-  });
-
+  yield fork(howlerLoadError, wolfCola.playingKey);
   // if load doesn't resolve Wolf-Cola won't start
   yield promiseifyHowlEvent(wolfCola[wolfCola.playingKey], 'load');
+  // music loaded
+  yield put(loading(false));
   // music loaded, setting duration
   yield put(duration(wolfCola[wolfCola.playingKey].duration()));
   // setting playing - USING Howler object [autoplay]

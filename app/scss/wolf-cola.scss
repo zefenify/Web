@@ -1,22 +1,10 @@
-/**
- * Color...if you spell it with a `u` I'll 🔪 you!
- *
- * LIGHT
- * background: ffffff
- * background-muted: f7f7f7
- * text-mute: 4c4c4c
- * text-mute-2: aeaeae
- * text-default: 4e4e4e
- * green: 2ebd59
- *
- * DARK [Default]
- * background: 121212
- * background-muted: 242424
- * text-mute: a0a0a0
- * text-mute-2: 8b8b8b
- * text-default: ffffff
- * green: 2ebd59
- */
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(0.0);
+  } 50% {
+    transform: scale(1.0);
+  }
+}
 
 body {
   font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Helvetica Neue", "Lucida Grande", sans-serif;

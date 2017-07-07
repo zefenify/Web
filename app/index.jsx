@@ -19,6 +19,7 @@ import { lightTheme, darkTheme } from '@app/config/theme';
 
 import Setting from '@app/component/hoc/Setting';
 import Control from '@app/component/hoc/Control';
+import Spinner from '@app/component/presentational/Spinner';
 
 const SmallText = styled.small`
   padding: 1em 0.5em;
@@ -29,12 +30,13 @@ const SmallText = styled.small`
 `;
 
 const Brand = styled(Link)`
-  padding-left: 1.25em;
-  min-height: 48px;
+  flex: 0 0 48px;
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  padding-left: 1.25em;
   font-weight: bold;
   font-size: 1.2em;
   text-decoration: none;
@@ -53,12 +55,20 @@ class WolfCola extends Component {
     super(props);
     this.state = {
       theme: darkTheme,
+      loading: false,
     };
   }
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      this.setState(() => ({ theme: store.getState().theme === 'light' ? lightTheme : darkTheme }));
+      this.setState(() => {
+        const state = store.getState();
+
+        return {
+          theme: state.theme === 'light' ? lightTheme : darkTheme,
+          loading: state.loading,
+        };
+      });
     });
   }
 
@@ -77,6 +87,7 @@ class WolfCola extends Component {
                   <Brand to="/">
                     <img src="app/static/image/brand.png" className="brand-image" alt="ArifZefen" />
                     <span>ArifZefen</span>
+                    <Spinner loading={this.state.loading} />
                   </Brand>
                   <Divider />
 

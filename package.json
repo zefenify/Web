@@ -37,7 +37,7 @@
     "precss": "^1.4.0",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.1",
-    "webpack": "^3.0.0",
+    "webpack": "^3.1.0",
     "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-dev-server": "^2.5.0"
   }

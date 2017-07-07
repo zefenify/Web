@@ -9,7 +9,7 @@ import { PLAY } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 
 import api from '@app/util/api';
-import { BoxContainer } from '@app/component/styled/WolfCola';
+import Collection from '@app/component/presentational/Collection';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -33,6 +33,9 @@ const HomeContainer = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     overflow-y: scroll;
     padding-top: 1em;
   }
@@ -45,6 +48,8 @@ class Home extends Component {
       featured: [],
       featuredPlay: null,
     };
+
+    this.playFeatured = this.playFeatured.bind(this);
   }
 
   componentDidMount() {
@@ -56,19 +61,17 @@ class Home extends Component {
       });
   }
 
-  playFeatured(e, f) {
-    e.stopPropagation();
-
+  playFeatured(fid) {
     // trigger _stop_...
-    if (this.state.featuredPlay === f.id) {
+    if (this.state.featuredPlay === fid) {
       this.setState(() => ({ featuredPlay: null }));
       return;
     }
 
-    this.setState(() => ({ featuredPlay: f.id }));
+    this.setState(() => ({ featuredPlay: fid }));
 
     // calling...
-    api(`${BASE}/json/featured/${f.id}.json`)
+    api(`${BASE}/json/featured/${fid}.json`)
       .then((data) => {
         // playing...
         store.dispatch({
@@ -92,22 +95,9 @@ class Home extends Component {
           <h2>Featured</h2>
         </div>
 
-        <BoxContainer className="list">
-          {
-            this.state.featured.map(f => (
-              <div key={f.id} className="box">
-                <div className="box__img-container" style={{ background: `transparent url('${BASE}${f.thumbnail}') 50% 50% / cover no-repeat` }}>
-                  <div className="control-overlay">
-                    <i onClick={e => this.playFeatured(e, f)} className={`icon-ion-ios-${f.id === this.state.featuredPlay ? 'pause' : 'play'}`} />
-                  </div>
-                </div>
-                <strong className="box__title">{ f.name }</strong>
-                <p className="box__description">{ f.description }</p>
-                <small className="box__count">{`${f.songCnt} SONG${Number.parseInt(f.songCnt, 10) > 1 ? 'S' : ''}`}</small>
-              </div>
-            ))
-          }
-        </BoxContainer>
+        <div className="list">
+          { this.state.featured.map(f => (<Collection play={this.playFeatured} key={f.id} playingId={this.state.featuredPlay} {...f} />)) }
+        </div>
       </HomeContainer>
     );
   }

@@ -7,9 +7,9 @@ import styled from 'styled-components';
 const SpinnerContainer = styled.div`
   position: absolute;
   right: 0.5em;
-  top: 8px;
-  width: 32px;
-  height: 32px;
+  top: 12px;
+  width: 24px;
+  height: 24px;
   background-color: transparent;
   border: none;
   outline: none;
@@ -17,8 +17,8 @@ const SpinnerContainer = styled.div`
   &:not(.active):after {
     position: absolute;
     right: 0;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     color: ${props => props.theme.primary};
   }
 
@@ -26,8 +26,8 @@ const SpinnerContainer = styled.div`
   &.active .double-bounce2 {
     position: absolute;
     right: 0;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background-color: ${props => props.theme.primary};
     opacity: 0.6;

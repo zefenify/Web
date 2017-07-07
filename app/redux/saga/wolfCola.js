@@ -225,7 +225,7 @@ function* play(action) {
   // music loaded
   yield put(loading(false));
   // music loaded, setting duration
-  yield put(duration(wolfCola[wolfCola.playingKey].duration()));
+  yield put(duration(payload.play.playtime));
   // setting playing - USING Howler object [autoplay]
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
   // fork for `end` lister [with channel]

@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { BASE, FEATURED_ALL } from '@app/config/api';
-import { PLAY } from '@app/redux/constant/wolfCola';
+import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 
 import api from '@app/util/api';
@@ -64,6 +64,9 @@ class Home extends Component {
   playFeatured(fid) {
     // trigger _stop_...
     if (this.state.featuredPlay === fid) {
+      // pausing whatever was playing...
+      store.dispatch({ type: TOGGLE_PLAY_PAUSE });
+      // pausing icon...
       this.setState(() => ({ featuredPlay: null }));
       return;
     }

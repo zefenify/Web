@@ -13,6 +13,8 @@ const CollectionContainer = styled(Link)`
   margin-bottom: 3em;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
 
   // non-full screen view
   @media(max-width: 992px) {

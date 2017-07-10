@@ -1,10 +1,11 @@
 import React from 'react';
 import { string, func } from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { BASE } from '@app/config/api';
 
-const CollectionContainer = styled.div`
+const CollectionContainer = styled(Link)`
   position: relative;
   flex: 0 0 25%;
   min-height: 25vh;
@@ -98,10 +99,10 @@ const CollectionContainer = styled.div`
 
 function Collection({ id, playingId, name, description, songCnt, thumbnail, play }) {
   return (
-    <CollectionContainer>
+    <CollectionContainer to={`/featured/${id}`}>
       <div className="collection-cover-image" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }}>
         <div className="control-overlay">
-          <i onClick={(e) => { e.stopPropagation(); play(id); }} className={`icon-ion-ios-${id === playingId ? 'pause' : 'play'}`} />
+          <i onClick={(e) => { e.preventDefault(); play(id); }} className={`icon-ion-ios-${id === playingId ? 'pause' : 'play'}`} />
         </div>
       </div>
 

@@ -30,7 +30,7 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
-    "extract-text-webpack-plugin": "^2.1.2",
+    "extract-text-webpack-plugin": "v3.0.0-rc.2",
     "file-loader": "^0.11.1",
     "node-sass": "^4.5.3",
     "postcss-loader": "^2.0.5",

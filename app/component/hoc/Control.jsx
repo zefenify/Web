@@ -164,7 +164,7 @@ const Control = ({
                 <p className="song__artist">{ current.artistName }</p>
               </div>
             </div>
-          ) : ''
+          ) : null
       }
     </NowPlayingContainer>
 

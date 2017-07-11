@@ -19,6 +19,7 @@ import { lightTheme, darkTheme } from '@app/config/theme';
 
 import Setting from '@app/component/hoc/Setting';
 import Control from '@app/component/hoc/Control';
+import Featured from '@app/component/hoc/Featured';
 import Spinner from '@app/component/presentational/Spinner';
 
 const SmallText = styled.small`
@@ -120,6 +121,7 @@ class WolfCola extends Component {
 
                 <ListContainer>
                   <Route exact path="/" component={Home} />
+                  <Route exact path="/featured/:id" component={Featured} />
                   <Route path="/setting" component={Setting} />
                 </ListContainer>
               </NavListContainer>

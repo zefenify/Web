@@ -1,5 +1,5 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -37,6 +37,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
+    publicPath: '/build/',
   },
   resolve: {
     alias: { '@app': path.resolve(__dirname, 'app/') },
@@ -63,10 +64,37 @@ module.exports = {
       // css
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
+        exclude: /emotion\.css$/,
+        use: PRODUCTION ? ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader',
-        }),
+          use: {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+            },
+          },
+        }) : [
+          'style-loader',
+          { loader: 'css-loader', options: { modules: false } },
+        ],
+      },
+
+      // emotion.css
+      {
+        test: /emotion\.css$/,
+        use: PRODUCTION ? ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        }) : [
+          'style-loader',
+          { loader: 'css-loader' },
+        ],
       },
 
       // fonts
@@ -78,14 +106,19 @@ module.exports = {
       // sass
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
+        use: PRODUCTION ? ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'postcss-loader', 'sass-loader'],
-        }),
+        }) : [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' },
+        ],
       },
     ],
   },
-  devtool: PRODUCTION ? 'cheap-source-map' : false,
+  devtool: PRODUCTION ? 'source-map' : 'eval',
   devServer: {
     publicPath: 'http://localhost:8080/build/',
   },

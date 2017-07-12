@@ -30,7 +30,7 @@ module.exports = {
       'redux',
       'redux-saga',
       'reselect',
-      'styled-components',
+      'emotion',
     ],
     app: ['./app/index.jsx'],
   },
@@ -50,6 +50,9 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
+          plugins: [
+            'emotion/babel',
+          ],
           presets: [
             'react',
             ['env', { targets: { browsers: ['safari >= 10'] } }], // 100% ES2015

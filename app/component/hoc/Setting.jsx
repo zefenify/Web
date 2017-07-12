@@ -1,7 +1,7 @@
 import React from 'react';
 import { func, string, number } from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 
 import { SET_THEME } from '@app/redux/constant/theme';
 import { SET_CROSSFADE } from '@app/redux/constant/crossfade';

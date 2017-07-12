@@ -1,6 +1,6 @@
 import React from 'react';
 import { func, number, string } from 'prop-types';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 
 import { human } from '@app/util/time';
 

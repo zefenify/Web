@@ -2,7 +2,7 @@
 /* global document, fetch */
 
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 
 import { BASE, FEATURED_ALL } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';

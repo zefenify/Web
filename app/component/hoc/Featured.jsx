@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { string, shape } from 'prop-types';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';

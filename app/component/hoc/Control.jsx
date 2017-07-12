@@ -1,6 +1,6 @@
 import React from 'react';
 import { func, bool, string, number, oneOfType, object } from 'prop-types';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 import { connect } from 'react-redux';
 
 import { human } from '@app/util/time';

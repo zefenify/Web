@@ -1,7 +1,6 @@
 import React from 'react';
 import { bool } from 'prop-types';
-import styled from 'styled-components';
-
+import styled from 'emotion/react';
 
 // use of keyframe is causing super fast transitions - so keyframe moved to SASS `wolf-cola.scss`
 const SpinnerContainer = styled.div`

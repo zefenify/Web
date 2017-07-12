@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, func } from 'prop-types';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 
 import { BASE } from '@app/config/api';
 

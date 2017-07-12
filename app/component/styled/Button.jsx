@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'emotion/react';
 
 const Button = styled.button`
   background-color: ${props => props.outline ? 'transparent' : props.theme.primary};

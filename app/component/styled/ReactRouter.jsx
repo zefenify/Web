@@ -1,11 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 
-const activeClassName = 'active';
-
-const NavLinkStyled = styled(NavLink).attrs({
-  activeClassName,
-})`
+const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.navbarText};
   padding: 0.5em 1em;
   margin: 0.25em 0;
@@ -18,7 +14,7 @@ const NavLinkStyled = styled(NavLink).attrs({
     color: ${props => props.theme.navbarTextActive};
   }
 
-  &.${activeClassName} {
+  &.active {
     color: ${props => props.theme.navbarTextActive};
     border-left: 6px solid ${props => props.theme.primary};
     background-color: ${props => props.theme.listBackgroundHover};

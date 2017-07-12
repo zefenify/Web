@@ -1,8 +1,16 @@
 import React from 'react';
 import { bool } from 'prop-types';
 import styled from 'emotion/react';
+import { keyframes } from 'emotion';
 
-// use of keyframe is causing super fast transitions - so keyframe moved to SASS `wolf-cola.scss`
+const bounce = keyframes`
+  0%, 100% {
+    transform: scale(0.0);
+  } 50% {
+    transform: scale(1.0);
+  }
+`;
+
 const SpinnerContainer = styled.div`
   position: absolute;
   right: 0.5em;
@@ -30,7 +38,7 @@ const SpinnerContainer = styled.div`
     border-radius: 50%;
     background-color: ${props => props.theme.primary};
     opacity: 0.6;
-    animation: bounce 2.0s infinite ease-in-out;
+    animation: ${bounce} 2.0s infinite ease-in-out;
   }
 
   &.active .double-bounce2 {

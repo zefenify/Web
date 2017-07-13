@@ -165,8 +165,7 @@ class Featured extends Component {
       return null;
     }
 
-    // eslint-disable-next-line
-    const { hours, minutes, seconds } = human(this.state.featured.songs.reduce((totalDuration, song) => totalDuration += song.playtime, 0), true);
+    const { hours, minutes, seconds } = human(this.state.featured.songs.reduce((totalDuration, song) => totalDuration + song.playtime, 0), true);
 
     return (
       <FeaturedContainer>

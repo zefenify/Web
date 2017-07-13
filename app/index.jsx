@@ -17,6 +17,7 @@ import Home from '@app/component/hoc/Home';
 import Setting from '@app/component/hoc/Setting';
 import Control from '@app/component/hoc/Control';
 import Featured from '@app/component/hoc/Featured';
+import Artist from '@app/component/hoc/Artist';
 
 import Spinner from '@app/component/presentational/Spinner';
 
@@ -124,6 +125,7 @@ class WolfCola extends Component {
                 <ListContainer>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/featured/:id" component={Featured} />
+                  <Route exact path="/artist/:id" component={Artist} />
                   <Route path="/setting" component={Setting} />
                 </ListContainer>
               </NavListContainer>

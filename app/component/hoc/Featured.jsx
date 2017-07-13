@@ -70,7 +70,7 @@ class Featured extends Component {
       current: null,
       playing: false,
       initialQueue: [],
-      isCurrentList: true,
+      isCurrentList: false,
     };
     this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
     this.playSong = this.playSong.bind(this);

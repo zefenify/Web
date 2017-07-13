@@ -6,14 +6,13 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
 
 const commonPlugins = [
   new ExtractTextPlugin({
-    filename: 'bundle.css',
+    filename: '[name].bundle.css',
     disable: false,
     allChunks: true,
   }),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
-    filename: 'vendor.js',
-    minChunks: 3,
+    minChunks: Infinity,
   }),
   new webpack.optimize.ModuleConcatenationPlugin(),
 ];
@@ -35,8 +34,8 @@ module.exports = {
     app: ['./app/index.jsx'],
   },
   output: {
+    filename: '[name].bundle.js',
     path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
     publicPath: '/build/',
   },
   resolve: {
@@ -65,36 +64,30 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: /emotion\.css$/,
-        use: PRODUCTION ? ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
+              sourceMap: PRODUCTION,
               modules: true,
             },
           },
-        }) : [
-          'style-loader',
-          { loader: 'css-loader', options: { modules: false } },
-        ],
+        }),
       },
 
       // emotion.css
       {
         test: /emotion\.css$/,
-        use: PRODUCTION ? ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
+              sourceMap: PRODUCTION,
             },
           },
-        }) : [
-          'style-loader',
-          { loader: 'css-loader' },
-        ],
+        }),
       },
 
       // fonts
@@ -106,15 +99,10 @@ module.exports = {
       // sass
       {
         test: /\.scss$/,
-        use: PRODUCTION ? ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'postcss-loader', 'sass-loader'],
-        }) : [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' },
-        ],
+        }),
       },
     ],
   },

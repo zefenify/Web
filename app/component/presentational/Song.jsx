@@ -1,6 +1,7 @@
 import React from 'react';
 import { func, number, string, bool } from 'prop-types';
 import styled from 'emotion/react';
+import { Link } from 'react-router-dom';
 
 import { human } from '@app/util/time';
 
@@ -8,16 +9,25 @@ const SongContainer = styled.div`
   display: flex;
   flex-direction: row;
 
-  div {
+  & > * {
     flex: 1 1 auto;
     padding: 0.8em 0;
     border-bottom: 1px solid ${props => props.theme.controlBackground};
   }
 
-  div {
+  & > * {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      color: ${props => props.theme.primary};
+    }
   }
 
   .track-number-container {
@@ -76,6 +86,7 @@ const SongContainer = styled.div`
 
 const Song = ({
   currentSongId,
+  artistId,
   songId,
   trackNumber,
   songName,
@@ -91,7 +102,7 @@ const Song = ({
       <i className={`icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
     </div>
     <div className="name">{ songName }</div>
-    <div className="artist-name">{ artistName }</div>
+    <Link to={`/artist/${artistId}`} className="artist-name">{ artistName }</Link>
     <div className="album-name">{ albumName }</div>
     <div className="duration">{ human(playtime) }</div>
   </SongContainer>
@@ -99,6 +110,7 @@ const Song = ({
 
 Song.propTypes = {
   currentSongId: number.isRequired,
+  artistId: number.isRequired,
   songId: number.isRequired,
   trackNumber: number.isRequired,
   songName: string.isRequired,

@@ -1,6 +1,20 @@
 import styled from 'emotion/react';
 
 const WolfColaContainer = styled.div`
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: ${props => props.theme.controlMute};
+  }
+
   position: absolute;
   top: 0;
   right: 0;

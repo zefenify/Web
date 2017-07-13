@@ -69,6 +69,8 @@ class Featured extends Component {
       featured: null,
       current: null,
       playing: false,
+      initialQueue: [],
+      isCurrentList: true,
     };
     this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
     this.playSong = this.playSong.bind(this);
@@ -84,8 +86,22 @@ class Featured extends Component {
       });
 
     this.unsubscribe = store.subscribe(() => {
-      const { playing, current } = store.getState();
-      this.setState(() => ({ playing, current }));
+      if (this.state.featured === null) {
+        return;
+      }
+
+      const { playing, current, initialQueue } = store.getState();
+      this.setState(() => ({ playing, current, initialQueue }));
+
+      // fix your face
+      // sees if the featured list is the same as the one that triggered the current playing list
+      // i.e. current playing should only be active in one list - not in all list that it's found
+      // eslint-disable-next-line
+      if (this.state.featured.songs.length > 0 && this.state.initialQueue.length > 0 && this.state.featured.songs.length === this.state.initialQueue.length && this.state.featured.songs[0].songId === this.state.initialQueue[0].songId && this.state.featured.songs[this.state.featured.songs.length - 1].songId === this.state.initialQueue[this.state.initialQueue.length - 1].songId) {
+        this.setState(() => ({ isCurrentList: true }));
+      } else {
+        this.setState(() => ({ isCurrentList: false }));
+      }
     });
   }
 
@@ -101,7 +117,7 @@ class Featured extends Component {
     const { current } = store.getState();
 
     // booting playlist
-    if (current === null) {
+    if (current === null || this.state.isCurrentList === false) {
       store.dispatch({
         type: PLAY,
         payload: {
@@ -152,14 +168,14 @@ class Featured extends Component {
             <p>FEATURED</p>
             <h1>{ this.state.featured.title }</h1>
             <p style={{ marginTop: '0.5em' }}>{`${this.state.featured.songs.length} song${this.state.featured.songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-            <Button onClick={this.togglePlayPauseAll}>{`${this.state.playing ? 'PAUSE' : 'PLAY'}`}</Button>
+            <Button onClick={this.togglePlayPauseAll}>{`${this.state.playing && this.state.isCurrentList ? 'PAUSE' : 'PLAY'}`}</Button>
           </div>
         </div>
 
         <Divider />
 
         <div className="song-container">
-          { this.state.featured.songs.map(song => <Song currentId={this.state.current === null ? -1 : this.state.current.songId} playSong={this.playSong} key={song.songId} {...song} />) }
+          { this.state.featured.songs.map(song => <Song currentId={this.state.current === null || this.state.isCurrentList === false ? -1 : this.state.current.songId} playSong={this.playSong} key={song.songId} {...song} />) }
         </div>
       </FeaturedContainer>
     );

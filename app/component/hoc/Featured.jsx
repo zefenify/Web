@@ -73,7 +73,7 @@ class Featured extends Component {
       isCurrentList: false,
     };
     this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
-    this.playSong = this.playSong.bind(this);
+    this.togglePlayPause = this.togglePlayPause.bind(this);
   }
 
   componentDidMount() {
@@ -135,10 +135,18 @@ class Featured extends Component {
     }
   }
 
-  playSong(songId) {
+  togglePlayPause(songId) {
     const songIdIndex = this.state.featured.songs.findIndex(song => song.songId === songId);
 
     if (songIdIndex === -1) {
+      return;
+    }
+
+    if (this.state.isCurrentList && this.state.current.songId === this.state.featured.songs[songIdIndex].songId) {
+      store.dispatch({
+        type: TOGGLE_PLAY_PAUSE,
+      });
+
       return;
     }
 
@@ -175,7 +183,14 @@ class Featured extends Component {
         <Divider />
 
         <div className="song-container">
-          { this.state.featured.songs.map(song => <Song currentId={this.state.current === null || this.state.isCurrentList === false ? -1 : this.state.current.songId} playSong={this.playSong} key={song.songId} {...song} />) }
+          { this.state.featured.songs.map((song, index) => <Song
+            key={song.songId}
+            currentSongId={this.state.current === null || this.state.isCurrentList === false ? -1 : this.state.current.songId}
+            trackNumber={index + 1}
+            togglePlayPause={this.togglePlayPause}
+            playing={this.state.playing}
+            {...song}
+          />) }
         </div>
       </FeaturedContainer>
     );

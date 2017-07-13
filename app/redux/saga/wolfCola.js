@@ -132,13 +132,11 @@ function* play(action) {
   const state = yield select();
   const { payload } = action;
 
-  // skipping state update on `ONE` or single song playlist
-  if (state.current === null || state.current.songId !== payload.play.songId) {
-    yield put(initialQueue(payload.initialQueue));
-    yield put(queueSet(payload.queue));
-    yield put(queueRemove(payload.queue.findIndex(song => song.songId === payload.play.songId)));
-    yield put(current(payload.play));
-  }
+  // same song can be in different playlist hence the "optimization" has to be removed
+  yield put(initialQueue(payload.initialQueue));
+  yield put(queueSet(payload.queue));
+  yield put(queueRemove(payload.queue.findIndex(song => song.songId === payload.play.songId)));
+  yield put(current(payload.play));
 
   if (state.crossfade === 0) { // crossfade is off - clearing any Howl event
     if (wolfCola.current !== null) {

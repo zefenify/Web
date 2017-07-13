@@ -46,7 +46,7 @@ class Home extends Component {
     super(props);
     this.state = {
       featured: [],
-      featuredPlay: null,
+      featuredPlayingId: null,
     };
 
     this.playFeatured = this.playFeatured.bind(this);
@@ -63,15 +63,15 @@ class Home extends Component {
 
   playFeatured(fid) {
     // trigger _stop_...
-    if (this.state.featuredPlay === fid) {
+    if (this.state.featuredPlayingId === fid) {
       // pausing whatever was playing...
       store.dispatch({ type: TOGGLE_PLAY_PAUSE });
       // pausing icon...
-      this.setState(() => ({ featuredPlay: null }));
+      this.setState(() => ({ featuredPlayingId: null }));
       return;
     }
 
-    this.setState(() => ({ featuredPlay: fid }));
+    this.setState(() => ({ featuredPlayingId: fid }));
 
     // calling...
     api(`${BASE}/json/featured/${fid}.json`)
@@ -86,7 +86,7 @@ class Home extends Component {
           },
         });
       }, (err) => {
-        this.setState(() => ({ featuredPlay: null }));
+        this.setState(() => ({ featuredPlayingId: null }));
         console.log(err);
       });
   }
@@ -99,7 +99,7 @@ class Home extends Component {
         </div>
 
         <div className="list">
-          { this.state.featured.map(f => (<Collection play={this.playFeatured} key={f.id} playingId={this.state.featuredPlay} {...f} />)) }
+          { this.state.featured.map(f => (<Collection play={this.playFeatured} key={f.id} playingId={this.state.featuredPlayingId} {...f} />)) }
         </div>
       </HomeContainer>
     );

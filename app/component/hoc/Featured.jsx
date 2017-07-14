@@ -114,10 +114,8 @@ class Featured extends Component {
       return;
     }
 
-    const { current } = store.getState();
-
     // booting playlist
-    if (current === null || this.state.isCurrentList === false) {
+    if (this.state.current === null || this.state.isCurrentList === false) {
       store.dispatch({
         type: PLAY,
         payload: {
@@ -128,7 +126,7 @@ class Featured extends Component {
       });
 
       // resuming / pausing playlist
-    } else if (current !== null) {
+    } else if (this.state.current !== null) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });

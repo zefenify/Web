@@ -3,7 +3,7 @@
     "s": "./node_modules/.bin/webpack-dev-server --progress --inline --hot --history-api-fallback",
     "a": "./node_modules/.bin/webpack --json | webpack-bundle-size-analyzer",
     "d": "./node_modules/.bin/webpack --progress --colors",
-    "p": "NODE_ENV='production' ./node_modules/.bin/webpack -p --progress --colors"
+    "p": "./node_modules/.bin/webpack -p --env production --progress --colors"
   },
   "dependencies": {
     "animejs": "^2.0.2",

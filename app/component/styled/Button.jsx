@@ -5,7 +5,6 @@ const Button = styled.button`
   border-radius: 2em;
   border: ${props => props.outline ? `1px solid ${props.theme.listText}` : 'none'};
   padding: 0.75em 2em;
-  font-size: ${props => props.small ? '0.8em' : '1em'};
   color: ${props => props.outline ? props.theme.listText : '#ffffff'};
 
   &:active {

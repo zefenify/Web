@@ -30,16 +30,16 @@ const SongContainer = styled.div`
     }
   }
 
-  .track-number-container {
+  .track-number-icon {
     position: relative;
     flex: 0 0 8%;
     padding-left: 2em;
 
-    .track-number {
+    &__number {
       display: block;
     }
 
-    i {
+    &__icon {
       display: none;
       position: absolute;
       left: 1em;
@@ -72,12 +72,12 @@ const SongContainer = styled.div`
   &:hover {
     background-color: ${props => props.theme.controlBackground};
 
-    .track-number-container {
-      .track-number {
+    .track-number-icon {
+      &__number {
         display: none;
       }
 
-      i {
+      &__icon {
         display: block;
       }
     }
@@ -97,9 +97,9 @@ const Song = ({
   playing,
 }) => (
   <SongContainer className={`${currentSongId === songId ? 'active' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
-    <div className="track-number-container">
-      <span className="track-number">{ trackNumber }</span>
-      <i className={`icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
+    <div className="track-number-icon">
+      <span className="track-number-icon__number">{ trackNumber }</span>
+      <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
     </div>
     <div className="name">{ songName }</div>
     <Link to={`/artist/${artistId}`} className="artist-name">{ artistName }</Link>

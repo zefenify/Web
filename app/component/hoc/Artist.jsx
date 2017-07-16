@@ -18,13 +18,13 @@ const ArtistContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  .artist-container {
+  .artist {
     flex: 1 0 auto;
     display: flex;
     flex-direction: row;
     padding: 1em 2em;
 
-    .artist-image {
+    &__image {
       flex: 0 0 200px;
       height: 200px;
       width: 200px;
@@ -32,7 +32,7 @@ const ArtistContainer = styled.div`
       border-radius: 50%;
     }
 
-    .artist-info {
+    &__info {
       display: flex;
       flex-direction: column;
       margin-left: 1em;
@@ -126,9 +126,9 @@ class Artist extends Component {
 
     return (
       <ArtistContainer>
-        <div className="artist-container">
-          <div className="artist-image" style={{ background: `transparent url('${BASE}${this.state.artist.thumbnail}') 50% 50% / cover no-repeat` }} />
-          <div className="artist-info">
+        <div className="artist">
+          <div className="artist__image" style={{ background: `transparent url('${BASE}${this.state.artist.thumbnail}') 50% 50% / cover no-repeat` }} />
+          <div className="artist__info">
             <p>ARTIST</p>
             <h1>{ this.state.artist.artistName }</h1>
             <p style={{ marginTop: '0.5em' }}>{`${this.state.artist.albums.length} album${this.state.artist.albums.length > 1 ? 's' : ''}, ${this.state.songCount} song${this.state.songCount > 1 ? 's' : ''}`}</p>

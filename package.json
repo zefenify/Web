@@ -3,11 +3,14 @@
     "s": "./node_modules/.bin/webpack-dev-server --progress --inline --hot --history-api-fallback",
     "a": "./node_modules/.bin/webpack --json | webpack-bundle-size-analyzer",
     "d": "./node_modules/.bin/webpack --progress --colors",
-    "p": "./node_modules/.bin/webpack -p --env production --progress --colors"
+    "p": "BABEL_ENV=production ./node_modules/.bin/webpack -p --env production --progress --colors",
+    "postinstall": "./node_modules/.bin/webpack --progress --colors"
   },
   "dependencies": {
     "animejs": "^2.0.2",
+    "compression": "^1.7.0",
     "emotion": "^6.0.1",
+    "express": "^4.15.3",
     "howler": "^2.0.4",
     "localforage": "^1.5.0",
     "lodash": "^4.17.4",
@@ -40,5 +43,8 @@
     "webpack": "^3.2.0",
     "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-dev-server": "^2.5.0"
+  },
+  "engines": {
+    "node": "8.x.x"
   }
 }

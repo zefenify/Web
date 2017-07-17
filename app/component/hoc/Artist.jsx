@@ -206,6 +206,13 @@ class Artist extends Component {
         const flattenSongs = flatten(restructuredData.albums.map(album => album.songs));
 
         const queueIsByArtist = (albums, queue) => {
+          const queueIsBySingleArtist = queue.every(song => song.artistId === restructuredData.artistId);
+
+          if (queueIsBySingleArtist === false) {
+            return false;
+          }
+
+          // looking for album index to set `PAUSE`...
           let albumIndex = -1;
           const queueSongIdList = queue.map(song => song.songId);
 

@@ -178,7 +178,8 @@ class Artist extends Component {
       current: null,
       playing: false,
       songCount: 0,
-      albumPlayingIndex: -1,
+      albumPlayingIndex: -1, // controls queue set on album play
+      playingArist: false, // checks the current initialQueue is filled with artists song [flat]
     };
 
     this.togglePlayPauseArtist = this.togglePlayPauseArtist.bind(this);
@@ -189,10 +190,39 @@ class Artist extends Component {
   componentDidMount() {
     api(`${BASE}/json/artist/${this.props.match.params.id}.json`)
       .then((data) => {
+        const { initialQueue } = store.getState();
+        const flattenSongs = flatten(data.albums.map(album => album.songs));
+        const firstLastItemMatch = (array1, array2) => {
+          if (array1.length === 0 || array2.length === 0) {
+            return false;
+          }
+
+          const firstMatch = array1[0].songId === array2[0].songId;
+          const lastMatch = array1[array1.length - 1].songId === array2[array2.length - 1].songId;
+
+          return firstMatch && lastMatch;
+        };
+
+        const queueIsByArtist = (albums, queue) => {
+          let albumIndex = -1;
+          const queueSongIdList = queue.map(song => song.songId);
+
+          albums.forEach((album, index) => {
+            if (albumIndex === -1 && album.songs.every(song => queueSongIdList.includes(song.songId))) {
+              albumIndex = index;
+            }
+          });
+
+          return albumIndex;
+        };
+
+        const playingArist = initialQueue.length === flattenSongs.length && firstLastItemMatch(initialQueue, flattenSongs);
+
         this.setState(() => ({
           artist: data,
-          // eslint-disable-next-line
-          songCount: data.albums.reduce((totalSongCount, album) => totalSongCount + album.songs.length, 0),
+          songCount: flattenSongs.length,
+          playingArist,
+          albumPlayingIndex: playingArist ? -1 : queueIsByArtist(data.albums, initialQueue),
         }));
       }, (err) => {
         console.log(err);
@@ -218,7 +248,7 @@ class Artist extends Component {
     }
 
     // booting playlist...
-    if (this.state.current === null) {
+    if (this.state.current === null || this.state.albumPlayingIndex !== -1) {
       const flattenSongs = flatten(this.state.artist.albums.map(album => album.songs));
 
       store.dispatch({
@@ -230,7 +260,10 @@ class Artist extends Component {
         },
       });
 
-      this.setState(() => ({ albumPlayingIndex: -1 }));
+      this.setState(() => ({
+        albumPlayingIndex: -1,
+        playingArist: true,
+      }));
       // resuming / pausing playlist
     } else if (this.state.current !== null) {
       store.dispatch({
@@ -250,7 +283,11 @@ class Artist extends Component {
         },
       });
 
-      this.setState(() => ({ albumPlayingIndex: albumIndex }));
+      this.setState(() => ({
+        albumPlayingIndex: albumIndex,
+        playingArist: true,
+      }));
+
       return;
     }
 
@@ -282,7 +319,10 @@ class Artist extends Component {
       },
     });
 
-    this.setState(() => ({ albumPlayingIndex: -1 }));
+    this.setState(() => ({
+      albumPlayingIndex: -1,
+      playingArist: true,
+    }));
   }
 
   render() {
@@ -298,7 +338,7 @@ class Artist extends Component {
             <p>ARTIST</p>
             <h1>{ this.state.artist.artistName }</h1>
             <p style={{ marginTop: '0.5em' }}>{`${this.state.artist.albums.length} album${this.state.artist.albums.length > 1 ? 's' : ''}, ${this.state.songCount} song${this.state.songCount > 1 ? 's' : ''}`}</p>
-            <Button onClick={this.togglePlayPauseArtist}>{`${this.state.playing ? 'PAUSE' : 'PLAY'}`}</Button>
+            <Button onClick={this.togglePlayPauseArtist}>{`${this.state.playing && this.state.playingArist && this.state.albumPlayingIndex === -1 ? 'PAUSE' : 'PLAY'}`}</Button>
           </div>
         </div>
 
@@ -324,7 +364,7 @@ class Artist extends Component {
                       <div key={song.songId} onDoubleClick={() => this.togglePlayPauseSong(song.songId)} className={`song-list__song song ${this.state.current !== null && song.songId === this.state.current.songId ? 'song_current' : ''}`}>
                         <div className="song__track-number-icon track-number-icon">
                           <div className="track-number-icon__number">{ songIndex + 1 }</div>
-                          <i className={`track-number-icon__icon icon-ion-ios-${this.state.current !== null && this.state.current.songId === song.songId && this.state.playing ? 'pause' : 'play'}`} onClick={() => this.togglePlayPauseSong(song.songId)} />
+                          <i className={`track-number-icon__icon icon-ion-ios-${this.state.current !== null && this.state.playing && this.state.current.songId === song.songId ? 'pause' : 'play'}`} onClick={() => this.togglePlayPauseSong(song.songId)} />
                         </div>
                         <div className="song__name">{ song.songName }</div>
                         <div className="song__duration">{ human(song.songPlaytime) }</div>
@@ -348,7 +388,5 @@ Artist.propTypes = {
     }),
   }).isRequired,
 };
-
-Artist.defaultProps = {};
 
 module.exports = Artist;

@@ -266,10 +266,6 @@ function* next() {
 
   // end of music - no music left; setting "no music" state...
   if (state.queue.length === 0 && state.repeat === 'OFF') {
-    wolfCola[wolfCola.playingKey].off();
-    wolfCola[wolfCola.playingKey].unload();
-    wolfCola[wolfCola.playingKey] = null;
-
     yield put(duration(0));
     yield put(playbackPosition(0));
     yield put(playing(false));

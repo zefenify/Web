@@ -16,6 +16,10 @@ const CollectionContainer = styled(Link)`
   text-decoration: none;
   color: inherit;
 
+  &.active {
+    color: ${props => props.theme.primary};
+  }
+
   // non-full screen view
   @media(max-width: 992px) {
     flex: 0 0 33.333%;
@@ -26,7 +30,7 @@ const CollectionContainer = styled(Link)`
     flex: 0 0 20%;
   }
 
-  .collection-cover-image {
+  .collection-cover {
     position: relative;
     width: 100%;
     height: 225px;
@@ -43,7 +47,7 @@ const CollectionContainer = styled(Link)`
       height: 300px;
     }
 
-    .control-overlay {
+    &__overlay {
       position: absolute;
       top: -1px;
       right: -1px;
@@ -59,18 +63,18 @@ const CollectionContainer = styled(Link)`
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #fff;
+        color: inherit;
         font-size: 80px;
         width: 80px;
         height: 80px;
       }
     }
 
-    & .control-overlay {
+    & .collection-cover__overlay {
       opacity: 0;
     }
 
-    &:hover .control-overlay {
+    &:hover .collection-cover__overlay {
       opacity: 1;
     }
   }
@@ -101,9 +105,9 @@ const CollectionContainer = styled(Link)`
 
 function Collection({ id, playingId, name, description, songCnt, thumbnail, play }) {
   return (
-    <CollectionContainer to={`/featured/${id}`}>
-      <div className="collection-cover-image" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }}>
-        <div className="control-overlay">
+    <CollectionContainer to={`/featured/${id}`} className={`${id === playingId ? 'active' : ''}`}>
+      <div className="collection-cover" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }}>
+        <div className="collection-cover__overlay">
           <i onClick={(e) => { e.preventDefault(); play(id); }} className={`icon-ion-ios-${id === playingId ? 'pause' : 'play'}`} />
         </div>
       </div>

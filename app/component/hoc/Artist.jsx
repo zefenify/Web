@@ -204,13 +204,13 @@ class Artist extends Component {
         const { initialQueue } = store.getState();
         const flattenSongs = flatten(restructuredData.albums.map(album => album.songs));
 
-        const firstLastItemMatch = (array1, array2) => {
-          if (array1.length === 0 || array2.length === 0) {
+        const firstLastSongMatch = (q1, q2) => {
+          if (q1.length === 0 || q2.length === 0) {
             return false;
           }
 
-          const firstMatch = array1[0].songId === array2[0].songId;
-          const lastMatch = array1[array1.length - 1].songId === array2[array2.length - 1].songId;
+          const firstMatch = q1[0].songId === q2[0].songId;
+          const lastMatch = q1[q1.length - 1].songId === q2[q2.length - 1].songId;
 
           return firstMatch && lastMatch;
         };
@@ -228,7 +228,7 @@ class Artist extends Component {
           return albumIndex;
         };
 
-        const playingArist = initialQueue.length === flattenSongs.length && firstLastItemMatch(initialQueue, flattenSongs);
+        const playingArist = initialQueue.length === flattenSongs.length && firstLastSongMatch(initialQueue, flattenSongs);
 
         this.setState(() => ({
           artist: restructuredData,

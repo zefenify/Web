@@ -18,13 +18,13 @@ const FeaturedContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  .featured-container {
+  .featured {
     flex: 1 0 auto;
     display: flex;
     flex-direction: row;
     padding: 1em 2em;
 
-    .featured-image {
+    &__image {
       flex: 0 0 200px;
       height: 200px;
       width: 200px;
@@ -32,11 +32,8 @@ const FeaturedContainer = styled.div`
       border-radius: 50%;
     }
 
-    .featured-info {
-      display: flex;
-      flex-direction: column;
+    &__info {
       margin-left: 1em;
-      justify-content: center;
 
       & > * {
         margin: 0;
@@ -45,15 +42,21 @@ const FeaturedContainer = styled.div`
       & > p:not(:first-child) {
         color: ${props => props.theme.controlMute};
       }
-
-      button {
-        width: 175px;
-        margin-top: 1em;
-      }
     }
   }
 
-  .song-container {
+  .featured-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &__button {
+      margin-top: 1em;
+      width: 175px;
+    }
+  }
+
+  .song {
     flex: 1 1 auto;
 
     & > *:last-child {
@@ -167,19 +170,19 @@ class Featured extends Component {
 
     return (
       <FeaturedContainer>
-        <div className="featured-container">
-          <div className="featured-image" style={{ background: `transparent url('${BASE}${this.state.featured.thumbnail}') 50% 50% / cover no-repeat` }} />
-          <div className="featured-info">
+        <div className="featured">
+          <div className="featured__image" style={{ background: `transparent url('${BASE}${this.state.featured.thumbnail}') 50% 50% / cover no-repeat` }} />
+          <div className="featured__info featured-info">
             <p>FEATURED</p>
             <h1>{ this.state.featured.title }</h1>
             <p style={{ marginTop: '0.5em' }}>{`${this.state.featured.songs.length} song${this.state.featured.songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-            <Button onClick={this.togglePlayPauseAll}>{`${this.state.playing && this.state.isCurrentList ? 'PAUSE' : 'PLAY'}`}</Button>
+            <Button className="featured-info__button" onClick={this.togglePlayPauseAll}>{`${this.state.playing && this.state.isCurrentList ? 'PAUSE' : 'PLAY'}`}</Button>
           </div>
         </div>
 
         <Divider />
 
-        <div className="song-container">
+        <div className="song">
           { this.state.featured.songs.map((song, index) => <Song
             key={song.songId}
             currentSongId={this.state.current === null || this.state.isCurrentList === false ? -1 : this.state.current.songId}

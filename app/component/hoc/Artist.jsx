@@ -190,8 +190,20 @@ class Artist extends Component {
   componentDidMount() {
     api(`${BASE}/json/artist/${this.props.match.params.id}.json`)
       .then((data) => {
+        // building a copy so each song containing `artistName` & `thumbnail`
+        // also replace `albumPurl` `icon` with `cover`
+        const restructuredData = Object.assign({}, data);
+        restructuredData.albums = restructuredData.albums.map((album) => {
+          const albumCopy = Object.assign({}, album);
+          albumCopy.songs = albumCopy.songs.map(song => Object.assign(song, { artistName: restructuredData.artistName, thumbnail: albumCopy.albumPurl.replace('_icon_', '_cover_') }));
+          albumCopy.albumPurl = albumCopy.albumPurl.replace('_icon_', '_cover_');
+
+          return albumCopy;
+        });
+
         const { initialQueue } = store.getState();
-        const flattenSongs = flatten(data.albums.map(album => album.songs));
+        const flattenSongs = flatten(restructuredData.albums.map(album => album.songs));
+
         const firstLastItemMatch = (array1, array2) => {
           if (array1.length === 0 || array2.length === 0) {
             return false;
@@ -219,10 +231,10 @@ class Artist extends Component {
         const playingArist = initialQueue.length === flattenSongs.length && firstLastItemMatch(initialQueue, flattenSongs);
 
         this.setState(() => ({
-          artist: data,
+          artist: restructuredData,
           songCount: flattenSongs.length,
           playingArist,
-          albumPlayingIndex: playingArist ? -1 : queueIsByArtist(data.albums, initialQueue),
+          albumPlayingIndex: playingArist ? -1 : queueIsByArtist(restructuredData.albums, initialQueue),
         }));
       }, (err) => {
         console.log(err);
@@ -351,7 +363,7 @@ class Artist extends Component {
             this.state.artist.albums.map((album, albumIndex) => (
               <div className="album-list__album album" key={`${this.state.artist.artistId}-${album.albumName}`}>
                 <div className="album-cover">
-                  <div className="album-cover__cover" style={{ background: `transparent url('${album.albumPurl ? `${BASE}${album.albumPurl.replace('_icon_', '_cover_')}` : 'app/static/image/brand.png'}') 50% 50% / cover no-repeat` }} />
+                  <div className="album-cover__cover" style={{ background: `transparent url('${BASE}${album.albumPurl}') 50% 50% / cover no-repeat` }} />
                   <div className="album-cover__info album-info">
                     <h1 className="album-info__name">{ album.albumName }</h1>
                     <Button className="album-info__button" onClick={() => this.togglePlayPauseAlbum(album, albumIndex)}>{`${this.state.playing && this.state.albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>

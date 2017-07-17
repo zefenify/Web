@@ -248,7 +248,7 @@ class Artist extends Component {
     }
 
     // booting playlist...
-    if (this.state.current === null || this.state.albumPlayingIndex !== -1) {
+    if (this.state.current === null || this.state.playingArist === false) {
       const flattenSongs = flatten(this.state.artist.albums.map(album => album.songs));
 
       store.dispatch({

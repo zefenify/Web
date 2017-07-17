@@ -20,6 +20,12 @@ const CollectionContainer = styled(Link)`
     color: ${props => props.theme.primary};
   }
 
+  &:not(.active) {
+    i {
+      color: #fff !important;
+    }
+  }
+
   // non-full screen view
   @media(max-width: 992px) {
     flex: 0 0 33.333%;

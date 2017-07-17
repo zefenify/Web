@@ -7,6 +7,7 @@ import styled from 'emotion/react';
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import { human } from '@app/util/time';
+import sameSongList from '@app/util/sameSongList';
 
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
@@ -73,7 +74,7 @@ class Featured extends Component {
       current: null,
       playing: false,
       initialQueue: [],
-      isCurrentList: false,
+      playingFeatured: false,
     };
     this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
     this.togglePlayPause = this.togglePlayPause.bind(this);
@@ -83,7 +84,20 @@ class Featured extends Component {
     // calling...
     api(`${BASE}/json/featured/${this.props.match.params.id}.json`)
       .then((data) => {
-        this.setState(() => ({ featured: data }));
+        this.setState(() => ({ featured: data }), () => {
+          const { initialQueue } = store.getState();
+
+          if (initialQueue.length === 0 || this.state.featured.songs.length === 0) {
+            this.setState(() => ({ playingFeatured: false }));
+            return;
+          }
+
+          if (sameSongList(this.state.featured.songs, initialQueue)) {
+            this.setState(() => ({ playingFeatured: true }));
+          } else {
+            this.setState(() => ({ playingFeatured: false }));
+          }
+        });
       }, (err) => {
         console.log(err);
       });
@@ -95,16 +109,6 @@ class Featured extends Component {
 
       const { playing, current, initialQueue } = store.getState();
       this.setState(() => ({ playing, current, initialQueue }));
-
-      // fix your face
-      // sees if the featured list is the same as the one that triggered the current playing list
-      // i.e. current playing should only be active in one list - not in all list that it's found
-      // eslint-disable-next-line
-      if (this.state.featured.songs.length > 0 && this.state.initialQueue.length > 0 && this.state.featured.songs.length === this.state.initialQueue.length && this.state.featured.songs[0].songId === this.state.initialQueue[0].songId && this.state.featured.songs[this.state.featured.songs.length - 1].songId === this.state.initialQueue[this.state.initialQueue.length - 1].songId) {
-        this.setState(() => ({ isCurrentList: true }));
-      } else {
-        this.setState(() => ({ isCurrentList: false }));
-      }
     });
   }
 
@@ -118,7 +122,7 @@ class Featured extends Component {
     }
 
     // booting playlist
-    if (this.state.current === null || this.state.isCurrentList === false) {
+    if (this.state.current === null || this.state.playingFeatured === false) {
       store.dispatch({
         type: PLAY,
         payload: {
@@ -128,6 +132,7 @@ class Featured extends Component {
         },
       });
 
+      this.setState(() => ({ playingFeatured: true }));
       // resuming / pausing playlist
     } else if (this.state.current !== null) {
       store.dispatch({
@@ -143,7 +148,7 @@ class Featured extends Component {
       return;
     }
 
-    if (this.state.isCurrentList && this.state.current.songId === this.state.featured.songs[songIdIndex].songId) {
+    if (this.state.playingFeatured && this.state.current.songId === this.state.featured.songs[songIdIndex].songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -159,6 +164,8 @@ class Featured extends Component {
         initialQueue: this.state.featured.songs,
       },
     });
+
+    this.setState(() => ({ playingFeatured: true }));
   }
 
   render() {
@@ -176,7 +183,7 @@ class Featured extends Component {
             <p>FEATURED</p>
             <h1>{ this.state.featured.title }</h1>
             <p style={{ marginTop: '0.5em' }}>{`${this.state.featured.songs.length} song${this.state.featured.songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-            <Button className="featured-info__button" onClick={this.togglePlayPauseAll}>{`${this.state.playing && this.state.isCurrentList ? 'PAUSE' : 'PLAY'}`}</Button>
+            <Button className="featured-info__button" onClick={this.togglePlayPauseAll}>{`${this.state.playing && this.state.playingFeatured ? 'PAUSE' : 'PLAY'}`}</Button>
           </div>
         </div>
 
@@ -185,7 +192,7 @@ class Featured extends Component {
         <div className="song">
           { this.state.featured.songs.map((song, index) => <Song
             key={song.songId}
-            currentSongId={this.state.current === null || this.state.isCurrentList === false ? -1 : this.state.current.songId}
+            currentSongId={this.state.current === null || this.state.playingFeatured === false ? -1 : this.state.current.songId}
             trackNumber={index + 1}
             togglePlayPause={this.togglePlayPause}
             playing={this.state.playing}

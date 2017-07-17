@@ -9,6 +9,7 @@ import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 
 import { human } from '@app/util/time';
+import sameSongList from '@app/util/sameSongList';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
 import api from '@app/util/api';
@@ -204,17 +205,6 @@ class Artist extends Component {
         const { initialQueue } = store.getState();
         const flattenSongs = flatten(restructuredData.albums.map(album => album.songs));
 
-        const firstLastSongMatch = (q1, q2) => {
-          if (q1.length === 0 || q2.length === 0) {
-            return false;
-          }
-
-          const firstMatch = q1[0].songId === q2[0].songId;
-          const lastMatch = q1[q1.length - 1].songId === q2[q2.length - 1].songId;
-
-          return firstMatch && lastMatch;
-        };
-
         const queueIsByArtist = (albums, queue) => {
           let albumIndex = -1;
           const queueSongIdList = queue.map(song => song.songId);
@@ -228,13 +218,11 @@ class Artist extends Component {
           return albumIndex;
         };
 
-        const playingArist = initialQueue.length === flattenSongs.length && firstLastSongMatch(initialQueue, flattenSongs);
-
         this.setState(() => ({
           artist: restructuredData,
           songCount: flattenSongs.length,
-          playingArist,
-          albumPlayingIndex: playingArist ? -1 : queueIsByArtist(restructuredData.albums, initialQueue),
+          playingArist: sameSongList(initialQueue, flattenSongs),
+          albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(restructuredData.albums, initialQueue),
         }));
       }, (err) => {
         console.log(err);

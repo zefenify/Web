@@ -158,7 +158,7 @@ const Control = ({
         current !== null
           ? (
             <div className="song-container">
-              <div className="artwork" style={{ background: `transparent url('${current.thumbnail ? `${BASE}${current.thumbnail}` : 'app/static/image/brand.png'}') 50% 50% / cover no-repeat` }} />
+              <div className="artwork" style={{ background: `transparent url('${BASE}${current.thumbnail}') 50% 50% / cover no-repeat` }} />
               <div className="song">
                 <p className="song__name">{ current.songName }</p>
                 <p className="song__artist">{ current.artistName }</p>

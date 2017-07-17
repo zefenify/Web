@@ -6,11 +6,9 @@ const DARK_4 = '#ededed';
 const MUTE_1 = '#a0a0a0';
 const MUTE_2 = '#282828';
 const MUTE_3 = '#404040';
-const MUTE_4 = '#343533';
-const MUTE_5 = '#ececec';
-const MUTE_6 = '#9d9d9d';
-const MUTE_7 = '#a1a1a1';
-const MUTE_8 = '#4e4e4e';
+const MUTE_4 = '#ececec';
+const MUTE_5 = '#a1a1a1';
+const MUTE_6 = '#4e4e4e';
 
 const WHITE_1 = '#ffffff';
 const WHITE_2 = '#f7f7f7';
@@ -48,12 +46,12 @@ module.exports = {
     listBackground: WHITE_1,
     listBackgroundHover: DARK_4,
     listDivider: DARK_4,
-    listText: MUTE_8,
-    listTextMute: MUTE_5,
+    listText: MUTE_6,
+    listTextMute: MUTE_4,
     listTextActive: PINK_1,
 
     controlBackground: DARK_4,
-    controlText: MUTE_8,
-    controlMute: MUTE_7,
+    controlText: MUTE_6,
+    controlMute: MUTE_5,
   },
 };

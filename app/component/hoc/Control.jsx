@@ -1,6 +1,7 @@
 import React from 'react';
 import { func, bool, string, number, oneOfType, object } from 'prop-types';
 import styled from 'emotion/react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { human } from '@app/util/time';
@@ -49,6 +50,7 @@ const NowPlayingContainer = styled.div`
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        text-decoration: none;
       }
 
       &__name {
@@ -161,7 +163,7 @@ const Control = ({
               <div className="artwork" style={{ background: `transparent url('${BASE}${current.thumbnail}') 50% 50% / cover no-repeat` }} />
               <div className="song">
                 <p className="song__name">{ current.songName }</p>
-                <p className="song__artist">{ current.artistName }</p>
+                <Link to={`/artist/${current.artistId}`} className="song__artist">{ current.artistName }</Link>
               </div>
             </div>
           ) : null

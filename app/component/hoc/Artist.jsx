@@ -191,12 +191,16 @@ class Artist extends Component {
   componentDidMount() {
     api(`${BASE}/json/artist/${this.props.match.params.id}.json`)
       .then((data) => {
-        // building a copy so each song containing `artistName` & `thumbnail`
+        // building a copy so each song containing `artistId`, `artistName` & `thumbnail`
         // also replace `albumPurl` `icon` with `cover`
         const restructuredData = Object.assign({}, data);
         restructuredData.albums = restructuredData.albums.map((album) => {
           const albumCopy = Object.assign({}, album);
-          albumCopy.songs = albumCopy.songs.map(song => Object.assign(song, { artistName: restructuredData.artistName, thumbnail: albumCopy.albumPurl.replace('_icon_', '_cover_') }));
+          albumCopy.songs = albumCopy.songs.map(song => Object.assign(song, {
+            artistId: restructuredData.artistId,
+            artistName: restructuredData.artistName,
+            thumbnail: albumCopy.albumPurl.replace('_icon_', '_cover_'),
+          }));
           albumCopy.albumPurl = albumCopy.albumPurl.replace('_icon_', '_cover_');
 
           return albumCopy;

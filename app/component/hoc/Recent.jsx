@@ -4,12 +4,14 @@
 // DJ K...
 
 import React from 'react';
-import { func, shape, bool, arrayOf } from 'prop-types';
+import { func, shape, bool, number, arrayOf } from 'prop-types';
 import styled from 'emotion/react';
 import { connect } from 'react-redux';
 
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
-import { human } from '@app/util/time';
+
+import historyDuration from '@app/redux/selector/historyDuration';
+import historyPlaying from '@app/redux/selector/historyPlaying';
 
 import Song from '@app/component/presentational/Song';
 import Divider from '@app/component/styled/Divider';
@@ -55,7 +57,8 @@ const RecentlyPlayed = ({
   playing,
   current,
   history,
-  initialQueue,
+  totalDuration,
+  playingHistory,
   togglePlayPauseHistory,
   togglePlayPauseSong,
 }) => {
@@ -68,20 +71,7 @@ const RecentlyPlayed = ({
     );
   }
 
-  const {
-    hours,
-    minutes,
-    seconds,
-  } = human(history.reduce((totalDuration, song) => totalDuration + song.playtime, 0), true);
-  // we can't use `sameSongList` here; we just can't
-  // so "same" is detected with length + song id content
-  let playingHistory = false;
-
-  if (initialQueue.length === history.length) {
-    const initialQueueSongIds = initialQueue.map(song => song.songId);
-    const historySongIds = history.map(song => song.songId);
-    playingHistory = historySongIds.every(songId => initialQueueSongIds.includes(songId));
-  }
+  const { hours, minutes, seconds } = totalDuration;
 
   return (
     <RecentContainer>
@@ -112,7 +102,12 @@ RecentlyPlayed.propTypes = {
   current: shape({
   }),
   history: arrayOf(shape({})),
-  initialQueue: arrayOf(shape({})),
+  totalDuration: shape({
+    hours: number,
+    minutes: number,
+    seconds: number,
+  }),
+  playingHistory: bool,
   togglePlayPauseHistory: func.isRequired,
   togglePlayPauseSong: func.isRequired,
 };
@@ -121,14 +116,20 @@ RecentlyPlayed.defaultProps = {
   playing: false,
   current: null,
   history: [],
-  initialQueue: [],
+  totalDuration: {
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  },
+  playingHistory: false,
 };
 
 module.exports = connect(state => ({
   playing: state.playing,
   current: state.current,
   history: state.history,
-  initialQueue: state.initialQueue,
+  totalDuration: historyDuration(state),
+  playingHistory: historyPlaying(state),
 }), dispatch => ({
   togglePlayPauseHistory(playing, playingHistory, history) {
     if (playing && playingHistory) {

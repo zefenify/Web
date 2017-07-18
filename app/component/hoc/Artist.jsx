@@ -186,57 +186,13 @@ class Artist extends Component {
     this.togglePlayPauseArtist = this.togglePlayPauseArtist.bind(this);
     this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
     this.togglePlayPauseAlbum = this.togglePlayPauseAlbum.bind(this);
+    this.afterFetch = this.afterFetch.bind(this);
   }
 
   componentDidMount() {
     api(`${BASE}/json/artist/${this.props.match.params.id}.json`)
       .then((data) => {
-        // building a copy so each song containing `artistId`, `artistName` & `thumbnail`
-        // also replace `albumPurl` `icon` with `cover`
-        const restructuredData = Object.assign({}, data);
-        restructuredData.albums = restructuredData.albums.map((album) => {
-          const albumCopy = Object.assign({}, album);
-          albumCopy.songs = albumCopy.songs.map(song => Object.assign(song, {
-            artistId: restructuredData.artistId,
-            artistName: restructuredData.artistName,
-            albumName: albumCopy.albumName,
-            playtime: song.songPlaytime,
-            thumbnail: albumCopy.albumPurl.replace('_icon_', '_cover_'),
-          }));
-          albumCopy.albumPurl = albumCopy.albumPurl.replace('_icon_', '_cover_');
-
-          return albumCopy;
-        });
-
-        const { initialQueue } = store.getState();
-        const flattenSongs = flatten(restructuredData.albums.map(album => album.songs));
-
-        const queueIsByArtist = (albums, queue) => {
-          const queueIsBySingleArtist = queue.every(song => song.artistId === restructuredData.artistId);
-
-          if (queueIsBySingleArtist === false) {
-            return false;
-          }
-
-          // looking for album index to set `PAUSE`...
-          let albumIndex = -1;
-          const queueSongIdList = queue.map(song => song.songId);
-
-          albums.forEach((album, index) => {
-            if (albumIndex === -1 && album.songs.every(song => queueSongIdList.includes(song.songId))) {
-              albumIndex = index;
-            }
-          });
-
-          return albumIndex;
-        };
-
-        this.setState(() => ({
-          artist: restructuredData,
-          songCount: flattenSongs.length,
-          playingArist: sameSongList(initialQueue, flattenSongs),
-          albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(restructuredData.albums, initialQueue),
-        }));
+        this.afterFetch(data);
       }, (err) => {
         console.log(err);
       });
@@ -251,8 +207,70 @@ class Artist extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id === this.props.match.params.id) {
+      return;
+    }
+
+    api(`${BASE}/json/artist/${nextProps.match.params.id}.json`)
+      .then((data) => {
+        this.afterFetch(data);
+      }, (err) => {
+        console.log(err);
+      });
+  }
+
   componentWillUnmount() {
     this.unsubscribe();
+  }
+
+  afterFetch(data) {
+    // building a copy so each song containing `artistId`, `artistName` & `thumbnail`
+    // also replace `albumPurl` `icon` with `cover`
+    const restructuredData = Object.assign({}, data);
+    restructuredData.albums = restructuredData.albums.map((album) => {
+      const albumCopy = Object.assign({}, album);
+      albumCopy.songs = albumCopy.songs.map(song => Object.assign(song, {
+        artistId: restructuredData.artistId,
+        artistName: restructuredData.artistName,
+        albumName: albumCopy.albumName,
+        playtime: song.songPlaytime,
+        thumbnail: albumCopy.albumPurl.replace('_icon_', '_cover_'),
+      }));
+      albumCopy.albumPurl = albumCopy.albumPurl.replace('_icon_', '_cover_');
+
+      return albumCopy;
+    });
+
+    const { initialQueue } = store.getState();
+    const flattenSongs = flatten(restructuredData.albums.map(album => album.songs));
+
+    const queueIsByArtist = (albums, queue) => {
+      const queueIsBySingleArtist = queue.every(song => song.artistId === restructuredData.artistId);
+
+      if (queueIsBySingleArtist === false) {
+        return false;
+      }
+
+      // looking for album index to set `PAUSE`...
+      let albumIndex = -1;
+      const queueSongIdList = queue.map(song => song.songId);
+
+      albums.forEach((album, index) => {
+        if (albumIndex === -1 && album.songs.every(song => queueSongIdList.includes(song.songId))) {
+          albumIndex = index;
+        }
+      });
+
+      return albumIndex;
+    };
+
+    this.setState(() => ({
+      artist: restructuredData,
+      songCount: flattenSongs.length,
+      playingArist: sameSongList(initialQueue, flattenSongs),
+      albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(restructuredData.albums, initialQueue),
+    }));
   }
 
   togglePlayPauseArtist() {

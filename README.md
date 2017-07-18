@@ -15,13 +15,16 @@ You also need CORS plug-in so Wolf-Cola can bypass CORS restrictions and access 
 - [Firefox: cors Everywhere](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere)
 - Safari: does not work 😔 [issues: ሳፋሪ ብቻ](https://github.com/utopiaio/Wolf-Cola/issues?q=is%3Aissue+is%3Aopen+label%3A%22ሳፋሪ+ብቻ%22)
 
-## Roadmap
+## Roadmap / Progress
+- [X] Settings
+- [X] Featured
+- [X] Artist Page
+- [X] Recently Played
+- [X] Surprise Me
 - [ ] Search
 - [ ] Top Songs
 - [ ] Genre
 - [ ] ArifList
-- [X] Surprise Me
-- [X] Recently Played
 - [ ] Songs
 - [ ] Playlist
 - [ ] Safari

@@ -80,7 +80,7 @@ const MusicControls = styled.div`
   font-size: 1.75em;
   padding-bottom: 0.2em;
 
-  div.control-container {
+  .control {
     position: relative;
     display: flex;
 
@@ -89,11 +89,11 @@ const MusicControls = styled.div`
       color: ${props => props.theme.listText};
     }
 
-    &.active {
+    &_active {
       color: ${props => props.theme.primary};
     }
 
-    .controller-state {
+    &__state {
       position: absolute;
       left: 50%;
       width: 14px;
@@ -172,28 +172,28 @@ const Control = ({
 
     <MusicControlsContainer>
       <MusicControls>
-        <div className={`control-container ${shuffle ? 'active' : ''}`} onClick={toggleShuffle}>
+        <div className={`control ${shuffle ? 'control_active' : ''}`} onClick={toggleShuffle}>
           <i className="icon-ion-ios-shuffle-strong" />
         </div>
 
-        <div className="control-container" onClick={previous}>
+        <div className="control" onClick={previous}>
           <i className="icon-ion-ios-skipbackward" />
         </div>
 
-        <div className="control-container" onClick={togglePlayPause}>
+        <div className="control" onClick={togglePlayPause}>
           <i className={`icon-ion-ios-${playing ? 'pause' : 'play'}`} />
         </div>
 
-        <div className="control-container" onClick={next}>
+        <div className="control" onClick={next}>
           <i className="icon-ion-ios-skipforward" />
         </div>
 
         <div
-          className={`control-container ${repeat === 'OFF' ? '' : 'active'}`}
+          className={`control ${repeat === 'OFF' ? '' : 'control_active'}`}
           onClick={setRepeat}
         >
           <i className="icon-ion-ios-loop-strong" />
-          <div className="controller-state" style={{ opacity: repeat === 'ONE' ? 1 : 0 }}>1</div>
+          <div className="control__state" style={{ opacity: repeat === 'ONE' ? 1 : 0 }}>1</div>
         </div>
       </MusicControls>
 

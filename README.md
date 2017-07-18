@@ -20,7 +20,7 @@ UI/UX inspired by Spotify, iTunes and ArifZefen API
 - [ ] Genre
 - [ ] ArifList
 - [ ] Surprise Me
-- [ ] Recently Played
+- [X] Recently Played
 - [ ] Songs
 - [ ] Playlist
 - [ ] Safari

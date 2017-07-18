@@ -199,6 +199,8 @@ class Artist extends Component {
           albumCopy.songs = albumCopy.songs.map(song => Object.assign(song, {
             artistId: restructuredData.artistId,
             artistName: restructuredData.artistName,
+            albumName: albumCopy.albumName,
+            playtime: song.songPlaytime,
             thumbnail: albumCopy.albumPurl.replace('_icon_', '_cover_'),
           }));
           albumCopy.albumPurl = albumCopy.albumPurl.replace('_icon_', '_cover_');
@@ -378,7 +380,7 @@ class Artist extends Component {
                           <i className={`track-number-icon__icon icon-ion-ios-${this.state.current !== null && this.state.playing && this.state.current.songId === song.songId ? 'pause' : 'play'}`} onClick={() => this.togglePlayPauseSong(song.songId)} />
                         </div>
                         <div className="song__name">{ song.songName }</div>
-                        <div className="song__duration">{ human(song.songPlaytime) }</div>
+                        <div className="song__duration">{ human(song.playtime) }</div>
                       </div>
                     ))
                   }

@@ -34,6 +34,7 @@ const ArtistContainer = styled.div`
     }
 
     &__info {
+      flex: 1 0 auto;
       display: flex;
       flex-direction: column;
       margin-left: 1em;
@@ -77,7 +78,7 @@ const ArtistContainer = styled.div`
     &__cover {
       width: 150px;
       height: 150px;
-      flex: 0 1 auto;
+      flex: 0 0 150px;
       border: 1px solid rgba(51, 51, 51, 0.25);
     }
 
@@ -90,12 +91,18 @@ const ArtistContainer = styled.div`
   .album-info {
     display: flex;
     flex-direction: column;
+    flex: 1 0 auto;
+    max-width: 64vw;
 
     &__name {
+      flex: 0 1 100%;
       font-size: 3em;
       padding: 0;
       margin: 0;
       margin-bottom: 0.25em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     &__button {

@@ -127,10 +127,10 @@ class WolfCola extends Component {
 
                 <ListContainer>
                   <Route exact path="/" component={Home} />
-                  <Route exact path="/featured/:id" component={Featured} />
-                  <Route exact path="/artist/:id" component={Artist} />
-                  <Route exact path="/surprise" component={Surprise} />
-                  <Route exact path="/recent" component={Recent} />
+                  <Route path="/featured/:id" component={Featured} />
+                  <Route path="/artist/:id" component={Artist} />
+                  <Route path="/surprise" component={Surprise} />
+                  <Route path="/recent" component={Recent} />
                   <Route path="/setting" component={Setting} />
                 </ListContainer>
               </NavListContainer>

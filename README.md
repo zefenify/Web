@@ -20,7 +20,7 @@ You also need CORS plug-in so Wolf-Cola can bypass CORS restrictions and access 
 - [ ] Top Songs
 - [ ] Genre
 - [ ] ArifList
-- [ ] Surprise Me
+- [X] Surprise Me
 - [X] Recently Played
 - [ ] Songs
 - [ ] Playlist

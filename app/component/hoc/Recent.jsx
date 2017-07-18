@@ -21,6 +21,7 @@ const RecentContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1em 2em;
+  flex: 1 1 auto;
 
   .mute {
     color: ${props => props.theme.controlMute};
@@ -29,6 +30,7 @@ const RecentContainer = styled.div`
   .recently-played {
     display: flex;
     flex-direction: column;
+    flex: 0 0 auto;
 
     &__title {
       margin-bottom: -0.15em;

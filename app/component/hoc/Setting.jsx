@@ -11,7 +11,7 @@ import Divider from '@app/component/styled/Divider';
 import Range from '@app/component/styled/Range';
 
 const SettingContainer = styled.div`
-  flex: 1 1 auto;
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,7 +40,7 @@ const Setting = ({ currentTheme, currentCrossfade, crossfade, toggleTheme }) => 
       <Button style={{ margin: '1em 0 0.5em 0' }} onClick={toggleTheme}>Change Theme</Button>
 
       <small>
-        <span>Current theme is </span><b>{ currentTheme }</b>
+        <span>Current theme is </span><b>{ currentTheme === 'light' ? 'Dayman' : 'Nightman' }</b>
       </small>
 
       <div className="crossfade">

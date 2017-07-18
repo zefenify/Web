@@ -44,7 +44,7 @@ class Featured extends Component {
       playingFeatured: false,
     };
     this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
-    this.togglePlayPause = this.togglePlayPause.bind(this);
+    this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
   }
 
   componentDidMount() {
@@ -111,18 +111,18 @@ class Featured extends Component {
     }
   }
 
-  togglePlayPause(songId) {
-    const songIdIndex = this.state.featured.songs.findIndex(song => song.songId === songId);
-
-    if (songIdIndex === -1) {
-      return;
-    }
-
-    if (this.state.playingFeatured && this.state.current.songId === this.state.featured.songs[songIdIndex].songId) {
+  togglePlayPauseSong(songId) {
+    if (this.state.current !== null && this.state.current.songId === songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
 
+      return;
+    }
+
+    const songIdIndex = this.state.featured.songs.findIndex(song => song.songId === songId);
+
+    if (songIdIndex === -1) {
       return;
     }
 
@@ -160,7 +160,7 @@ class Featured extends Component {
             key={song.songId}
             currentSongId={this.state.current === null ? -1 : this.state.current.songId}
             trackNumber={index + 1}
-            togglePlayPause={this.togglePlayPause}
+            togglePlayPause={this.togglePlayPauseSong}
             playing={this.state.playing}
             {...song}
           />) }

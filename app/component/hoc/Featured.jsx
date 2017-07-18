@@ -6,56 +6,18 @@ import styled from 'emotion/react';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
-import { human } from '@app/util/time';
 import sameSongList from '@app/util/sameSongList';
+import { human } from '@app/util/time';
 
 import Divider from '@app/component/styled/Divider';
-import Button from '@app/component/styled/Button';
 import Song from '@app/component/presentational/Song';
+import PlaylistHeader from '@app/component/presentational/PlaylistHeader';
 import api from '@app/util/api';
 import store from '@app/redux/store';
 
 const FeaturedContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  .featured {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: row;
-    padding: 1em 2em;
-
-    &__image {
-      flex: 0 0 200px;
-      height: 200px;
-      width: 200px;
-      border: 1px solid rgba(51, 51, 51, 0.25);
-      border-radius: 50%;
-    }
-
-    &__info {
-      margin-left: 1em;
-
-      & > * {
-        margin: 0;
-      }
-
-      & > p:not(:first-child) {
-        color: ${props => props.theme.controlMute};
-      }
-    }
-  }
-
-  .featured-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    &__button {
-      margin-top: 1em;
-      width: 175px;
-    }
-  }
 
   .song {
     flex: 1 1 auto;
@@ -74,6 +36,11 @@ class Featured extends Component {
       current: null,
       playing: false,
       initialQueue: [],
+      duration: {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      },
       playingFeatured: false,
     };
     this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
@@ -84,7 +51,10 @@ class Featured extends Component {
     // calling...
     api(`${BASE}/json/featured/${this.props.match.params.id}.json`)
       .then((data) => {
-        this.setState(() => ({ featured: data }), () => {
+        this.setState(() => ({
+          featured: data,
+          duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
+        }), () => {
           const { initialQueue } = store.getState();
 
           if (initialQueue.length === 0 || this.state.featured.songs.length === 0) {
@@ -173,26 +143,22 @@ class Featured extends Component {
       return null;
     }
 
-    const { hours, minutes, seconds } = human(this.state.featured.songs.reduce((totalDuration, song) => totalDuration + song.playtime, 0), true);
-
     return (
       <FeaturedContainer>
-        <div className="featured">
-          <div className="featured__image" style={{ background: `transparent url('${BASE}${this.state.featured.thumbnail}') 50% 50% / cover no-repeat` }} />
-          <div className="featured__info featured-info">
-            <p>FEATURED</p>
-            <h1>{ this.state.featured.title }</h1>
-            <p style={{ marginTop: '0.5em' }}>{`${this.state.featured.songs.length} song${this.state.featured.songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-            <Button className="featured-info__button" onClick={this.togglePlayPauseAll}>{`${this.state.playing && this.state.playingFeatured ? 'PAUSE' : 'PLAY'}`}</Button>
-          </div>
-        </div>
+        <PlaylistHeader
+          {...this.state.featured}
+          duration={this.state.duration}
+          playlist={false}
+          playing={(this.state.playing && this.state.playingFeatured)}
+          togglePlayPause={this.togglePlayPauseAll}
+        />
 
         <Divider />
 
         <div className="song">
           { this.state.featured.songs.map((song, index) => <Song
             key={song.songId}
-            currentSongId={this.state.current === null || this.state.playingFeatured === false ? -1 : this.state.current.songId}
+            currentSongId={this.state.current === null ? -1 : this.state.current.songId}
             trackNumber={index + 1}
             togglePlayPause={this.togglePlayPause}
             playing={this.state.playing}

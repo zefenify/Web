@@ -22,13 +22,13 @@ const NowPlayingContainer = styled.div`
   display: flex;
   align-items: center;
 
-  .song-container {
+  .song {
     display: flex;
     flex-direction: row;
     align-items: center;
     max-width: 250px;
 
-    .artwork {
+    &__artwork {
       flex: 0 0 60px;
       width: 60px;
       height: 60px;
@@ -36,31 +36,34 @@ const NowPlayingContainer = styled.div`
       border: 1px solid rgba(51, 51, 51, 0.25);
     }
 
-    .song {
-      display: flex;
-      flex-direction: column;
+    &__name {
       padding-left: 6px;
       flex: 0 0 184px;
+    }
+  }
 
-      &__name,
-      &__artist {
-        padding: 0;
-        margin: 0;
-        width: 184px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        text-decoration: none;
-      }
+  .song-name {
+    display: flex;
+    flex-direction: column;
 
-      &__name {
-        margin-bottom: 0.5em;
-        color: ${props => props.theme.controlText};
-      }
+    &__name,
+    &__artist {
+      padding: 0;
+      margin: 0;
+      width: 184px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-decoration: none;
+    }
 
-      &__artist {
-        color: ${props => props.theme.controlMute};
-      }
+    &__name {
+      margin-bottom: 0.5em;
+      color: ${props => props.theme.controlText};
+    }
+
+    &__artist {
+      color: ${props => props.theme.controlMute};
     }
   }
 `;
@@ -159,11 +162,11 @@ const Control = ({
       {
         current !== null
           ? (
-            <div className="song-container">
-              <div className="artwork" style={{ background: `transparent url('${BASE}${current.thumbnail}') 50% 50% / cover no-repeat` }} />
-              <div className="song">
-                <p className="song__name">{ current.songName }</p>
-                <Link to={`/artist/${current.artistId}`} className="song__artist">{ current.artistName }</Link>
+            <div className="song">
+              <div className="song__artwork" style={{ background: `transparent url('${BASE}${current.thumbnail}') 50% 50% / cover no-repeat` }} />
+              <div className="song__name song-name">
+                <p className="song-name__name">{ current.songName }</p>
+                <Link to={`/artist/${current.artistId}`} className="song-name__artist">{ current.artistName }</Link>
               </div>
             </div>
           ) : null
@@ -188,10 +191,7 @@ const Control = ({
           <i className="icon-ion-ios-skipforward" />
         </div>
 
-        <div
-          className={`control ${repeat === 'OFF' ? '' : 'control_active'}`}
-          onClick={setRepeat}
-        >
+        <div className={`control ${repeat === 'OFF' ? '' : 'control_active'}`} onClick={setRepeat}>
           <i className="icon-ion-ios-loop-strong" />
           <div className="control__state" style={{ opacity: repeat === 'ONE' ? 1 : 0 }}>1</div>
         </div>

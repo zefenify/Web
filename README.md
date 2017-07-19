@@ -7,7 +7,7 @@ Web Music player app for [ArifZefen](http://www.arifzefen.com)
 UI/UX inspired by Spotify, iTunes and ArifZefen API
 
 ## Usage / Installation
-The app **must be open in HTTP** not HTTPS as ArifZefn server API is served only through HTTP
+The app **must be open in HTTP** not HTTPS as ArifZefen server API is served only through HTTP
 
 You also need CORS plug-in so Wolf-Cola can bypass CORS restrictions and access ArifZefen's API
 

@@ -32,8 +32,8 @@ const SongContainer = styled.div`
 
   .track-number-icon {
     position: relative;
-    flex: 0 0 8%;
-    padding-left: 2em;
+    flex: 0 0 5%;
+    padding-left: 0.5em;
 
     &__number {
       display: block;
@@ -42,15 +42,15 @@ const SongContainer = styled.div`
     &__icon {
       display: none;
       position: absolute;
-      left: 1em;
-      top: 4px;
+      left: 0.25em;
+      top: 6px;
       width: 1em;
       font-size: 2em;
     }
   }
 
   .name {
-    flex: 0 0 37%;
+    flex: 1 0 auto;
   }
 
   .artist-name {
@@ -62,7 +62,9 @@ const SongContainer = styled.div`
   }
 
   .duration {
-    flex: 0 0 10%;
+    padding-right: 0.5em;
+    flex: 0 0 8%;
+    text-align: right;
   }
 
   &.active {
@@ -85,6 +87,7 @@ const SongContainer = styled.div`
 `;
 
 const Song = ({
+  fullDetail,
   currentSongId,
   artistId,
   songId,
@@ -95,20 +98,36 @@ const Song = ({
   playtime,
   togglePlayPause,
   playing,
-}) => (
-  <SongContainer className={`${currentSongId === songId ? 'active' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
-    <div className="track-number-icon">
-      <span className="track-number-icon__number">{ trackNumber }</span>
-      <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
-    </div>
-    <div className="name">{ songName }</div>
-    <Link to={`/artist/${artistId}`} className="artist-name">{ artistName }</Link>
-    <div className="album-name">{ albumName }</div>
-    <div className="duration">{ human(playtime) }</div>
-  </SongContainer>
-);
+}) => {
+  if (fullDetail === false) {
+    return (
+      <SongContainer className={`${currentSongId === songId ? 'active' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+        <div className="track-number-icon">
+          <span className="track-number-icon__number">{ trackNumber }</span>
+          <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
+        </div>
+        <div className="name">{ songName }</div>
+        <div className="duration">{ human(playtime) }</div>
+      </SongContainer>
+    );
+  }
+
+  return (
+    <SongContainer className={`${currentSongId === songId ? 'active' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+      <div className="track-number-icon">
+        <span className="track-number-icon__number">{ trackNumber }</span>
+        <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
+      </div>
+      <div className="name">{ songName }</div>
+      <Link to={`/artist/${artistId}`} className="artist-name">{ artistName }</Link>
+      <div className="album-name">{ albumName }</div>
+      <div className="duration">{ human(playtime) }</div>
+    </SongContainer>
+  );
+};
 
 Song.propTypes = {
+  fullDetail: bool,
   currentSongId: number.isRequired,
   artistId: number.isRequired,
   songId: number.isRequired,
@@ -119,6 +138,10 @@ Song.propTypes = {
   playtime: number.isRequired,
   togglePlayPause: func.isRequired,
   playing: bool.isRequired,
+};
+
+Song.defaultProps = {
+  fullDetail: true,
 };
 
 module.exports = Song;

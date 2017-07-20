@@ -8,12 +8,13 @@ import flatten from 'lodash/flatten';
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 
-import { human } from '@app/util/time';
 import sameSongList from '@app/util/sameSongList';
-import Divider from '@app/component/styled/Divider';
-import Button from '@app/component/styled/Button';
 import api from '@app/util/api';
 import store from '@app/redux/store';
+
+import Divider from '@app/component/styled/Divider';
+import Song from '@app/component/presentational/Song';
+import Button from '@app/component/styled/Button';
 
 const ArtistContainer = styled.div`
   display: flex;
@@ -113,68 +114,6 @@ const ArtistContainer = styled.div`
   .song-list {
     display: flex;
     flex-direction: column;
-
-    &__song {
-      border-bottom: 1px solid ${props => props.theme.controlBackground};
-    }
-  }
-
-  .song {
-    display: flex;
-    flex-direction: row;
-
-    & > * {
-      padding: 0.8em 0;
-    }
-
-    &__track-number-icon {
-      padding-left: 0.5em;
-      flex: 0 0 4%;
-    }
-
-    &__name {
-      flex: 1 1 auto;
-    }
-
-    &__duration {
-      text-align: right;
-      flex: 0 0 6%;
-      padding-right: 0.5em;
-    }
-
-    &_current {
-      color: ${props => props.theme.primary};
-    }
-
-    &:hover {
-      background-color: ${props => props.theme.controlBackground};
-
-      .track-number-icon {
-        &__number {
-          display: none;
-        }
-
-        &__icon {
-          display: block;
-        }
-      }
-    }
-  }
-
-  .track-number-icon {
-    position: relative;
-
-    &__number {
-      display: block;
-    }
-
-    &__icon {
-      display: none;
-      position: absolute;
-      left: 0.25em;
-      top: 6px;
-      font-size: 2em;
-    }
   }
 `;
 
@@ -383,7 +322,7 @@ class Artist extends Component {
         <Divider />
 
         <div className="album-list">
-          <h3>Albums</h3>
+          <h2>Albums</h2>
 
           {
             this.state.artist.albums.map((album, albumIndex) => (
@@ -399,14 +338,15 @@ class Artist extends Component {
                 <div className="album__song-list song-list">
                   {
                     album.songs.map((song, songIndex) => (
-                      <div key={song.songId} onDoubleClick={() => this.togglePlayPauseSong(song.songId)} className={`song-list__song song ${this.state.current !== null && song.songId === this.state.current.songId ? 'song_current' : ''}`}>
-                        <div className="song__track-number-icon track-number-icon">
-                          <div className="track-number-icon__number">{ songIndex + 1 }</div>
-                          <i className={`track-number-icon__icon icon-ion-ios-${this.state.current !== null && this.state.playing && this.state.current.songId === song.songId ? 'pause' : 'play'}`} onClick={() => this.togglePlayPauseSong(song.songId)} />
-                        </div>
-                        <div className="song__name">{ song.songName }</div>
-                        <div className="song__duration">{ human(song.playtime) }</div>
-                      </div>
+                      <Song
+                        fullDetail={false}
+                        key={song.songId}
+                        currentSongId={this.state.current === null ? -1 : this.state.current.songId}
+                        trackNumber={songIndex + 1}
+                        togglePlayPause={this.togglePlayPauseSong}
+                        playing={this.state.playing}
+                        {...song}
+                      />
                     ))
                   }
                 </div>

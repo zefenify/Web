@@ -8,11 +8,12 @@ import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
+import api from '@app/util/api';
 
 import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 import PlaylistHeader from '@app/component/presentational/PlaylistHeader';
-import api from '@app/util/api';
+
 import store from '@app/redux/store';
 
 const FeaturedContainer = styled.div`
@@ -20,7 +21,8 @@ const FeaturedContainer = styled.div`
   flex-direction: column;
 
   .song {
-    flex: 1 1 auto;
+    padding: 0 2em;
+    flex: 1 0 auto;
 
     & > *:last-child {
       margin-bottom: 1px;

@@ -38,7 +38,7 @@ const store = createStore(
     loading,
   }),
   {
-    theme: 'dark',
+    theme: 'light',
     volume: 1,
     queue: [],
     initialQueue: [], // queue of songs to be played [used on repeat `ALL` and queue is empty]

@@ -97,7 +97,7 @@ const NavContainer = styled.div`
 
 const ListContainer = styled.div`
   position: relative;
-  flex: 1 1 80%;
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.listBackground};

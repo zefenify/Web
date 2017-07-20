@@ -20,6 +20,7 @@ import Featured from '@app/component/hoc/Featured';
 import Artist from '@app/component/hoc/Artist';
 import Recent from '@app/component/hoc/Recent';
 import Surprise from '@app/component/hoc/Surprise';
+import Top from '@app/component/hoc/Top';
 
 import Spinner from '@app/component/presentational/Spinner';
 
@@ -101,6 +102,7 @@ class WolfCola extends Component {
                   <Route exact path="/" component={Home} />
                   <Route path="/featured/:id" component={Featured} />
                   <Route path="/artist/:id" component={Artist} />
+                  <Route path="/top/:category?" component={Top} />
                   <Route path="/surprise" component={Surprise} />
                   <Route path="/recent" component={Recent} />
                   <Route path="/setting" component={Setting} />

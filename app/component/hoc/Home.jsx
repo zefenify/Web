@@ -22,7 +22,7 @@ const HomeContainer = styled.div`
     top: 0;
     right: 0;
     left: 0;
-    border-bottom: 1px solid rgba(51, 51, 51, 0.25);
+    box-shadow: 0 0 4px ${props => props.theme.listBoxShadow};
     height: 60px;
     padding: 0 1em;
   }

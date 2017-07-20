@@ -2,6 +2,8 @@ const DARK_1 = '#121212';
 const DARK_2 = '#181818';
 const DARK_3 = '#282828';
 const DARK_4 = '#ededed';
+const DARK_5 = '#657786';
+const DARK_6 = '#000000';
 
 const MUTE_1 = '#a0a0a0';
 const MUTE_2 = '#282828';
@@ -12,6 +14,7 @@ const MUTE_6 = '#4e4e4e';
 
 const WHITE_1 = '#ffffff';
 const WHITE_2 = '#f7f7f7';
+const WHITE_3 = '#d8d8d8';
 
 const GREEN_1 = '#1ed660';
 const PINK_1 = '#f94263';
@@ -23,6 +26,7 @@ module.exports = {
     navbarBackground: DARK_1,
     navbarText: MUTE_1,
     navbarTextActive: WHITE_1,
+    navBarBoxShadow: DARK_6,
 
     listBackground: DARK_2,
     listBackgroundHover: MUTE_2,
@@ -30,6 +34,7 @@ module.exports = {
     listText: WHITE_1,
     listTextMute: MUTE_1,
     listTextActive: GREEN_1,
+    listBoxShadow: DARK_6,
 
     controlBackground: DARK_3,
     controlText: WHITE_1,
@@ -42,6 +47,7 @@ module.exports = {
     navbarBackground: WHITE_2,
     navbarText: MUTE_3,
     navbarTextActive: MUTE_2,
+    navBarBoxShadow: WHITE_3,
 
     listBackground: WHITE_1,
     listBackgroundHover: DARK_4,
@@ -49,6 +55,7 @@ module.exports = {
     listText: MUTE_6,
     listTextMute: MUTE_4,
     listTextActive: PINK_1,
+    listBoxShadow: DARK_5,
 
     controlBackground: DARK_4,
     controlText: MUTE_6,

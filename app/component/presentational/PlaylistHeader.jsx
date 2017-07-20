@@ -12,25 +12,23 @@ const Featured = styled.div`
   flex-direction: row;
   padding: 1em 2em;
 
-  .featured {
-    &__image {
-      flex: 0 0 200px;
-      height: 200px;
-      width: 200px;
-      border: 1px solid rgba(51, 51, 51, 0.25);
-      border-radius: 50%;
+  .image {
+    flex: 0 0 200px;
+    height: 200px;
+    width: 200px;
+    border: 1px solid rgba(51, 51, 51, 0.25);
+    border-radius: 50%;
+  }
+
+  .info {
+    margin-left: 1em;
+
+    & > * {
+      margin: 0;
     }
 
-    &__info {
-      margin-left: 1em;
-
-      & > * {
-        margin: 0;
-      }
-
-      & > p:not(:first-child) {
-        color: ${props => props.theme.controlMute};
-      }
+    & > p:not(:first-child) {
+      color: ${props => props.theme.controlMute};
     }
   }
 
@@ -58,9 +56,9 @@ const PlaylistHeader = ({
   const { hours, minutes, seconds } = duration;
 
   return (
-    <Featured className="featured">
-      <div className="featured__image" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }} />
-      <div className="featured__info featured-info">
+    <Featured>
+      <div className="image" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }} />
+      <div className="info featured-info">
         <p>{`${playlist ? 'PLAYLIST' : 'FEATURED'}`}</p>
         <h1>{ title }</h1>
         <p style={{ marginTop: '0.5em' }}>{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>

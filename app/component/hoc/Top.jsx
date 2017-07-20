@@ -54,7 +54,7 @@ const TopContainer = styled.div`
 const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.navbarText};
   padding: 0 1em;
-  font-size: 1.25em;
+  font-size: 1.2em;
   font-weight: bold;
   text-decoration: none;
   border-bottom: 2px solid transparent;

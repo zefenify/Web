@@ -42,6 +42,7 @@ const TopContainer = styled.div`
     overflow-y: scroll;
 
     &__song {
+      padding: 0 2em;
       flex: 1 1 auto;
 
       & > *:last-child {

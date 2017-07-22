@@ -17,7 +17,7 @@ import store from '@app/redux/store';
 const TopContainer = styled.div`
   display: flex;
   flex-direction: column;
-  ovefflow-y: scroll;
+  ovefflow-y: auto;
   padding: 0 1em;
 
   .title {
@@ -39,7 +39,7 @@ const TopContainer = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     &__song {
       padding: 0 2em;

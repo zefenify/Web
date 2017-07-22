@@ -47,7 +47,7 @@ const NavContainer = styled.div`
   flex-direction: column;
   background-color: ${props => props.theme.navbarBackground};
   color: ${props => props.theme.navbarText};
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 
   .brand {
@@ -83,7 +83,7 @@ const NavContainer = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .small-text {
@@ -95,7 +95,7 @@ const NavContainer = styled.div`
   }
 `;
 
-const ListContainer = styled.div`
+const RouteContainer = styled.div`
   position: relative;
   flex: 1 0 auto;
   display: flex;
@@ -103,7 +103,7 @@ const ListContainer = styled.div`
   background-color: ${props => props.theme.listBackground};
   color: ${props => props.theme.listText};
   max-height: calc(100vh - 70px);
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 module.exports = {
@@ -111,5 +111,5 @@ module.exports = {
   ControlsContainer,
   NavListContainer,
   NavContainer,
-  ListContainer,
+  RouteContainer,
 };

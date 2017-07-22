@@ -24,7 +24,7 @@ import Top from '@app/component/hoc/Top';
 
 import Spinner from '@app/component/presentational/Spinner';
 
-import { WolfColaContainer, NavListContainer, NavContainer, ListContainer } from '@app/component/styled/WolfCola';
+import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
 import Divider from '@app/component/styled/Divider';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 
@@ -98,7 +98,7 @@ class WolfCola extends Component {
                   </div>
                 </NavContainer>
 
-                <ListContainer>
+                <RouteContainer>
                   <Route exact path="/" component={Home} />
                   <Route path="/featured/:id" component={Featured} />
                   <Route path="/artist/:id" component={Artist} />
@@ -106,7 +106,7 @@ class WolfCola extends Component {
                   <Route path="/surprise" component={Surprise} />
                   <Route path="/recent" component={Recent} />
                   <Route path="/setting" component={Setting} />
-                </ListContainer>
+                </RouteContainer>
               </NavListContainer>
 
               <Control />

@@ -14,7 +14,7 @@ import Collection from '@app/component/presentational/Collection';
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  ovefflow-y: scroll;
+  ovefflow-y: auto;
   padding: 0 1em;
 
   .title {
@@ -36,7 +36,7 @@ const HomeContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-top: 1em;
   }
 `;

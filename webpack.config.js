@@ -53,6 +53,7 @@ module.exports = (env) => {
           options: {
             plugins: [
               'emotion/babel',
+              'transform-react-inline-elements',
             ],
             presets: [
               'react',

@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const commonPlugins = [
+  new webpack.optimize.ModuleConcatenationPlugin(),
   new ExtractTextPlugin({
     filename: '[name].bundle.css',
     disable: false,
@@ -12,7 +13,6 @@ const commonPlugins = [
     name: 'vendor',
     minChunks: Infinity,
   }),
-  new webpack.optimize.ModuleConcatenationPlugin(),
 ];
 
 module.exports = (env) => {
@@ -54,10 +54,11 @@ module.exports = (env) => {
             plugins: [
               'emotion/babel',
               'transform-react-inline-elements',
+              ['transform-runtime', { helpers: false, polyfill: false }],
             ],
             presets: [
+              'es2015',
               'react',
-              ['env', { targets: { browsers: ['safari >= 10'] } }], // 100% ES2015
             ],
           },
         },
@@ -110,6 +111,7 @@ module.exports = (env) => {
     },
     devtool: PRODUCTION ? 'source-map' : 'eval',
     devServer: {
+      historyApiFallback: true,
       publicPath: 'http://localhost:8080/build/',
     },
     plugins: PRODUCTION ? [

@@ -13,7 +13,9 @@ You also need CORS plug-in so Wolf-Cola can bypass CORS restrictions and access 
 
 - [Chrome: moesif origin cors change](https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc)
 - [Firefox: cors Everywhere](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere)
-- Safari: does not work 😔 [issues: ሳፋሪ ብቻ](https://github.com/utopiaio/Wolf-Cola/issues?q=is%3Aissue+is%3Aopen+label%3A%22ሳፋሪ+ብቻ%22)
+- Safari
+  - Safari > Preferences... > Advanced > Show Develop menu in menu bar
+  - Develop > Disable Cross-Origin Restrictions
 
 ## Roadmap / Progress
 - [X] Settings
@@ -27,7 +29,7 @@ You also need CORS plug-in so Wolf-Cola can bypass CORS restrictions and access 
 - [ ] ArifList
 - [ ] Songs
 - [ ] Playlist
-- [ ] Safari
+- [X] Safari
 - [ ] Tests
 
 ## Disclaimer

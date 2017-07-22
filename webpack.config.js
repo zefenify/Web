@@ -57,7 +57,7 @@ module.exports = (env) => {
               ['transform-runtime', { helpers: false, polyfill: false }],
             ],
             presets: [
-              'es2015',
+              ['env', { targets: { browsers: ['safari >= 10'], uglify: true } }], // 100% ES2015
               'react',
             ],
           },

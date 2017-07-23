@@ -95,6 +95,7 @@ class WolfCola extends Component {
                     <Divider />
 
                     <NavLinkStyled to="/setting">Settings</NavLinkStyled>
+                    <div style={{ paddingBottom: '2em' }} />
                   </div>
                 </NavContainer>
 

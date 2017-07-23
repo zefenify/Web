@@ -16,6 +16,14 @@ body {
   outline: none;
 }
 
+*:not(a) {
+  cursor: default !important;
+}
+
+a, a * {
+  cursor: pointer !important;
+}
+
 h1 {
   font-size: 4em;
 }

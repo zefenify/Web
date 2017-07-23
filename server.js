@@ -8,10 +8,10 @@ const compression = require('compression');
 const app = express();
 app.set('port', process.env.PORT);
 app.use(compression());
-app.use(express.static(path.join(__dirname, './')));
+app.use(express.static(path.join(__dirname, './build')));
 
 app.use((request, response) => {
-  response.sendFile(path.join(__dirname, './index.html'));
+  response.sendFile(path.join(__dirname, './build/index.html'));
 });
 
 const server = http.createServer(app); // creating server which express will piggy back on

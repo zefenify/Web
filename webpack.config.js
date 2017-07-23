@@ -1,11 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const commonPlugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
+  new HtmlWebpackPlugin({
+    template: 'app/index.html',
+  }),
   new ExtractTextPlugin({
-    filename: '[name].bundle.css',
+    filename: '[name].bundle.css?build=[hash]',
     disable: false,
     allChunks: true,
   }),
@@ -35,12 +39,12 @@ module.exports = (env) => {
       app: ['./app/index.jsx'],
     },
     output: {
-      filename: '[name].bundle.js',
-      path: path.join(__dirname, 'build'),
-      publicPath: '/build/',
+      filename: '[name].bundle.js?build=[hash]',
+      path: path.join(__dirname, './build'),
+      publicPath: '/',
     },
     resolve: {
-      alias: { '@app': path.resolve(__dirname, 'app/') },
+      alias: { '@app': path.resolve(__dirname, './app') },
       extensions: ['.js', '.jsx', '.scss'],
     },
     module: {
@@ -111,8 +115,9 @@ module.exports = (env) => {
     },
     devtool: PRODUCTION ? 'source-map' : 'eval',
     devServer: {
+      contentBase: path.resolve(__dirname, './app'),
+      publicPath: '/',
       historyApiFallback: true,
-      publicPath: 'http://localhost:8080/build/',
     },
     plugins: PRODUCTION ? [
       new webpack.DefinePlugin({

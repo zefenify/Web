@@ -10,8 +10,8 @@ const Featured = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: row;
-  padding: 1em 2em;
   align-items: center;
+  margin-bottom: 2em;
 
   .image {
     flex: 0 0 200px;

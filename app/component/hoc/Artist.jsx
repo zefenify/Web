@@ -24,7 +24,7 @@ const ArtistContainer = styled.div`
     flex: 1 0 auto;
     display: flex;
     flex-direction: row;
-    padding: 1em 2em;
+    margin-bottom: 2em;
 
     &__image {
       flex: 0 0 200px;
@@ -57,8 +57,6 @@ const ArtistContainer = styled.div`
   }
 
   .album-list {
-    padding: 0 2em;
-
     &__album {
       margin-top: 2em;
       padding-bottom: 1px;

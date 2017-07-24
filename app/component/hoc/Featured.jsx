@@ -21,7 +21,6 @@ const FeaturedContainer = styled.div`
   flex-direction: column;
 
   .song {
-    padding: 0 2em;
     flex: 1 0 auto;
 
     & > *:last-child {

@@ -40,9 +40,9 @@ const TopContainer = styled.div`
     bottom: 0;
     left: 0;
     overflow-y: auto;
+    padding: 1em 2em;
 
     &__song {
-      padding: 0 2em;
       flex: 1 1 auto;
 
       & > *:last-child {

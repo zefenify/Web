@@ -20,8 +20,12 @@ import Button from '@app/component/styled/Button';
 const RecentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1em 2em;
   flex: 1 1 auto;
+
+  &.center-content {
+    justify-content: center;
+    align-items: center;
+  }
 
   .mute {
     color: ${props => props.theme.controlMute};
@@ -31,6 +35,7 @@ const RecentContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
+    margin-bottom: 2em;
 
     &__title {
       margin-bottom: -0.15em;
@@ -66,7 +71,7 @@ const RecentlyPlayed = ({
 }) => {
   if (history.length === 0) {
     return (
-      <RecentContainer>
+      <RecentContainer className="center-content">
         <h1 style={{ marginBottom: '0' }}>ላሽ ላሽ  ¯\_(ツ)_/¯</h1>
         <h2 className="mute">You have no recently played songs...yet</h2>
       </RecentContainer>

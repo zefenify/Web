@@ -15,7 +15,6 @@ const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   ovefflow-y: auto;
-  padding: 0 1em;
 
   .title {
     position: absolute;
@@ -24,7 +23,7 @@ const HomeContainer = styled.div`
     left: 0;
     box-shadow: 0 0 4px ${props => props.theme.listBoxShadow};
     height: 60px;
-    padding: 0 1em;
+    padding: 0 2em;
   }
 
   .list {
@@ -37,7 +36,7 @@ const HomeContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: auto;
-    padding-top: 1em;
+    padding: 1em 1em; // <Collection /> has 1em padding
   }
 `;
 

@@ -103,6 +103,8 @@ const RouteContainer = styled.div`
   color: ${props => props.theme.listText};
   max-height: calc(100vh - 70px);
   overflow-y: auto;
+  padding: 1em 2em;
+  padding-top: 2em;
 `;
 
 module.exports = {

@@ -9,7 +9,7 @@
 // Breaking SAGA! 😔
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
-import random from 'lodash/random';
+import randomParam from '@app/util/randomParam';
 
 const API_CACHE = {};
 
@@ -20,7 +20,7 @@ module.exports = URL => new Promise((resolve, reject) => {
   }
 
   store.dispatch(loading(true));
-  fetch(`${URL}?${random(0, 999999)}`)
+  fetch(`${URL}?${randomParam()}`)
     .then(response => response.json())
     .then((data) => {
       store.dispatch(loading(false));

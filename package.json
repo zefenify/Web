@@ -3,8 +3,8 @@
     "s": "./node_modules/.bin/webpack-dev-server --progress --inline --hot",
     "a": "./node_modules/.bin/webpack --json | webpack-bundle-size-analyzer",
     "d": "./node_modules/.bin/webpack --progress --colors",
-    "p": "rm -rf build && BABEL_ENV=production ./node_modules/.bin/webpack -p --env production --progress --colors && cp -a app/static/image build/static",
-    "postinstall": "rm -rf build && BABEL_ENV=production ./node_modules/.bin/webpack -p --env production --progress --colors && cp -a app/static/image build/static"
+    "p": "rm -rf build && ./node_modules/.bin/webpack -p --env production --progress --colors && cp -a app/static/image build/static",
+    "postinstall": "rm -rf build && ./node_modules/.bin/webpack -p --env production --progress --colors && cp -a app/static/image build/static"
   },
   "dependencies": {
     "animejs": "^2.0.2",

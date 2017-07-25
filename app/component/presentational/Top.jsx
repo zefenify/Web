@@ -6,11 +6,6 @@ import styled from 'emotion/react';
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 const TopWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  ovefflow-y: auto;
-  padding: 0 1em;
-
   .title {
     display: flex;
     flex-direction: row;

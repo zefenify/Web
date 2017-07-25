@@ -11,6 +11,7 @@ import Button from '@app/component/styled/Button';
 const ArtistWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
 
   .artist {
     flex: 1 0 auto;

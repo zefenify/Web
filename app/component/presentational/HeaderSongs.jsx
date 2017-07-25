@@ -11,6 +11,7 @@ import Song from '@app/component/presentational/Song';
 const HeaderSongsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
 `;
 
 const Header = styled.div`

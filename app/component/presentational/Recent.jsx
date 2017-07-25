@@ -9,9 +9,10 @@ import Button from '@app/component/styled/Button';
 const RecentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
 
   &.center-content {
+    flex: 1 0 auto;
     justify-content: center;
     align-items: center;
   }
@@ -24,9 +25,10 @@ const RecentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 
     &__title {
+      margin: 0;
       margin-bottom: -0.15em;
     }
 

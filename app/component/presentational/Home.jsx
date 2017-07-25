@@ -7,6 +7,7 @@ import Collection from '@app/component/presentational/Collection';
 const HomeWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
   ovefflow-y: auto;
 
   .title {

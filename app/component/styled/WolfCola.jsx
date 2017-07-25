@@ -104,6 +104,7 @@ const RouteContainer = styled.div`
   max-height: calc(100vh - 70px);
   overflow-y: auto;
   padding: 1em 2em;
+  padding-bottom: 0;
   padding-top: 2em;
 `;
 

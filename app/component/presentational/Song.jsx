@@ -69,6 +69,16 @@ const SongContainer = styled.div`
 
   &.active {
     color: ${props => props.theme.primary};
+
+    &.active_playing {
+      .track-number-icon__number {
+        display: none;
+      }
+
+      &:hover .track-number-icon_volume {
+        display: none !important;
+      }
+    }
   }
 
   &:hover {
@@ -101,10 +111,11 @@ const Song = ({
 }) => {
   if (fullDetail === false) {
     return (
-      <SongContainer className={`${currentSongId === songId ? 'active' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+      <SongContainer className={`${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
         <div className="track-number-icon">
           <span className="track-number-icon__number">{ trackNumber }</span>
           <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
+          <i style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} className="track-number-icon__icon track-number-icon_volume icon-ion-ios-volume-high" />
         </div>
         <div className="name">{ songName }</div>
         <div className="duration">{ human(playtime) }</div>
@@ -113,10 +124,11 @@ const Song = ({
   }
 
   return (
-    <SongContainer className={`${currentSongId === songId ? 'active' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+    <SongContainer className={`${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
       <div className="track-number-icon">
         <span className="track-number-icon__number">{ trackNumber }</span>
         <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
+        <i style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} className="track-number-icon__icon track-number-icon_volume icon-ion-ios-volume-high" />
       </div>
       <div className="name">{ songName }</div>
       <Link to={`/artist/${artistId}`} className="artist-name">{ artistName }</Link>

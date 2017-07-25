@@ -41,14 +41,21 @@ class FeaturedContainer extends Component {
           const { initialQueue } = store.getState();
 
           if (initialQueue.length === 0 || this.state.featured.songs.length === 0) {
-            this.setState(() => ({ playingFeatured: false }));
+            this.setState(() => ({
+              playingFeatured: false,
+            }));
+
             return;
           }
 
           if (sameSongList(this.state.featured.songs, initialQueue)) {
-            this.setState(() => ({ playingFeatured: true }));
+            this.setState(() => ({
+              playingFeatured: true,
+            }));
           } else {
-            this.setState(() => ({ playingFeatured: false }));
+            this.setState(() => ({
+              playingFeatured: false,
+            }));
           }
         });
       }, (err) => {
@@ -61,7 +68,11 @@ class FeaturedContainer extends Component {
       }
 
       const { playing, current, initialQueue } = store.getState();
-      this.setState(() => ({ playing, current, initialQueue }));
+      this.setState(() => ({
+        playing,
+        current,
+        initialQueue,
+      }));
     });
   }
 

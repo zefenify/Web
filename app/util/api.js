@@ -19,14 +19,17 @@ module.exports = URL => new Promise((resolve, reject) => {
   }
 
   store.dispatch(loading(true));
+
   fetch(`${URL}?${randomParam()}`)
     .then(response => response.json())
     .then((data) => {
       store.dispatch(loading(false));
+
       API_CACHE[URL] = data;
       resolve(Object.assign(Array.isArray(API_CACHE[URL]) ? [] : {}, API_CACHE[URL]));
     }, (err) => {
       store.dispatch(loading(false));
+
       reject(err);
     });
 });

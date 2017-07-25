@@ -142,7 +142,7 @@ class SupriseContainer extends Component {
         current={this.state.current}
         duration={this.state.duration}
         playing={this.state.playing}
-        playingSongs={this.state.playingSurprise}
+        playingSongs={this.state.playing && this.state.playingSurprise}
         togglePlayPauseAll={this.togglePlayPauseAll}
         togglePlayPauseSong={this.togglePlayPauseSong}
         {...this.state.surprise}

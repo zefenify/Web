@@ -146,7 +146,7 @@ class FeaturedContainer extends Component {
         playlist={false}
         current={this.state.current}
         playing={this.state.playing}
-        playingSongs={this.state.playingFeatured}
+        playingSongs={this.state.playing && this.state.playingFeatured}
         duration={this.state.duration}
         togglePlayPauseAll={this.togglePlayPauseAll}
         togglePlayPauseSong={this.togglePlayPauseSong}

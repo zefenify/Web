@@ -13,14 +13,14 @@ import '@app/scss/wolf-cola.scss';
 import store from '@app/redux/store';
 import { lightTheme, darkTheme } from '@app/config/theme';
 
-import Home from '@app/component/hoc/Home';
-import Setting from '@app/component/hoc/Setting';
-import Control from '@app/component/hoc/Control';
-import Featured from '@app/component/hoc/Featured';
-import Artist from '@app/component/hoc/Artist';
-import Recent from '@app/component/hoc/Recent';
-import Surprise from '@app/component/hoc/Surprise';
-import Top from '@app/component/hoc/Top';
+import HomeContainer from '@app/component/container/HomeContainer';
+import SettingContainer from '@app/component/container/SettingContainer';
+import ControlContainer from '@app/component/container/ControlContainer';
+import FeaturedContainer from '@app/component/container/FeaturedContainer';
+import ArtistContainer from '@app/component/container/ArtistContainer';
+import RecentContainer from '@app/component/container/RecentContainer';
+import SurpriseContainer  from '@app/component/container/SurpriseContainer';
+import TopContainer from '@app/component/container/TopContainer';
 
 import Spinner from '@app/component/presentational/Spinner';
 
@@ -100,17 +100,17 @@ class WolfCola extends Component {
                 </NavContainer>
 
                 <RouteContainer>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/featured/:id" component={Featured} />
-                  <Route path="/artist/:id" component={Artist} />
-                  <Route path="/top/:category?" component={Top} />
-                  <Route path="/surprise" component={Surprise} />
-                  <Route path="/recent" component={Recent} />
-                  <Route path="/setting" component={Setting} />
+                  <Route exact path="/" component={HomeContainer} />
+                  <Route path="/featured/:id" component={FeaturedContainer} />
+                  <Route path="/artist/:id" component={ArtistContainer} />
+                  <Route path="/top/:category?" component={TopContainer} />
+                  <Route path="/surprise" component={SurpriseContainer} />
+                  <Route path="/recent" component={RecentContainer} />
+                  <Route path="/setting" component={SettingContainer} />
                 </RouteContainer>
               </NavListContainer>
 
-              <Control />
+              <ControlContainer />
             </WolfColaContainer>
           </Router>
         </ThemeProvider>

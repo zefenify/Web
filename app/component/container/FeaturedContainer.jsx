@@ -1,8 +1,5 @@
-/* eslint no-console: 0 */
-
 import React, { Component } from 'react';
 import { string, shape } from 'prop-types';
-import styled from 'emotion/react';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
@@ -10,26 +7,11 @@ import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
 
-import Divider from '@app/component/styled/Divider';
-import Song from '@app/component/presentational/Song';
-import PlaylistHeader from '@app/component/presentational/PlaylistHeader';
+import Featured from '@app/component/presentational/Featured';
 
 import store from '@app/redux/store';
 
-const FeaturedContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  .song {
-    flex: 1 0 auto;
-
-    & > *:last-child {
-      margin-bottom: 1px;
-    }
-  }
-`;
-
-class Featured extends Component {
+class FeaturedContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +52,7 @@ class Featured extends Component {
           }
         });
       }, (err) => {
-        console.log(err);
+        /* handle fetch error */
       });
 
     this.unsubscribe = store.subscribe(() => {
@@ -103,7 +85,9 @@ class Featured extends Component {
         },
       });
 
-      this.setState(() => ({ playingFeatured: true }));
+      this.setState(() => ({
+        playingFeatured: true,
+      }));
       // resuming / pausing playlist
     } else if (this.state.current !== null) {
       store.dispatch({
@@ -136,7 +120,9 @@ class Featured extends Component {
       },
     });
 
-    this.setState(() => ({ playingFeatured: true }));
+    this.setState(() => ({
+      playingFeatured: true,
+    }));
   }
 
   render() {
@@ -145,33 +131,20 @@ class Featured extends Component {
     }
 
     return (
-      <FeaturedContainer>
-        <PlaylistHeader
-          {...this.state.featured}
-          duration={this.state.duration}
-          playlist={false}
-          playing={(this.state.playing && this.state.playingFeatured)}
-          togglePlayPause={this.togglePlayPauseAll}
-        />
-
-        <Divider />
-
-        <div className="song">
-          { this.state.featured.songs.map((song, index) => <Song
-            key={song.songId}
-            currentSongId={this.state.current === null ? -1 : this.state.current.songId}
-            trackNumber={index + 1}
-            togglePlayPause={this.togglePlayPauseSong}
-            playing={this.state.playing}
-            {...song}
-          />) }
-        </div>
-      </FeaturedContainer>
+      <Featured
+        featured={this.state.featured}
+        current={this.state.current}
+        playing={this.state.playing}
+        duration={this.state.duration}
+        playingFeatured={this.state.playingFeatured}
+        togglePlayPauseAll={this.togglePlayPauseAll}
+        togglePlayPauseSong={this.togglePlayPauseSong}
+      />
     );
   }
 }
 
-Featured.propTypes = {
+FeaturedContainer.propTypes = {
   match: shape({
     params: shape({
       id: string,
@@ -179,6 +152,4 @@ Featured.propTypes = {
   }).isRequired,
 };
 
-Featured.defaultProps = {};
-
-module.exports = Featured;
+module.exports = FeaturedContainer;

@@ -1,21 +1,16 @@
 import React from 'react';
 import { func, string, number } from 'prop-types';
-import { connect } from 'react-redux';
 import styled from 'emotion/react';
-
-import { SET_THEME } from '@app/redux/constant/theme';
-import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
 
 import Button from '@app/component/styled/Button';
 import Divider from '@app/component/styled/Divider';
 import Range from '@app/component/styled/Range';
 
-const SettingContainer = styled.div`
+const SettingWrapper = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1em;
 
   .crossfade {
     padding: 0;
@@ -28,11 +23,16 @@ const SettingContainer = styled.div`
   }
 `;
 
-const Setting = ({ currentTheme, currentCrossfade, crossfade, toggleTheme }) => {
+const Setting = ({
+  currentTheme,
+  currentCrossfade,
+  crossfade,
+  toggleTheme,
+}) => {
   const crossfadeMessage = `Crossfade: ${currentCrossfade === 0 ? 'Off' : `${currentCrossfade} Second${currentCrossfade > 1 ? 's' : ''}`}`;
 
   return (
-    <SettingContainer>
+    <SettingWrapper>
       <h1>Settings</h1>
 
       <Divider />
@@ -55,7 +55,7 @@ const Setting = ({ currentTheme, currentCrossfade, crossfade, toggleTheme }) => 
           step="1"
         />
       </div>
-    </SettingContainer>
+    </SettingWrapper>
   );
 };
 
@@ -67,18 +67,8 @@ Setting.propTypes = {
 };
 
 Setting.defaultProps = {
-  currentTheme: '',
+  currentTheme: 'light',
   currentCrossfade: 0,
 };
 
-module.exports = connect(state => ({
-  currentTheme: state.theme,
-  currentCrossfade: state.crossfade,
-}), dispatch => ({
-  toggleTheme() {
-    dispatch({ type: SET_THEME });
-  },
-  crossfade(e) {
-    dispatch({ type: SET_CROSSFADE, payload: Number.parseInt(e.target.value, 10) });
-  },
-}))(Setting);
+module.exports = Setting;

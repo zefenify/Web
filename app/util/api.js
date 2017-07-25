@@ -1,5 +1,4 @@
 /* global fetch */
-/* eslint no-console: 0 */
 
 /**
  * "wrapper" around fetch that makes sure all request that go out will be saved

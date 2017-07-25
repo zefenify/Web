@@ -1,21 +1,15 @@
 import React from 'react';
 import { func, bool, string, number, oneOfType, object } from 'prop-types';
-import styled from 'emotion/react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import styled from 'emotion/react';
 
+import { BASE } from '@app/config/api';
 import { human } from '@app/util/time';
+
 import { ControlsContainer } from '@app/component/styled/WolfCola';
 import Range from '@app/component/styled/Range';
 
-import { BASE } from '@app/config/api';
-import { SET_VOLUME } from '@app/redux/constant/volume';
-import { SET_REPEAT } from '@app/redux/constant/repeat';
-import { SET_SHUFFLE } from '@app/redux/constant/shuffle';
-import { SET_REMAINING } from '@app/redux/constant/remaining';
-import { NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
-
-const NowPlayingContainer = styled.div`
+const NowPlayingWrapper = styled.div`
   flex: 0 1 250px;
   max-width: 250px;
   padding-left: 6px;
@@ -68,7 +62,7 @@ const NowPlayingContainer = styled.div`
   }
 `;
 
-const MusicControlsContainer = styled.div`
+const MusicControlsWrapper = styled.div`
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -125,7 +119,7 @@ const MusicProgress = styled.div`
   cursor: default;
 `;
 
-const VolumeContainer = styled.div`
+const VolumeWrapper = styled.div`
   flex: 0 1 175px;
   display: flex;
   flex-direction: row;
@@ -142,23 +136,23 @@ const Control = ({
   togglePlayPause,
   next,
   previous,
-  seek,
-  duration,
-  playbackPosition,
-  remaining,
   playing,
   shuffle,
   repeat,
   volume,
-  toggleRemaining,
+  remaining,
+  duration,
+  playbackPosition,
+  seek,
   toggleShuffle,
-  setRepeat,
+  toggleRemaining,
   setVolume,
   muteVolume,
   maxVolume,
+  setRepeat,
 }) => (
   <ControlsContainer>
-    <NowPlayingContainer>
+    <NowPlayingWrapper>
       {
         current !== null
           ? (
@@ -171,9 +165,9 @@ const Control = ({
             </div>
           ) : null
       }
-    </NowPlayingContainer>
+    </NowPlayingWrapper>
 
-    <MusicControlsContainer>
+    <MusicControlsWrapper>
       <MusicControls>
         <div className={`control ${shuffle ? 'control_active' : ''}`} onClick={toggleShuffle}>
           <i className="icon-ion-ios-shuffle-strong" />
@@ -216,9 +210,9 @@ const Control = ({
           <span>{`${remaining ? human(duration - playbackPosition) : human(duration)}`}</span>
         </small>
       </MusicProgress>
-    </MusicControlsContainer>
+    </MusicControlsWrapper>
 
-    <VolumeContainer>
+    <VolumeWrapper>
       <i className="icon-ion-ios-volume-low" style={{ fontSize: '2em' }} onClick={muteVolume} />
       <Range
         type="range"
@@ -229,7 +223,7 @@ const Control = ({
         onChange={e => setVolume(e)}
       />
       <i className="icon-ion-ios-volume-high" style={{ fontSize: '2em' }} onClick={maxVolume} />
-    </VolumeContainer>
+    </VolumeWrapper>
   </ControlsContainer>
 );
 
@@ -265,44 +259,4 @@ Control.defaultProps = {
   playbackPosition: 0,
 };
 
-module.exports = connect(state => ({
-  current: state.current,
-  duration: state.duration,
-  playbackPosition: state.playbackPosition,
-  playing: state.playing,
-  shuffle: state.shuffle,
-  repeat: state.repeat,
-  volume: state.volume,
-  remaining: state.remaining,
-}), dispatch => () => ({
-  seek(e) {
-    dispatch({ type: SEEK, payload: Number.parseInt(e.target.value, 10) });
-  },
-  togglePlayPause() {
-    dispatch({ type: TOGGLE_PLAY_PAUSE });
-  },
-  next() {
-    dispatch({ type: NEXT });
-  },
-  previous() {
-    dispatch({ type: PREVIOUS });
-  },
-  toggleShuffle() {
-    dispatch({ type: SET_SHUFFLE });
-  },
-  toggleRemaining() {
-    dispatch({ type: SET_REMAINING });
-  },
-  setRepeat() {
-    dispatch({ type: SET_REPEAT });
-  },
-  setVolume(e) {
-    dispatch({ type: SET_VOLUME, payload: Number.parseFloat(e.target.value) });
-  },
-  muteVolume() {
-    dispatch({ type: SET_VOLUME, payload: 0 });
-  },
-  maxVolume() {
-    dispatch({ type: SET_VOLUME, payload: 1 });
-  },
-}))(Control);
+module.exports = Control;

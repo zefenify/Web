@@ -1,8 +1,5 @@
-/* eslint no-console: 0 */
-
 import React, { Component } from 'react';
 import { string, shape } from 'prop-types';
-import styled from 'emotion/react';
 import flatten from 'lodash/flatten';
 
 import { BASE } from '@app/config/api';
@@ -12,110 +9,9 @@ import sameSongList from '@app/util/sameSongList';
 import api from '@app/util/api';
 import store from '@app/redux/store';
 
-import Divider from '@app/component/styled/Divider';
-import Song from '@app/component/presentational/Song';
-import Button from '@app/component/styled/Button';
+import Artist from '@app/component/presentational/Artist';
 
-const ArtistContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  .artist {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 2em;
-
-    &__image {
-      flex: 0 0 200px;
-      height: 200px;
-      width: 200px;
-      border: 1px solid rgba(51, 51, 51, 0.25);
-      border-radius: 50%;
-    }
-
-    &__info {
-      flex: 1 0 auto;
-      display: flex;
-      flex-direction: column;
-      margin-left: 1em;
-      justify-content: center;
-
-      & > * {
-        margin: 0;
-      }
-
-      & > p:not(:first-child) {
-        color: ${props => props.theme.controlMute};
-      }
-
-      button {
-        width: 175px;
-        margin-top: 1em;
-      }
-    }
-  }
-
-  .album-list {
-    &__album {
-      margin-top: 2em;
-      padding-bottom: 1px;
-    }
-  }
-
-  .album {
-    &__song-list {
-      margin-top: 1em;
-    }
-  }
-
-  .album-cover {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    &__cover {
-      width: 150px;
-      height: 150px;
-      flex: 0 0 150px;
-      border: 1px solid rgba(51, 51, 51, 0.25);
-    }
-
-    &__info {
-      flex: 1 0 auto;
-      padding-left: 1em;
-    }
-  }
-
-  .album-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1 0 auto;
-    max-width: 64vw;
-
-    &__name {
-      flex: 0 1 100%;
-      font-size: 3em;
-      padding: 0;
-      margin: 0;
-      margin-bottom: 0.25em;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    &__button {
-      width: 125px;
-    }
-  }
-
-  .song-list {
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-class Artist extends Component {
+class ArtistContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -138,7 +34,7 @@ class Artist extends Component {
       .then((data) => {
         this.afterFetch(data);
       }, (err) => {
-        console.log(err);
+        /* handle fetch error */
       });
 
     this.unsubscribe = store.subscribe(() => {
@@ -160,7 +56,7 @@ class Artist extends Component {
       .then((data) => {
         this.afterFetch(data);
       }, (err) => {
-        console.log(err);
+        /* handle fetch error */
       });
   }
 
@@ -306,58 +202,22 @@ class Artist extends Component {
     }
 
     return (
-      <ArtistContainer>
-        <div className="artist">
-          <div className="artist__image" style={{ background: `transparent url('${BASE}${this.state.artist.thumbnail}') 50% 50% / cover no-repeat` }} />
-          <div className="artist__info">
-            <p>ARTIST</p>
-            <h1>{ this.state.artist.artistName }</h1>
-            <p style={{ marginTop: '0.5em' }}>{`${this.state.artist.albums.length} album${this.state.artist.albums.length > 1 ? 's' : ''}, ${this.state.songCount} song${this.state.songCount > 1 ? 's' : ''}`}</p>
-            <Button onClick={this.togglePlayPauseArtist}>{`${this.state.playing && this.state.playingArist && this.state.albumPlayingIndex === -1 ? 'PAUSE' : 'PLAY'}`}</Button>
-          </div>
-        </div>
-
-        <Divider />
-
-        <div className="album-list">
-          <h2>Albums</h2>
-
-          {
-            this.state.artist.albums.map((album, albumIndex) => (
-              <div className="album-list__album album" key={`${this.state.artist.artistId}-${album.albumName}`}>
-                <div className="album-cover">
-                  <div className="album-cover__cover" style={{ background: `transparent url('${BASE}${album.albumPurl}') 50% 50% / cover no-repeat` }} />
-                  <div className="album-cover__info album-info">
-                    <h1 className="album-info__name">{ album.albumName }</h1>
-                    <Button className="album-info__button" onClick={() => this.togglePlayPauseAlbum(album, albumIndex)}>{`${this.state.playing && this.state.albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>
-                  </div>
-                </div>
-
-                <div className="album__song-list song-list">
-                  {
-                    album.songs.map((song, songIndex) => (
-                      <Song
-                        fullDetail={false}
-                        key={song.songId}
-                        currentSongId={this.state.current === null ? -1 : this.state.current.songId}
-                        trackNumber={songIndex + 1}
-                        togglePlayPause={this.togglePlayPauseSong}
-                        playing={this.state.playing}
-                        {...song}
-                      />
-                    ))
-                  }
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </ArtistContainer>
+      <Artist
+        artist={this.state.artist}
+        current={this.state.current}
+        playing={this.state.playing}
+        songCount={this.state.songCount}
+        albumPlayingIndex={this.state.albumPlayingIndex}
+        playingArist={this.state.playingArist}
+        togglePlayPauseArtist={this.togglePlayPauseArtist}
+        togglePlayPauseSong={this.togglePlayPauseSong}
+        togglePlayPauseAlbum={this.togglePlayPauseAlbum}
+      />
     );
   }
 }
 
-Artist.propTypes = {
+ArtistContainer.propTypes = {
   match: shape({
     params: shape({
       id: string,
@@ -365,4 +225,4 @@ Artist.propTypes = {
   }).isRequired,
 };
 
-module.exports = Artist;
+module.exports = ArtistContainer;

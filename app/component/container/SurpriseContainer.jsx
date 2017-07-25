@@ -1,36 +1,17 @@
 /* eslint no-console: 0 */
 
 import React, { Component } from 'react';
-import styled from 'emotion/react';
 
-import { BASE } from '@app/config/api';
+import { SURPRISE_ME } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
-
-import Divider from '@app/component/styled/Divider';
-import PlaylistHeader from '@app/component/presentational/PlaylistHeader';
-import Song from '@app/component/presentational/Song';
 import api from '@app/util/api';
-
 import store from '@app/redux/store';
 
-const SurpriseContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1em 2em;
-  flex: 1 1 auto;
+import Surprise from '@app/component/presentational/Surprise';
 
-  .song {
-    flex: 1 1 auto;
-
-    & > *:last-child {
-      margin-bottom: 1px;
-    }
-  }
-`;
-
-class Suprise extends Component {
+class SupriseContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,7 +32,7 @@ class Suprise extends Component {
 
   componentDidMount() {
     // calling...
-    api(`${BASE}/json/curated/surpriseme.php`)
+    api(SURPRISE_ME)
       .then((data) => {
         this.setState(() => ({
           surpriseList: data,
@@ -71,7 +52,7 @@ class Suprise extends Component {
           }
         });
       }, (err) => {
-        console.log(err);
+        /* handle fetch error */
       });
 
     this.unsubscribe = store.subscribe(() => {
@@ -104,7 +85,9 @@ class Suprise extends Component {
         },
       });
 
-      this.setState(() => ({ playingSurprise: true }));
+      this.setState(() => ({
+        playingSurprise: true,
+      }));
       // resuming / pausing playlist
     } else if (this.state.surpriseList !== null) {
       store.dispatch({
@@ -137,7 +120,9 @@ class Suprise extends Component {
       },
     });
 
-    this.setState(() => ({ playingSurprise: true }));
+    this.setState(() => ({
+      playingSurprise: true,
+    }));
   }
 
   render() {
@@ -146,29 +131,17 @@ class Suprise extends Component {
     }
 
     return (
-      <SurpriseContainer>
-        <PlaylistHeader
-          {...this.state.surpriseList}
-          duration={this.state.duration}
-          playing={(this.state.playing && this.state.playingSurprise)}
-          togglePlayPause={this.togglePlayPauseAll}
-        />
-
-        <Divider />
-
-        <div className="song">
-          { this.state.surpriseList.songs.map((song, index) => <Song
-            key={song.songId}
-            currentSongId={this.state.current === null ? -1 : this.state.current.songId}
-            trackNumber={index + 1}
-            togglePlayPause={this.togglePlayPauseSong}
-            playing={this.state.playing}
-            {...song}
-          />) }
-        </div>
-      </SurpriseContainer>
+      <Surprise
+        playing={this.state.playing}
+        current={this.state.current}
+        surpriseList={this.state.surpriseList}
+        duration={this.state.duration}
+        playingSurprise={this.state.playingSurprise}
+        togglePlayPauseAll={this.togglePlayPauseAll}
+        togglePlayPauseSong={this.togglePlayPauseSong}
+      />
     );
   }
 }
 
-module.exports = Suprise;
+module.exports = SupriseContainer;

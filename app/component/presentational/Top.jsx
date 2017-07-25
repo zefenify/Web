@@ -3,9 +3,7 @@ import { arrayOf, shape, func, number, bool } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'emotion/react';
 
-import Divider from '@app/component/styled/Divider';
-import Song from '@app/component/presentational/Song';
-import PlaylistHeader from '@app/component/presentational/PlaylistHeader';
+import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 const TopWrapper = styled.div`
   display: flex;
@@ -34,14 +32,6 @@ const TopWrapper = styled.div`
     left: 0;
     overflow-y: auto;
     padding: 1em 2em;
-
-    &__song {
-      flex: 1 1 auto;
-
-      & > *:last-child {
-        margin-bottom: 1px;
-      }
-    }
   }
 `;
 
@@ -99,29 +89,16 @@ const Top = ({
       </div>
 
       <div className="list">
-        <PlaylistHeader
-          {...most}
+        <HeaderSongs
+          playlist={false}
+          current={current}
+          playing={playing}
+          playingSongs={playingTheSameMost}
           duration={duration}
-          playing={(playing && playingTheSameMost)}
-          togglePlayPause={togglePlayPauseAll}
+          togglePlayPauseAll={togglePlayPauseAll}
+          togglePlayPauseSong={togglePlayPauseSong}
+          {...most}
         />
-
-        <Divider />
-
-        <div className="list__song">
-          {
-            most.songs.map((song, index) => (
-              <Song
-                key={song.songId}
-                currentSongId={current === null ? -1 : current.songId}
-                trackNumber={index + 1}
-                togglePlayPause={togglePlayPauseSong}
-                playing={playing}
-                {...song}
-              />
-            ))
-          }
-        </div>
       </div>
     </TopWrapper>
   );

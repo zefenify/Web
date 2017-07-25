@@ -9,7 +9,7 @@ import { human } from '@app/util/time';
 import api from '@app/util/api';
 import store from '@app/redux/store';
 
-import Surprise from '@app/component/presentational/Surprise';
+import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 class SupriseContainer extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class SupriseContainer extends Component {
     this.state = {
       playing: false,
       current: null,
-      surpriseList: null,
+      surprise: null,
       initialQueue: [],
       duration: {
         hours: 0,
@@ -35,20 +35,26 @@ class SupriseContainer extends Component {
     api(SURPRISE_ME)
       .then((data) => {
         this.setState(() => ({
-          surpriseList: data,
+          surprise: data,
           duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
         }), () => {
           const { initialQueue } = store.getState();
 
-          if (initialQueue.length === 0 || this.state.surpriseList.songs.length === 0) {
-            this.setState(() => ({ playingSurprise: false }));
+          if (initialQueue.length === 0 || this.state.surprise.songs.length === 0) {
+            this.setState(() => ({
+              playingSurprise: false,
+            }));
             return;
           }
 
-          if (sameSongList(this.state.surpriseList.songs, initialQueue)) {
-            this.setState(() => ({ playingSurprise: true }));
+          if (sameSongList(this.state.surprise.songs, initialQueue)) {
+            this.setState(() => ({
+              playingSurprise: true,
+            }));
           } else {
-            this.setState(() => ({ playingSurprise: false }));
+            this.setState(() => ({
+              playingSurprise: false,
+            }));
           }
         });
       }, (err) => {
@@ -56,7 +62,7 @@ class SupriseContainer extends Component {
       });
 
     this.unsubscribe = store.subscribe(() => {
-      if (this.state.surpriseList === null) {
+      if (this.state.surprise === null) {
         return;
       }
 
@@ -70,7 +76,7 @@ class SupriseContainer extends Component {
   }
 
   togglePlayPauseAll() {
-    if (this.state.surpriseList === null) {
+    if (this.state.surprise === null) {
       return;
     }
 
@@ -79,9 +85,9 @@ class SupriseContainer extends Component {
       store.dispatch({
         type: PLAY,
         payload: {
-          play: this.state.surpriseList.songs[0],
-          queue: this.state.surpriseList.songs,
-          initialQueue: this.state.surpriseList.songs,
+          play: this.state.surprise.songs[0],
+          queue: this.state.surprise.songs,
+          initialQueue: this.state.surprise.songs,
         },
       });
 
@@ -89,7 +95,7 @@ class SupriseContainer extends Component {
         playingSurprise: true,
       }));
       // resuming / pausing playlist
-    } else if (this.state.surpriseList !== null) {
+    } else if (this.state.surprise !== null) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -105,7 +111,7 @@ class SupriseContainer extends Component {
       return;
     }
 
-    const songIdIndex = this.state.surpriseList.songs.findIndex(song => song.songId === songId);
+    const songIdIndex = this.state.surprise.songs.findIndex(song => song.songId === songId);
 
     if (songIdIndex === -1) {
       return;
@@ -114,9 +120,9 @@ class SupriseContainer extends Component {
     store.dispatch({
       type: PLAY,
       payload: {
-        play: this.state.surpriseList.songs[songIdIndex],
-        queue: this.state.surpriseList.songs,
-        initialQueue: this.state.surpriseList.songs,
+        play: this.state.surprise.songs[songIdIndex],
+        queue: this.state.surprise.songs,
+        initialQueue: this.state.surprise.songs,
       },
     });
 
@@ -126,19 +132,20 @@ class SupriseContainer extends Component {
   }
 
   render() {
-    if (this.state.surpriseList === null) {
+    if (this.state.surprise === null) {
       return null;
     }
 
     return (
-      <Surprise
-        playing={this.state.playing}
+      <HeaderSongs
+        playlist={false}
         current={this.state.current}
-        surpriseList={this.state.surpriseList}
         duration={this.state.duration}
-        playingSurprise={this.state.playingSurprise}
+        playing={this.state.playing}
+        playingSongs={this.state.playingSurprise}
         togglePlayPauseAll={this.togglePlayPauseAll}
         togglePlayPauseSong={this.togglePlayPauseSong}
+        {...this.state.surprise}
       />
     );
   }

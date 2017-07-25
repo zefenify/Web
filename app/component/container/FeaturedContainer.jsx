@@ -7,7 +7,7 @@ import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
 
-import Featured from '@app/component/presentational/Featured';
+import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 import store from '@app/redux/store';
 
@@ -131,14 +131,15 @@ class FeaturedContainer extends Component {
     }
 
     return (
-      <Featured
-        featured={this.state.featured}
+      <HeaderSongs
+        playlist={false}
         current={this.state.current}
         playing={this.state.playing}
+        playingSongs={this.state.playingFeatured}
         duration={this.state.duration}
-        playingFeatured={this.state.playingFeatured}
         togglePlayPauseAll={this.togglePlayPauseAll}
         togglePlayPauseSong={this.togglePlayPauseSong}
+        {...this.state.featured}
       />
     );
   }

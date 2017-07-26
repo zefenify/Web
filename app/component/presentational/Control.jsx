@@ -83,7 +83,6 @@ const MusicControls = styled.div`
 
     &:hover {
       transform: scale(1.2);
-      color: ${props => props.theme.listText};
     }
 
     &_active {

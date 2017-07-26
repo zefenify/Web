@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "s": "./node_modules/.bin/webpack-dev-server --progress --inline --hot",
-    "a": "./node_modules/.bin/webpack --json | webpack-bundle-size-analyzer",
-    "d": "./node_modules/.bin/webpack --progress --colors",
-    "p": "rm -rf build && ./node_modules/.bin/webpack -p --env production --progress --colors && cp -a app/static/image build/static",
-    "postinstall": "rm -rf build && ./node_modules/.bin/webpack -p --env production --progress --colors && cp -a app/static/image build/static"
+    "s": "webpack-dev-server --progress --inline --hot",
+    "a": "webpack --json | webpack-bundle-size-analyzer",
+    "d": "rm -rf build && webpack --progress --colors && cp -a app/static/image build/static",
+    "p": "rm -rf build && webpack -p --env production --progress --colors && cp -a app/static/image build/static",
+    "postinstall": "rm -rf build && webpack -p --env production --progress --colors && cp -a app/static/image build/static"
   },
   "dependencies": {
     "animejs": "^2.0.2",
@@ -43,7 +43,8 @@
     "precss": "^1.4.0",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.2",
-    "webpack": "^3.2.0",
+    "uglifyjs-webpack-plugin": "beta",
+    "webpack": "^3.4.0",
     "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-dev-server": "^2.5.0"
   },

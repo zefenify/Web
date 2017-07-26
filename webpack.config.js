@@ -1,17 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const commonPlugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
   new HtmlWebpackPlugin({
     template: 'app/index.html',
-  }),
-  new ExtractTextPlugin({
-    filename: '[name].bundle.css?build=[hash]',
-    disable: false,
-    allChunks: true,
+    minify: {
+      collapseInlineTagWhitespace: true,
+      collapseWhitespace: true,
+      removeAttributeQuotes: true,
+      removeComments: true,
+    },
+    hash: true,
   }),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
@@ -39,7 +42,7 @@ module.exports = (env) => {
       app: ['./app/index.jsx'],
     },
     output: {
-      filename: '[name].bundle.js?build=[hash]',
+      filename: '[name].bundle.js',
       path: path.join(__dirname, './build'),
       publicPath: '/',
     },
@@ -52,18 +55,20 @@ module.exports = (env) => {
         // js[x]
         {
           test: /\.jsx?$/,
-          loader: 'babel-loader',
           exclude: /node_modules/,
-          options: {
-            plugins: [
-              'emotion/babel',
-              'transform-react-inline-elements',
-              ['transform-runtime', { helpers: false, polyfill: false }],
-            ],
-            presets: [
-              ['env', { targets: { browsers: ['safari >= 10'], uglify: true } }], // 100% ES2015
-              'react',
-            ],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                'emotion/babel',
+                'transform-react-inline-elements',
+                ['transform-runtime', { helpers: false, polyfill: false }],
+              ],
+              presets: [
+                ['env', { targets: { safari: 10, uglify: true }, useBuiltIns: true, debug: true }], // 100% ES2015
+                'react',
+              ],
+            },
           },
         },
 
@@ -71,30 +76,30 @@ module.exports = (env) => {
         {
           test: /\.css$/,
           exclude: /emotion\.css$/,
-          use: ExtractTextPlugin.extract({
+          use: PRODUCTION ? ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: {
               loader: 'css-loader',
               options: {
-                sourceMap: PRODUCTION,
+                sourceMap: true,
                 modules: true,
               },
             },
-          }),
+          }) : ['style-loader', { loader: 'css-loader', options: { modules: true } }],
         },
 
         // emotion.css
         {
           test: /emotion\.css$/,
-          use: ExtractTextPlugin.extract({
+          use: PRODUCTION ? ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: {
               loader: 'css-loader',
               options: {
-                sourceMap: PRODUCTION,
+                sourceMap: true,
               },
             },
-          }),
+          }) : ['style-loader', { loader: 'css-loader' }],
         },
 
         // fonts
@@ -106,10 +111,10 @@ module.exports = (env) => {
         // sass
         {
           test: /\.scss$/,
-          use: ExtractTextPlugin.extract({
+          use: PRODUCTION ? ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: ['css-loader', 'postcss-loader', 'sass-loader'],
-          }),
+          }) : ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
         },
       ],
     },
@@ -125,11 +130,13 @@ module.exports = (env) => {
           NODE_ENV: JSON.stringify('production'),
         },
       }),
-      new webpack.optimize.UglifyJsPlugin({
+      new ExtractTextPlugin({
+        filename: '[name].bundle.css',
+        disable: false,
+        allChunks: true,
+      }),
+      new UglifyJsPlugin({
         sourceMap: true,
-        compress: {
-          warnings: false,
-        },
       }),
     ].concat(commonPlugins) : [
       // add development plugins here

@@ -18,7 +18,6 @@ class TopContainer extends Component {
       most: null,
       current: null,
       playing: false,
-      initialQueue: [],
       duration: {
         hours: 0,
         minutes: 0,

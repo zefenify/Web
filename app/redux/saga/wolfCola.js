@@ -133,7 +133,9 @@ function* play(action) {
   // same song can be in different playlist hence the "optimization" has to be removed
   yield put(initialQueue(payload.initialQueue));
   yield put(queueSet(payload.queue));
-  yield put(queueRemove(payload.queue.findIndex(song => song.songId === payload.play.songId)));
+  if (state.shuffle === true) {
+    yield put(queueRemove(payload.queue.findIndex(song => song.songId === payload.play.songId)));
+  }
   yield put(current(payload.play));
 
   if (state.crossfade === 0) { // crossfade is off - clearing any Howl event
@@ -299,33 +301,42 @@ function* next() {
   }
 
   // repeat is `OFF | ALL`, there are items in queue; picking next item according to shuffle...
-  let nextPlayIndex = 0;
-
   if (state.shuffle) {
-    nextPlayIndex = random(0)(state.initialQueue.length - 1);
-  } else {
-    // `nextPlayIndex` will not be -1 on `findIndex`
-    nextPlayIndex = state.initialQueue.findIndex(song => song.songId === state.current.songId) + 1;
+    const nextPlayIndex = random(0)(state.queue.length - 1);
 
-    if (nextPlayIndex === state.initialQueue.length) {
-      if (state.repeat === 'ALL') {
-        nextPlayIndex = 0;
-      } else {
-        // killing...
-        // crossroading will not be applied here as there's nothing to crossfade-to
-        wolfCola[wolfCola.playingKey].off();
-        wolfCola[wolfCola.playingKey].unload();
-        wolfCola[wolfCola.playingKey] = null;
-        wolfCola.crossfadeInProgress = false;
+    yield put({
+      type: PLAY,
+      payload: {
+        play: state.queue[nextPlayIndex],
+        queue: state.queue,
+        initialQueue: state.initialQueue,
+      },
+    });
 
-        // yield my beer...
-        yield put(duration(0));
-        yield put(playbackPosition(0));
-        yield put(playing(false));
-        yield put(current(null));
+    return;
+  }
 
-        return;
-      }
+  // `nextPlayIndex` will not be -1 on `findIndex`
+  let nextPlayIndex = state.initialQueue.findIndex(song => song.songId === state.current.songId) + 1;
+
+  if (nextPlayIndex === state.initialQueue.length) {
+    if (state.repeat === 'ALL') {
+      nextPlayIndex = 0;
+    } else {
+      // killing...
+      // crossroading will not be applied here as there's nothing to crossfade-to
+      wolfCola[wolfCola.playingKey].off();
+      wolfCola[wolfCola.playingKey].unload();
+      wolfCola[wolfCola.playingKey] = null;
+      wolfCola.crossfadeInProgress = false;
+
+      // yield my beer...
+      yield put(duration(0));
+      yield put(playbackPosition(0));
+      yield put(playing(false));
+      yield put(current(null));
+
+      return;
     }
   }
 
@@ -387,7 +398,7 @@ function* previous() {
     type: PLAY,
     payload: {
       play: state.history[0],
-      queue: [state.history[0], ...state.queue],
+      queue: state.shuffle ? [state.history[0], ...state.queue] : [...state.initialQueue],
       initialQueue: state.initialQueue,
     },
   });

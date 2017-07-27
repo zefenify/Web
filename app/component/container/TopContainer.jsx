@@ -146,9 +146,6 @@ class TopContainer extends Component {
   }
 
   render() {
-    // eslint-disable-next-line
-    console.log('TR');
-
     return (
       <Top
         most={this.state.most}
@@ -181,4 +178,4 @@ TopContainer.defaultProps = {
   current: null,
 };
 
-module.exports = DJkhaled('current', 'playing', 'initialQueue')(TopContainer);
+module.exports = DJkhaled('current', 'playing')(TopContainer);

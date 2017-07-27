@@ -140,6 +140,9 @@ class FeaturedContainer extends Component {
       return null;
     }
 
+    // eslint-disable-next-line
+    console.log('FR');
+
     return (
       <HeaderSongs
         playlist={false}

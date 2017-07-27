@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, shape } from 'prop-types';
+import { string, bool, func, shape } from 'prop-types';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
@@ -10,14 +10,13 @@ import api from '@app/util/api';
 import store from '@app/redux/store';
 
 import Top from '@app/component/presentational/Top';
+import DJkhaled from '@app/component/hoc/DJkhaled';
 
 class TopContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       most: null,
-      current: null,
-      playing: false,
       duration: {
         hours: 0,
         minutes: 0,
@@ -31,11 +30,6 @@ class TopContainer extends Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      const { playing, current, initialQueue } = store.getState();
-      this.setState(() => ({ playing, current, initialQueue }));
-    });
-
     if (this.props.match.params.category === undefined) {
       this.props.history.replace('/top/recent');
       return;
@@ -55,10 +49,6 @@ class TopContainer extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   loadSongs(filter) {
     if (['recent', 'liked', 'played'].includes(filter) === false) {
       this.props.history.replace('/top/recent');
@@ -66,7 +56,9 @@ class TopContainer extends Component {
     }
 
     // this makes sure tab navigation clears previous render
-    this.setState(() => ({ most: null }));
+    this.setState(() => ({
+      most: null,
+    }));
 
     api(`${BASE}/json/list/most${filter}.json`)
       .then((data) => {
@@ -103,7 +95,7 @@ class TopContainer extends Component {
     }
 
     // booting playlist
-    if (this.state.current === null || this.state.playingTheSameMost === false) {
+    if (this.props.current === null || this.state.playingTheSameMost === false) {
       store.dispatch({
         type: PLAY,
         payload: {
@@ -117,7 +109,7 @@ class TopContainer extends Component {
         playingTheSameMost: true,
       }));
       // resuming / pausing playlist
-    } else if (this.state.current !== null) {
+    } else if (this.props.current !== null) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -125,7 +117,7 @@ class TopContainer extends Component {
   }
 
   togglePlayPauseSong(songId) {
-    if (this.state.current !== null && this.state.current.songId === songId) {
+    if (this.props.current !== null && this.props.current.songId === songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -154,11 +146,14 @@ class TopContainer extends Component {
   }
 
   render() {
+    // eslint-disable-next-line
+    console.log('TR');
+
     return (
       <Top
         most={this.state.most}
-        current={this.state.current}
-        playing={this.state.playing}
+        current={this.props.current}
+        playing={this.props.playing}
         duration={this.state.duration}
         playingTheSameMost={this.state.playingTheSameMost}
         togglePlayPauseAll={this.togglePlayPauseAll}
@@ -169,6 +164,8 @@ class TopContainer extends Component {
 }
 
 TopContainer.propTypes = {
+  playing: bool,
+  current: shape({}),
   history: shape({
     replace: func,
   }).isRequired,
@@ -179,4 +176,9 @@ TopContainer.propTypes = {
   }).isRequired,
 };
 
-module.exports = TopContainer;
+TopContainer.defaultProps = {
+  playing: false,
+  current: null,
+};
+
+module.exports = DJkhaled('current', 'playing', 'initialQueue')(TopContainer);

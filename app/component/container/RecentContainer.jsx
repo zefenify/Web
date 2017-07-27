@@ -11,6 +11,7 @@ import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import historyDuration from '@app/redux/selector/historyDuration';
 import historyPlaying from '@app/redux/selector/historyPlaying';
 
+import DJkhaled from '@app/component/hoc/DJkhaled';
 import Recent from '@app/component/presentational/Recent';
 
 const RecentlyPlayed = props => (<Recent {...props} />);
@@ -59,4 +60,4 @@ module.exports = connect(state => ({
       type: TOGGLE_PLAY_PAUSE,
     });
   },
-}))(RecentlyPlayed);
+}))(DJkhaled('playing', 'current', 'history')(RecentlyPlayed));

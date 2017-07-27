@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, shape } from 'prop-types';
+import { bool, string, shape } from 'prop-types';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
@@ -7,6 +7,7 @@ import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
 
+import DJkhaled from '@app/component/hoc/DJkhaled';
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 import store from '@app/redux/store';
@@ -16,8 +17,6 @@ class FeaturedContainer extends Component {
     super(props);
     this.state = {
       featured: null,
-      current: null,
-      playing: false,
       duration: {
         hours: 0,
         minutes: 0,
@@ -60,23 +59,6 @@ class FeaturedContainer extends Component {
       }, (err) => {
         /* handle fetch error */
       });
-
-    this.unsubscribe = store.subscribe(() => {
-      if (this.state.featured === null) {
-        return;
-      }
-
-      const { playing, current, initialQueue } = store.getState();
-      this.setState(() => ({
-        playing,
-        current,
-        initialQueue,
-      }));
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
   }
 
   togglePlayPauseAll() {
@@ -85,7 +67,7 @@ class FeaturedContainer extends Component {
     }
 
     // booting playlist
-    if (this.state.current === null || this.state.playingFeatured === false) {
+    if (this.props.current === null || this.state.playingFeatured === false) {
       store.dispatch({
         type: PLAY,
         payload: {
@@ -99,7 +81,7 @@ class FeaturedContainer extends Component {
         playingFeatured: true,
       }));
       // resuming / pausing playlist
-    } else if (this.state.current !== null) {
+    } else if (this.props.current !== null) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -107,7 +89,7 @@ class FeaturedContainer extends Component {
   }
 
   togglePlayPauseSong(songId) {
-    if (this.state.current !== null && this.state.current.songId === songId) {
+    if (this.props.current !== null && this.props.current.songId === songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -140,15 +122,12 @@ class FeaturedContainer extends Component {
       return null;
     }
 
-    // eslint-disable-next-line
-    console.log('FR');
-
     return (
       <HeaderSongs
         playlist={false}
-        current={this.state.current}
-        playing={this.state.playing}
-        playingSongs={this.state.playing && this.state.playingFeatured}
+        current={this.props.current}
+        playing={this.props.playing}
+        playingSongs={this.props.playing && this.state.playingFeatured}
         duration={this.state.duration}
         togglePlayPauseAll={this.togglePlayPauseAll}
         togglePlayPauseSong={this.togglePlayPauseSong}
@@ -159,6 +138,8 @@ class FeaturedContainer extends Component {
 }
 
 FeaturedContainer.propTypes = {
+  current: shape({}),
+  playing: bool,
   match: shape({
     params: shape({
       id: string,
@@ -166,4 +147,9 @@ FeaturedContainer.propTypes = {
   }).isRequired,
 };
 
-module.exports = FeaturedContainer;
+FeaturedContainer.defaultProps = {
+  current: null,
+  playing: false,
+};
+
+module.exports = DJkhaled('current', 'playing')(FeaturedContainer);

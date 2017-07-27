@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { SET_THEME } from '@app/redux/constant/theme';
 import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
 
+import DJkhaled from '@app/component/hoc/DJkhaled';
 import Setting from '@app/component/presentational/Setting';
 
 const SettingContainer = props => (<Setting {...props} />);
@@ -23,4 +24,4 @@ module.exports = connect(state => ({
       payload: Number.parseInt(e.target.value, 10),
     });
   },
-}))(SettingContainer);
+}))(DJkhaled('currentTheme', 'currentCrossfade')(SettingContainer));

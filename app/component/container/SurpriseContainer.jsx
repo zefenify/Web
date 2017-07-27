@@ -1,6 +1,5 @@
-/* eslint no-console: 0 */
-
 import React, { Component } from 'react';
+import { bool, shape } from 'prop-types';
 
 import { SURPRISE_ME } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
@@ -9,16 +8,14 @@ import { human } from '@app/util/time';
 import api from '@app/util/api';
 import store from '@app/redux/store';
 
+import DJkhaled from '@app/component/hoc/DJkhaled';
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 class SupriseContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playing: false,
-      current: null,
       surprise: null,
-      initialQueue: [],
       duration: {
         hours: 0,
         minutes: 0,
@@ -60,19 +57,6 @@ class SupriseContainer extends Component {
       }, (err) => {
         /* handle fetch error */
       });
-
-    this.unsubscribe = store.subscribe(() => {
-      if (this.state.surprise === null) {
-        return;
-      }
-
-      const { playing, current, initialQueue } = store.getState();
-      this.setState(() => ({ playing, current, initialQueue }));
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
   }
 
   togglePlayPauseAll() {
@@ -81,7 +65,7 @@ class SupriseContainer extends Component {
     }
 
     // booting playlist
-    if (this.state.current === null || this.state.playingSurprise === false) {
+    if (this.props.current === null || this.state.playingSurprise === false) {
       store.dispatch({
         type: PLAY,
         payload: {
@@ -103,7 +87,7 @@ class SupriseContainer extends Component {
   }
 
   togglePlayPauseSong(songId) {
-    if (this.state.current !== null && this.state.current.songId === songId) {
+    if (this.props.current !== null && this.props.current.songId === songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -139,10 +123,10 @@ class SupriseContainer extends Component {
     return (
       <HeaderSongs
         playlist={false}
-        current={this.state.current}
+        current={this.props.current}
         duration={this.state.duration}
-        playing={this.state.playing}
-        playingSongs={this.state.playing && this.state.playingSurprise}
+        playing={this.props.playing}
+        playingSongs={this.props.playing && this.state.playingSurprise}
         togglePlayPauseAll={this.togglePlayPauseAll}
         togglePlayPauseSong={this.togglePlayPauseSong}
         {...this.state.surprise}
@@ -151,4 +135,14 @@ class SupriseContainer extends Component {
   }
 }
 
-module.exports = SupriseContainer;
+SupriseContainer.propTypes = {
+  current: shape({}),
+  playing: bool,
+};
+
+SupriseContainer.defaultProps = {
+  current: null,
+  playing: false,
+};
+
+module.exports = DJkhaled('playing', 'current')(SupriseContainer);

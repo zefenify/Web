@@ -9,8 +9,8 @@ import { human } from '@app/util/time';
 import api from '@app/util/api';
 import store from '@app/redux/store';
 
-import Top from '@app/component/presentational/Top';
 import DJkhaled from '@app/component/hoc/DJkhaled';
+import Top from '@app/component/presentational/Top';
 
 class TopContainer extends Component {
   constructor(props) {

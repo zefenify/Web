@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, shape } from 'prop-types';
+import { string, bool, shape } from 'prop-types';
 import flatten from 'lodash/flatten';
 
 import { BASE } from '@app/config/api';
@@ -9,6 +9,7 @@ import sameSongList from '@app/util/sameSongList';
 import api from '@app/util/api';
 import store from '@app/redux/store';
 
+import DJkhaled from '@app/component/hoc/DJkhaled';
 import Artist from '@app/component/presentational/Artist';
 
 class ArtistContainer extends Component {
@@ -36,15 +37,6 @@ class ArtistContainer extends Component {
       }, (err) => {
         /* handle fetch error */
       });
-
-    this.unsubscribe = store.subscribe(() => {
-      if (this.state.artist === null) {
-        return;
-      }
-
-      const { playing, current, initialQueue } = store.getState();
-      this.setState(() => ({ playing, current, initialQueue }));
-    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,10 +50,6 @@ class ArtistContainer extends Component {
       }, (err) => {
         /* handle fetch error */
       });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
   }
 
   afterFetch(data) {
@@ -119,7 +107,7 @@ class ArtistContainer extends Component {
     }
 
     // booting playlist...
-    if (this.state.current === null || this.state.playingArist === false) {
+    if (this.props.current === null || this.state.playingArist === false) {
       const flattenSongs = flatten(this.state.artist.albums.map(album => album.songs));
 
       store.dispatch({
@@ -136,7 +124,7 @@ class ArtistContainer extends Component {
         playingArist: true,
       }));
       // resuming / pausing playlist
-    } else if (this.state.current !== null) {
+    } else if (this.props.current !== null) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -144,7 +132,7 @@ class ArtistContainer extends Component {
   }
 
   togglePlayPauseAlbum(album, albumIndex) {
-    if (this.state.current === null || this.state.albumPlayingIndex !== albumIndex) {
+    if (this.props.current === null || this.state.albumPlayingIndex !== albumIndex) {
       store.dispatch({
         type: PLAY,
         payload: {
@@ -173,7 +161,7 @@ class ArtistContainer extends Component {
     const flattenSongs = flatten(this.state.artist.albums.map(album => album.songs));
     const songIndex = flattenSongs.findIndex(song => song.songId === songId);
 
-    if (this.state.current !== null && this.state.current.songId === songId) {
+    if (this.props.current !== null && this.props.current.songId === songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -204,8 +192,8 @@ class ArtistContainer extends Component {
     return (
       <Artist
         artist={this.state.artist}
-        current={this.state.current}
-        playing={this.state.playing}
+        current={this.props.current}
+        playing={this.props.playing}
         songCount={this.state.songCount}
         albumPlayingIndex={this.state.albumPlayingIndex}
         playingArist={this.state.playingArist}
@@ -218,6 +206,8 @@ class ArtistContainer extends Component {
 }
 
 ArtistContainer.propTypes = {
+  current: shape({}),
+  playing: bool,
   match: shape({
     params: shape({
       id: string,
@@ -225,4 +215,9 @@ ArtistContainer.propTypes = {
   }).isRequired,
 };
 
-module.exports = ArtistContainer;
+ArtistContainer.defaultProps = {
+  current: null,
+  playing: false,
+};
+
+module.exports = DJkhaled('current', 'playing')(ArtistContainer);

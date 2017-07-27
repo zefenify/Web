@@ -26,7 +26,8 @@ const TopWrapper = styled.div`
     bottom: 0;
     left: 0;
     overflow-y: auto;
-    padding: 1em 2em;
+    padding: 2em;
+    padding-bottom: 0;
   }
 `;
 

@@ -11,7 +11,7 @@ import { theme } from '@app/redux/action/theme';
 function* themeBootFromLF() {
   try {
     const lfTheme = yield localforage.getItem(LF_STORE.THEME);
-    yield put(theme(lfTheme === null ? 'light' : lfTheme));
+    yield put(theme(lfTheme === null ? 'dark' : lfTheme));
   } catch (err) {
     console.warn('Unable to boot theme from LF', err);
   }

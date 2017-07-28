@@ -32,7 +32,7 @@ class WolfCola extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: lightTheme,
+      theme: darkTheme,
       loading: false,
     };
   }

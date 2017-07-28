@@ -21,6 +21,7 @@ import ArtistContainer from '@app/component/container/ArtistContainer';
 import RecentContainer from '@app/component/container/RecentContainer';
 import SurpriseContainer  from '@app/component/container/SurpriseContainer';
 import TopContainer from '@app/component/container/TopContainer';
+import SearchContainer from '@app/component/container/SearchContainer';
 
 import Spinner from '@app/component/presentational/Spinner';
 
@@ -103,6 +104,7 @@ class WolfCola extends Component {
                   <Route exact path="/" component={HomeContainer} />
                   <Route path="/featured/:id" component={FeaturedContainer} />
                   <Route path="/artist/:id" component={ArtistContainer} />
+                  <Route path="/search" component={SearchContainer} />
                   <Route path="/top/:category?" component={TopContainer} />
                   <Route path="/surprise" component={SurpriseContainer} />
                   <Route path="/recent" component={RecentContainer} />

@@ -23,7 +23,7 @@ You also need CORS plug-in so Wolf-Cola can bypass CORS restrictions and access 
 - [X] Artist Page
 - [X] Recently Played
 - [X] Surprise Me
-- [ ] Search
+- [X] Search
 - [X] Top Songs
 - [ ] Share
 - [ ] Notie

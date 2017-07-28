@@ -4,6 +4,8 @@ import styled from 'emotion/react';
 
 import { BASE } from '@app/config/api';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
+
 import Button from '@app/component/styled/Button';
 import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
@@ -139,4 +141,4 @@ HeaderSongs.defaultProps = {
   playingSongs: false,
 };
 
-module.exports = HeaderSongs;
+module.exports = DJKhaled()(HeaderSongs);

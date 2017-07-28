@@ -10,6 +10,7 @@ import historyDuration from '@app/redux/selector/historyDuration';
 import historyPlaying from '@app/redux/selector/historyPlaying';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
+
 import Recent from '@app/component/presentational/Recent';
 
 const RecentlyPlayed = props => (<Recent {...props} />);

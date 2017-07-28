@@ -1,6 +1,6 @@
 /* global document */
 
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -12,6 +12,8 @@ import '@app/scss/wolf-cola.scss';
 
 import store from '@app/redux/store';
 import { lightTheme, darkTheme } from '@app/config/theme';
+
+import DJKhaled from '@app/component/hoc/DJKhaled';
 
 import HomeContainer from '@app/component/container/HomeContainer';
 import SettingContainer from '@app/component/container/SettingContainer';
@@ -29,96 +31,67 @@ import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } fro
 import Divider from '@app/component/styled/Divider';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 
-class WolfCola extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      theme: darkTheme,
-      loading: false,
-    };
-  }
+const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
+  <Provider store={store}>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <Router>
+        <WolfColaContainer>
+          <NavListContainer>
+            <NavContainer>
+              <Link className="brand" to="/">
+                <img src="static/image/brand.png" className="brand-image" alt="ArifZefen" />
+                <span>ArifZefen</span>
+                <Spinner loading={loading} />
+              </Link>
+              <Divider />
 
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(() => {
-        const state = store.getState();
+              <div className="nav-list">
+                <NavLinkStyled to="/search">
+                  <span>Search</span>
+                  <i className="icon-ion-ios-search-strong" style={{ float: 'right' }} />
+                </NavLinkStyled>
+                <NavLinkStyled to="/top">Top Songs</NavLinkStyled>
+                <NavLinkStyled to="/genre">Genre</NavLinkStyled>
+                <NavLinkStyled to="/ariflist">ArifList</NavLinkStyled>
+                <NavLinkStyled to="/surprise">Surprise Me</NavLinkStyled>
 
-        return {
-          theme: state.theme === 'light' ? lightTheme : darkTheme,
-          loading: state.loading,
-        };
-      });
-    });
-  }
+                <small className="small-text">YOUR MUSIC</small>
+                <Divider />
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
+                <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
+                <NavLinkStyled to="/songs">Songs</NavLinkStyled>
 
-  render() {
-    return (
-      <Provider store={store}>
-        <ThemeProvider theme={this.state.theme}>
-          <Router>
-            <WolfColaContainer>
-              <NavListContainer>
-                <NavContainer>
-                  <Link className="brand" to="/">
-                    <img src="static/image/brand.png" className="brand-image" alt="ArifZefen" />
-                    <span>ArifZefen</span>
-                    <Spinner loading={this.state.loading} />
-                  </Link>
-                  <Divider />
+                <small className="small-text">YOUR PLAYLISTS</small>
+                <Divider />
 
-                  <div className="nav-list">
-                    <NavLinkStyled to="/search">
-                      <span>Search</span>
-                      <i className="icon-ion-ios-search-strong" style={{ float: 'right' }} />
-                    </NavLinkStyled>
-                    <NavLinkStyled to="/top">Top Songs</NavLinkStyled>
-                    <NavLinkStyled to="/genre">Genre</NavLinkStyled>
-                    <NavLinkStyled to="/ariflist">ArifList</NavLinkStyled>
-                    <NavLinkStyled to="/surprise">Surprise Me</NavLinkStyled>
+                <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
+                <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
 
-                    <small className="small-text">YOUR MUSIC</small>
-                    <Divider />
+                <small className="small-text">SETTINGS</small>
+                <Divider />
 
-                    <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
-                    <NavLinkStyled to="/songs">Songs</NavLinkStyled>
+                <NavLinkStyled to="/setting">Settings</NavLinkStyled>
+                <div style={{ paddingBottom: '2em' }} />
+              </div>
+            </NavContainer>
 
-                    <small className="small-text">YOUR PLAYLISTS</small>
-                    <Divider />
+            <RouteContainer>
+              <Route exact path="/" component={HomeContainer} />
+              <Route path="/featured/:id" component={FeaturedContainer} />
+              <Route path="/artist/:id" component={ArtistContainer} />
+              <Route path="/search" component={SearchContainer} />
+              <Route path="/top/:category?" component={TopContainer} />
+              <Route path="/surprise" component={SurpriseContainer} />
+              <Route path="/recent" component={RecentContainer} />
+              <Route path="/setting" component={SettingContainer} />
+            </RouteContainer>
+          </NavListContainer>
 
-                    <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
-                    <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
-
-                    <small className="small-text">SETTINGS</small>
-                    <Divider />
-
-                    <NavLinkStyled to="/setting">Settings</NavLinkStyled>
-                    <div style={{ paddingBottom: '2em' }} />
-                  </div>
-                </NavContainer>
-
-                <RouteContainer>
-                  <Route exact path="/" component={HomeContainer} />
-                  <Route path="/featured/:id" component={FeaturedContainer} />
-                  <Route path="/artist/:id" component={ArtistContainer} />
-                  <Route path="/search" component={SearchContainer} />
-                  <Route path="/top/:category?" component={TopContainer} />
-                  <Route path="/surprise" component={SurpriseContainer} />
-                  <Route path="/recent" component={RecentContainer} />
-                  <Route path="/setting" component={SettingContainer} />
-                </RouteContainer>
-              </NavListContainer>
-
-              <ControlContainer />
-            </WolfColaContainer>
-          </Router>
-        </ThemeProvider>
-      </Provider>
-    );
-  }
-}
+          <ControlContainer />
+        </WolfColaContainer>
+      </Router>
+    </ThemeProvider>
+  </Provider>
+));
 
 render(<WolfCola />, document.querySelector('#wolf-cola'));

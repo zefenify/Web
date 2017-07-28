@@ -10,6 +10,7 @@ import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
+
 import Search from '@app/component/presentational/Search';
 
 let throttle = null;

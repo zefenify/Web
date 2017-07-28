@@ -9,6 +9,7 @@ import api from '@app/util/api';
 import store from '@app/redux/store';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
+
 import Artist from '@app/component/presentational/Artist';
 
 class ArtistContainer extends Component {

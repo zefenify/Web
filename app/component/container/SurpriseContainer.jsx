@@ -9,6 +9,7 @@ import api from '@app/util/api';
 import store from '@app/redux/store';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
+
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 class SupriseContainer extends Component {

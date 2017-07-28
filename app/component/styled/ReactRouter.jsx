@@ -1,7 +1,9 @@
 import { Link, NavLink } from 'react-router-dom';
 import styled from 'emotion/react';
 
-const NavLinkStyled = styled(NavLink)`
+import DJKhaled from '@app/component/hoc/DJKhaled';
+
+const NavLinkStyled = DJKhaled()(styled(NavLink)`
   color: ${props => props.theme.navbarText};
   padding: 0.5em 1em;
   margin: 0.25em 0;
@@ -19,7 +21,7 @@ const NavLinkStyled = styled(NavLink)`
     border-left: 6px solid ${props => props.theme.primary};
     background-color: ${props => props.theme.listBackgroundHover};
   }
-`;
+`);
 
 const LinkStyled = styled(Link)`
   text-decoration: none;

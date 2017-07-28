@@ -5,6 +5,7 @@ import { SET_THEME } from '@app/redux/constant/theme';
 import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
+
 import Setting from '@app/component/presentational/Setting';
 
 const SettingContainer = props => (<Setting {...props} />);

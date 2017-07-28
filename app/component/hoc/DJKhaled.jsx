@@ -10,44 +10,59 @@ import store from '@app/redux/store';
  * @param  {...String} stateKeys DJ Khaled 🔑
  * @return {HOC}
  */
-module.exports = (...stateKeys) => WrappedComponent => class extends React.Component {
-  constructor(props) {
-    super(props);
+module.exports = (...stateKeys) => (WrappedComponent) => {
+  if (stateKeys.length === 0) {
+    return class extends React.Component {
+      shouldComponentUpdate(nextProps) {
+        return isEqual(this.props)(nextProps) === false;
+      }
 
-    const stateObject = {};
-    const state = store.getState();
-
-    stateKeys.forEach((key) => {
-      stateObject[key] = state[key];
-    });
-
-    this.state = stateObject;
+      render() {
+        return <WrappedComponent {...this.props} />;
+      }
+    };
   }
 
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      const state = store.getState();
+  // eslint-disable-next-line
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+
       const stateObject = {};
+      const state = store.getState();
 
       stateKeys.forEach((key) => {
         stateObject[key] = state[key];
       });
 
-      if (isEqual(stateObject)(this.state) === false) {
-        this.setState(() => (stateObject));
-      }
-    });
-  }
+      this.state = stateObject;
+    }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return isEqual(this.props)(nextProps) === false || isEqual(this.state)(nextState) === false;
-  }
+    componentDidMount() {
+      this.unsubscribe = store.subscribe(() => {
+        const state = store.getState();
+        const stateObject = {};
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
+        stateKeys.forEach((key) => {
+          stateObject[key] = state[key];
+        });
 
-  render() {
-    return <WrappedComponent {...this.state} {...this.props} />;
-  }
+        if (isEqual(stateObject)(this.state) === false) {
+          this.setState(() => (stateObject));
+        }
+      });
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+      return isEqual(this.props)(nextProps) === false || isEqual(this.state)(nextState) === false;
+    }
+
+    componentWillUnmount() {
+      this.unsubscribe();
+    }
+
+    render() {
+      return <WrappedComponent {...this.state} {...this.props} />;
+    }
+  };
 };

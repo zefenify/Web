@@ -1,13 +1,13 @@
 @font-face {
-  font-family: 'icomoon';
-  src: url('fonts/icomoon.woff') format('woff');
+  font-family: 'wolfcola';
+  src: url('fonts/wolfcola.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: 'wolfcola' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -20,8 +20,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-ion-ios-circle-filled:before {
-  content: "\f400";
+.icon-circle:before {
+  content: "\f111";
 }
 .icon-ion-ios-close-empty:before {
   content: "\f404";
@@ -70,7 +70,4 @@
 }
 .icon-ion-ios-volume-low:before {
   content: "\f4cf";
-}
-.icon-ion-social-github:before {
-  content: "\f233";
 }

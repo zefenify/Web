@@ -95,6 +95,8 @@ class TopContainer extends Component {
             }));
           }
         });
+      }, () => {
+        /* handle error */
       });
   }
 

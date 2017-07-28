@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
 import flatten from 'lodash/flatten';
 
-import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 
 import sameSongList from '@app/util/sameSongList';
@@ -31,7 +30,9 @@ class ArtistContainer extends Component {
   }
 
   componentDidMount() {
-    api(`${BASE}/json/artist/${this.props.match.params.id}.json`)
+    api(`json/artist/${this.props.match.params.id}.json`, (cancel) => {
+      this.cancelRequest = cancel;
+    })
       .then((data) => {
         this.afterFetch(data);
       }, (err) => {
@@ -50,6 +51,10 @@ class ArtistContainer extends Component {
       }, (err) => {
         /* handle fetch error */
       });
+  }
+
+  componentWillUnmount() {
+    this.cancelRequest();
   }
 
   afterFetch(data) {

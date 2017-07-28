@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { string, bool, func, shape } from 'prop-types';
 
-import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
@@ -49,6 +48,10 @@ class TopContainer extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.cancelRequest();
+  }
+
   loadSongs(filter) {
     if (['recent', 'liked', 'played'].includes(filter) === false) {
       this.props.history.replace('/top/recent');
@@ -60,7 +63,9 @@ class TopContainer extends Component {
       most: null,
     }));
 
-    api(`${BASE}/json/list/most${filter}.json`)
+    api(`json/list/most${filter}.json`, (cancel) => {
+      this.cancelRequest = cancel;
+    })
       .then((data) => {
         this.setState(() => ({
           most: data,

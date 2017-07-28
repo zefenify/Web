@@ -29,6 +29,7 @@ module.exports = (env) => {
     entry: {
       vendor: [
         'localforage',
+        'axios',
         'react',
         'react-dom',
         'react-redux',

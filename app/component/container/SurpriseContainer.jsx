@@ -29,7 +29,9 @@ class SupriseContainer extends Component {
 
   componentDidMount() {
     // calling...
-    api(SURPRISE_ME)
+    api(SURPRISE_ME, (cancel) => {
+      this.cancelRequest = cancel;
+    })
       .then((data) => {
         this.setState(() => ({
           surprise: data,
@@ -57,6 +59,10 @@ class SupriseContainer extends Component {
       }, (err) => {
         /* handle fetch error */
       });
+  }
+
+  componentWillUnmount() {
+    this.cancelRequest();
   }
 
   togglePlayPauseAll() {

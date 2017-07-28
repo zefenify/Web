@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bool, string, shape } from 'prop-types';
 
-import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
@@ -30,7 +29,9 @@ class FeaturedContainer extends Component {
 
   componentDidMount() {
     // calling...
-    api(`${BASE}/json/featured/${this.props.match.params.id}.json`)
+    api(`json/featured/${this.props.match.params.id}.json`, (cancel) => {
+      this.cancelRequest = cancel;
+    })
       .then((data) => {
         this.setState(() => ({
           featured: data,
@@ -59,6 +60,10 @@ class FeaturedContainer extends Component {
       }, (err) => {
         /* handle fetch error */
       });
+  }
+
+  componentWillUnmount() {
+    this.cancelRequest();
   }
 
   togglePlayPauseAll() {

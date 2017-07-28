@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { BASE, FEATURED_ALL } from '@app/config/api';
+import { FEATURED_ALL } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 import api from '@app/util/api';
@@ -19,7 +19,9 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    api(FEATURED_ALL)
+    api(FEATURED_ALL, (cancel) => {
+      this.cancelRequest = cancel;
+    })
       .then((data) => {
         this.setState(() => ({
           featured: data,
@@ -27,6 +29,10 @@ class HomeContainer extends Component {
       }, (err) => {
         /* handle fetch error */
       });
+  }
+
+  componentWillUnmount() {
+    this.cancelRequest();
   }
 
   playFeatured(fid) {
@@ -48,7 +54,7 @@ class HomeContainer extends Component {
     }));
 
     // calling...
-    api(`${BASE}/json/featured/${fid}.json`)
+    api(`json/featured/${fid}.json`)
       .then((data) => {
         // playing...
         store.dispatch({
@@ -59,7 +65,7 @@ class HomeContainer extends Component {
             initialQueue: data.songs,
           },
         });
-      }, (err) => {
+      }, () => {
         this.setState(() => ({
           featuredPlayingId: '-1',
         }));

@@ -1,6 +1,6 @@
 const BASE = 'http://www.arifzefen.com';
-const FEATURED_ALL = 'http://www.arifzefen.com/json/featured/all.json';
-const SURPRISE_ME = 'http://www.arifzefen.com/json/curated/surpriseme.php';
+const FEATURED_ALL = 'json/featured/all.json';
+const SURPRISE_ME = 'json/curated/surpriseme.php';
 
 module.exports = {
   BASE,

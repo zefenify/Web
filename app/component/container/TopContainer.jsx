@@ -63,6 +63,10 @@ class TopContainer extends Component {
       most: null,
     }));
 
+    if (this.cancelRequest !== undefined) {
+      this.cancelRequest();
+    }
+
     api(`json/list/most${filter}.json`, (cancel) => {
       this.cancelRequest = cancel;
     })

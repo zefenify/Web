@@ -102,6 +102,18 @@ const MusicControls = styled.div`
       margin: 0 auto;
       text-align: center;
     }
+
+    &__accessibility {
+      position: absolute;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      font-size: 6px;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      margin: 0 auto;
+    }
   }
 
   & [class^="icon-"] {
@@ -170,6 +182,7 @@ const Control = ({
       <MusicControls>
         <div className={`control ${shuffle ? 'control_active' : ''}`} onClick={toggleShuffle}>
           <i className="icon-ion-ios-shuffle-strong" />
+          <i className="control__accessibility icon-circle" style={{ opacity: shuffle ? 1 : 0 }}></i>
         </div>
 
         <div className="control" onClick={previous}>
@@ -187,6 +200,7 @@ const Control = ({
         <div className={`control ${repeat === 'OFF' ? '' : 'control_active'}`} onClick={setRepeat}>
           <i className="icon-ion-ios-loop-strong" />
           <div className="control__state" style={{ opacity: repeat === 'ONE' ? 1 : 0 }}>1</div>
+          <i className="control__accessibility icon-circle" style={{ opacity: (repeat === 'ONE' || repeat === 'ALL') ? 1 : 0 }}></i>
         </div>
       </MusicControls>
 

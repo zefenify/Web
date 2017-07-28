@@ -8,6 +8,7 @@ import { human } from '@app/util/time';
 const SongContainer = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
 
   & > * {
     flex: 1 1 auto;
@@ -47,6 +48,10 @@ const SongContainer = styled.div`
       width: 1em;
       font-size: 2em;
     }
+  }
+
+  &.full-detail .name {
+    flex: 0 0 42%;
   }
 
   .name {
@@ -124,7 +129,7 @@ const Song = ({
   }
 
   return (
-    <SongContainer className={`${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+    <SongContainer className={`full-detail ${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
       <div className="track-number-icon">
         <span className="track-number-icon__number">{ trackNumber }</span>
         <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />

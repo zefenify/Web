@@ -9,7 +9,7 @@ import sameSongList from '@app/util/sameSongList';
 import api from '@app/util/api';
 import store from '@app/redux/store';
 
-import DJkhaled from '@app/component/hoc/DJkhaled';
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Artist from '@app/component/presentational/Artist';
 
 class ArtistContainer extends Component {
@@ -220,4 +220,4 @@ ArtistContainer.defaultProps = {
   playing: false,
 };
 
-module.exports = DJkhaled('current', 'playing')(ArtistContainer);
+module.exports = DJKhaled('current', 'playing')(ArtistContainer);

@@ -9,7 +9,7 @@ import { human } from '@app/util/time';
 import api from '@app/util/api';
 import store from '@app/redux/store';
 
-import DJkhaled from '@app/component/hoc/DJkhaled';
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Top from '@app/component/presentational/Top';
 
 class TopContainer extends Component {
@@ -178,4 +178,4 @@ TopContainer.defaultProps = {
   current: null,
 };
 
-module.exports = DJkhaled('current', 'playing')(TopContainer);
+module.exports = DJKhaled('current', 'playing')(TopContainer);

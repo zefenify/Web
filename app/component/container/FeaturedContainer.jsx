@@ -7,7 +7,7 @@ import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
 
-import DJkhaled from '@app/component/hoc/DJkhaled';
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 import store from '@app/redux/store';
@@ -152,4 +152,4 @@ FeaturedContainer.defaultProps = {
   playing: false,
 };
 
-module.exports = DJkhaled('current', 'playing')(FeaturedContainer);
+module.exports = DJKhaled('current', 'playing')(FeaturedContainer);

@@ -20,6 +20,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-ion-ios-circle-filled:before {
+  content: "\f400";
+}
 .icon-ion-ios-close-empty:before {
   content: "\f404";
 }
@@ -32,23 +35,14 @@
 .icon-ion-ios-loop-strong:before {
   content: "\f459";
 }
-.icon-ion-ios-more-outline:before {
-  content: "\f469";
-}
 .icon-ion-ios-more:before {
   content: "\f46a";
 }
 .icon-ion-ios-musical-notes:before {
   content: "\f46c";
 }
-.icon-ion-ios-pause-outline:before {
-  content: "\f477";
-}
 .icon-ion-ios-pause:before {
   content: "\f478";
-}
-.icon-ion-ios-play-outline:before {
-  content: "\f487";
 }
 .icon-ion-ios-play:before {
   content: "\f488";
@@ -65,14 +59,8 @@
 .icon-ion-ios-shuffle-strong:before {
   content: "\f4a8";
 }
-.icon-ion-ios-skipbackward-outline:before {
-  content: "\f4aa";
-}
 .icon-ion-ios-skipbackward:before {
   content: "\f4ab";
-}
-.icon-ion-ios-skipforward-outline:before {
-  content: "\f4ac";
 }
 .icon-ion-ios-skipforward:before {
   content: "\f4ad";
@@ -82,4 +70,7 @@
 }
 .icon-ion-ios-volume-low:before {
   content: "\f4cf";
+}
+.icon-ion-social-github:before {
+  content: "\f233";
 }

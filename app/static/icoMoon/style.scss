@@ -20,8 +20,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-circle:before {
-  content: "\f111";
+.icon-android:before {
+  content: "\e900";
+  color: #a4c639;
+}
+.icon-ios:before {
+  content: "\e901";
+  color: #999;
+}
+.icon-github:before {
+  content: "\e902";
+}
+.icon-react:before {
+  content: "\e903";
+  color: #00d8ff;
+}
+.icon-twitter:before {
+  content: "\e904";
+  color: #1da1f2;
 }
 .icon-ion-ios-close-empty:before {
   content: "\f404";
@@ -70,4 +86,7 @@
 }
 .icon-ion-ios-volume-low:before {
   content: "\f4cf";
+}
+.icon-circle:before {
+  content: "\f111";
 }

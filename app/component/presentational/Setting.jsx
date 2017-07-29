@@ -43,7 +43,7 @@ const SettingWrapper = styled.div`
     }
 
     &__howler {
-      background: url(/static/image/howler.svg) no-repeat;
+      background: url(../../static/image/howler.svg) no-repeat;
       display: inline-block;
       width: 36px;
       height: 40px;

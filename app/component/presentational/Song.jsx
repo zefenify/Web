@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 import { human } from '@app/util/time';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
+
 const SongContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -161,4 +163,4 @@ Song.defaultProps = {
   fullDetail: true,
 };
 
-module.exports = Song;
+module.exports = DJKhaled()(Song);

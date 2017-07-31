@@ -36,6 +36,11 @@ module.exports = (URL, cancel) => new Promise((resolve, reject) => {
     }, (err) => {
       store.dispatch(loading(false));
 
+      // request cancellation will not reject
+      if (axios.isCancel(err)) {
+        return;
+      }
+
       reject(err);
     });
 

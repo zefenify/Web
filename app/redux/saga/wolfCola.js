@@ -7,6 +7,7 @@ import { eventChannel, END, delay } from 'redux-saga';
 import { select, put, call, fork, take, throttle, takeEvery, takeLatest } from 'redux-saga/effects';
 import { Howl } from 'howler';
 import random from 'lodash/fp/random';
+import notie from 'notie';
 
 import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import { BASE } from '@app/config/api';
@@ -50,6 +51,12 @@ const howlerEndChannel = key => eventChannel((emitter) => {
 
 const howlerLoadErrorChannel = key => eventChannel((emitter) => {
   wolfCola[key].once('loaderror', (loadError) => {
+    notie.alert({
+      type: 'error',
+      text: 'ወይኔ - unable to load music',
+      time: 5,
+    });
+
     /* handle song load error */
     wolfCola.crossfadeInProgress = false;
     emitter({ loadError });

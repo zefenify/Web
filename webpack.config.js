@@ -39,6 +39,7 @@ module.exports = (env) => {
         'redux-saga',
         'reselect',
         'emotion',
+        'notie',
       ],
       app: ['./app/index.jsx'],
     },

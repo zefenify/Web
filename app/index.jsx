@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'emotion/react/theming';
 
 import 'normalize.css';
+import '@app/scss/notie.scss';
 import '@app/static/icoMoon/style.scss';
 import '@app/scss/wolf-cola.scss';
 

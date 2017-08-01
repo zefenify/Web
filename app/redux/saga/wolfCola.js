@@ -9,7 +9,7 @@ import { Howl } from 'howler';
 import random from 'lodash/fp/random';
 import notie from 'notie';
 
-import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE, PREVIOUS_THRESHOLD } from '@app/redux/constant/wolfCola';
 import { BASE } from '@app/config/api';
 
 import { current } from '@app/redux/action/current';
@@ -367,7 +367,7 @@ function* previous() {
 
   // repeat `ONE`
   // previous triggered while crossfade > playbackPosition
-  if (state.repeat === 'ONE' || state.crossfade > state.playbackPosition) {
+  if (state.repeat === 'ONE' || (state.playbackPosition > PREVIOUS_THRESHOLD && state.crossfade > state.playbackPosition)) {
     yield put({
       type: PLAY,
       payload: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'emotion/react';
 
-const MobileWrapper = styled.div`
+const MobileContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,7 +46,7 @@ const MobileWrapper = styled.div`
 `;
 
 const Mobile = () => (
-  <MobileWrapper>
+  <MobileContainer>
     <p className="sorry">ይቅርታ</p>
     <p className="message">Wolf Cola is designed for Desktop use</p>
 
@@ -54,7 +54,7 @@ const Mobile = () => (
       <a className="store-links__link" href="https://itunes.apple.com/us/app/arifzefen/id420206088?mt=8"><i className="icon-ios" /></a>
       <a className="store-links__link" href="https://play.google.com/store/apps/details?id=com.arifsoft.arifzefen"><i className="icon-android" /></a>
     </div>
-  </MobileWrapper>
+  </MobileContainer>
 );
 
 Mobile.propTypes = {};

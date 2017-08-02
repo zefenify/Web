@@ -6,7 +6,7 @@ import { BASE } from '@app/config/api';
 
 import Song from '@app/component/presentational/Song';
 
-const SearchWrapper = styled.div`
+const SearchContainer = styled.div`
   display: flex;
   flex: 0 1 auto;
   flex-direction: column;
@@ -85,7 +85,7 @@ const Search = ({
   // initial component mount
   if (matches === null) {
     return (
-      <SearchWrapper>
+      <SearchContainer>
         <div className="search">
           <div className="search__label">Search for an Artist, Song or Album</div>
           <input
@@ -95,14 +95,14 @@ const Search = ({
             onChange={handleChange}
           />
         </div>
-      </SearchWrapper>
+      </SearchContainer>
     );
   }
 
   // no matches found
   if (matches.songs.length === 0) {
     return (
-      <SearchWrapper>
+      <SearchContainer>
         <div className="search">
           <div className="search__label">Search for an Artist, Song or Album</div>
           <input
@@ -116,13 +116,13 @@ const Search = ({
         <div className="result no-matches">
           <h2>{`ጉራ ብቻ - የለም match ለ "${q}"...`}</h2>
         </div>
-      </SearchWrapper>
+      </SearchContainer>
     );
   }
 
   // search has result...
   return (
-    <SearchWrapper>
+    <SearchContainer>
       <div className="search">
         <div className="search__label">Search for an Artist, Song or Album</div>
         <input
@@ -151,7 +151,7 @@ const Search = ({
           }
         </div>
       </div>
-    </SearchWrapper>
+    </SearchContainer>
   );
 };
 

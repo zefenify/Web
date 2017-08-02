@@ -9,7 +9,7 @@ import { human } from '@app/util/time';
 import { ControlsContainer } from '@app/component/styled/WolfCola';
 import Range from '@app/component/styled/Range';
 
-const NowPlayingWrapper = styled.div`
+const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
   max-width: 250px;
   padding-left: 6px;
@@ -62,7 +62,7 @@ const NowPlayingWrapper = styled.div`
   }
 `;
 
-const MusicControlsWrapper = styled.div`
+const MusicControlsContainer = styled.div`
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -130,7 +130,7 @@ const MusicProgress = styled.div`
   cursor: default;
 `;
 
-const VolumeWrapper = styled.div`
+const VolumeContainer = styled.div`
   flex: 0 1 175px;
   display: flex;
   flex-direction: row;
@@ -163,7 +163,7 @@ const Control = ({
   setRepeat,
 }) => (
   <ControlsContainer>
-    <NowPlayingWrapper>
+    <NowPlayingContainer>
       {
         current !== null
           ? (
@@ -176,9 +176,9 @@ const Control = ({
             </div>
           ) : null
       }
-    </NowPlayingWrapper>
+    </NowPlayingContainer>
 
-    <MusicControlsWrapper>
+    <MusicControlsContainer>
       <MusicControls>
         <div className={`control ${shuffle ? 'control_active' : ''}`} onClick={toggleShuffle}>
           <i className="icon-ion-ios-shuffle-strong" />
@@ -223,9 +223,9 @@ const Control = ({
           <span>{`${remaining ? human(duration - playbackPosition) : human(duration)}`}</span>
         </small>
       </MusicProgress>
-    </MusicControlsWrapper>
+    </MusicControlsContainer>
 
-    <VolumeWrapper>
+    <VolumeContainer>
       <i className="icon-ion-ios-volume-low" style={{ fontSize: '2em' }} onClick={muteVolume} />
       <Range
         type="range"
@@ -236,7 +236,7 @@ const Control = ({
         onChange={e => setVolume(e)}
       />
       <i className="icon-ion-ios-volume-high" style={{ fontSize: '2em' }} onClick={maxVolume} />
-    </VolumeWrapper>
+    </VolumeContainer>
   </ControlsContainer>
 );
 

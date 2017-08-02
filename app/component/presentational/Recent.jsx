@@ -6,7 +6,7 @@ import Song from '@app/component/presentational/Song';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
 
-const RecentWrapper = styled.div`
+const RecentContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -62,17 +62,17 @@ const Recent = ({
 }) => {
   if (history.length === 0) {
     return (
-      <RecentWrapper className="center-content">
+      <RecentContainer className="center-content">
         <h1 style={{ marginBottom: '0' }}>ላሽ ላሽ  ¯\_(ツ)_/¯</h1>
         <h2 className="mute">You have no recently played songs...yet</h2>
-      </RecentWrapper>
+      </RecentContainer>
     );
   }
 
   const { hours, minutes, seconds } = totalDuration;
 
   return (
-    <RecentWrapper>
+    <RecentContainer>
       <div className="recently-played">
         <h1 className="recently-played__title">Recently Played</h1>
         <p className="recently-played__info">{`${history.length} song${history.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
@@ -95,7 +95,7 @@ const Recent = ({
           ))
         }
       </div>
-    </RecentWrapper>
+    </RecentContainer>
   );
 };
 

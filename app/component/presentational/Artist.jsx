@@ -8,7 +8,7 @@ import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 import Button from '@app/component/styled/Button';
 
-const ArtistWrapper = styled.div`
+const ArtistContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -119,7 +119,7 @@ const Arist = ({
   togglePlayPauseSong,
   togglePlayPauseAlbum,
 }) => (
-  <ArtistWrapper>
+  <ArtistContainer>
     <div className="artist">
       <div className="artist__image" style={{ background: `transparent url('${BASE}${artist.thumbnail}') 50% 50% / cover no-repeat` }} />
       <div className="artist__info">
@@ -165,7 +165,7 @@ const Arist = ({
         ))
       }
     </div>
-  </ArtistWrapper>
+  </ArtistContainer>
 );
 
 Arist.propTypes = {

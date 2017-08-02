@@ -4,7 +4,7 @@ import styled from 'emotion/react';
 
 import Collection from '@app/component/presentational/Collection';
 
-const HomeWrapper = styled.div`
+const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -35,7 +35,7 @@ const HomeWrapper = styled.div`
 `;
 
 const Home = ({ featured, featuredPlayingId, playFeatured }) => (
-  <HomeWrapper>
+  <HomeContainer>
     <div className="title">
       <h2>Featured</h2>
     </div>
@@ -52,7 +52,7 @@ const Home = ({ featured, featuredPlayingId, playFeatured }) => (
         ))
       }
     </div>
-  </HomeWrapper>
+  </HomeContainer>
 );
 
 Home.propTypes = {

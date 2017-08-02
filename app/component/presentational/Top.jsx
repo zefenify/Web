@@ -5,7 +5,7 @@ import styled from 'emotion/react';
 
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
-const TopWrapper = styled.div`
+const TopContainer = styled.div`
   .title {
     display: flex;
     flex-direction: row;
@@ -66,18 +66,18 @@ const Top = ({
   if (most === null) {
     // repeating block to avoid the ? : in the _actual_ render
     return (
-      <TopWrapper>
+      <TopContainer>
         <div className="title">
           <NavLinkStyled to="/top/recent">Most Recent</NavLinkStyled>
           <NavLinkStyled to="/top/liked">Most Liked</NavLinkStyled>
           <NavLinkStyled to="/top/played">Most Played</NavLinkStyled>
         </div>
-      </TopWrapper>
+      </TopContainer>
     );
   }
 
   return (
-    <TopWrapper>
+    <TopContainer>
       <div className="title">
         <NavLinkStyled to="/top/recent">Most Recent</NavLinkStyled>
         <NavLinkStyled to="/top/liked">Most Liked</NavLinkStyled>
@@ -96,7 +96,7 @@ const Top = ({
           {...most}
         />
       </div>
-    </TopWrapper>
+    </TopContainer>
   );
 };
 

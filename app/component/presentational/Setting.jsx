@@ -6,7 +6,7 @@ import Button from '@app/component/styled/Button';
 import Divider from '@app/component/styled/Divider';
 import Range from '@app/component/styled/Range';
 
-const SettingWrapper = styled.div`
+const SettingContainer = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
@@ -69,7 +69,7 @@ const Setting = ({
   const crossfadeMessage = `Crossfade: ${currentCrossfade === 0 ? 'Off' : `${currentCrossfade} Second${currentCrossfade > 1 ? 's' : ''}`}`;
 
   return (
-    <SettingWrapper>
+    <SettingContainer>
       <h1>Settings</h1>
 
       <Divider />
@@ -100,7 +100,7 @@ const Setting = ({
           <a className="squad__react" href="https://facebook.github.io/react" rel="noopener noreferrer" target="_blank"><i className="icon-react" /></a>
         </div>
       </div>
-    </SettingWrapper>
+    </SettingContainer>
   );
 };
 

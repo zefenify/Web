@@ -46,7 +46,7 @@ class ArtistContainer extends Component {
       return;
     }
 
-    api(`${BASE}/json/artist/${nextProps.match.params.id}.json`)
+    api(`json/artist/${nextProps.match.params.id}.json`)
       .then((data) => {
         this.afterFetch(data);
       }, (err) => {

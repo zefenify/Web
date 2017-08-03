@@ -46,7 +46,9 @@ class ArtistContainer extends Component {
       return;
     }
 
-    api(`json/artist/${nextProps.match.params.id}.json`)
+    api(`json/artist/${nextProps.match.params.id}.json`, (cancel) => {
+      this.cancelRequest = cancel;
+    })
       .then((data) => {
         this.afterFetch(data);
       }, (err) => {

@@ -54,7 +54,9 @@ class HomeContainer extends Component {
     }));
 
     // calling...
-    api(`json/featured/${fid}.json`)
+    api(`json/featured/${fid}.json`, (cancel) => {
+      this.cancelRequest = cancel;
+    })
       .then((data) => {
         // playing...
         store.dispatch({

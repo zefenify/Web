@@ -25,6 +25,7 @@ import RecentContainer from '@app/component/container/RecentContainer';
 import SurpriseContainer  from '@app/component/container/SurpriseContainer';
 import TopContainer from '@app/component/container/TopContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
+import GenreContainer from '@app/component/container/GenreContainer';
 
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
@@ -82,6 +83,7 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
               <Route path="/artist/:id" component={ArtistContainer} />
               <Route path="/search" component={SearchContainer} />
               <Route path="/top/:category?" component={TopContainer} />
+              <Route path="/genre" component={GenreContainer} />
               <Route path="/surprise" component={SurpriseContainer} />
               <Route path="/recent" component={RecentContainer} />
               <Route path="/setting" component={SettingContainer} />

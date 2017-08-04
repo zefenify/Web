@@ -4,7 +4,7 @@ import styled from 'emotion/react';
 
 import Box from '@app/component/presentational/Box';
 
-const GenreContainer = styled.div`
+const BoxListContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -34,8 +34,8 @@ const GenreContainer = styled.div`
   }
 `;
 
-const Genre = ({ box, boxPlayingData, boxPlay }) => (
-  <GenreContainer>
+const BoxList = ({ box, boxPlayingData, boxPlay }) => (
+  <BoxListContainer>
     <div className="title">
       <h2>Genre</h2>
     </div>
@@ -52,18 +52,18 @@ const Genre = ({ box, boxPlayingData, boxPlay }) => (
         ))
       }
     </div>
-  </GenreContainer>
+  </BoxListContainer>
 );
 
-Genre.propTypes = {
+BoxList.propTypes = {
   box: arrayOf(shape({})),
   boxPlayingData: string,
   boxPlay: func.isRequired,
 };
 
-Genre.defaultProps = {
+BoxList.defaultProps = {
   box: [],
   boxPlayingData: '',
 };
 
-module.exports = Genre;
+module.exports = BoxList;

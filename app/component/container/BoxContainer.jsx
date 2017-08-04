@@ -5,9 +5,9 @@ import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 import api from '@app/util/api';
 
-import Genre from '@app/component/presentational/Genre';
+import BoxList from '@app/component/presentational/BoxList';
 
-class GenreContainer extends Component {
+class BoxContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +17,10 @@ class GenreContainer extends Component {
 
     this.boxPlay = this.boxPlay.bind(this);
     this.cancelRequest = () => {};
+  }
+
+  componentDidMount() {
+    console.log(this.props.match);
   }
 
   componentWillUnmount() {
@@ -61,7 +65,7 @@ class GenreContainer extends Component {
 
   render() {
     return (
-      <Genre
+      <BoxList
         box={this.state.box}
         boxPlayingData={this.state.boxPlayingData}
         boxPlay={this.boxPlay}
@@ -70,4 +74,4 @@ class GenreContainer extends Component {
   }
 }
 
-module.exports = GenreContainer;
+module.exports = BoxContainer;

@@ -97,9 +97,9 @@ const BoxContainer = styled(Link)`
   }
 `;
 
-function Box({ title, thumbnail, data, boxPlayingData, play }) {
+function Box({ type, title, thumbnail, data, boxPlayingData, play }) {
   return (
-    <BoxContainer to={`/genre/${data}`} className={`${boxPlayingData === data ? 'active' : ''}`}>
+    <BoxContainer to={`/${type}/${data}`} className={`${boxPlayingData === data ? 'active' : ''}`}>
       <div className="box-cover" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }}>
         <div className="box-cover__overlay">
           <i onClick={(e) => { e.preventDefault(); play(data); }} className={`icon-ion-ios-${data === boxPlayingData ? 'pause' : 'play'}`} />
@@ -112,6 +112,7 @@ function Box({ title, thumbnail, data, boxPlayingData, play }) {
 }
 
 Box.propTypes = {
+  type: string,
   title: string,
   thumbnail: string,
   data: string,
@@ -120,6 +121,7 @@ Box.propTypes = {
 };
 
 Box.defaultProps = {
+  type: '',
   title: '',
   thumbnail: '',
   data: '',

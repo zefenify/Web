@@ -2,7 +2,7 @@ const BASE = 'http://www.arifzefen.com';
 const FEATURED_ALL = 'json/featured/all.json';
 const SURPRISE_ME = 'json/curated/surpriseme.php';
 const SEARCH = 'json/list/search.php';
-const LIST = 'http://www.arifzefen.com/json/list/';
+const GENRE_BASE = 'http://www.arifzefen.com/json/list/';
 const GENRE = [
   {
     title: 'Orthodox Mezmur',
@@ -80,12 +80,67 @@ const GENRE = [
     data: 'sudanese',
   },
 ];
+const ARIFLIST_BASE = 'http://www.arifzefen.com/json/curated/';
+const ARIFLIST = [
+  {
+    title: 'Workout',
+    thumbnail: '/images/default/album_cover_120x120.png',
+    data: 'workout',
+  },
+  {
+    title: 'Wedding Songs',
+    thumbnail: '/json/imgs/album_cover_209.png',
+    data: 'weddingsongs',
+  },
+  {
+    title: 'Traditional',
+    thumbnail: '/images/default/album_cover_120x120.png',
+    data: 'traditional',
+  },
+  {
+    title: 'Tizita',
+    thumbnail: '/json/imgs/album_cover_158.png',
+    data: 'tizita',
+  },
+  {
+    title: 'Slow Jamz',
+    thumbnail: '/json/imgs/album_cover_238.png',
+    data: 'slowjamz',
+  },
+  {
+    title: 'Reggae Fusion',
+    thumbnail: '/json/imgs/album_cover_88.png',
+    data: 'reggaefusion',
+  },
+  {
+    title: 'Oldies',
+    thumbnail: '/json/imgs/artist_cover_533.png',
+    data: 'oldies',
+  },
+  {
+    title: 'Ethio Jazz',
+    thumbnail: '/json/imgs/album_cover_329.png',
+    data: 'ethiojazz',
+  },
+  {
+    title: 'Ethio Hip-Hop',
+    thumbnail: '/json/imgs/artist_cover_1128.png',
+    data: 'ethiohip-hop',
+  },
+  {
+    title: 'Dance N Chifera',
+    thumbnail: '/json/imgs/album_cover_209.png',
+    data: 'dancenchifera',
+  },
+];
 
 module.exports = {
   BASE,
   FEATURED_ALL,
   SURPRISE_ME,
   SEARCH,
-  LIST,
+  GENRE_BASE,
   GENRE,
+  ARIFLIST_BASE,
+  ARIFLIST,
 };

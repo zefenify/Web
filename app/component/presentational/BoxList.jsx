@@ -34,7 +34,7 @@ const BoxListContainer = styled.div`
   }
 `;
 
-const BoxList = ({ box, boxPlayingData, boxPlay }) => (
+const BoxList = ({ type, box, boxPlayingData, boxPlay }) => (
   <BoxListContainer>
     <div className="title">
       <h2>Genre</h2>
@@ -44,6 +44,7 @@ const BoxList = ({ box, boxPlayingData, boxPlay }) => (
       {
         box.map(b => (
           <Box
+            type={type}
             play={boxPlay}
             key={b.data}
             boxPlayingData={boxPlayingData}
@@ -56,12 +57,14 @@ const BoxList = ({ box, boxPlayingData, boxPlay }) => (
 );
 
 BoxList.propTypes = {
+  type: string,
   box: arrayOf(shape({})),
   boxPlayingData: string,
   boxPlay: func.isRequired,
 };
 
 BoxList.defaultProps = {
+  type: '',
   box: [],
   boxPlayingData: '',
 };

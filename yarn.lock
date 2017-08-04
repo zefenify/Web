@@ -4508,8 +4508,8 @@ rc@^1.1.7:
     strip-json-comments "~2.0.1"
 
 react-dom@next:
-  version "16.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-beta.2.tgz#55352e02d93112f06cce7f83ca378a1beae465d9"
+  version "16.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-beta.3.tgz#6b662e8db127d14565b98799c13532044c7768b9"
   dependencies:
     fbjs "^0.8.9"
     loose-envify "^1.1.0"
@@ -4560,8 +4560,8 @@ react@^15.5.4:
     prop-types "^15.5.10"
 
 react@next:
-  version "16.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-beta.2.tgz#340bbaa28c8678499353586cf46d096438dee561"
+  version "16.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-beta.3.tgz#f3974ce09dfef8e7debaba87c063a35aa09878a4"
   dependencies:
     fbjs "^0.8.9"
     loose-envify "^1.1.0"

@@ -40,6 +40,7 @@ module.exports = (env) => {
         'reselect',
         'emotion',
         'notie',
+        'howler',
       ],
       app: ['./app/index.jsx'],
     },
@@ -120,7 +121,7 @@ module.exports = (env) => {
         },
       ],
     },
-    devtool: PRODUCTION ? 'source-map' : 'eval',
+    devtool: PRODUCTION ? false : 'eval',
     devServer: {
       contentBase: path.resolve(__dirname, './app'),
       publicPath: '/',
@@ -137,9 +138,7 @@ module.exports = (env) => {
         disable: false,
         allChunks: true,
       }),
-      new UglifyJsPlugin({
-        sourceMap: true,
-      }),
+      new UglifyJsPlugin(),
     ].concat(commonPlugins) : [
       // add development plugins here
     ].concat(commonPlugins),

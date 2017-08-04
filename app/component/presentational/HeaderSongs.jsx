@@ -48,6 +48,10 @@ const Header = styled.div`
     flex-direction: column;
     justify-content: center;
 
+    &__title {
+      text-transform: capitalize;
+    }
+
     &__button {
       margin-top: 1em;
       width: 175px;
@@ -83,7 +87,7 @@ const HeaderSongs = ({
         <div className="image" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }} />
         <div className="info info-container">
           <p>{`${playlist ? 'PLAYLIST' : 'FEATURED'}`}</p>
-          <h1>{ title }</h1>
+          <h1 className="info-container__title">{ title }</h1>
           <p style={{ marginTop: '0.5em' }}>{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
           <Button className="info-container__button" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
         </div>

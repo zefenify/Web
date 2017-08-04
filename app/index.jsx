@@ -61,13 +61,15 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
                 <Divider />
 
                 <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
-                <NavLinkStyled to="/songs">Songs</NavLinkStyled>
+                { /* <NavLinkStyled to="/songs">Songs</NavLinkStyled> */ }
 
+                {/*
                 <small className="small-text">YOUR PLAYLISTS</small>
                 <Divider />
 
                 <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
                 <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
+                */}
 
                 <small className="small-text">SETTINGS</small>
                 <Divider />

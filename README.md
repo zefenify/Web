@@ -29,8 +29,8 @@ You also need CORS plug-in so Wolf-Cola can bypass CORS restrictions and access 
 - [X] Top Songs
 - [ ] Share
 - [X] Notie
-- [ ] Genre
-- [ ] ArifList
+- [X] Genre
+- [X] ArifList
 - [ ] Songs
 - [ ] Playlist
 - [X] Safari

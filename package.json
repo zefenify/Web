@@ -10,8 +10,8 @@
     "animejs": "^2.0.2",
     "axios": "^0.16.2",
     "compression": "^1.7.0",
-    "emotion": "^7.0.11",
-    "express": "^4.15.3",
+    "emotion": "^7.0.13",
+    "express": "^4.15.4",
     "howler": "^2.0.4",
     "localforage": "^1.5.0",
     "lodash": "^4.17.4",
@@ -21,7 +21,7 @@
     "qs": "^6.5.0",
     "react": "next",
     "react-dom": "next",
-    "react-redux": "^5.0.5",
+    "react-redux": "^5.0.6",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
@@ -48,9 +48,9 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "beta",
-    "webpack": "^3.4.1",
+    "webpack": "^3.5.3",
     "webpack-bundle-size-analyzer": "^2.7.0",
-    "webpack-dev-server": "^2.6.1"
+    "webpack-dev-server": "^2.7.1"
   },
   "engines": {
     "node": "8.x.x"

@@ -1,6 +1,7 @@
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
-const WolfColaContainer = styled.div`
+const WolfColaContainer = withTheme(styled.div`
   ::-webkit-scrollbar {
     width: 4px;
   }
@@ -22,15 +23,15 @@ const WolfColaContainer = styled.div`
   left: 0;
   display: flex;
   flex-direction: column;
-`;
+`);
 
-const ControlsContainer = styled.div`
+const ControlsContainer = withTheme(styled.div`
   flex: 0 0 70px;
   background-color: ${props => props.theme.controlBackground};
   color: ${props => props.theme.controlText};
   display: flex;
   flex-direction: row;
-`;
+`);
 
 const NavListContainer = styled.div`
   flex: 1 0 auto;
@@ -38,7 +39,7 @@ const NavListContainer = styled.div`
   flex-direction: row;
 `;
 
-const NavContainer = styled.div`
+const NavContainer = withTheme(styled.div`
   position: relative;
   flex: 0 0 220px;
   height: calc(100vh - 70px);
@@ -92,9 +93,9 @@ const NavContainer = styled.div`
     margin-top: 2em;
     cursor: default;
   }
-`;
+`);
 
-const RouteContainer = styled.div`
+const RouteContainer = withTheme(styled.div`
   position: relative;
   flex: 1 0 auto;
   display: flex;
@@ -106,7 +107,7 @@ const RouteContainer = styled.div`
   padding: 1em 2em;
   padding-bottom: 0;
   padding-top: 2em;
-`;
+`);
 
 module.exports = {
   WolfColaContainer,

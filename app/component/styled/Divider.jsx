@@ -1,9 +1,10 @@
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
-const Divider = styled.div`
+const Divider = withTheme(styled.div`
   width: 100%;
   border-top: 1px solid ${props => props.theme.listDivider};
   border-bottom: transparent;
-`;
+`);
 
 module.exports = Divider;

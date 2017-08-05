@@ -2,6 +2,7 @@ import React from 'react';
 import { func, bool, string, number, oneOfType, object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 import { human } from '@app/util/time';
@@ -9,7 +10,7 @@ import { human } from '@app/util/time';
 import { ControlsContainer } from '@app/component/styled/WolfCola';
 import Range from '@app/component/styled/Range';
 
-const NowPlayingContainer = styled.div`
+const NowPlayingContainer = withTheme(styled.div`
   flex: 0 1 250px;
   max-width: 250px;
   padding-left: 6px;
@@ -60,7 +61,7 @@ const NowPlayingContainer = styled.div`
       color: ${props => props.theme.controlMute};
     }
   }
-`;
+`);
 
 const MusicControlsContainer = styled.div`
   flex: 1 1 auto;
@@ -68,7 +69,7 @@ const MusicControlsContainer = styled.div`
   flex-direction: column;
 `;
 
-const MusicControls = styled.div`
+const MusicControls = withTheme(styled.div`
   flex: 0 0 40px;
   display: flex;
   flex-direction: row;
@@ -119,7 +120,7 @@ const MusicControls = styled.div`
   & [class^="icon-"] {
     padding: 0 1em;
   }
-`;
+`);
 
 const MusicProgress = styled.div`
   flex: 0 0 30px;

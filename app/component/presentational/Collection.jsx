@@ -2,12 +2,12 @@ import React from 'react';
 import { string, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
-const CollectionContainer = styled(Link)`
+const CollectionContainer = withTheme(styled(Link)`
   position: relative;
-  flex: 0 0 25%;
   min-height: 25vh;
   padding: 0 1em;
   margin-bottom: 3em;
@@ -26,14 +26,14 @@ const CollectionContainer = styled(Link)`
     }
   }
 
-  // non-full screen view
   @media(max-width: 992px) {
     flex: 0 0 33.333%;
+    border: 1px solid blue;
   }
 
-  // big screens
   @media(min-width: 1281px) {
     flex: 0 0 20%;
+    border: 1px solid red;
   }
 
   .collection-cover {
@@ -43,12 +43,10 @@ const CollectionContainer = styled(Link)`
     border: 1px solid rgba(51, 51, 51, 0.25);
     border-radius: 6px;
 
-    // no-full screen view
     @media(max-width: 992px) {
       height: 175px;
     }
 
-    // big screens
     @media(min-width: 1281px) {
       height: 300px;
     }
@@ -107,7 +105,7 @@ const CollectionContainer = styled(Link)`
   &:active {
     transform: scale(0.95);
   }
-`;
+`);
 
 function Collection({ id, playingId, name, description, songCnt, thumbnail, play }) {
   return (

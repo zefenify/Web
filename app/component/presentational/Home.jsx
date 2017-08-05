@@ -1,10 +1,11 @@
 import React from 'react';
 import { func, number, arrayOf, shape } from 'prop-types';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import Collection from '@app/component/presentational/Collection';
 
-const HomeContainer = styled.div`
+const HomeContainer = withTheme(styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -32,7 +33,7 @@ const HomeContainer = styled.div`
     overflow-y: auto;
     padding: 1em 1em; // <Collection /> has 1em padding
   }
-`;
+`);
 
 const Home = ({ featured, featuredPlayingId, playFeatured }) => (
   <HomeContainer>

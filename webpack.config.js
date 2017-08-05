@@ -63,8 +63,9 @@ module.exports = (env) => {
             loader: 'babel-loader',
             options: {
               plugins: [
-                'emotion/babel',
+                ['emotion/babel'],
                 'transform-react-inline-elements',
+                'transform-class-properties',
                 ['transform-runtime', { helpers: false, polyfill: false }],
               ],
               presets: [

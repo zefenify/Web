@@ -26,12 +26,10 @@ const CollectionContainer = styled(Link)`
     }
   }
 
-  // non-full screen view
   @media(max-width: 992px) {
     flex: 0 0 33.333%;
   }
 
-  // big screens
   @media(min-width: 1281px) {
     flex: 0 0 20%;
   }
@@ -43,12 +41,10 @@ const CollectionContainer = styled(Link)`
     border: 1px solid rgba(51, 51, 51, 0.25);
     border-radius: 6px;
 
-    // no-full screen view
     @media(max-width: 992px) {
       height: 175px;
     }
 
-    // big screens
     @media(min-width: 1281px) {
       height: 300px;
     }

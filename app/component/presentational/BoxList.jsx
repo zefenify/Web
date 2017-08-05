@@ -30,7 +30,7 @@ const BoxListContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: auto;
-    padding: 1em 1em; // <Box /> has 1em padding
+    padding: 1em 1em;
   }
 `;
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { shape, bool, number, func } from 'prop-types';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
@@ -8,7 +9,7 @@ import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 import Button from '@app/component/styled/Button';
 
-const ArtistContainer = styled.div`
+const ArtistContainer = withTheme(styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -106,7 +107,7 @@ const ArtistContainer = styled.div`
     display: flex;
     flex-direction: column;
   }
-`;
+`);
 
 const Arist = ({
   artist,

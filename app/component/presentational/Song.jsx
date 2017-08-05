@@ -2,12 +2,13 @@ import React from 'react';
 import { func, number, string, bool } from 'prop-types';
 import styled from 'emotion/react';
 import { Link } from 'react-router-dom';
+import { withTheme } from 'theming';
 
 import { human } from '@app/util/time';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
-const SongContainer = styled.div`
+const SongContainer = withTheme(styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -101,7 +102,7 @@ const SongContainer = styled.div`
       }
     }
   }
-`;
+`);
 
 const Song = ({
   fullDetail,

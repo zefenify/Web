@@ -1,10 +1,11 @@
 import React from 'react';
 import { func, string, arrayOf, shape } from 'prop-types';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import Box from '@app/component/presentational/Box';
 
-const BoxListContainer = styled.div`
+const BoxListContainer = withTheme(styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -32,7 +33,7 @@ const BoxListContainer = styled.div`
     overflow-y: auto;
     padding: 1em 1em; // <Box /> has 1em padding
   }
-`;
+`);
 
 const BoxList = ({ type, box, boxPlayingData, boxPlay }) => (
   <BoxListContainer>

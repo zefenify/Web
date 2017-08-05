@@ -1,6 +1,7 @@
 import React from 'react';
 import { bool, number, string, arrayOf, shape, func } from 'prop-types';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
@@ -16,7 +17,7 @@ const HeaderSongsContainer = styled.div`
   flex: 0 0 auto;
 `;
 
-const Header = styled.div`
+const Header = withTheme(styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: row;
@@ -57,7 +58,7 @@ const Header = styled.div`
       width: 175px;
     }
   }
-`;
+`);
 
 const Songs = styled.div`
   flex: 1 0 auto;

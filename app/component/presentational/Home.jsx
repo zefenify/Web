@@ -31,7 +31,7 @@ const HomeContainer = withTheme(styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: auto;
-    padding: 1em 1em; // <Collection /> has 1em padding
+    padding: 1em 1em;
   }
 `);
 

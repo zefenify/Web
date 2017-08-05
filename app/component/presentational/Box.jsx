@@ -2,10 +2,11 @@ import React from 'react';
 import { string, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
-const BoxContainer = styled(Link)`
+const BoxContainer = withTheme(styled(Link)`
   position: relative;
   flex: 0 0 25%;
   min-height: 25vh;
@@ -26,12 +27,10 @@ const BoxContainer = styled(Link)`
     }
   }
 
-  // non-full screen view
   @media(max-width: 992px) {
     flex: 0 0 33.333%;
   }
 
-  // big screens
   @media(min-width: 1281px) {
     flex: 0 0 20%;
   }
@@ -43,12 +42,10 @@ const BoxContainer = styled(Link)`
     border: 1px solid rgba(51, 51, 51, 0.25);
     border-radius: 6px;
 
-    // no-full screen view
     @media(max-width: 992px) {
       height: 175px;
     }
 
-    // big screens
     @media(min-width: 1281px) {
       height: 300px;
     }
@@ -95,7 +92,7 @@ const BoxContainer = styled(Link)`
   &:active {
     transform: scale(0.95);
   }
-`;
+`);
 
 function Box({ type, title, thumbnail, data, boxPlayingData, play }) {
   return (

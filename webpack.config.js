@@ -85,7 +85,6 @@ module.exports = (env) => {
               loader: 'css-loader',
               options: {
                 sourceMap: true,
-                modules: true,
               },
             },
           }) : ['style-loader', { loader: 'css-loader', options: { modules: true } }],
@@ -100,6 +99,7 @@ module.exports = (env) => {
               loader: 'css-loader',
               options: {
                 sourceMap: true,
+                modules: true,
               },
             },
           }) : ['style-loader', { loader: 'css-loader' }],

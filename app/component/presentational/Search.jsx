@@ -1,12 +1,13 @@
 import React from 'react';
 import { string, func, bool, shape } from 'prop-types';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
 import Song from '@app/component/presentational/Song';
 
-const SearchContainer = styled.div`
+const SearchContainer = withTheme(styled.div`
   display: flex;
   flex: 0 1 auto;
   flex-direction: column;
@@ -72,7 +73,7 @@ const SearchContainer = styled.div`
       flex: 1 1 auto;
     }
   }
-`;
+`);
 
 const Search = ({
   q,

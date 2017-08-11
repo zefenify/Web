@@ -14,7 +14,7 @@ const ArtistContainer = withTheme(styled.div`
   flex-direction: column;
   flex: 0 0 auto;
 
-  .artist {
+  & .artist {
     flex: 1 0 auto;
     display: flex;
     flex-direction: row;
@@ -43,27 +43,27 @@ const ArtistContainer = withTheme(styled.div`
         color: ${props => props.theme.controlMute};
       }
 
-      button {
+      & button {
         width: 175px;
         margin-top: 1em;
       }
     }
   }
 
-  .album-list {
+  & .album-list {
     &__album {
       margin-top: 2em;
       padding-bottom: 1px;
     }
   }
 
-  .album {
+  & .album {
     &__song-list {
       margin-top: 1em;
     }
   }
 
-  .album-cover {
+  & .album-cover {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -81,7 +81,7 @@ const ArtistContainer = withTheme(styled.div`
     }
   }
 
-  .album-info {
+  & .album-info {
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
@@ -103,7 +103,7 @@ const ArtistContainer = withTheme(styled.div`
     }
   }
 
-  .song-list {
+  & .song-list {
     display: flex;
     flex-direction: column;
   }

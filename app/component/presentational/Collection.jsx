@@ -8,6 +8,7 @@ import { BASE } from '@app/config/api';
 
 const CollectionContainer = withTheme(styled(Link)`
   position: relative;
+  flex: 0 0 25%;
   min-height: 25vh;
   padding: 0 1em;
   margin-bottom: 3em;
@@ -28,15 +29,13 @@ const CollectionContainer = withTheme(styled(Link)`
 
   @media(max-width: 992px) {
     flex: 0 0 33.333%;
-    border: 1px solid blue;
   }
 
   @media(min-width: 1281px) {
     flex: 0 0 20%;
-    border: 1px solid red;
   }
 
-  .collection-cover {
+  & .collection-cover {
     position: relative;
     width: 100%;
     height: 225px;
@@ -63,7 +62,7 @@ const CollectionContainer = withTheme(styled(Link)`
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
 
-      i {
+      & i {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -83,20 +82,20 @@ const CollectionContainer = withTheme(styled(Link)`
     }
   }
 
-  .collection-title {
+  & .collection-title {
     padding: 0;
     margin: 0;
     font-weight: bold;
     margin-top: 0.5em;
   }
 
-  .collection-description {
+  & .collection-description {
     padding: 0;
     margin: 0;
     margin-top: 0.5em;
   }
 
-  .collection-count {
+  & .collection-count {
     padding: 0;
     margin: 0;
     margin-top: 0.5em;

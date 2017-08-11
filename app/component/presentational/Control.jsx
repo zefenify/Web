@@ -17,7 +17,7 @@ const NowPlayingContainer = withTheme(styled.div`
   display: flex;
   align-items: center;
 
-  .song {
+  & .song {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -37,7 +37,7 @@ const NowPlayingContainer = withTheme(styled.div`
     }
   }
 
-  .song-name {
+  & .song-name {
     display: flex;
     flex-direction: column;
 
@@ -78,7 +78,7 @@ const MusicControls = withTheme(styled.div`
   font-size: 1.75em;
   padding-bottom: 0.2em;
 
-  .control {
+  & .control {
     position: relative;
     display: flex;
 
@@ -138,7 +138,7 @@ const VolumeContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  [class^="icon-"] {
+  & [class^="icon-"] {
     padding: 0 0.5em;
   }
 `;

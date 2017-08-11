@@ -24,7 +24,7 @@ const Header = withTheme(styled.div`
   align-items: center;
   margin-bottom: 2em;
 
-  .image {
+  & .image {
     flex: 0 0 200px;
     height: 200px;
     width: 200px;
@@ -32,7 +32,7 @@ const Header = withTheme(styled.div`
     border-radius: 50%;
   }
 
-  .info {
+  & .info {
     margin-left: 1em;
 
     & > * {
@@ -44,7 +44,7 @@ const Header = withTheme(styled.div`
     }
   }
 
-  .info-container {
+  & .info-container {
     display: flex;
     flex-direction: column;
     justify-content: center;

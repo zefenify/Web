@@ -50,7 +50,7 @@ const NavContainer = withTheme(styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 
-  .brand {
+  & .brand {
     position: absolute;
     left: 0;
     right: 0;
@@ -75,7 +75,7 @@ const NavContainer = withTheme(styled.div`
     }
   }
 
-  .nav-list {
+  & .nav-list {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -86,7 +86,7 @@ const NavContainer = withTheme(styled.div`
     overflow-y: auto;
   }
 
-  .small-text {
+  & .small-text {
     padding: 1em 0.5em;
     border-left: 1.25em solid transparent;
     font-size: 0.75em;

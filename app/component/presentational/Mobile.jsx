@@ -20,19 +20,19 @@ const MobileContainer = withTheme(styled.div`
     display: none;
   }
 
-  .sorry {
+  & .sorry {
     font-size: 2em;
     margin: 0;
   }
 
-  .message {
+  & .message {
     font-size: 1em;
     margin: 0;
     margin-top: 0.25em;
     padding: 0 1em;
   }
 
-  .store-links {
+  & .store-links {
     display: flex;
     flex-direction: row;
     justify-content: center;

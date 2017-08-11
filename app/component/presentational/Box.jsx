@@ -35,7 +35,7 @@ const BoxContainer = withTheme(styled(Link)`
     flex: 0 0 20%;
   }
 
-  .box-cover {
+  & .box-cover {
     position: relative;
     width: 100%;
     height: 225px;
@@ -62,7 +62,7 @@ const BoxContainer = withTheme(styled(Link)`
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
 
-      i {
+      & i {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -82,7 +82,7 @@ const BoxContainer = withTheme(styled(Link)`
     }
   }
 
-  .box-title {
+  & .box-title {
     padding: 0;
     margin: 0;
     font-size: 1.25em;

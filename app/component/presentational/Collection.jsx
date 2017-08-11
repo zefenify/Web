@@ -27,11 +27,7 @@ const CollectionContainer = withTheme(styled(Link)`
     }
   }
 
-  @media(max-width: 992px) {
-    flex: 0 0 33.333%;
-  }
-
-  @media(min-width: 1281px) {
+  @media(min-width: 1282px) {
     flex: 0 0 20%;
   }
 
@@ -42,11 +38,7 @@ const CollectionContainer = withTheme(styled(Link)`
     border: 1px solid rgba(51, 51, 51, 0.25);
     border-radius: 6px;
 
-    @media(max-width: 992px) {
-      height: 175px;
-    }
-
-    @media(min-width: 1281px) {
+    @media(min-width: 1284px) {
       height: 300px;
     }
 

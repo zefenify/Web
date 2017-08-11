@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
-const MobileContainer = styled.div`
+const MobileContainer = withTheme(styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,19 +20,19 @@ const MobileContainer = styled.div`
     display: none;
   }
 
-  .sorry {
+  & .sorry {
     font-size: 2em;
     margin: 0;
   }
 
-  .message {
+  & .message {
     font-size: 1em;
     margin: 0;
     margin-top: 0.25em;
     padding: 0 1em;
   }
 
-  .store-links {
+  & .store-links {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -43,7 +44,7 @@ const MobileContainer = styled.div`
       font-size: 3em;
     }
   }
-`;
+`);
 
 const Mobile = () => (
   <MobileContainer>

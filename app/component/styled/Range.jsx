@@ -1,7 +1,8 @@
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 // https://codepen.io/aronwoost/pen/nlyrf + some styling tweaks, theme and Firefox fix
-const Range = styled.input`
+const Range = withTheme(styled.input`
   &[type="range"] {
     -webkit-appearance: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -88,6 +89,6 @@ const Range = styled.input`
       transform: scale(1.25);
     }
   }
-`;
+`);
 
 module.exports = Range;

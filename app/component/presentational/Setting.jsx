@@ -12,7 +12,7 @@ const SettingContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  .crossfade {
+  & .crossfade {
     padding: 0;
     width: 75%;
     max-width: 250px;
@@ -22,7 +22,7 @@ const SettingContainer = styled.div`
     align-items: center;
   }
 
-  .utopia {
+  & .utopia {
     display: flex;
     flex-direction: column;
 
@@ -32,13 +32,13 @@ const SettingContainer = styled.div`
     }
   }
 
-  .squad {
+  & .squad {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 
-    a {
+    & a {
       text-decoration: none;
     }
 

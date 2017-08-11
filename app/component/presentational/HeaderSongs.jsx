@@ -1,6 +1,7 @@
 import React from 'react';
 import { bool, number, string, arrayOf, shape, func } from 'prop-types';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
@@ -16,14 +17,14 @@ const HeaderSongsContainer = styled.div`
   flex: 0 0 auto;
 `;
 
-const Header = styled.div`
+const Header = withTheme(styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 2em;
 
-  .image {
+  & .image {
     flex: 0 0 200px;
     height: 200px;
     width: 200px;
@@ -31,7 +32,7 @@ const Header = styled.div`
     border-radius: 50%;
   }
 
-  .info {
+  & .info {
     margin-left: 1em;
 
     & > * {
@@ -43,7 +44,7 @@ const Header = styled.div`
     }
   }
 
-  .info-container {
+  & .info-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -57,7 +58,7 @@ const Header = styled.div`
       width: 175px;
     }
   }
-`;
+`);
 
 const Songs = styled.div`
   flex: 1 0 auto;

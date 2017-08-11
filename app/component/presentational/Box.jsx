@@ -2,10 +2,11 @@ import React from 'react';
 import { string, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
-const BoxContainer = styled(Link)`
+const BoxContainer = withTheme(styled(Link)`
   position: relative;
   flex: 0 0 25%;
   min-height: 25vh;
@@ -34,7 +35,7 @@ const BoxContainer = styled(Link)`
     flex: 0 0 20%;
   }
 
-  .box-cover {
+  & .box-cover {
     position: relative;
     width: 100%;
     height: 225px;
@@ -61,7 +62,7 @@ const BoxContainer = styled(Link)`
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
 
-      i {
+      & i {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -81,7 +82,7 @@ const BoxContainer = styled(Link)`
     }
   }
 
-  .box-title {
+  & .box-title {
     padding: 0;
     margin: 0;
     font-size: 1.25em;
@@ -91,7 +92,7 @@ const BoxContainer = styled(Link)`
   &:active {
     transform: scale(0.95);
   }
-`;
+`);
 
 function Box({ type, title, thumbnail, data, boxPlayingData, play }) {
   return (

@@ -2,12 +2,13 @@ import React from 'react';
 import { func, number, string, bool } from 'prop-types';
 import styled from 'emotion/react';
 import { Link } from 'react-router-dom';
+import { withTheme } from 'theming';
 
 import { human } from '@app/util/time';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
-const SongContainer = styled.div`
+const SongContainer = withTheme(styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -24,7 +25,7 @@ const SongContainer = styled.div`
     text-overflow: ellipsis;
   }
 
-  a {
+  & a {
     text-decoration: none;
     color: inherit;
 
@@ -33,7 +34,7 @@ const SongContainer = styled.div`
     }
   }
 
-  .track-number-icon {
+  & .track-number-icon {
     position: relative;
     flex: 0 0 5%;
     padding-left: 0.5em;
@@ -56,19 +57,19 @@ const SongContainer = styled.div`
     flex: 0 0 42%;
   }
 
-  .name {
+  & .name {
     flex: 1 0 auto;
   }
 
-  .artist-name {
+  & .artist-name {
     flex: 0 0 25%;
   }
 
-  .album-name {
+  & .album-name {
     flex: 0 0 20%;
   }
 
-  .duration {
+  & .duration {
     padding-right: 0.5em;
     flex: 0 0 8%;
     text-align: right;
@@ -91,7 +92,7 @@ const SongContainer = styled.div`
   &:hover {
     background-color: ${props => props.theme.controlBackground};
 
-    .track-number-icon {
+    & .track-number-icon {
       &__number {
         display: none;
       }
@@ -101,7 +102,7 @@ const SongContainer = styled.div`
       }
     }
   }
-`;
+`);
 
 const Song = ({
   fullDetail,

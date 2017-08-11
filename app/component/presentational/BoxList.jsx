@@ -1,16 +1,17 @@
 import React from 'react';
 import { func, string, arrayOf, shape } from 'prop-types';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import Box from '@app/component/presentational/Box';
 
-const BoxListContainer = styled.div`
+const BoxListContainer = withTheme(styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
   ovefflow-y: auto;
 
-  .title {
+  & .title {
     position: absolute;
     top: 0;
     right: 0;
@@ -20,7 +21,7 @@ const BoxListContainer = styled.div`
     padding: 0 2em;
   }
 
-  .list {
+  & .list {
     position: absolute;
     top: 60px;
     right: 0;
@@ -32,7 +33,7 @@ const BoxListContainer = styled.div`
     overflow-y: auto;
     padding: 1em 1em;
   }
-`;
+`);
 
 const BoxList = ({ type, box, boxPlayingData, boxPlay }) => (
   <BoxListContainer>

@@ -2,6 +2,7 @@ import React from 'react';
 import { bool } from 'prop-types';
 import styled from 'emotion/react';
 import { keyframes } from 'emotion';
+import { withTheme } from 'theming';
 
 const bounce = keyframes`
   0%, 100% {
@@ -11,7 +12,7 @@ const bounce = keyframes`
   }
 `;
 
-const SpinnerContainer = styled.div`
+const SpinnerContainer = withTheme(styled.div`
   position: absolute;
   right: 0.5em;
   top: 18px;
@@ -44,7 +45,7 @@ const SpinnerContainer = styled.div`
   &.active .double-bounce2 {
     animation-delay: -1.0s;
   }
-`;
+`);
 
 function Spinner({ loading }) {
   return (

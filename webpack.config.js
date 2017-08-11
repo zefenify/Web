@@ -38,6 +38,7 @@ module.exports = (env) => {
         'redux',
         'redux-saga',
         'reselect',
+        'theming',
         'emotion',
         'notie',
         'howler',
@@ -65,6 +66,7 @@ module.exports = (env) => {
               plugins: [
                 'emotion/babel',
                 'transform-react-inline-elements',
+                'transform-class-properties',
                 ['transform-runtime', { helpers: false, polyfill: false }],
               ],
               presets: [
@@ -85,7 +87,6 @@ module.exports = (env) => {
               loader: 'css-loader',
               options: {
                 sourceMap: true,
-                modules: true,
               },
             },
           }) : ['style-loader', { loader: 'css-loader', options: { modules: true } }],
@@ -100,6 +101,7 @@ module.exports = (env) => {
               loader: 'css-loader',
               options: {
                 sourceMap: true,
+                modules: true,
               },
             },
           }) : ['style-loader', { loader: 'css-loader' }],

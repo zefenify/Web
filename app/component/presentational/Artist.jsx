@@ -1,6 +1,7 @@
 import React from 'react';
 import { shape, bool, number, func } from 'prop-types';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
@@ -8,12 +9,12 @@ import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 import Button from '@app/component/styled/Button';
 
-const ArtistContainer = styled.div`
+const ArtistContainer = withTheme(styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
 
-  .artist {
+  & .artist {
     flex: 1 0 auto;
     display: flex;
     flex-direction: row;
@@ -42,27 +43,27 @@ const ArtistContainer = styled.div`
         color: ${props => props.theme.controlMute};
       }
 
-      button {
+      & button {
         width: 175px;
         margin-top: 1em;
       }
     }
   }
 
-  .album-list {
+  & .album-list {
     &__album {
       margin-top: 2em;
       padding-bottom: 1px;
     }
   }
 
-  .album {
+  & .album {
     &__song-list {
       margin-top: 1em;
     }
   }
 
-  .album-cover {
+  & .album-cover {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -80,7 +81,7 @@ const ArtistContainer = styled.div`
     }
   }
 
-  .album-info {
+  & .album-info {
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
@@ -102,11 +103,11 @@ const ArtistContainer = styled.div`
     }
   }
 
-  .song-list {
+  & .song-list {
     display: flex;
     flex-direction: column;
   }
-`;
+`);
 
 const Arist = ({
   artist,

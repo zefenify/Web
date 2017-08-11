@@ -2,11 +2,12 @@ import React from 'react';
 import { arrayOf, shape, func, number, bool } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'emotion/react';
+import { withTheme } from 'theming';
 
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
-const TopContainer = styled.div`
-  .title {
+const TopContainer = withTheme(styled.div`
+  & .title {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -19,7 +20,7 @@ const TopContainer = styled.div`
     box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
   }
 
-  .list {
+  & .list {
     position: absolute;
     top: 60px;
     right: 0;
@@ -29,9 +30,9 @@ const TopContainer = styled.div`
     padding: 2em;
     padding-bottom: 0;
   }
-`;
+`);
 
-const NavLinkStyled = styled(NavLink)`
+const NavLinkStyled = withTheme(styled(NavLink)`
   color: ${props => props.theme.navbarText};
   padding: 0 1em;
   font-size: 1.2em;
@@ -52,7 +53,7 @@ const NavLinkStyled = styled(NavLink)`
     border-bottom: 2px solid ${props => props.theme.primary};
     background-color: ${props => props.theme.listBackgroundHover};
   }
-`;
+`);
 
 const Top = ({
   most,

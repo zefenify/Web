@@ -79,7 +79,7 @@ const SongContainer = withTheme(styled.div`
     color: ${props => props.theme.primary};
 
     &.active_playing {
-      .track-number-icon__number {
+      & .track-number-icon__number {
         display: none;
       }
 

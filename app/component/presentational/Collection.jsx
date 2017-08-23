@@ -22,7 +22,7 @@ const CollectionContainer = withTheme(styled(Link)`
   }
 
   &:not(.active) {
-    i {
+    & i {
       color: #fff !important;
     }
   }

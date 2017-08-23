@@ -22,7 +22,7 @@ const BoxContainer = withTheme(styled(Link)`
   }
 
   &:not(.active) {
-    i {
+    & i {
       color: #fff !important;
     }
   }

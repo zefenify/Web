@@ -17,7 +17,7 @@ const WHITE_2 = '#f7f7f7';
 const WHITE_3 = '#d8d8d8';
 
 const GREEN_1 = '#1ed660';
-const PINK_1 = '#f94263';
+const BLUE_1 = '#31a8e6';
 
 module.exports = {
   darkTheme: {
@@ -42,7 +42,7 @@ module.exports = {
   },
 
   lightTheme: {
-    primary: PINK_1,
+    primary: BLUE_1,
 
     navbarBackground: WHITE_2,
     navbarText: MUTE_3,
@@ -54,7 +54,7 @@ module.exports = {
     listDivider: DARK_4,
     listText: MUTE_6,
     listTextMute: MUTE_4,
-    listTextActive: PINK_1,
+    listTextActive: BLUE_1,
     listBoxShadow: DARK_5,
 
     controlBackground: DARK_4,

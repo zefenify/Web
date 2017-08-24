@@ -17,8 +17,6 @@ class ArtistContainer extends Component {
     super(props);
     this.state = {
       artist: null,
-      current: null,
-      playing: false,
       songCount: 0,
       albumPlayingIndex: -1, // controls queue set on album play
       playingArist: false, // checks the current initialQueue is filled with artists song [flat]

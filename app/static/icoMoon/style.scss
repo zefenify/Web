@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'wolfcola';
-  src: url('fonts/wolfcola.woff?93f006a2122b080257b0') format('woff');
+  src: url('fonts/wolfcola.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -28,16 +28,46 @@
   content: "\e901";
   color: #999;
 }
+.icon-facebook:before {
+  content: "\e905";
+  color: #3b5998;
+}
 .icon-github:before {
   content: "\e902";
 }
-.icon-react:before {
-  content: "\e903";
-  color: #00d8ff;
+.icon-instagram:before {
+  content: "\e906";
+  color: #e4405f;
+}
+.icon-messenger:before {
+  content: "\e907";
+  color: #0084ff;
+}
+.icon-snapchat:before {
+  content: "\e908";
+  color: #fffc00;
+}
+.icon-telegram:before {
+  content: "\e909";
+  color: #2ca5e0;
 }
 .icon-twitter:before {
   content: "\e904";
   color: #1da1f2;
+}
+.icon-linux:before {
+  content: "\e90a";
+  color: #dd4814;
+}
+.icon-windows:before {
+  content: "\e90b";
+  color: #0078d6;
+}
+.icon-ion-ios-arrow-left:before {
+  content: "\f3d2";
+}
+.icon-ion-ios-arrow-right:before {
+  content: "\f3d3";
 }
 .icon-ion-ios-close-empty:before {
   content: "\f404";

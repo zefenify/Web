@@ -16,6 +16,20 @@ body {
   outline: none;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: #5E5A59;
+}
+
 *:not(a) {
   cursor: default !important;
 }

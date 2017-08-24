@@ -42,11 +42,13 @@ module.exports = (URL, cancel) => new Promise((resolve, reject) => {
         return;
       }
 
-      notie.alert({
-        type: 'error',
-        text: 'ጭራሽ ጭጭ - Network',
-        time: 5,
-      });
+      if (err.message === 'Network Error') {
+        notie.alert({
+          type: 'error',
+          text: 'ጭራሽ ጭጭ - Network',
+          time: 5,
+        });
+      }
 
       reject(err);
     });

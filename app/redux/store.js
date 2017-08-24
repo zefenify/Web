@@ -16,6 +16,7 @@ import current from '@app/redux/reducer/current';
 import initialQueue from '@app/redux/reducer/initialQueue';
 import history from '@app/redux/reducer/history';
 import loading from '@app/redux/reducer/loading';
+import user from '@app/redux/reducer/user';
 
 import rootSaga from '@app/redux/saga/sagas';
 
@@ -36,6 +37,7 @@ const store = createStore(
     initialQueue,
     history,
     loading,
+    user,
   }),
   {
     theme: 'dark',
@@ -56,6 +58,7 @@ const store = createStore(
     current: null, // current song object, *not* the Howler object
     // online: false,
     loading: false,
+    user: null,
   },
   window.devToolsExtension
     ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension())

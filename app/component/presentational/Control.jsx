@@ -10,6 +10,126 @@ import { human } from '@app/util/time';
 import { ControlsContainer } from '@app/component/styled/WolfCola';
 import Range from '@app/component/styled/Range';
 
+const SkipBack = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polygon points="19 20 9 12 19 4 19 20" fill="currentColor" />
+    <line x1="5" y1="19" x2="5" y2="5" />
+  </svg>
+);
+
+const SkipForward = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polygon points="5 4 15 12 5 20 5 4" fill="currentColor" />
+    <line x1="19" y1="5" x2="19" y2="19" />
+  </svg>
+);
+
+const Repeat = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polyline points="17 1 21 5 17 9" />
+    <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+    <polyline points="7 23 3 19 7 15" />
+    <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+  </svg>
+);
+
+const Shuffle = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polyline points="16 3 21 3 21 8" />
+    <line x1="4" y1="20" x2="21" y2="3" />
+    <polyline points="21 16 21 21 16 21" />
+    <line x1="15" y1="15" x2="21" y2="21" />
+    <line x1="4" y1="4" x2="9" y2="9" />
+  </svg>
+);
+
+const PlayPause = ({ playing }) => (
+  <svg
+    width="34"
+    height="34"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {
+      playing ?
+        <g>
+          <circle cx="12" cy="12" r="10" />
+          <line x1="10" y1="15" x2="10" y2="9" />
+          <line x1="14" y1="15" x2="14" y2="9" />
+        </g>
+        :
+        <g>
+          <circle cx="12" cy="12" r="10" />
+          <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
+        </g>
+    }
+  </svg>
+);
+
+PlayPause.propTypes = {
+  playing: bool,
+};
+
+PlayPause.defaultProps = {
+  playing: true,
+};
+
+const Circle = props => (
+  <svg
+    width="4"
+    height="4"
+    viewBox="0 0 2 2"
+    fill="currentColor"
+    stroke="none"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <circle cx="1" cy="1" r="1" />
+  </svg>
+);
+
 const NowPlayingContainer = withTheme(styled.div`
   flex: 0 1 250px;
   max-width: 250px;
@@ -73,18 +193,14 @@ const MusicControls = withTheme(styled.div`
   flex: 0 0 40px;
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   font-size: 1.75em;
-  padding-bottom: 0.2em;
+  padding-top: 0.25em;
 
   & .control {
     position: relative;
     display: flex;
-
-    &:hover {
-      transform: scale(1.2);
-    }
 
     &_active {
       color: ${props => props.theme.primary};
@@ -92,7 +208,8 @@ const MusicControls = withTheme(styled.div`
 
     &__state {
       position: absolute;
-      left: 50%;
+      top: -4px;
+      right: 18px;
       width: 14px;
       height: 14px;
       padding: 0.25em 0.5em;
@@ -117,7 +234,7 @@ const MusicControls = withTheme(styled.div`
     }
   }
 
-  & [class^="icon-"] {
+  & > * {
     padding: 0 1em;
   }
 `);
@@ -182,26 +299,26 @@ const Control = ({
     <MusicControlsContainer>
       <MusicControls>
         <div className={`control ${shuffle ? 'control_active' : ''}`} onClick={toggleShuffle}>
-          <i className="icon-ion-ios-shuffle-strong" />
-          <i className="control__accessibility icon-circle" style={{ opacity: shuffle ? 1 : 0 }}></i>
+          <Shuffle />
+          <Circle className="control__accessibility" style={{ opacity: shuffle ? 1 : 0 }} />
         </div>
 
         <div className="control" onClick={previous}>
-          <i className="icon-ion-ios-skipbackward" />
+          <SkipBack />
         </div>
 
         <div className="control" onClick={togglePlayPause}>
-          <i className={`icon-ion-ios-${playing ? 'pause' : 'play'}`} />
+          <PlayPause playing={playing} />
         </div>
 
         <div className="control" onClick={next}>
-          <i className="icon-ion-ios-skipforward" />
+          <SkipForward />
         </div>
 
         <div className={`control ${repeat === 'OFF' ? '' : 'control_active'}`} onClick={setRepeat}>
-          <i className="icon-ion-ios-loop-strong" />
+          <Repeat />
           <div className="control__state" style={{ opacity: repeat === 'ONE' ? 1 : 0 }}>1</div>
-          <i className="control__accessibility icon-circle" style={{ opacity: (repeat === 'ONE' || repeat === 'ALL') ? 1 : 0 }}></i>
+          <Circle className="control__accessibility" style={{ opacity: (repeat === 'ONE' || repeat === 'ALL') ? 1 : 0 }} />
         </div>
       </MusicControls>
 

@@ -256,7 +256,7 @@ const MusicControls = withTheme(styled.div`
     &__state {
       position: absolute;
       top: -4px;
-      right: 18px;
+      right: 20px;
       width: 14px;
       height: 14px;
       padding: 0.25em 0.5em;

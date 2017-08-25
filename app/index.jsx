@@ -8,7 +8,6 @@ import { ThemeProvider } from 'theming';
 
 import 'normalize.css';
 import '@app/scss/notie.scss';
-import '@app/static/icoMoon/style.scss';
 import '@app/scss/wolf-cola.scss';
 
 import store from '@app/redux/store';

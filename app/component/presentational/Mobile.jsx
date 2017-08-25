@@ -31,30 +31,12 @@ const MobileContainer = withTheme(styled.div`
     margin-top: 0.25em;
     padding: 0 1em;
   }
-
-  & .store-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 2em;
-
-    &__link {
-      padding: 0 0.5em;
-      text-decoration: none;
-      font-size: 3em;
-    }
-  }
 `);
 
 const Mobile = () => (
   <MobileContainer>
     <p className="sorry">ይቅርታ</p>
     <p className="message">Wolf Cola is designed for Desktop use</p>
-
-    <div className="store-links">
-      <a className="store-links__link" href="https://itunes.apple.com/us/app/arifzefen/id420206088?mt=8"><i className="icon-ios" /></a>
-      <a className="store-links__link" href="https://play.google.com/store/apps/details?id=com.arifsoft.arifzefen"><i className="icon-android" /></a>
-    </div>
   </MobileContainer>
 );
 

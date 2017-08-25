@@ -9,6 +9,18 @@ import { SET_USER } from '@app/redux/constant/user';
 import { LF_STORE } from '@app/config/localforage';
 import api from '@app/util/api';
 
+const statusChangeCallback = (response) => {
+  // user connected - booting `user`...
+  if (response.status === 'connected') {
+    api(`${FAUTH}${response.authResponse.accessToken}`).then((user) => {
+      store.dispatch({
+        type: SET_USER,
+        payload: user,
+      });
+    }, () => {});
+  }
+};
+
 // reading LF *directly* checking for user...
 localforage
   .getItem(LF_STORE.USER)
@@ -36,15 +48,7 @@ window.fbAsyncInit = () => {
   FB.AppEvents.logPageView();
 
   // checking user login status...
-  FB.getLoginStatus((response) => {
-    // user connected - booting `user`...
-    if (response.status === 'connected') {
-      api(`${FAUTH}${response.authResponse.accessToken}`).then((user) => {
-        store.dispatch({
-          type: SET_USER,
-          payload: user,
-        });
-      }, () => {});
-    }
-  });
+  FB.getLoginStatus(statusChangeCallback);
 };
+
+module.exports = statusChangeCallback;

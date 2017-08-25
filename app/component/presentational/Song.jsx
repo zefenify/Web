@@ -8,6 +8,58 @@ import { human } from '@app/util/time';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
+const PlayPause = ({ onClick, playing, className }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="none"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    onClick={onClick}
+    className={className}
+  >
+    {
+      playing ?
+        <g>
+          <rect x="6" y="4" width="4" height="16" fill="currentColor" />
+          <rect x="14" y="4" width="4" height="16" fill="currentColor" />
+        </g>
+        : <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
+    }
+  </svg>
+);
+
+PlayPause.propTypes = {
+  onClick: func.isRequired,
+  playing: bool,
+  className: string,
+};
+
+PlayPause.defaultProps = {
+  playing: false,
+  className: '',
+};
+
+const Volume = props => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+  </svg>
+);
+
 const SongContainer = withTheme(styled.div`
   display: flex;
   flex-direction: row;
@@ -46,7 +98,7 @@ const SongContainer = withTheme(styled.div`
     &__icon {
       display: none;
       position: absolute;
-      left: 0.25em;
+      left: 0;
       top: 6px;
       width: 1em;
       font-size: 2em;
@@ -122,8 +174,12 @@ const Song = ({
       <SongContainer className={`${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
         <div className="track-number-icon">
           <span className="track-number-icon__number">{ trackNumber }</span>
-          <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
-          <i style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} className="track-number-icon__icon track-number-icon_volume icon-ion-ios-volume-high" />
+          <PlayPause
+            className="track-number-icon__icon"
+            playing={currentSongId === songId && playing}
+            onClick={() => togglePlayPause(songId)}
+          />
+          <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} />
         </div>
         <div className="name">{ songName }</div>
         <div className="duration">{ human(playtime) }</div>
@@ -135,8 +191,12 @@ const Song = ({
     <SongContainer className={`full-detail ${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
       <div className="track-number-icon">
         <span className="track-number-icon__number">{ trackNumber }</span>
-        <i className={`track-number-icon__icon icon-ion-ios-${currentSongId === songId && playing ? 'pause' : 'play'}`} onClick={() => togglePlayPause(songId)} />
-        <i style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} className="track-number-icon__icon track-number-icon_volume icon-ion-ios-volume-high" />
+        <PlayPause
+          className="track-number-icon__icon"
+          playing={currentSongId === songId && playing}
+          onClick={() => togglePlayPause(songId)}
+        />
+        <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} />
       </div>
       <div className="name">{ songName }</div>
       <Link to={`/artist/${artistId}`} className="artist-name">{ artistName }</Link>

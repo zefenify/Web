@@ -1,4 +1,4 @@
-/* global FB, window */
+/* global window */
 
 import store from '@app/redux/store';
 
@@ -20,17 +20,12 @@ const statusChangeCallback = (response) => {
 
 // SDK will be loaded if `userBootFromLF` doesn't find any user
 window.fbAsyncInit = () => {
-  FB.init({
+  window.FB.init({
     appId: '470148740022518',
     cookie: false,
     xfbml: false,
     version: 'v2.8',
   });
-
-  // FB.AppEvents.logPageView();
-
-  // checking user login status...
-  FB.getLoginStatus(statusChangeCallback);
 };
 
 module.exports = statusChangeCallback;

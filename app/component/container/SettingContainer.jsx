@@ -1,11 +1,13 @@
-/* global window */
+/* global document, window */
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { confirm } from 'notie';
 
 import statusChangeCallback from '@app/facebook';
 import { SET_THEME } from '@app/redux/constant/theme';
 import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
+import { SET_USER } from '@app/redux/constant/user';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
@@ -31,5 +33,27 @@ module.exports = connect(state => ({
   },
   login() {
     window.FB.login(statusChangeCallback);
+  },
+  logout() {
+    confirm({
+      text: 'Logout?',
+      submitCallback: () => {
+        dispatch({
+          type: SET_USER,
+          payload: null,
+        });
+
+        // [re]booting Facebook SDK...
+        if (window.FB === undefined) {
+          (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = '//connect.facebook.net/en_US/sdk.js';
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+        }
+      },
+    });
   },
 }))(DJKhaled('currentTheme', 'currentCrossfade', 'user')(SettingContainer));

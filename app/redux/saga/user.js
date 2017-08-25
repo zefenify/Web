@@ -1,4 +1,4 @@
-/* global document */
+/* global window, document */
 /* eslint no-console: 0 */
 
 import localforage from 'localforage';
@@ -14,7 +14,7 @@ function* userBootFromLF() {
     const lfUser = yield localforage.getItem(LF_STORE.USER);
 
     // booting Facebook SDK...
-    if (lfUser === null) {
+    if (lfUser === null && window.FB === undefined) {
       (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) { return; }

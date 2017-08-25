@@ -29,6 +29,7 @@ const Setting = ({
   currentCrossfade,
   crossfade,
   toggleTheme,
+  login,
 }) => {
   const crossfadeMessage = `Crossfade: ${currentCrossfade === 0 ? 'Off' : `${currentCrossfade} Second${currentCrossfade > 1 ? 's' : ''}`}`;
 
@@ -38,7 +39,11 @@ const Setting = ({
 
       <Divider />
 
-      <Button style={{ margin: '1em 0 0.5em 0' }} onClick={toggleTheme}>Change Theme</Button>
+      <Button style={{ marginTop: '2em', marginBottom: '5em' }} onClick={login}>
+        <b>Login with Facebook</b>
+      </Button>
+
+      <Button style={{ marginBottom: '0.5em' }} onClick={toggleTheme}>Change Theme</Button>
 
       <small>
         <span>Current theme is </span><b>{ currentTheme === 'light' ? 'Dayman' : 'Nightman' }</b>
@@ -65,6 +70,7 @@ Setting.propTypes = {
   currentCrossfade: number,
   toggleTheme: func.isRequired,
   crossfade: func.isRequired,
+  login: func.isRequired,
 };
 
 Setting.defaultProps = {

@@ -1,6 +1,9 @@
+/* global window */
+
 import React from 'react';
 import { connect } from 'react-redux';
 
+import statusChangeCallback from '@app/facebook';
 import { SET_THEME } from '@app/redux/constant/theme';
 import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
 
@@ -13,6 +16,7 @@ const SettingContainer = props => (<Setting {...props} />);
 module.exports = connect(state => ({
   currentTheme: state.theme,
   currentCrossfade: state.crossfade,
+  user: state.user,
 }), dispatch => ({
   toggleTheme() {
     dispatch({
@@ -25,4 +29,7 @@ module.exports = connect(state => ({
       payload: Number.parseInt(e.target.value, 10),
     });
   },
-}))(DJKhaled('currentTheme', 'currentCrossfade')(SettingContainer));
+  login() {
+    window.FB.login(statusChangeCallback);
+  },
+}))(DJKhaled('currentTheme', 'currentCrossfade', 'user')(SettingContainer));

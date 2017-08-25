@@ -1,12 +1,9 @@
-/* global FB, window, document */
-
-import localforage from 'localforage';
+/* global FB, window */
 
 import store from '@app/redux/store';
 
 import { FAUTH } from '@app/config/api';
 import { SET_USER } from '@app/redux/constant/user';
-import { LF_STORE } from '@app/config/localforage';
 import api from '@app/util/api';
 
 const statusChangeCallback = (response) => {
@@ -21,22 +18,7 @@ const statusChangeCallback = (response) => {
   }
 };
 
-// reading LF *directly* checking for user...
-localforage
-  .getItem(LF_STORE.USER)
-  .then((lfUser) => {
-    // booting Facebook SDK...
-    if (lfUser === null) {
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = '//connect.facebook.net/en_US/sdk.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    }
-  }, () => {});
-
+// SDK will be loaded if `userBootFromLF` doesn't find any user
 window.fbAsyncInit = () => {
   FB.init({
     appId: '470148740022518',
@@ -45,7 +27,7 @@ window.fbAsyncInit = () => {
     version: 'v2.8',
   });
 
-  FB.AppEvents.logPageView();
+  // FB.AppEvents.logPageView();
 
   // checking user login status...
   FB.getLoginStatus(statusChangeCallback);

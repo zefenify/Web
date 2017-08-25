@@ -16,7 +16,8 @@ const SettingContainer = styled.div`
     padding: 0;
     width: 75%;
     max-width: 250px;
-    margin: 2em 0;
+    margin-top: 2em;
+    margin-bottom: 4em;
     display: flex;
     flex-direction: column;
     align-items: center;

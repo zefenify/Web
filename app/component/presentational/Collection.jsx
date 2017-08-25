@@ -6,6 +6,8 @@ import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
+import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
+
 const CollectionContainer = withTheme(styled(Link)`
   position: relative;
   flex: 0 0 25%;
@@ -22,7 +24,7 @@ const CollectionContainer = withTheme(styled(Link)`
   }
 
   &:not(.active) {
-    & i {
+    & svg {
       color: #fff !important;
     }
   }
@@ -54,7 +56,7 @@ const CollectionContainer = withTheme(styled(Link)`
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
 
-      & i {
+      & svg {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -103,7 +105,10 @@ function Collection({ id, playingId, name, description, songCnt, thumbnail, play
     <CollectionContainer to={`/featured/${id}`} className={`${id === playingId ? 'active' : ''}`}>
       <div className="collection-cover" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }}>
         <div className="collection-cover__overlay">
-          <i onClick={(e) => { e.preventDefault(); play(id); }} className={`icon-ion-ios-${id === playingId ? 'pause' : 'play'}`} />
+          <PlayPauseSVG
+            onClick={(e) => { e.preventDefault(); play(id); }}
+            playing={id === playingId}
+          />
         </div>
       </div>
 

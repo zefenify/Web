@@ -1,10 +1,12 @@
 import React from 'react';
-import { string, func } from 'prop-types';
+import { string, bool, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
 import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
+
+import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
 const BoxContainer = withTheme(styled(Link)`
   position: relative;
@@ -22,7 +24,7 @@ const BoxContainer = withTheme(styled(Link)`
   }
 
   &:not(.active) {
-    & i {
+    & svg {
       color: #fff !important;
     }
   }
@@ -62,7 +64,7 @@ const BoxContainer = withTheme(styled(Link)`
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
 
-      & i {
+      & svg {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -99,7 +101,10 @@ function Box({ type, title, thumbnail, data, boxPlayingData, play }) {
     <BoxContainer to={`/${type}/${data}`} className={`${boxPlayingData === data ? 'active' : ''}`}>
       <div className="box-cover" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }}>
         <div className="box-cover__overlay">
-          <i onClick={(e) => { e.preventDefault(); play(data); }} className={`icon-ion-ios-${data === boxPlayingData ? 'pause' : 'play'}`} />
+          <PlayPauseSVG
+            onClick={(e) => { e.preventDefault(); play(data); }}
+            playing={data === boxPlayingData}
+          />
         </div>
       </div>
 

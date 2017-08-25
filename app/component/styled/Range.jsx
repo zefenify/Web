@@ -7,7 +7,7 @@ const Range = withTheme(styled.input`
     -webkit-appearance: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     width: 100%;
-    height: 4px;
+    height: 2px;
     margin: 0;
     border: none;
     padding: 1px 2px;

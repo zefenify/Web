@@ -10,7 +10,7 @@ import 'normalize.css';
 import '@app/scss/notie.scss';
 import '@app/scss/wolf-cola.scss';
 
-import '@app/facebook';
+import '@app/util/facebook';
 import store from '@app/redux/store';
 import { lightTheme, darkTheme } from '@app/config/theme';
 

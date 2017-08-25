@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { confirm } from 'notie';
 
-import statusChangeCallback from '@app/facebook';
+import statusChangeCallback from '@app/util/facebook';
 import { SET_THEME } from '@app/redux/constant/theme';
 import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
 import { SET_USER } from '@app/redux/constant/user';

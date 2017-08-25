@@ -3,6 +3,7 @@ const FEATURED_ALL = 'json/featured/all.json';
 const SURPRISE_ME = 'json/curated/surpriseme.php';
 const SEARCH = 'json/list/search.php';
 const GENRE_BASE = 'http://www.arifzefen.com/json/list/';
+const FAUTH = 'http://api.zefenify.io/fauth/';
 const GENRE = [
   {
     title: 'Orthodox Mezmur',
@@ -143,4 +144,5 @@ module.exports = {
   GENRE,
   ARIFLIST_BASE,
   ARIFLIST,
+  FAUTH,
 };

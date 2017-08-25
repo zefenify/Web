@@ -10,6 +10,7 @@ import 'normalize.css';
 import '@app/scss/notie.scss';
 import '@app/scss/wolf-cola.scss';
 
+import '@app/facebook';
 import store from '@app/redux/store';
 import { lightTheme, darkTheme } from '@app/config/theme';
 
@@ -21,7 +22,7 @@ import ControlContainer from '@app/component/container/ControlContainer';
 import FeaturedContainer from '@app/component/container/FeaturedContainer';
 import ArtistContainer from '@app/component/container/ArtistContainer';
 import RecentContainer from '@app/component/container/RecentContainer';
-import SurpriseContainer  from '@app/component/container/SurpriseContainer';
+import SurpriseContainer from '@app/component/container/SurpriseContainer';
 import TopContainer from '@app/component/container/TopContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
 import BoxContainer from '@app/component/container/BoxContainer';
@@ -49,6 +50,7 @@ const Search = props => (
     <line x1="21" y1="21" x2="15.8" y2="15.8" />
   </svg>
 );
+
 const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
   <Provider store={store}>
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -58,7 +60,7 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
             <NavContainer>
               <Link className="brand" to="/">
                 <img src="static/image/brand.png" className="brand-image" alt="ArifZefen" />
-                <span>ArifZefen</span>
+                <span>Zefenify</span>
                 <Spinner loading={loading} />
               </Link>
 

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "s": "webpack-dev-server --hot --progress",
+    "s": "webpack-dev-server --progress",
     "a": "webpack --json | webpack-bundle-size-analyzer",
     "d": "rm -rf build && webpack --progress --colors && cp -a app/static/image build/static",
     "p": "rm -rf build && webpack -p --env production --progress --colors && cp -a app/static/image build/static",

@@ -1,10 +1,10 @@
+const HEADER = 'Authorization';
+const FAUTH = 'http://api.zefenify.io/fauth/';
 const BASE = 'http://www.arifzefen.com';
 const FEATURED_ALL = 'json/featured/all.json';
 const SURPRISE_ME = 'json/curated/surpriseme.php';
 const SEARCH = 'json/list/search.php';
 const GENRE_BASE = 'http://www.arifzefen.com/json/list/';
-const FAUTH = 'http://api.zefenify.io/fauth/';
-const HEADER = 'Authorization';
 const GENRE = [
   {
     title: 'Orthodox Mezmur',
@@ -137,7 +137,9 @@ const ARIFLIST = [
 ];
 
 module.exports = {
+  HEADER,
   BASE,
+  FAUTH,
   FEATURED_ALL,
   SURPRISE_ME,
   SEARCH,
@@ -145,6 +147,4 @@ module.exports = {
   GENRE,
   ARIFLIST_BASE,
   ARIFLIST,
-  HEADER,
-  FAUTH,
 };

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
 import { withTheme } from 'theming';
 
-import { BASE } from '@app/config/api';
+import { BASE_S3 } from '@app/config/api';
 import { human } from '@app/util/time';
 
 import { ControlsContainer } from '@app/component/styled/WolfCola';
@@ -333,10 +333,14 @@ const Control = ({
         current !== null
           ? (
             <div className="song">
-              <div className="song__artwork" style={{ background: `transparent url('${BASE}${current.thumbnail}') 50% 50% / cover no-repeat` }} />
+              <div className="song__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
               <div className="song__name song-name">
-                <p className="song-name__name">{ current.songName }</p>
-                <Link to={`/artist/${current.artistId}`} className="song-name__artist">{ current.artistName }</Link>
+                <p className="song-name__name">{ current.track_name }</p>
+                {
+                  current.track_album.album_artist.map(artist => (
+                    <Link to={`/artist/${artist.artist_id}`} className="song-name__artist">{ artist.artist_name }</Link>
+                  ))
+                }
               </div>
             </div>
           ) : null

@@ -135,7 +135,10 @@ class FeaturedContainer extends Component {
         duration={this.state.duration}
         togglePlayPauseAll={this.togglePlayPauseAll}
         togglePlayPauseSong={this.togglePlayPauseSong}
-        {...this.state.featured}
+        title={this.state.featured.playlist_name}
+        description={this.state.featured.playlist_description}
+        cover={this.state.featured.playlist_cover}
+        songs={this.state.featured.playlist_track}
       />
     );
   }

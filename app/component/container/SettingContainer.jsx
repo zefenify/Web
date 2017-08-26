@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { confirm } from 'notie';
+import { alert, confirm } from 'notie';
 
 import statusChangeCallback from '@app/util/facebook';
 import { SET_THEME } from '@app/redux/constant/theme';
@@ -32,6 +32,15 @@ module.exports = connect(state => ({
     });
   },
   login() {
+    if (window.FB === undefined) {
+      alert({
+        type: 'error',
+        text: 'Unable to contact Facebook server',
+      });
+
+      return;
+    }
+
     window.FB.login(statusChangeCallback);
   },
   logout() {

@@ -1,6 +1,8 @@
 const HEADER = 'Authorization';
-const BASE = 'http://www.arifzefen.com';
+const BASE = 'http://www.api.zefenify.io';
+const BASE_S3 = 'http://api.zefenify.io/@S3/';
 const FAUTH = 'http://api.zefenify.io/fauth/';
+
 const FEATURED = 'http://api.zefenify.io/featured';
 const FEATURED_ALL = 'json/featured/all.json';
 const SURPRISE_ME = 'json/curated/surpriseme.php';
@@ -140,6 +142,7 @@ const ARIFLIST = [
 module.exports = {
   HEADER,
   BASE,
+  BASE_S3,
   FAUTH,
   FEATURED,
   FEATURED_ALL,

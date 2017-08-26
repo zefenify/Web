@@ -55,7 +55,26 @@ class ArtistContainer extends Component {
 
   afterFetch(data) {
     const { initialQueue } = store.getState();
-    const flattenSongs = flatten(data.reference.album.map(album => album.reference.track));
+
+    // minor restructuring to avoid artist depth 4 request
+    // it's going to be a massacre of mutations 🙈
+    const flattenSongs = flatten(data.reference.album.map((album) => {
+      const albumArtistDereferenced = Object.assign([], album.album_artist);
+      albumArtistDereferenced.forEach((artist) => {
+        // eslint-disable-next-line
+        delete artist.reference;
+      });
+
+      album.reference.track.forEach((track) => {
+        // eslint-disable-next-line
+        track.track_album.album_cover = Object.assign({}, album.album_cover);
+        // eslint-disable-next-line
+        track.track_album.album_artist = albumArtistDereferenced; // so `current` isn't bloated
+      });
+
+      return album.reference.track;
+    }));
+    // end of massacre
 
     const queueIsByArtist = (albums, queue) => {
       const queueIsBySingleArtist = queue.every(song => song.artist_id === data.artist_id);

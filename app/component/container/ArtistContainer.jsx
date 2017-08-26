@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
 import flatten from 'lodash/flatten';
 
+import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 
 import sameSongList from '@app/util/sameSongList';
@@ -29,14 +30,11 @@ class ArtistContainer extends Component {
   }
 
   componentDidMount() {
-    api(`json/artist/${this.props.match.params.id}.json`, (cancel) => {
+    api(`${BASE}artist/${this.props.match.params.id}`, (cancel) => {
       this.cancelRequest = cancel;
-    })
-      .then((data) => {
-        this.afterFetch(data);
-      }, (err) => {
-        /* handle fetch error */
-      });
+    }).then((data) => {
+      this.afterFetch(data);
+    }, () => { /* handle fetch error */ });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,14 +42,11 @@ class ArtistContainer extends Component {
       return;
     }
 
-    api(`json/artist/${nextProps.match.params.id}.json`, (cancel) => {
+    api(`${BASE}artist/${nextProps.match.params.id}`, (cancel) => {
       this.cancelRequest = cancel;
-    })
-      .then((data) => {
-        this.afterFetch(data);
-      }, (err) => {
-        /* handle fetch error */
-      });
+    }).then((data) => {
+      this.afterFetch(data);
+    }, () => { /* handle fetch error */ });
   }
 
   componentWillUnmount() {
@@ -59,28 +54,11 @@ class ArtistContainer extends Component {
   }
 
   afterFetch(data) {
-    // building a copy so each song containing `artistId`, `artistName` & `thumbnail`
-    // also replace `albumPurl` `icon` with `cover`
-    const restructuredData = Object.assign({}, data);
-    restructuredData.albums = restructuredData.albums.map((album) => {
-      const albumCopy = Object.assign({}, album);
-      albumCopy.songs = albumCopy.songs.map(song => Object.assign(song, {
-        artistId: restructuredData.artistId,
-        artistName: restructuredData.artistName,
-        albumName: albumCopy.albumName,
-        playtime: song.songPlaytime,
-        thumbnail: albumCopy.albumPurl.replace('_icon_', '_cover_'),
-      }));
-      albumCopy.albumPurl = albumCopy.albumPurl.replace('_icon_', '_cover_');
-
-      return albumCopy;
-    });
-
     const { initialQueue } = store.getState();
-    const flattenSongs = flatten(restructuredData.albums.map(album => album.songs));
+    const flattenSongs = flatten(data.reference.album.map(album => album.reference.track));
 
     const queueIsByArtist = (albums, queue) => {
-      const queueIsBySingleArtist = queue.every(song => song.artistId === restructuredData.artistId);
+      const queueIsBySingleArtist = queue.every(song => song.artist_id === data.artist_id);
 
       if (queueIsBySingleArtist === false) {
         return false;
@@ -91,7 +69,7 @@ class ArtistContainer extends Component {
       const queueSongIdList = queue.map(song => song.songId);
 
       albums.forEach((album, index) => {
-        if (albumIndex === -1 && album.songs.every(song => queueSongIdList.includes(song.songId))) {
+        if (albumIndex === -1 && album.reference.track.every(song => queueSongIdList.includes(song.track_id))) {
           albumIndex = index;
         }
       });
@@ -100,10 +78,10 @@ class ArtistContainer extends Component {
     };
 
     this.setState(() => ({
-      artist: restructuredData,
+      artist: data,
       songCount: flattenSongs.length,
       playingArist: sameSongList(initialQueue, flattenSongs),
-      albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(restructuredData.albums, initialQueue),
+      albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(data.reference.album, initialQueue),
     }));
   }
 
@@ -114,7 +92,7 @@ class ArtistContainer extends Component {
 
     // booting playlist...
     if (this.props.current === null || this.state.playingArist === false) {
-      const flattenSongs = flatten(this.state.artist.albums.map(album => album.songs));
+      const flattenSongs = flatten(this.state.artist.reference.album.map(album => album.reference.track));
 
       store.dispatch({
         type: PLAY,
@@ -142,9 +120,9 @@ class ArtistContainer extends Component {
       store.dispatch({
         type: PLAY,
         payload: {
-          play: album.songs[0],
-          queue: album.songs,
-          initialQueue: album.songs,
+          play: album.reference.track[0],
+          queue: album.reference.track,
+          initialQueue: album.reference.track,
         },
       });
 
@@ -164,10 +142,10 @@ class ArtistContainer extends Component {
   }
 
   togglePlayPauseSong(songId) {
-    const flattenSongs = flatten(this.state.artist.albums.map(album => album.songs));
-    const songIndex = flattenSongs.findIndex(song => song.songId === songId);
+    const flattenSongs = flatten(this.state.artist.reference.album.map(album => album.reference.track));
+    const songIndex = flattenSongs.findIndex(song => song.track_id === songId);
 
-    if (this.props.current !== null && this.props.current.songId === songId) {
+    if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });

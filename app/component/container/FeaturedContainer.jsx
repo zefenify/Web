@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bool, string, shape } from 'prop-types';
 
+import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
@@ -30,37 +31,34 @@ class FeaturedContainer extends Component {
 
   componentDidMount() {
     // calling...
-    api(`json/featured/${this.props.match.params.id}.json`, (cancel) => {
+    api(`${BASE}playlist/${this.props.match.params.id}`, (cancel) => {
       this.cancelRequest = cancel;
-    })
-      .then((data) => {
-        this.setState(() => ({
-          featured: data,
-          duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
-        }), () => {
-          const { initialQueue } = store.getState();
+    }).then((data) => {
+      this.setState(() => ({
+        featured: data,
+        duration: human(data.playlist_track.reduce((totalD, track) => totalD + track.track_track.s3_meta.duration, 0), true),
+      }), () => {
+        const { initialQueue } = store.getState();
 
-          if (initialQueue.length === 0 || this.state.featured.songs.length === 0) {
-            this.setState(() => ({
-              playingFeatured: false,
-            }));
+        if (initialQueue.length === 0 || this.state.featured.playlist_track.length === 0) {
+          this.setState(() => ({
+            playingFeatured: false,
+          }));
 
-            return;
-          }
+          return;
+        }
 
-          if (sameSongList(this.state.featured.songs, initialQueue)) {
-            this.setState(() => ({
-              playingFeatured: true,
-            }));
-          } else {
-            this.setState(() => ({
-              playingFeatured: false,
-            }));
-          }
-        });
-      }, (err) => {
-        /* handle fetch error */
+        if (sameSongList(this.state.featured.playlist_track, initialQueue)) {
+          this.setState(() => ({
+            playingFeatured: true,
+          }));
+        } else {
+          this.setState(() => ({
+            playingFeatured: false,
+          }));
+        }
       });
+    }, () => { /* handle fetch error */ });
   }
 
   componentWillUnmount() {
@@ -77,9 +75,9 @@ class FeaturedContainer extends Component {
       store.dispatch({
         type: PLAY,
         payload: {
-          play: this.state.featured.songs[0],
-          queue: this.state.featured.songs,
-          initialQueue: this.state.featured.songs,
+          play: this.state.featured.playlist_track[0],
+          queue: this.state.featured.playlist_track,
+          initialQueue: this.state.featured.playlist_track,
         },
       });
 
@@ -95,7 +93,7 @@ class FeaturedContainer extends Component {
   }
 
   togglePlayPauseSong(songId) {
-    if (this.props.current !== null && this.props.current.songId === songId) {
+    if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -103,7 +101,7 @@ class FeaturedContainer extends Component {
       return;
     }
 
-    const songIdIndex = this.state.featured.songs.findIndex(song => song.songId === songId);
+    const songIdIndex = this.state.featured.playlist_track.findIndex(song => song.track_id === songId);
 
     if (songIdIndex === -1) {
       return;
@@ -112,9 +110,9 @@ class FeaturedContainer extends Component {
     store.dispatch({
       type: PLAY,
       payload: {
-        play: this.state.featured.songs[songIdIndex],
-        queue: this.state.featured.songs,
-        initialQueue: this.state.featured.songs,
+        play: this.state.featured.playlist_track[songIdIndex],
+        queue: this.state.featured.playlist_track,
+        initialQueue: this.state.featured.playlist_track,
       },
     });
 

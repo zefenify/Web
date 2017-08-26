@@ -38,7 +38,6 @@ const CollectionContainer = withTheme(styled(Link)`
     width: 100%;
     height: auto;
     min-height: 225px;
-    border: 1px solid rgba(51, 51, 51, 0.25);
     border-radius: 6px;
 
     @media(min-width: 1284px) {
@@ -47,10 +46,10 @@ const CollectionContainer = withTheme(styled(Link)`
 
     &__overlay {
       position: absolute;
-      top: -1px;
-      right: -1px;
-      bottom: -1px;
-      left: -1px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       display: flex;
       justify-content: center;
       align-items: center;

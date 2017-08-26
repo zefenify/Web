@@ -28,7 +28,6 @@ const Header = withTheme(styled.div`
     flex: 0 0 200px;
     height: 200px;
     width: 200px;
-    border: 1px solid rgba(51, 51, 51, 0.25);
     border-radius: 50%;
   }
 

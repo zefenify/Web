@@ -24,7 +24,6 @@ const ArtistContainer = withTheme(styled.div`
       flex: 0 0 200px;
       height: 200px;
       width: 200px;
-      border: 1px solid rgba(51, 51, 51, 0.25);
       border-radius: 50%;
     }
 
@@ -72,7 +71,6 @@ const ArtistContainer = withTheme(styled.div`
       width: 150px;
       height: 150px;
       flex: 0 0 150px;
-      border: 1px solid rgba(51, 51, 51, 0.25);
     }
 
     &__info {
@@ -94,7 +92,7 @@ const ArtistContainer = withTheme(styled.div`
     }
 
     &__name {
-      flex: 0 1 100%;
+      flex: 0 1 auto;
       font-size: 3em;
       padding: 0;
       margin: 0;

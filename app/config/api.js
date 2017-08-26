@@ -1,5 +1,5 @@
 const HEADER = 'Authorization';
-const BASE = 'http://www.api.zefenify.io';
+const BASE = 'http://www.api.zefenify.io/';
 const BASE_S3 = 'http://api.zefenify.io/@S3/';
 const FAUTH = 'http://api.zefenify.io/fauth/';
 

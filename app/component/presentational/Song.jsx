@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, number, string, bool } from 'prop-types';
+import { func, number, string, bool, shape } from 'prop-types';
 import styled from 'emotion/react';
 import { Link } from 'react-router-dom';
 import { withTheme } from 'theming';
@@ -115,6 +115,10 @@ const SongContainer = withTheme(styled.div`
 
   & .artist-name {
     flex: 0 0 25%;
+
+    &__artist {
+      margin-right: 1em;
+    }
   }
 
   & .album-name {
@@ -159,13 +163,11 @@ const SongContainer = withTheme(styled.div`
 const Song = ({
   fullDetail,
   currentSongId,
-  artistId,
-  songId,
   trackNumber,
+  songId,
   songName,
-  artistName,
-  albumName,
-  playtime,
+  songAlbum,
+  songDuration,
   togglePlayPause,
   playing,
 }) => {
@@ -182,7 +184,7 @@ const Song = ({
           <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} />
         </div>
         <div className="name">{ songName }</div>
-        <div className="duration">{ human(playtime) }</div>
+        <div className="duration">{ human(songDuration) }</div>
       </SongContainer>
     );
   }
@@ -199,9 +201,13 @@ const Song = ({
         <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} />
       </div>
       <div className="name">{ songName }</div>
-      <Link to={`/artist/${artistId}`} className="artist-name">{ artistName }</Link>
-      <div className="album-name">{ albumName }</div>
-      <div className="duration">{ human(playtime) }</div>
+      <div className="artist-name">
+        {
+          songAlbum.album_artist.map(artist => <Link className="artist-name__artist" to={`/artist/${artist.artist_id}`}>{ artist.artist_name }</Link>)
+        }
+      </div>
+      <Link to={`/album/${songAlbum.album_id}`} className="album-name">{ songAlbum.album_name }</Link>
+      <div className="duration">{ human(songDuration) }</div>
     </SongContainer>
   );
 };
@@ -209,13 +215,11 @@ const Song = ({
 Song.propTypes = {
   fullDetail: bool,
   currentSongId: number.isRequired,
-  artistId: number.isRequired,
   songId: number.isRequired,
   trackNumber: number.isRequired,
   songName: string.isRequired,
-  artistName: string.isRequired,
-  albumName: string.isRequired,
-  playtime: number.isRequired,
+  songAlbum: shape({}).isRequired,
+  songDuration: number.isRequired,
   togglePlayPause: func.isRequired,
   playing: bool.isRequired,
 };

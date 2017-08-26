@@ -34,6 +34,19 @@ import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } fro
 import Divider from '@app/component/styled/Divider';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 
+const Brand = props => (
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 24 24"
+    fill="#2fd566"
+    strokeWidth="0"
+    {...props}
+  >
+    <circle cx="12" cy="12" r="12" />
+  </svg>
+);
+
 const Search = props => (
   <svg
     width="16"
@@ -59,7 +72,7 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
           <NavListContainer>
             <NavContainer>
               <Link className="brand" to="/">
-                <img src="static/image/brand.png" className="brand-image" alt="ArifZefen" />
+                <Brand className="brand-svg" />
                 <span>Zefenify</span>
                 <Spinner loading={loading} />
               </Link>

@@ -194,8 +194,7 @@ const NowPlayingContainer = withTheme(styled.div`
       flex: 0 0 60px;
       width: 60px;
       height: 60px;
-      border-radius: 4px;
-      border: 1px solid rgba(51, 51, 51, 0.25);
+      border-radius: 2px;
     }
 
     &__name {

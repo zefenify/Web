@@ -3,7 +3,7 @@ import { bool, number, string, arrayOf, shape, func } from 'prop-types';
 import styled from 'emotion/react';
 import { withTheme } from 'theming';
 
-import { BASE } from '@app/config/api';
+import { BASE_S3 } from '@app/config/api';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
@@ -38,10 +38,6 @@ const Header = withTheme(styled.div`
     & > * {
       margin: 0;
     }
-
-    & > p:not(:first-child) {
-      color: ${props => props.theme.controlMute};
-    }
   }
 
   & .info-container {
@@ -51,6 +47,15 @@ const Header = withTheme(styled.div`
 
     &__title {
       text-transform: capitalize;
+    }
+
+    &__description {
+      font-size: 1.2em;
+    }
+
+    &__duration {
+      margin-top: 0.5em;
+      color: ${props => props.theme.controlMute};
     }
 
     &__button {
@@ -70,8 +75,9 @@ const Songs = styled.div`
 
 const HeaderSongs = ({
   playlist,
-  thumbnail,
   title,
+  description,
+  cover,
   current,
   playing,
   playingSongs,
@@ -85,11 +91,12 @@ const HeaderSongs = ({
   return (
     <HeaderSongsContainer>
       <Header>
-        <div className="image" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }} />
+        <div className="image" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }} />
         <div className="info info-container">
           <p>{`${playlist ? 'PLAYLIST' : 'FEATURED'}`}</p>
           <h1 className="info-container__title">{ title }</h1>
-          <p style={{ marginTop: '0.5em' }}>{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
+          <p className="info-container__description">{ description }</p>
+          <p className="info-container__duration">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
           <Button className="info-container__button" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
         </div>
       </Header>
@@ -100,12 +107,15 @@ const HeaderSongs = ({
         {
           songs.map((song, index) => (
             <Song
-              key={song.songId}
-              currentSongId={current === null ? -1 : current.songId}
+              key={song.track_id}
+              currentSongId={current === null ? -1 : current.track_id}
               trackNumber={index + 1}
               togglePlayPause={togglePlayPauseSong}
               playing={playing}
-              {...song}
+              songId={song.track_id}
+              songName={song.track_name}
+              songDuration={song.track_track.s3_meta.duration}
+              songAlbum={song.track_album}
             />
           ))
         }
@@ -116,8 +126,9 @@ const HeaderSongs = ({
 
 HeaderSongs.propTypes = {
   playlist: bool,
-  thumbnail: string,
+  cover: shape({}),
   title: string,
+  description: string,
   current: shape({}),
   songs: arrayOf(shape({})),
   duration: shape({
@@ -133,8 +144,9 @@ HeaderSongs.propTypes = {
 
 HeaderSongs.defaultProps = {
   playlist: true,
-  thumbnail: '',
+  cover: {},
   title: '',
+  description: '',
   current: null,
   songs: [],
   duration: {

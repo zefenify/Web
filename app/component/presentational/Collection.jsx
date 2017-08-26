@@ -36,7 +36,8 @@ const CollectionContainer = withTheme(styled(Link)`
   & .collection-cover {
     position: relative;
     width: 100%;
-    height: 225px;
+    height: auto;
+    min-height: 225px;
     border: 1px solid rgba(51, 51, 51, 0.25);
     border-radius: 6px;
 

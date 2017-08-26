@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { FEATURED_ALL } from '@app/config/api';
+import { BASE, FEATURED } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 import api from '@app/util/api';
@@ -12,23 +12,20 @@ class HomeContainer extends Component {
     super(props);
     this.state = {
       featured: [],
-      featuredPlayingId: '-1',
+      featuredPlayingId: -1,
     };
 
     this.playFeatured = this.playFeatured.bind(this);
   }
 
   componentDidMount() {
-    api(FEATURED_ALL, (cancel) => {
+    api(FEATURED, (cancel) => {
       this.cancelRequest = cancel;
-    })
-      .then((data) => {
-        this.setState(() => ({
-          featured: data,
-        }));
-      }, (err) => {
-        /* handle fetch error */
-      });
+    }).then((data) => {
+      this.setState(() => ({
+        featured: data,
+      }));
+    }, () => { /* handle fetch error */ });
   }
 
   componentWillUnmount() {
@@ -42,10 +39,12 @@ class HomeContainer extends Component {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
+
       // pausing icon...
       this.setState(() => ({
-        featuredPlayingId: '-1',
+        featuredPlayingId: -1,
       }));
+
       return;
     }
 
@@ -54,24 +53,23 @@ class HomeContainer extends Component {
     }));
 
     // calling...
-    api(`json/featured/${fid}.json`, (cancel) => {
+    api(`${BASE}playlist/${fid}`, (cancel) => {
       this.cancelRequest = cancel;
-    })
-      .then((data) => {
-        // playing...
-        store.dispatch({
-          type: PLAY,
-          payload: {
-            play: data.songs[0],
-            queue: data.songs,
-            initialQueue: data.songs,
-          },
-        });
-      }, () => {
-        this.setState(() => ({
-          featuredPlayingId: '-1',
-        }));
+    }).then((data) => {
+      // playing...
+      store.dispatch({
+        type: PLAY,
+        payload: {
+          play: data.playlist_track[0],
+          queue: data.playlist_track,
+          initialQueue: data.playlist_track,
+        },
       });
+    }, () => {
+      this.setState(() => ({
+        featuredPlayingId: -1,
+      }));
+    });
   }
 
   render() {

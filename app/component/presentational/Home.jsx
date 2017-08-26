@@ -46,9 +46,13 @@ const Home = ({ featured, featuredPlayingId, playFeatured }) => (
         featured.map(f => (
           <Collection
             play={playFeatured}
-            key={f.id}
+            key={f.playlist_id}
             playingId={featuredPlayingId}
-            {...f}
+            id={f.playlist_id}
+            name={f.playlist_name}
+            description={f.playlist_description}
+            cover={f.playlist_cover}
+            songCount={f.playlist_track.length}
           />
         ))
       }

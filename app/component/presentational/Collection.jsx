@@ -1,10 +1,10 @@
 import React from 'react';
-import { string, func } from 'prop-types';
+import { string, func, shape } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
 import { withTheme } from 'theming';
 
-import { BASE } from '@app/config/api';
+import { BASE_S3 } from '@app/config/api';
 
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
@@ -101,10 +101,10 @@ const CollectionContainer = withTheme(styled(Link)`
   }
 `);
 
-function Collection({ id, playingId, name, description, songCnt, thumbnail, play }) {
+function Collection({ id, playingId, name, description, songCount, cover, play }) {
   return (
     <CollectionContainer to={`/featured/${id}`} className={`${id === playingId ? 'active' : ''}`}>
-      <div className="collection-cover" style={{ background: `transparent url('${BASE}${thumbnail}') 50% 50% / cover no-repeat` }}>
+      <div className="collection-cover" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }}>
         <div className="collection-cover__overlay">
           <PlayPauseSVG
             onClick={(e) => { e.preventDefault(); play(id); }}
@@ -115,7 +115,7 @@ function Collection({ id, playingId, name, description, songCnt, thumbnail, play
 
       <strong className="collection-title">{ name }</strong>
       <p className="collection-description">{ description }</p>
-      <small className="collection-count">{`${songCnt} SONG${Number.parseInt(songCnt, 10) > 1 ? 'S' : ''}`}</small>
+      <small className="collection-count">{`${songCount} SONG${Number.parseInt(songCount, 10) > 1 ? 'S' : ''}`}</small>
     </CollectionContainer>
   );
 }
@@ -125,18 +125,18 @@ Collection.propTypes = {
   playingId: string,
   name: string,
   description: string,
-  songCnt: string,
-  thumbnail: string,
+  songCount: string,
+  cover: shape({}),
   play: func.isRequired,
 };
 
 Collection.defaultProps = {
-  id: '-1',
-  playingId: '-1',
+  id: -1,
+  playingId: -1,
   name: '',
   description: '',
-  songCnt: '',
-  thumbnail: '',
+  songCount: 0,
+  cover: {},
 };
 
 module.exports = Collection;

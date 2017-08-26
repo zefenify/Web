@@ -1,6 +1,7 @@
 const HEADER = 'Authorization';
-const FAUTH = 'http://api.zefenify.io/fauth/';
 const BASE = 'http://www.arifzefen.com';
+const FAUTH = 'http://api.zefenify.io/fauth/';
+const FEATURED = 'http://api.zefenify.io/featured';
 const FEATURED_ALL = 'json/featured/all.json';
 const SURPRISE_ME = 'json/curated/surpriseme.php';
 const SEARCH = 'json/list/search.php';
@@ -140,6 +141,7 @@ module.exports = {
   HEADER,
   BASE,
   FAUTH,
+  FEATURED,
   FEATURED_ALL,
   SURPRISE_ME,
   SEARCH,

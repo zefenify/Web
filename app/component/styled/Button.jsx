@@ -8,6 +8,10 @@ const Button = withTheme(styled.button`
   padding: 0.75em 2em;
   color: ${props => props.outline ? props.theme.listText : '#ffffff'};
 
+  &:hover {
+    transform: scale(1.05);
+  }
+
   &:active {
     transform: scale(0.95);
   }

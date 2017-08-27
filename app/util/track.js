@@ -2,7 +2,7 @@
  * given a list of tracks [0 depth] and included, returns a track that has references in-line
  *
  * @param  {Array} tracks
- * @param  {Array} included
+ * @param  {Object} included { table: { id: entry } }
  * @return {Array}
  */
 module.exports = (tracks = [], included = []) => tracks.map(track => Object.assign({}, {

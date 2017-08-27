@@ -1,5 +1,6 @@
 import React from 'react';
 import { shape, bool, number, func } from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
 import { withTheme } from 'theming';
 
@@ -94,12 +95,15 @@ const ArtistContainer = withTheme(styled.div`
     &__name {
       flex: 0 1 auto;
       font-size: 3em;
+      font-weight: bold;
       padding: 0;
       margin: 0;
       margin-bottom: 0.25em;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      text-decoration: none;
+      color: inherit;
     }
 
     &__button {
@@ -144,10 +148,10 @@ const Arist = ({
         artist.relationships.album.map((album, albumIndex) => (
           <div className="album-list__album album" key={`${artist.artist_id}-${album.album_id}`}>
             <div className="album-cover">
-              <div className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+              <Link to={`/album/${album.album_id}`} className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
               <div className="album-cover__info album-info">
                 <p className="album-info__year">{ album.album_year }</p>
-                <h1 className="album-info__name">{ album.album_name }</h1>
+                <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
                 <Button className="album-info__button" onClick={() => togglePlayPauseAlbum(album, albumIndex)}>{`${playing && albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>
               </div>
             </div>

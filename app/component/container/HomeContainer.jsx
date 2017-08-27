@@ -4,6 +4,7 @@ import { BASE, FEATURED } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 import api from '@app/util/api';
+import track from '@app/util/track';
 
 import Home from '@app/component/presentational/Home';
 
@@ -23,7 +24,9 @@ class HomeContainer extends Component {
       this.cancelRequest = cancel;
     }).then((data) => {
       this.setState(() => ({
-        featured: data,
+        featured: data.data.map(featured => Object.assign({}, featured, {
+          playlist_cover: data.included.s3[featured.playlist_cover],
+        })),
       }));
     }, () => { /* handle fetch error */ });
   }
@@ -52,17 +55,22 @@ class HomeContainer extends Component {
       featuredPlayingId: fid,
     }));
 
-    // calling...
     api(`${BASE}playlist/${fid}`, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
+      // mapping track...
+      const playlistTrack = Object.assign({}, data.data, {
+        playlist_track: data.data.playlist_track.map(trackId => data.included.track[trackId]),
+      });
+      const tracks = track(playlistTrack.playlist_track, data.included);
+
       // playing...
       store.dispatch({
         type: PLAY,
         payload: {
-          play: data.playlist_track[0],
-          queue: data.playlist_track,
-          initialQueue: data.playlist_track,
+          play: tracks[0],
+          queue: tracks,
+          initialQueue: tracks,
         },
       });
     }, () => {

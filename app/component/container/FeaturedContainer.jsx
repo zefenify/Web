@@ -6,6 +6,7 @@ import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
+import track from '@app/util/track';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
@@ -30,13 +31,21 @@ class FeaturedContainer extends Component {
   }
 
   componentDidMount() {
-    // calling...
     api(`${BASE}playlist/${this.props.match.params.id}`, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
+      // mapping track...
+      const playlistTrack = Object.assign({}, data.data, {
+        playlist_track: data.data.playlist_track.map(trackId => data.included.track[trackId]),
+      });
+      const tracks = track(playlistTrack.playlist_track, data.included);
+
       this.setState(() => ({
-        featured: data,
-        duration: human(data.playlist_track.reduce((totalD, track) => totalD + track.track_track.s3_meta.duration, 0), true),
+        featured: Object.assign({}, data.data, {
+          playlist_cover: data.included.s3[data.data.playlist_cover],
+          playlist_track: tracks,
+        }),
+        duration: human(tracks.reduce((totalD, t) => totalD + t.track_track.s3_meta.duration, 0), true),
       }), () => {
         const { initialQueue } = store.getState();
 

@@ -21,6 +21,7 @@ import SettingContainer from '@app/component/container/SettingContainer';
 import ControlContainer from '@app/component/container/ControlContainer';
 import FeaturedContainer from '@app/component/container/FeaturedContainer';
 import ArtistContainer from '@app/component/container/ArtistContainer';
+import AlbumContainer from '@app/component/container/AlbumContainer';
 import RecentContainer from '@app/component/container/RecentContainer';
 import SurpriseContainer from '@app/component/container/SurpriseContainer';
 import TopContainer from '@app/component/container/TopContainer';
@@ -113,6 +114,7 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
               <Route exact path="/" component={HomeContainer} />
               <Route path="/featured/:id" component={FeaturedContainer} />
               <Route path="/artist/:id" component={ArtistContainer} />
+              <Route path="/album/:id" component={AlbumContainer} />
               <Route path="/search" component={SearchContainer} />
               <Route path="/top/:category?" component={TopContainer} />
               <Route path="/:type(genre|ariflist)/:list?" component={BoxContainer} />

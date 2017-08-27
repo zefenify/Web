@@ -35,7 +35,7 @@ module.exports = connect(state => ({
     if (window.FB === undefined) {
       alert({
         type: 'error',
-        text: 'Unable to contact Facebook server',
+        text: 'Unable to reach Facebook server',
       });
 
       return;

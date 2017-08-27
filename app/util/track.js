@@ -16,7 +16,11 @@ module.exports = (tracks = [], included = []) => tracks.map(track => Object.assi
     album_id: included.album[track.track_album].album_id,
     album_name: included.album[track.track_album].album_name,
     album_year: included.album[track.track_album].album_year,
-    album_artist: included.album[track.track_album].album_artist.map(artistId => included.artist[artistId]),
+    album_artist: included.album[track.track_album].album_artist.map(artistId => Object.assign({}, {
+      artist_id: included.artist[artistId].artist_id,
+      artist_name: included.artist[artistId].artist_name,
+      artist_cover: included.artist[artistId].artist_cover,
+    })),
     album_cover: included.s3[included.album[track.track_album].album_cover],
   }),
 }));

@@ -1,6 +1,7 @@
 // Breaking SAGA! 😔
 import axios from 'axios';
 import notie from 'notie';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { BASE, HEADER } from '@app/config/api';
 import store from '@app/redux/store';
@@ -30,7 +31,7 @@ const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
       cancel(() => {});
     }
 
-    resolve(Object.assign(Array.isArray(API_CACHE[URL]) ? [] : {}, API_CACHE[URL]));
+    resolve(cloneDeep(API_CACHE[URL]));
     return;
   }
 
@@ -50,7 +51,7 @@ const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
       store.dispatch(loading(false));
 
       API_CACHE[URL] = data.data;
-      resolve(Object.assign(Array.isArray(API_CACHE[URL]) ? [] : {}, API_CACHE[URL]));
+      resolve(cloneDeep(API_CACHE[URL]));
     }, (err) => {
       store.dispatch(loading(false));
 
@@ -97,7 +98,7 @@ const postPatch = method => (URL, data, cancel) => new Promise((resolve, reject)
   })
     .then((response) => {
       store.dispatch(loading(false));
-      resolve(Object.assign({}, response));
+      resolve(cloneDeep(response));
     }, (err) => {
       store.dispatch(loading(false));
 

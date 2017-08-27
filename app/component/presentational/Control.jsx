@@ -278,6 +278,10 @@ const MusicControls = withTheme(styled.div`
       bottom: -8px;
       margin: 0 auto;
     }
+
+    &:hover {
+      transform: scale(1.075);
+    }
   }
 
   & > * {

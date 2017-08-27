@@ -7,6 +7,7 @@ import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 
 import sameSongList from '@app/util/sameSongList';
 import api from '@app/util/api';
+import track from '@app/util/track';
 import store from '@app/redux/store';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -53,30 +54,20 @@ class ArtistContainer extends Component {
     this.cancelRequest();
   }
 
-  afterFetch(data) {
+  afterFetch({ data, included }) {
     const { initialQueue } = store.getState();
 
-    // minor restructuring to avoid artist depth 4 request
-    // it's going to be a massacre of mutations 🙈
-    const flattenSongs = flatten(data.reference.album.map((album) => {
-      const albumArtistDereferenced = Object.assign([], album.album_artist);
-      albumArtistDereferenced.forEach((artist) => {
-        // eslint-disable-next-line
-        delete artist.reference;
-      });
+    const albums = data.relationships.album.map((albumId) => {
+      const album = included.album[albumId];
+      album.relationships.track = track(album.relationships.track.map(trackId => included.track[trackId]), included);
+      album.album_cover = included.s3[album.album_cover];
 
-      album.reference.track.forEach((track) => {
-        // eslint-disable-next-line
-        track.track_album.album_cover = Object.assign({}, album.album_cover);
-        // eslint-disable-next-line
-        track.track_album.album_artist = albumArtistDereferenced; // so `current` isn't bloated
-      });
+      return album;
+    });
 
-      return album.reference.track;
-    }));
-    // end of massacre
+    const flattenSongs = flatten(albums.map(album => album.relationships.track));
 
-    const queueIsByArtist = (albums, queue) => {
+    const queueIsByArtist = (artistAlbums, queue) => {
       const queueIsBySingleArtist = queue.every(song => song.artist_id === data.artist_id);
 
       if (queueIsBySingleArtist === false) {
@@ -87,8 +78,8 @@ class ArtistContainer extends Component {
       let albumIndex = -1;
       const queueSongIdList = queue.map(song => song.songId);
 
-      albums.forEach((album, index) => {
-        if (albumIndex === -1 && album.reference.track.every(song => queueSongIdList.includes(song.track_id))) {
+      artistAlbums.forEach((album, index) => {
+        if (albumIndex === -1 && album.relationships.track.every(song => queueSongIdList.includes(song.track_id))) {
           albumIndex = index;
         }
       });
@@ -97,10 +88,15 @@ class ArtistContainer extends Component {
     };
 
     this.setState(() => ({
-      artist: data,
+      artist: Object.assign({}, data, {
+        artist_cover: included.s3[data.artist_cover],
+        relationships: {
+          album: albums,
+        },
+      }),
       songCount: flattenSongs.length,
       playingArist: sameSongList(initialQueue, flattenSongs),
-      albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(data.reference.album, initialQueue),
+      albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(albums, initialQueue),
     }));
   }
 
@@ -111,7 +107,7 @@ class ArtistContainer extends Component {
 
     // booting playlist...
     if (this.props.current === null || this.state.playingArist === false) {
-      const flattenSongs = flatten(this.state.artist.reference.album.map(album => album.reference.track));
+      const flattenSongs = flatten(this.state.artist.relationships.album.map(album => album.relationships.track));
 
       store.dispatch({
         type: PLAY,
@@ -139,9 +135,9 @@ class ArtistContainer extends Component {
       store.dispatch({
         type: PLAY,
         payload: {
-          play: album.reference.track[0],
-          queue: album.reference.track,
-          initialQueue: album.reference.track,
+          play: album.relationships.track[0],
+          queue: album.relationships.track,
+          initialQueue: album.relationships.track,
         },
       });
 
@@ -161,7 +157,7 @@ class ArtistContainer extends Component {
   }
 
   togglePlayPauseSong(songId) {
-    const flattenSongs = flatten(this.state.artist.reference.album.map(album => album.reference.track));
+    const flattenSongs = flatten(this.state.artist.relationships.album.map(album => album.relationships.track));
     const songIndex = flattenSongs.findIndex(song => song.track_id === songId);
 
     if (this.props.current !== null && this.props.current.track_id === songId) {

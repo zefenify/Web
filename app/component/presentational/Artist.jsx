@@ -130,7 +130,7 @@ const Arist = ({
       <div className="artist__info">
         <p>ARTIST</p>
         <h1>{ artist.artist_name }</h1>
-        <p style={{ marginTop: '0.5em' }}>{`${artist.reference.album.length} album${artist.reference.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
+        <p style={{ marginTop: '0.5em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
         <Button onClick={togglePlayPauseArtist}>{`${playing && playingArist && albumPlayingIndex === -1 ? 'PAUSE' : 'PLAY'}`}</Button>
       </div>
     </div>
@@ -141,7 +141,7 @@ const Arist = ({
       <h2>Albums</h2>
 
       {
-        artist.reference.album.map((album, albumIndex) => (
+        artist.relationships.album.map((album, albumIndex) => (
           <div className="album-list__album album" key={`${artist.artist_id}-${album.album_id}`}>
             <div className="album-cover">
               <div className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
@@ -154,7 +154,7 @@ const Arist = ({
 
             <div className="album__song-list song-list">
               {
-                album.reference.track.map((song, songIndex) => (
+                album.relationships.track.map((song, songIndex) => (
                   <Song
                     fullDetail={false}
                     key={song.track_id}

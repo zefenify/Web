@@ -137,7 +137,7 @@ class PlaylistContainer extends Component {
 
     return (
       <HeaderSongs
-        playlist={this.props.match.params.type === 'playlist'}
+        type={this.props.match.params.type}
         current={this.props.current}
         playing={this.props.playing}
         playingSongs={this.props.playing && this.state.playingFeatured}

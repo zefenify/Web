@@ -129,7 +129,6 @@ class SupriseContainer extends Component {
 
     return (
       <HeaderSongs
-        playlist={false}
         current={this.props.current}
         duration={this.state.duration}
         playing={this.props.playing}

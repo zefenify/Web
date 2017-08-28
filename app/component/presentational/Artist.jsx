@@ -72,6 +72,7 @@ const ArtistContainer = withTheme(styled.div`
       width: 150px;
       height: 150px;
       flex: 0 0 150px;
+      border-radius: 4px;
     }
 
     &__info {

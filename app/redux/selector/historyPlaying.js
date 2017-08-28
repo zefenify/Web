@@ -5,8 +5,8 @@ module.exports = createSelector([state => state.history, state => state.initialQ
   let playingHistory = false;
 
   if (initialQueue.length === history.length) {
-    const initialQueueSongIds = initialQueue.map(song => song.songId);
-    const historySongIds = history.map(song => song.songId);
+    const initialQueueSongIds = initialQueue.map(song => song.track_id);
+    const historySongIds = history.map(song => song.track_id);
     playingHistory = historySongIds.every(songId => initialQueueSongIds.includes(songId));
   }
 

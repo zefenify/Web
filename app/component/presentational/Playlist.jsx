@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, shape } from 'prop-types';
+import { string, func, shape, oneOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
 import { withTheme } from 'theming';
@@ -8,7 +8,7 @@ import { BASE_S3 } from '@app/config/api';
 
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
-const CollectionContainer = withTheme(styled(Link)`
+const PlaylistContainer = withTheme(styled(Link)`
   position: relative;
   flex: 0 0 25%;
   min-height: 25vh;
@@ -33,7 +33,7 @@ const CollectionContainer = withTheme(styled(Link)`
     flex: 0 0 20%;
   }
 
-  & .collection-cover {
+  & .playlist-cover {
     position: relative;
     width: 100%;
     height: auto;
@@ -67,29 +67,29 @@ const CollectionContainer = withTheme(styled(Link)`
       }
     }
 
-    & .collection-cover__overlay {
+    & .playlist-cover__overlay {
       opacity: 0;
     }
 
-    &:hover .collection-cover__overlay {
+    &:hover .playlist-cover__overlay {
       opacity: 1;
     }
   }
 
-  & .collection-title {
+  & .playlist-title {
     padding: 0;
     margin: 0;
     font-weight: bold;
     margin-top: 0.5em;
   }
 
-  & .collection-description {
+  & .playlist-description {
     padding: 0;
     margin: 0;
     margin-top: 0.5em;
   }
 
-  & .collection-count {
+  & .playlist-count {
     padding: 0;
     margin: 0;
     margin-top: 0.5em;
@@ -100,11 +100,11 @@ const CollectionContainer = withTheme(styled(Link)`
   }
 `);
 
-function Collection({ id, playingId, name, description, songCount, cover, play }) {
+function Playlist({ type, id, playingId, name, description, songCount, cover, play }) {
   return (
-    <CollectionContainer to={`/featured/${id}`} className={`${id === playingId ? 'active' : ''}`}>
-      <div className="collection-cover" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }}>
-        <div className="collection-cover__overlay">
+    <PlaylistContainer to={`/${type}/${id}`} className={`${id === playingId ? 'active' : ''}`}>
+      <div className="playlist-cover" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }}>
+        <div className="playlist-cover__overlay">
           <PlayPauseSVG
             onClick={(e) => { e.preventDefault(); play(id); }}
             playing={id === playingId}
@@ -112,14 +112,15 @@ function Collection({ id, playingId, name, description, songCount, cover, play }
         </div>
       </div>
 
-      <strong className="collection-title">{ name }</strong>
-      <p className="collection-description">{ description }</p>
-      <small className="collection-count">{`${songCount} SONG${Number.parseInt(songCount, 10) > 1 ? 'S' : ''}`}</small>
-    </CollectionContainer>
+      <strong className="playlist-title">{ name }</strong>
+      <p className="playlist-description">{ description }</p>
+      <small className="playlist-count">{`${songCount} SONG${Number.parseInt(songCount, 10) > 1 ? 'S' : ''}`}</small>
+    </PlaylistContainer>
   );
 }
 
-Collection.propTypes = {
+Playlist.propTypes = {
+  type: oneOf(['featured', 'playlist']),
   id: string,
   playingId: string,
   name: string,
@@ -129,7 +130,8 @@ Collection.propTypes = {
   play: func.isRequired,
 };
 
-Collection.defaultProps = {
+Playlist.defaultProps = {
+  type: 'playlist',
   id: -1,
   playingId: -1,
   name: '',
@@ -138,4 +140,4 @@ Collection.defaultProps = {
   cover: {},
 };
 
-module.exports = Collection;
+module.exports = Playlist;

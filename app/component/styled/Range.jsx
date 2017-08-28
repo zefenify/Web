@@ -49,10 +49,10 @@ const Range = withTheme(styled.input`
 
   &[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
     background-color: ${props => props.theme.listText};
     transition: all 125ms linear;
 

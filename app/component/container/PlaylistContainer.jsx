@@ -14,7 +14,7 @@ import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 import store from '@app/redux/store';
 
-class FeaturedContainer extends Component {
+class PlaylistContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -137,7 +137,7 @@ class FeaturedContainer extends Component {
 
     return (
       <HeaderSongs
-        playlist={false}
+        playlist={this.props.match.params.type === 'playlist'}
         current={this.props.current}
         playing={this.props.playing}
         playingSongs={this.props.playing && this.state.playingFeatured}
@@ -153,7 +153,7 @@ class FeaturedContainer extends Component {
   }
 }
 
-FeaturedContainer.propTypes = {
+PlaylistContainer.propTypes = {
   current: shape({}),
   playing: bool,
   match: shape({
@@ -163,9 +163,9 @@ FeaturedContainer.propTypes = {
   }).isRequired,
 };
 
-FeaturedContainer.defaultProps = {
+PlaylistContainer.defaultProps = {
   current: null,
   playing: false,
 };
 
-module.exports = DJKhaled('current', 'playing')(FeaturedContainer);
+module.exports = DJKhaled('current', 'playing')(PlaylistContainer);

@@ -6,7 +6,6 @@ import cloneDeep from 'lodash/cloneDeep';
 import { BASE, HEADER } from '@app/config/api';
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
-import randomParam from '@app/util/randomParam';
 
 axios.defaults.baseURL = BASE;
 
@@ -41,7 +40,7 @@ const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
   const source = CancelToken.source();
 
   axios
-    .get(`${URL}?${randomParam()}`, {
+    .get(URL, {
       cancelToken: source.token,
       headers: {
         [HEADER]: user === null ? undefined : user.jwt,

@@ -3,7 +3,7 @@ import { func, number, arrayOf, shape } from 'prop-types';
 import styled from 'emotion/react';
 import { withTheme } from 'theming';
 
-import Collection from '@app/component/presentational/Collection';
+import Playlist from '@app/component/presentational/Playlist';
 
 const HomeContainer = withTheme(styled.div`
   display: flex;
@@ -44,10 +44,11 @@ const Home = ({ featured, featuredPlayingId, playFeatured }) => (
     <div className="list">
       {
         featured.map(f => (
-          <Collection
-            play={playFeatured}
+          <Playlist
             key={f.playlist_id}
+            play={playFeatured}
             playingId={featuredPlayingId}
+            type="featured"
             id={f.playlist_id}
             name={f.playlist_name}
             description={f.playlist_description}

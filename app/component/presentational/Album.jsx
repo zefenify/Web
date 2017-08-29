@@ -46,6 +46,7 @@ const Header = withTheme(styled.div`
     justify-content: center;
 
     &__title {
+      line-height: 100%;
       text-transform: capitalize;
     }
 

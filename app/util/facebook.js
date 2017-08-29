@@ -9,10 +9,10 @@ import api from '@app/util/api';
 const statusChangeCallback = (response) => {
   // user connected - booting `user`...
   if (response.status === 'connected') {
-    api(`${FAUTH}${response.authResponse.accessToken}`).then((user) => {
+    api(`${FAUTH}${response.authResponse.accessToken}`).then(({ data }) => {
       store.dispatch({
         type: SET_USER,
-        payload: user,
+        payload: data,
       });
     }, () => {});
   }

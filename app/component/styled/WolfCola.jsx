@@ -89,6 +89,7 @@ const RouteContainer = withTheme(styled.div`
   background-color: ${props => props.theme.listBackground};
   color: ${props => props.theme.listText};
   max-height: calc(100vh - 70px);
+  max-width: calc(100vw - 200px);
   overflow-y: auto;
   padding: 1em 2em;
   padding-bottom: 0;

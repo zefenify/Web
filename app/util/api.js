@@ -9,7 +9,7 @@ import { loading } from '@app/redux/action/loading';
 
 axios.defaults.baseURL = BASE;
 
-const API_CACHE = {};
+const API_CACHE = {}; // caches GET requests { [URL]: response }
 let user = null; // to be used when sending header [JWT]
 
 store.subscribe(() => {

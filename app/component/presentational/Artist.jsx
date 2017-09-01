@@ -169,6 +169,7 @@ const Arist = ({
                     playing={playing}
                     songId={song.track_id}
                     songName={song.track_name}
+                    songFeaturing={song.track_featuring}
                     songAlbum={album}
                     songDuration={song.track_track.s3_meta.duration}
                   />

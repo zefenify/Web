@@ -8,6 +8,7 @@ import { BASE_S3 } from '@app/config/api';
 import { human } from '@app/util/time';
 
 import { ControlsContainer } from '@app/component/styled/WolfCola';
+import ArtistList from '@app/component/presentational/ArtistList';
 import Range from '@app/component/styled/Range';
 
 const SkipBack = () => (
@@ -215,7 +216,6 @@ const NowPlayingContainer = withTheme(styled.div`
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      text-decoration: none;
     }
 
     &__name {
@@ -223,8 +223,9 @@ const NowPlayingContainer = withTheme(styled.div`
       color: ${props => props.theme.controlText};
     }
 
-    &__artist {
+    &__artist a {
       color: ${props => props.theme.controlMute};
+      text-decoration: none;
     }
   }
 `);
@@ -340,11 +341,9 @@ const Control = ({
               <div className="song__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
               <div className="song__name song-name">
                 <p className="song-name__name">{ current.track_name }</p>
-                {
-                  current.track_album.album_artist.map(artist => (
-                    <Link to={`/artist/${artist.artist_id}`} className="song-name__artist">{ artist.artist_name }</Link>
-                  ))
-                }
+                <div className="song-name__artist">
+                  <ArtistList artists={current.track_album.album_artist} />
+                </div>
               </div>
             </div>
           ) : null

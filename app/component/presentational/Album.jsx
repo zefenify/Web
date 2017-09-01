@@ -1,6 +1,5 @@
 import React from 'react';
 import { bool, number, string, arrayOf, shape, func } from 'prop-types';
-import { Link } from 'react-router-dom';
 import styled from 'emotion/react';
 import { withTheme } from 'theming';
 
@@ -8,6 +7,7 @@ import { BASE_S3 } from '@app/config/api';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
+import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
 import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
@@ -55,7 +55,6 @@ const Header = withTheme(styled.div`
 
       & a {
         font-size: 1.25em;
-        padding-right: 0.75em;
         text-decoration: none;
         color: inherit;
       }
@@ -106,9 +105,10 @@ const HeaderSongs = ({
         <div className="info info-container">
           <p>ALBUM</p>
           <h1 className="info-container__title">{ title }</h1>
-          <p className="info-container__by"><span className="text-muted">By</span> {
-            artist.map(a => <Link to={`/artist/${a.artist_id}`}>{a.artist_name}</Link>)
-          }</p>
+          <p className="info-container__by">
+            <span className="text-muted">By&nbsp;</span>
+            <ArtistList artists={artist} />
+          </p>
           <p className="info-container__duration">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
           <Button className="info-container__button" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
         </div>
@@ -128,6 +128,7 @@ const HeaderSongs = ({
               playing={playing}
               songId={song.track_id}
               songName={song.track_name}
+              songFeaturing={song.track_featuring}
               songDuration={song.track_track.s3_meta.duration}
               songAlbum={song.track_album}
             />

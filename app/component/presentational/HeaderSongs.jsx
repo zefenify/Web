@@ -119,6 +119,7 @@ const HeaderSongs = ({
               playing={playing}
               songId={song.track_id}
               songName={song.track_name}
+              songFeaturing={song.track_featuring}
               songDuration={song.track_track.s3_meta.duration}
               songAlbum={song.track_album}
             />

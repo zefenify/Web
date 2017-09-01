@@ -1,11 +1,12 @@
 import React from 'react';
-import { func, number, string, bool, shape } from 'prop-types';
+import { func, number, string, bool, arrayOf, shape } from 'prop-types';
 import styled from 'emotion/react';
 import { Link } from 'react-router-dom';
 import { withTheme } from 'theming';
 
 import { human } from '@app/util/time';
 
+import ArtistList from '@app/component/presentational/ArtistList';
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
 const PlayPause = ({ onClick, playing, className }) => (
@@ -111,6 +112,10 @@ const SongContainer = withTheme(styled.div`
 
   & .name {
     flex: 1 0 auto;
+
+    &__featuring {
+      color: ${props => props.theme.controlMute};
+    }
   }
 
   & .artist-name {
@@ -166,6 +171,7 @@ const Song = ({
   trackNumber,
   songId,
   songName,
+  songFeaturing,
   songAlbum,
   songDuration,
   togglePlayPause,
@@ -183,7 +189,14 @@ const Song = ({
           />
           <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} />
         </div>
-        <div className="name">{ songName }</div>
+        <div className="name">
+          <span>{ songName }</span>
+          {
+            songFeaturing.length > 0
+              ? <span className="name__featuring"> - <ArtistList artists={songFeaturing} /></span>
+              : null
+          }
+        </div>
         <div className="duration">{ human(songDuration) }</div>
       </SongContainer>
     );
@@ -200,12 +213,15 @@ const Song = ({
         />
         <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} />
       </div>
-      <div className="name">{ songName }</div>
-      <div className="artist-name">
+      <div className="name">
+        <span>{ songName }</span>
         {
-          songAlbum.album_artist.map(artist => <Link className="artist-name__artist" to={`/artist/${artist.artist_id}`}>{ artist.artist_name }</Link>)
+          songFeaturing.length > 0
+            ? <span className="name__featuring"> - <ArtistList artists={songFeaturing} /></span>
+            : null
         }
       </div>
+      <ArtistList className="artist-name" artists={songAlbum.album_artist} />
       <Link to={`/album/${songAlbum.album_id}`} className="album-name">{ songAlbum.album_name }</Link>
       <div className="duration">{ human(songDuration) }</div>
     </SongContainer>
@@ -218,6 +234,7 @@ Song.propTypes = {
   songId: number.isRequired,
   trackNumber: number.isRequired,
   songName: string.isRequired,
+  songFeaturing: arrayOf(shape({})).isRequired,
   songAlbum: shape({}).isRequired,
   songDuration: number.isRequired,
   togglePlayPause: func.isRequired,

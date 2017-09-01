@@ -99,8 +99,8 @@ const HeaderSongs = ({
         <div className="image" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }} />
         <div className="info info-container">
           <p className="info-container__type">{type}</p>
-          <h1 className="info-container__title">{ title }</h1>
-          <p className="info-container__description">{ description }</p>
+          <h1 className="info-container__title">{title}</h1>
+          <p className="info-container__description">{description}</p>
           <p className="info-container__duration">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
           <Button className="info-container__button" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
         </div>

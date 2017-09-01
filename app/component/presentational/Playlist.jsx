@@ -21,6 +21,10 @@ const PlaylistContainer = withTheme(styled(Link)`
 
   &.active {
     color: ${props => props.theme.primary};
+
+    & .playlist-title {
+      color: ${props => props.theme.primary};
+    }
   }
 
   &:not(.active) {
@@ -87,12 +91,15 @@ const PlaylistContainer = withTheme(styled(Link)`
     padding: 0;
     margin: 0;
     margin-top: 0.5em;
+    line-height: 1.25em;
+    color: ${props => props.theme.controlMute};
   }
 
   & .playlist-count {
     padding: 0;
     margin: 0;
     margin-top: 0.5em;
+    color: ${props => props.theme.controlMute};
   }
 
   &:active {

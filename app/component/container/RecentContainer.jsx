@@ -42,7 +42,7 @@ module.exports = connect(state => ({
   },
 
   togglePlayPauseSong(songIndex, song, current, history) {
-    if (current === null || current.songId !== song.songId) {
+    if (current === null || current.track_id !== song.track_id) {
       dispatch({
         type: PLAY,
         payload: {

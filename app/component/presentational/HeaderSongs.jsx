@@ -54,6 +54,8 @@ const Header = withTheme(styled.div`
 
     &__description {
       font-size: 1.2em;
+      line-height: 1.25em;
+      color: ${props => props.theme.controlMute};
     }
 
     &__duration {

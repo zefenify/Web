@@ -53,10 +53,9 @@ const NavContainer = withTheme(styled.div`
     color: inherit;
     box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
 
-    & > svg.brand-svg {
+    & > img.brand-img {
       width: 40px;
       height: 40px;
-      border-radius: 3px;
       margin-right: 0.75em;
     }
   }

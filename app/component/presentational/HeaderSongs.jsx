@@ -43,13 +43,18 @@ const Header = withTheme(styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: calc(100vw - (400px + 5em));
 
     &__type {
       text-transform: uppercase;
     }
 
     &__title {
+      flex: 1 0 auto;
       text-transform: capitalize;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     &__description {

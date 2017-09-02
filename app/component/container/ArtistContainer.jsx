@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
 import flatten from 'lodash/flatten';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
@@ -58,7 +59,7 @@ class ArtistContainer extends Component {
     const { initialQueue } = store.getState();
 
     const albums = data.relationships.album.map((albumId) => {
-      const album = included.album[albumId];
+      const album = cloneDeep(included.album[albumId]);
       album.relationships.track = track(album.relationships.track.map(trackId => included.track[trackId]), included);
       album.album_cover = included.s3[album.album_cover];
 

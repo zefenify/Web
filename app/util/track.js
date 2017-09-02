@@ -7,7 +7,6 @@
  */
 module.exports = (tracks = [], included = []) => tracks.map(track => ({
   track_id: track.track_id,
-  track_number: track.track_number,
   track_name: track.track_name,
   track_explicit: track.track_explicit,
   track_track: included.s3[track.track_track],

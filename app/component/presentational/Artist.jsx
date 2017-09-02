@@ -127,10 +127,6 @@ const ArtistContainer = withTheme(styled.div`
     flex-direction: column;
     padding: 0 1em;
 
-    &__title {
-      padding: 0 1em;
-    }
-
     &__list {
       display: flex;
       flex-direction: row;
@@ -244,11 +240,11 @@ const Arist = ({
       </div>
     }
 
-    <div>
-      {
-        artist.relationships.track.length === 0 ? null : <div className="appears-container">
-          <h2 className="appears-container__title">Appears On</h2>
+    {
+      artist.relationships.track.length === 0 ? null : <div>
+        <h2>Appears On</h2>
 
+        <div className="appears-container">
           <div className="appears-container__list appears-list">
             {
               artist.relationships.track.map(track => (
@@ -261,8 +257,8 @@ const Arist = ({
             }
           </div>
         </div>
-      }
-    </div>
+      </div>
+    }
   </ArtistContainer>
 );
 

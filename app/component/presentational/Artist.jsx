@@ -120,18 +120,21 @@ const ArtistContainer = withTheme(styled.div`
   }
 
   & .appears-container {
+    position: absolute;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
+    padding: 0 1em;
+
+    &__title {
+      padding: 0 1em;
+    }
 
     &__list {
-      position: absolute;
-      left: 0;
-      right: 0;
-      flex: 0 0 100%;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      padding: 0 1em;
     }
   }
 
@@ -146,11 +149,10 @@ const ArtistContainer = withTheme(styled.div`
   }
 
   & .appears-album {
-    position: relative;
-    padding: 0 1em;
-    margin-bottom: 3em;
     display: flex;
     flex-direction: column;
+    padding: 0 1em;
+    margin-bottom: 3em;
     text-decoration: none;
     color: inherit;
 
@@ -201,58 +203,65 @@ const Arist = ({
 
     <Divider />
 
-    <div className="album-list">
-      <h2>Albums</h2>
+    {
+      artist.relationships.album.length === 0 ? null : <div className="album-list">
+        <h2>Albums</h2>
 
-      {
-        artist.relationships.album.map((album, albumIndex) => (
-          <div className="album-list__album album" key={`${artist.artist_id}-${album.album_id}`}>
-            <div className="album-cover">
-              <Link to={`/album/${album.album_id}`} className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-              <div className="album-cover__info album-info">
-                <p className="album-info__year">{ album.album_year }</p>
-                <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
-                <Button className="album-info__button" onClick={() => togglePlayPauseAlbum(album, albumIndex)}>{`${playing && albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>
+        {
+          artist.relationships.album.map((album, albumIndex) => (
+            <div className="album-list__album album" key={`${artist.artist_id}-${album.album_id}`}>
+              <div className="album-cover">
+                <Link to={`/album/${album.album_id}`} className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                <div className="album-cover__info album-info">
+                  <p className="album-info__year">{ album.album_year }</p>
+                  <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
+                  <Button className="album-info__button" onClick={() => togglePlayPauseAlbum(album, albumIndex)}>{`${playing && albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>
+                </div>
+              </div>
+
+              <div className="album__song-list song-list">
+                {
+                  album.relationships.track.map((song, songIndex) => (
+                    <Song
+                      fullDetail={false}
+                      key={song.track_id}
+                      currentSongId={current === null ? -1 : current.track_id}
+                      trackNumber={songIndex + 1}
+                      togglePlayPause={togglePlayPauseSong}
+                      playing={playing}
+                      songId={song.track_id}
+                      songName={song.track_name}
+                      songFeaturing={song.track_featuring}
+                      songAlbum={album}
+                      songDuration={song.track_track.s3_meta.duration}
+                    />
+                  ))
+                }
               </div>
             </div>
-
-            <div className="album__song-list song-list">
-              {
-                album.relationships.track.map((song, songIndex) => (
-                  <Song
-                    fullDetail={false}
-                    key={song.track_id}
-                    currentSongId={current === null ? -1 : current.track_id}
-                    trackNumber={songIndex + 1}
-                    togglePlayPause={togglePlayPauseSong}
-                    playing={playing}
-                    songId={song.track_id}
-                    songName={song.track_name}
-                    songFeaturing={song.track_featuring}
-                    songAlbum={album}
-                    songDuration={song.track_track.s3_meta.duration}
-                  />
-                ))
-              }
-            </div>
-          </div>
-        ))
-      }
-    </div>
-
-    <h2>Appears On</h2>
-    <div className="appears-container">
-      <div className="appears-container__list appears-list">
-        {
-          artist.relationships.track.map(track => (
-            <Link to={`/album/${track.track_album.album_id}`} className="appears-list__album appears-album">
-              <div className="appears-album__cover" style={{ background: `transparent url('${BASE_S3}${track.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-              <p className="appears-album__name">{track.track_album.album_name}</p>
-              <p className="appears-album__year">{track.track_album.album_year}</p>
-            </Link>
           ))
         }
       </div>
+    }
+
+    <div>
+      {
+        artist.relationships.track.length === 0 ? null : <div className="appears-container">
+          <h2 className="appears-container__title">Appears On</h2>
+
+          <div className="appears-container__list appears-list">
+            {
+              artist.relationships.track.map(track => (
+                <Link to={`/album/${track.track_album.album_id}`} className="appears-list__album appears-album">
+                  <div className="appears-album__cover" style={{ background: `transparent url('${BASE_S3}${track.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                  <p className="appears-album__name">{track.track_album.album_name}</p>
+                  <p className="appears-album__year">{track.track_album.album_year}</p>
+                </Link>
+              ))
+            }
+          </div>
+        </div>
+      }
     </div>
   </ArtistContainer>
 );

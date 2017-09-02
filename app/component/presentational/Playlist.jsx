@@ -83,6 +83,7 @@ const PlaylistContainer = withTheme(styled(Link)`
   & .playlist-title {
     padding: 0;
     margin: 0;
+    line-height: 125%;
     font-weight: bold;
     margin-top: 0.5em;
   }

@@ -65,6 +65,7 @@ class ArtistContainer extends Component {
       return album;
     });
 
+    const tracks = track(data.relationships.track.map(trackId => included.track[trackId]), included);
     const flattenSongs = flatten(albums.map(album => album.relationships.track));
 
     const queueIsByArtist = (artistAlbums, queue) => {
@@ -92,6 +93,7 @@ class ArtistContainer extends Component {
         artist_cover: included.s3[data.artist_cover],
         relationships: {
           album: albums,
+          track: tracks,
         },
       }),
       songCount: flattenSongs.length,

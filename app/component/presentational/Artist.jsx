@@ -55,6 +55,8 @@ const ArtistContainer = withTheme(styled.div`
       margin-top: 2em;
       padding-bottom: 1px;
     }
+
+    margin-bottom: 2em;
   }
 
   & .album {
@@ -115,6 +117,63 @@ const ArtistContainer = withTheme(styled.div`
   & .song-list {
     display: flex;
     flex-direction: column;
+  }
+
+  & .appears-container {
+    display: flex;
+    flex-direction: column;
+
+    &__list {
+      position: absolute;
+      left: 0;
+      right: 0;
+      flex: 0 0 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 0 1em;
+    }
+  }
+
+  & .appears-list {
+    &__album {
+      flex: 0 0 25%;
+
+      @media(min-width: 1282px) {
+        flex: 0 0 20%;
+      }
+    }
+  }
+
+  & .appears-album {
+    position: relative;
+    padding: 0 1em;
+    margin-bottom: 3em;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+
+    &__cover {
+      position: relative;
+      width: 100%;
+      height: auto;
+      min-height: 225px;
+      border-radius: 6px;
+
+      @media(min-width: 1284px) {
+        height: 300px;
+      }
+    }
+
+    &__name {
+      margin: 0.5em 0;
+    }
+
+    &__year {
+      margin: 0;
+      color: ${props => props.theme.controlMute};
+    }
   }
 `);
 
@@ -179,6 +238,21 @@ const Arist = ({
           </div>
         ))
       }
+    </div>
+
+    <h2>Appears On</h2>
+    <div className="appears-container">
+      <div className="appears-container__list appears-list">
+        {
+          artist.relationships.track.map(track => (
+            <Link to={`/album/${track.track_album.album_id}`} className="appears-list__album appears-album">
+              <div className="appears-album__cover" style={{ background: `transparent url('${BASE_S3}${track.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+              <p className="appears-album__name">{track.track_album.album_name}</p>
+              <p className="appears-album__year">{track.track_album.album_year}</p>
+            </Link>
+          ))
+        }
+      </div>
     </div>
   </ArtistContainer>
 );

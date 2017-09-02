@@ -21,6 +21,7 @@ class ArtistContainer extends Component {
     this.state = {
       artist: null,
       songCount: 0,
+      flattenSongs: [], // all tracks in artist album flattened
       albumPlayingIndex: -1, // controls queue set on album play
       playingArist: false, // checks the current initialQueue is filled with artists song [flat]
     };
@@ -97,6 +98,7 @@ class ArtistContainer extends Component {
           track: tracks,
         },
       }),
+      flattenSongs,
       songCount: flattenSongs.length,
       playingArist: sameSongList(initialQueue, flattenSongs),
       albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(albums, initialQueue),
@@ -104,20 +106,18 @@ class ArtistContainer extends Component {
   }
 
   togglePlayPauseArtist() {
-    if (this.state.artist === null) {
+    if (this.state.artist === null || this.state.flattenSongs.length === 0) {
       return;
     }
 
     // booting playlist...
     if (this.props.current === null || this.state.playingArist === false) {
-      const flattenSongs = flatten(this.state.artist.relationships.album.map(album => album.relationships.track));
-
       store.dispatch({
         type: PLAY,
         payload: {
-          play: flattenSongs[0],
-          queue: flattenSongs,
-          initialQueue: flattenSongs,
+          play: this.state.flattenSongs[0],
+          queue: this.state.flattenSongs,
+          initialQueue: this.state.flattenSongs,
         },
       });
 
@@ -160,8 +160,7 @@ class ArtistContainer extends Component {
   }
 
   togglePlayPauseSong(songId) {
-    const flattenSongs = flatten(this.state.artist.relationships.album.map(album => album.relationships.track));
-    const songIndex = flattenSongs.findIndex(song => song.track_id === songId);
+    const songIndex = this.state.flattenSongs.findIndex(song => song.track_id === songId);
 
     if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
@@ -174,9 +173,9 @@ class ArtistContainer extends Component {
     store.dispatch({
       type: PLAY,
       payload: {
-        play: flattenSongs[songIndex],
-        queue: flattenSongs,
-        initialQueue: flattenSongs,
+        play: this.state.flattenSongs[songIndex],
+        queue: this.state.flattenSongs,
+        initialQueue: this.state.flattenSongs,
       },
     });
 

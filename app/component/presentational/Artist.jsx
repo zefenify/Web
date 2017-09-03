@@ -87,7 +87,7 @@ const ArtistContainer = withTheme(styled.div`
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
-    max-width: 64vw;
+    max-width: calc(100vw - (350px + 4em));
 
     &__year {
       font-size: 1.25em;

@@ -56,6 +56,7 @@ const Header = withTheme(styled.div`
 
     &__by {
       font-size: 1em;
+      margin-top: 0.5em;
 
       & a {
         font-size: 1.25em;

@@ -93,6 +93,13 @@ class ArtistContainer extends Component {
       return albumIndex;
     };
 
+    let albumPlayingIndex = -1;
+    albums.forEach((album, albumIndex) => {
+      if (sameSongList(initialQueue, album.relationships.track) === true) {
+        albumPlayingIndex = albumIndex;
+      }
+    });
+
     this.setState(() => ({
       artist: Object.assign({}, data, {
         artist_cover: included.s3[data.artist_cover],
@@ -104,7 +111,7 @@ class ArtistContainer extends Component {
       flattenSongs,
       songCount: flattenSongs.length,
       playingArist: sameSongList(initialQueue, flattenSongs),
-      albumPlayingIndex: sameSongList(initialQueue, flattenSongs) ? -1 : queueIsByArtist(albums, initialQueue),
+      albumPlayingIndex,
     }));
   }
 

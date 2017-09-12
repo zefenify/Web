@@ -61,15 +61,9 @@ class AlbumContainer extends Component {
           return;
         }
 
-        if (sameSongList(this.state.album.relationships.track, initialQueue)) {
-          this.setState(() => ({
-            playingAlbum: true,
-          }));
-        } else {
-          this.setState(() => ({
-            playingAlbum: false,
-          }));
-        }
+        this.setState(() => ({
+          playingAlbum: sameSongList(this.state.album.relationships.track, initialQueue),
+        }));
       });
     }, () => { /* handle fetch error */ });
   }

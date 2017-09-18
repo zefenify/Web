@@ -43,7 +43,9 @@ module.exports = (env) => {
         'notie',
         'howler',
       ],
-      app: ['./app/index.jsx'],
+      app: [
+        './app/index.jsx',
+      ],
     },
     output: {
       filename: '[name].bundle.js',
@@ -132,7 +134,7 @@ module.exports = (env) => {
     plugins: PRODUCTION ? [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify('production'),
+          NODE_ENV: '"production"',
         },
       }),
       new ExtractTextPlugin({

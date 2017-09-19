@@ -7,9 +7,11 @@ const compression = require('compression');
 
 const app = express();
 app.set('port', process.env.PORT);
+
 app.use(compression({
   threshold: 128,
 }));
+
 app.use(express.static(path.join(__dirname, './build'), {
   etag: false,
   maxAge: '30 days',

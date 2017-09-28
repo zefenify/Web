@@ -22,13 +22,13 @@ const PlaylistContainer = withTheme(styled(Link)`
   &.active {
     color: ${props => props.theme.primary};
 
-    & .playlist-title {
+    .playlist-title {
       color: ${props => props.theme.primary};
     }
   }
 
   &:not(.active) {
-    & svg {
+    svg {
       color: #fff !important;
     }
   }
@@ -37,7 +37,7 @@ const PlaylistContainer = withTheme(styled(Link)`
     flex: 0 0 20%;
   }
 
-  & .playlist-cover {
+  .playlist-cover {
     position: relative;
     width: 100%;
     height: auto;
@@ -60,7 +60,7 @@ const PlaylistContainer = withTheme(styled(Link)`
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
 
-      & svg {
+      svg {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -71,7 +71,7 @@ const PlaylistContainer = withTheme(styled(Link)`
       }
     }
 
-    & .playlist-cover__overlay {
+    .playlist-cover__overlay {
       opacity: 0;
     }
 
@@ -80,7 +80,7 @@ const PlaylistContainer = withTheme(styled(Link)`
     }
   }
 
-  & .playlist-title {
+  .playlist-title {
     padding: 0;
     margin: 0;
     line-height: 125%;
@@ -88,7 +88,7 @@ const PlaylistContainer = withTheme(styled(Link)`
     margin-top: 0.5em;
   }
 
-  & .playlist-description {
+  .playlist-description {
     padding: 0;
     margin: 0;
     margin-top: 0.5em;
@@ -96,7 +96,7 @@ const PlaylistContainer = withTheme(styled(Link)`
     color: ${props => props.theme.controlMute};
   }
 
-  & .playlist-count {
+  .playlist-count {
     padding: 0;
     margin: 0;
     margin-top: 0.5em;

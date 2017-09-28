@@ -18,11 +18,11 @@ const RecentContainer = withTheme(styled.div`
     align-items: center;
   }
 
-  & .mute {
+  .mute {
     color: ${props => props.theme.controlMute};
   }
 
-  & .recently-played {
+  .recently-played {
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
@@ -43,7 +43,7 @@ const RecentContainer = withTheme(styled.div`
     }
   }
 
-  & .song {
+  .song {
     flex: 1 1 auto;
 
     & > *:last-child {

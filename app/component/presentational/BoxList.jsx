@@ -11,7 +11,7 @@ const BoxListContainer = withTheme(styled.div`
   flex: 0 0 auto;
   ovefflow-y: auto;
 
-  & .title {
+  .title {
     position: absolute;
     top: 0;
     right: 0;
@@ -21,7 +21,7 @@ const BoxListContainer = withTheme(styled.div`
     padding: 0 2em;
   }
 
-  & .list {
+  .list {
     position: absolute;
     top: 60px;
     right: 0;

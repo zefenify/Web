@@ -25,14 +25,14 @@ const Header = withTheme(styled.div`
   align-items: center;
   margin-bottom: 2em;
 
-  & .image {
+  .image {
     flex: 0 0 200px;
     height: 200px;
     width: 200px;
     border-radius: 4px;
   }
 
-  & .info {
+  .info {
     margin-left: 1em;
 
     & > * {
@@ -40,7 +40,7 @@ const Header = withTheme(styled.div`
     }
   }
 
-  & .info-container {
+  .info-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,7 +58,7 @@ const Header = withTheme(styled.div`
       font-size: 1em;
       margin-top: 0.5em;
 
-      & a {
+      a {
         font-size: 1.25em;
         text-decoration: none;
         color: inherit;
@@ -76,7 +76,7 @@ const Header = withTheme(styled.div`
     }
   }
 
-  & .text-muted {
+  .text-muted {
     color: ${props => props.theme.controlMute};
   }
 `);

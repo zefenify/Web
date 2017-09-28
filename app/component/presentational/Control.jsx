@@ -184,7 +184,7 @@ const NowPlayingContainer = withTheme(styled.div`
   display: flex;
   align-items: center;
 
-  & .song {
+  .song {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -203,7 +203,7 @@ const NowPlayingContainer = withTheme(styled.div`
     }
   }
 
-  & .song-name {
+  .song-name {
     display: flex;
     flex-direction: column;
 
@@ -244,7 +244,7 @@ const MusicControls = withTheme(styled.div`
   font-size: 1.75em;
   padding-top: 0.25em;
 
-  & .control {
+  .control {
     position: relative;
     display: flex;
 
@@ -306,7 +306,7 @@ const VolumeContainer = styled.div`
   justify-content: center;
   padding: 0 1em;
 
-  & input[type="range"] {
+  input[type="range"] {
     margin: 0 0.5em;
   }
 `;

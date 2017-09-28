@@ -7,7 +7,7 @@ import { withTheme } from 'theming';
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 const TopContainer = withTheme(styled.div`
-  & .title {
+  .title {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -20,7 +20,7 @@ const TopContainer = withTheme(styled.div`
     box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
   }
 
-  & .list {
+  .list {
     position: absolute;
     top: 60px;
     right: 0;

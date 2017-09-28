@@ -24,7 +24,7 @@ const BoxContainer = withTheme(styled(Link)`
   }
 
   &:not(.active) {
-    & svg {
+    svg {
       color: #fff !important;
     }
   }
@@ -37,7 +37,7 @@ const BoxContainer = withTheme(styled(Link)`
     flex: 0 0 20%;
   }
 
-  & .box-cover {
+  .box-cover {
     position: relative;
     width: 100%;
     height: 225px;
@@ -64,7 +64,7 @@ const BoxContainer = withTheme(styled(Link)`
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
 
-      & svg {
+      svg {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -75,7 +75,7 @@ const BoxContainer = withTheme(styled(Link)`
       }
     }
 
-    & .box-cover__overlay {
+    .box-cover__overlay {
       opacity: 0;
     }
 
@@ -84,7 +84,7 @@ const BoxContainer = withTheme(styled(Link)`
     }
   }
 
-  & .box-title {
+  .box-title {
     padding: 0;
     margin: 0;
     font-size: 1.25em;

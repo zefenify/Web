@@ -24,14 +24,14 @@ const Header = withTheme(styled.div`
   align-items: center;
   margin-bottom: 2em;
 
-  & .image {
+  .image {
     flex: 0 0 200px;
     height: 200px;
     width: 200px;
     border-radius: 4px;
   }
 
-  & .info {
+  .info {
     margin-left: 1em;
 
     & > * {
@@ -39,11 +39,12 @@ const Header = withTheme(styled.div`
     }
   }
 
-  & .info-container {
+  .info-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     max-width: calc(100vw - (400px + 5em));
+    border: 1px solid red;
 
     &__type {
       text-transform: uppercase;

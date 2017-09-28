@@ -12,7 +12,7 @@ const SearchContainer = withTheme(styled.div`
   flex: 0 1 auto;
   flex-direction: column;
 
-  & .search {
+  .search {
     position: absolute;
     top: 0;
     left: 0;
@@ -40,7 +40,7 @@ const SearchContainer = withTheme(styled.div`
     }
   }
 
-  & .result {
+  .result {
     position: absolute;
     top: 95px;
     right: 0;

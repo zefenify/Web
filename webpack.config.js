@@ -65,11 +65,6 @@ module.exports = (env) => {
           use: {
             loader: 'babel-loader',
             options: {
-              env: {
-                production: {
-                  plugins: ['emotion', 'transform-react-constant-elements'],
-                },
-              },
               plugins: [
                 'emotion',
                 'transform-react-inline-elements',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { func, string, arrayOf, shape } from 'prop-types';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { withTheme } from 'theming';
 
 import Box from '@app/component/presentational/Box';

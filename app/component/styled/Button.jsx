@@ -1,4 +1,4 @@
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { withTheme } from 'theming';
 
 const Button = withTheme(styled.button`

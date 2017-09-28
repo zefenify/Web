@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, arrayOf, shape } from 'prop-types';
 import { Link } from 'react-router-dom';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { withTheme } from 'theming';
 
 const Muted = withTheme(styled.span`

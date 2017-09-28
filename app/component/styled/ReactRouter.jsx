@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { withTheme } from 'theming';
 
 const NavLinkStyled = withTheme(styled(NavLink)`

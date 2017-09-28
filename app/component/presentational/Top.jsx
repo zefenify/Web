@@ -1,7 +1,7 @@
 import React from 'react';
 import { arrayOf, shape, func, number, bool } from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { withTheme } from 'theming';
 
 import HeaderSongs from '@app/component/presentational/HeaderSongs';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { func, string, number, shape } from 'prop-types';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 
 import Button from '@app/component/styled/Button';
 import Divider from '@app/component/styled/Divider';

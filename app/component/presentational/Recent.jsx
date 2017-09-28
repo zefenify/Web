@@ -1,6 +1,6 @@
 import React from 'react';
 import { func, shape, bool, number, arrayOf } from 'prop-types';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { withTheme } from 'theming';
 
 import Song from '@app/component/presentational/Song';

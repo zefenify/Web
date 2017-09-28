@@ -1,6 +1,6 @@
 import React from 'react';
 import { bool, number, string, arrayOf, shape, func } from 'prop-types';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { withTheme } from 'theming';
 
 import { BASE_S3 } from '@app/config/api';

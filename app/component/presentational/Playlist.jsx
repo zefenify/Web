@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, func, shape, oneOf } from 'prop-types';
 import { Link } from 'react-router-dom';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { withTheme } from 'theming';
 
 import { BASE_S3 } from '@app/config/api';

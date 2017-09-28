@@ -1,6 +1,6 @@
 import React from 'react';
 import { bool } from 'prop-types';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { keyframes } from 'emotion';
 import { withTheme } from 'theming';
 

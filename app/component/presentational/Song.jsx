@@ -1,6 +1,6 @@
 import React from 'react';
 import { func, number, string, bool, arrayOf, shape } from 'prop-types';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
 import { withTheme } from 'theming';
 

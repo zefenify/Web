@@ -34,10 +34,6 @@ const Header = withTheme(styled.div`
 
   .info {
     margin-left: 1em;
-
-    & > * {
-      margin: 0;
-    }
   }
 
   .info-container {
@@ -46,7 +42,13 @@ const Header = withTheme(styled.div`
     justify-content: center;
     max-width: calc(100vw - (400px + 5em));
 
+    &__type {
+      margin: 0;
+      text-transform: uppercase;
+    }
+
     &__title {
+      margin: 0;
       flex: 1 0 auto;
       text-transform: capitalize;
       overflow: hidden;
@@ -55,6 +57,7 @@ const Header = withTheme(styled.div`
     }
 
     &__by {
+      margin: 0;
       font-size: 1em;
       margin-top: 0.5em;
 
@@ -66,11 +69,13 @@ const Header = withTheme(styled.div`
     }
 
     &__duration {
+      margin: 0;
       margin-top: 0.5em;
       color: ${props => props.theme.controlMute};
     }
 
     &__button {
+      margin: 0;
       margin-top: 1em;
       width: 175px;
     }
@@ -108,7 +113,7 @@ const HeaderSongs = ({
       <Header>
         <div className="image" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }} />
         <div className="info info-container">
-          <p>ALBUM</p>
+          <p className="info-container__type">ALBUM</p>
           <h1 className="info-container__title">{ title }</h1>
           <p className="info-container__by">
             <span className="text-muted">By&nbsp;</span>

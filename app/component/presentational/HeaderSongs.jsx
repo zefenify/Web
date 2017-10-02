@@ -33,10 +33,6 @@ const Header = withTheme(styled.div`
 
   .info {
     margin-left: 1em;
-
-    & > * {
-      margin: 0;
-    }
   }
 
   .info-container {
@@ -44,9 +40,9 @@ const Header = withTheme(styled.div`
     flex-direction: column;
     justify-content: center;
     max-width: calc(100vw - (400px + 5em));
-    border: 1px solid red;
 
     &__type {
+      margin: 0;
       text-transform: uppercase;
     }
 
@@ -56,20 +52,24 @@ const Header = withTheme(styled.div`
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      margin: 0;
     }
 
     &__description {
+      margin: 0;
       font-size: 1.2em;
       line-height: 1.25em;
       color: ${props => props.theme.controlMute};
     }
 
     &__duration {
-      margin-top: 0.5em;
+      margin: 0;
+      margin-top: 0.25em;
       color: ${props => props.theme.controlMute};
     }
 
     &__button {
+      margin: 0;
       margin-top: 1em;
       width: 175px;
     }

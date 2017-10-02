@@ -55,8 +55,6 @@ const ArtistContainer = withTheme(styled.div`
       margin-top: 2em;
       padding-bottom: 1px;
     }
-
-    margin-bottom: 2em;
   }
 
   .album {
@@ -241,7 +239,7 @@ const Arist = ({
     }
 
     {
-      artist.relationships.track.length === 0 ? null : <div>
+      artist.relationships.track.length === 0 ? null : <div style={{ marginTop: '2em' }}>
         <h2>Appears On</h2>
 
         <div className="appears-container">

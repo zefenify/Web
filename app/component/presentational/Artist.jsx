@@ -190,7 +190,7 @@ const Arist = ({
       <div className="artist__info">
         <p>ARTIST</p>
         <h1>{ artist.artist_name }</h1>
-        <p style={{ marginTop: '0.5em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
+        <p style={{ marginTop: '0.25em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
         <Button onClick={togglePlayPauseArtist}>{`${playing && playingArist && albumPlayingIndex === -1 ? 'PAUSE' : 'PLAY'}`}</Button>
       </div>
     </div>

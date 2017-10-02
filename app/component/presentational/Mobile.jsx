@@ -36,7 +36,7 @@ const MobileContainer = withTheme(styled.div`
 const Mobile = () => (
   <MobileContainer>
     <p className="sorry">ይቅርታ</p>
-    <p className="message">Wolf Cola is designed for Desktop use</p>
+    <p className="message">Zefenify Web is designed for Desktop use</p>
   </MobileContainer>
 );
 

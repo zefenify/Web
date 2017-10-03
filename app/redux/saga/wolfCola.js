@@ -10,7 +10,7 @@ import random from 'lodash/fp/random';
 import notie from 'notie';
 
 import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE, PREVIOUS_THRESHOLD } from '@app/redux/constant/wolfCola';
-import { BASE, BASE_S3 } from '@app/config/api';
+import { BASE_S3 } from '@app/config/api';
 
 import { current } from '@app/redux/action/current';
 import { queueSet, queueRemove } from '@app/redux/action/queue';
@@ -221,7 +221,6 @@ function* play(action) {
   // - single song ID whenever it's called
   // - light [no preparation until asked]
   wolfCola[wolfCola.playingKey] = new Howl({
-    // src: [`${BASE}/json/playSong.php?id=${payload.play.songId}`],
     src: [`${BASE_S3}${payload.play.track_track.s3_name}`],
     html5: true,
     autoplay: true,

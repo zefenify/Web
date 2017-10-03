@@ -1,7 +1,6 @@
 {
   "scripts": {
     "s": "webpack-dev-server --progress",
-    "a": "webpack --json | webpack-bundle-size-analyzer",
     "d": "rm -rf build && webpack --progress --colors && cp -R app/static build/static",
     "p": "rm -rf build && webpack -p --env production --progress --colors && cp -R app/static build/static",
     "postinstall": "rm -rf build && webpack -p --env production --progress --colors && cp -R app/static build/static"
@@ -51,7 +50,6 @@
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "beta",
     "webpack": "^3.6.0",
-    "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-dev-server": "^2.9.1"
   },
   "engines": {

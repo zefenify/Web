@@ -13,6 +13,7 @@ import DJKhaled from '@app/component/hoc/DJKhaled';
 
 import Search from '@app/component/presentational/Search';
 
+const THROTTLE_TIMEOUT = 500;
 let throttle = null;
 let CancelToken = axios.CancelToken;
 let source = CancelToken.source();
@@ -100,7 +101,7 @@ class SearchContainer extends Component {
           }, () => {
             store.dispatch(loading(false));
           });
-      }, 500);
+      }, THROTTLE_TIMEOUT);
     });
   }
 

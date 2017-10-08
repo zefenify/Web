@@ -68,7 +68,6 @@ module.exports = (env) => {
               plugins: [
                 'emotion',
                 'transform-react-inline-elements',
-                'transform-class-properties',
                 ['transform-runtime', { helpers: false, polyfill: false }],
               ],
               presets: [

@@ -1,7 +1,6 @@
 import React from 'react';
 import { func, bool, string, number, oneOfType, object } from 'prop-types';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
 import { BASE_S3 } from '@app/config/api';
 import { human } from '@app/util/time';
@@ -177,7 +176,7 @@ const Circle = props => (
   </svg>
 );
 
-const NowPlayingContainer = withTheme(styled.div`
+const NowPlayingContainer = styled.div`
   flex: 0 1 250px;
   max-width: 250px;
   padding-left: 6px;
@@ -227,7 +226,7 @@ const NowPlayingContainer = withTheme(styled.div`
       text-overflow: ellipsis;
     }
   }
-`);
+`;
 
 const MusicControlsContainer = styled.div`
   flex: 1 1 auto;
@@ -235,7 +234,7 @@ const MusicControlsContainer = styled.div`
   flex-direction: column;
 `;
 
-const MusicControls = withTheme(styled.div`
+const MusicControls = styled.div`
   flex: 0 0 40px;
   display: flex;
   flex-direction: row;
@@ -287,7 +286,7 @@ const MusicControls = withTheme(styled.div`
   & > * {
     padding: 0 1em;
   }
-`);
+`;
 
 const MusicProgress = styled.div`
   flex: 0 0 30px;

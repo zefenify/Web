@@ -2,11 +2,10 @@ import React from 'react';
 import { string, arrayOf, shape } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
-const Muted = withTheme(styled.span`
+const Muted = styled.span`
   color: ${props => props.theme.controlMute};
-`);
+`;
 
 const ArtistList = ({ className, artists }) => (
   <span className={className}>

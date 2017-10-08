@@ -2,7 +2,6 @@ import React from 'react';
 import { shape, bool, number, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
 import { BASE_S3 } from '@app/config/api';
 
@@ -10,7 +9,7 @@ import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 import Button from '@app/component/styled/Button';
 
-const ArtistContainer = withTheme(styled.div`
+const ArtistContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -171,7 +170,7 @@ const ArtistContainer = withTheme(styled.div`
       color: ${props => props.theme.controlMute};
     }
   }
-`);
+`;
 
 const Arist = ({
   artist,

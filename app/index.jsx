@@ -4,7 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'theming';
+import { ThemeProvider } from 'emotion-theming';
 
 import 'normalize.css';
 import '@app/scss/notie.scss';

@@ -1,7 +1,6 @@
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
-const Button = withTheme(styled.button`
+const Button = styled.button`
   background-color: ${props => props.outline ? 'transparent' : props.theme.primary};
   border-radius: 2em;
   border: ${props => props.outline ? `1px solid ${props.theme.listText}` : 'none'};
@@ -15,6 +14,6 @@ const Button = withTheme(styled.button`
   &:active {
     transform: scale(0.95);
   }
-`);
+`;
 
 module.exports = Button;

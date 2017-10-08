@@ -27,8 +27,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-saga": "^0.15.6",
-    "reselect": "^3.0.1",
-    "theming": "^1.1.0"
+    "reselect": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.4",

@@ -1,7 +1,6 @@
 import React from 'react';
 import { bool, number, string, arrayOf, shape, func } from 'prop-types';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
 import { BASE_S3 } from '@app/config/api';
 
@@ -18,7 +17,7 @@ const HeaderSongsContainer = styled.div`
   flex: 0 0 auto;
 `;
 
-const Header = withTheme(styled.div`
+const Header = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: row;
@@ -84,7 +83,7 @@ const Header = withTheme(styled.div`
   .text-muted {
     color: ${props => props.theme.controlMute};
   }
-`);
+`;
 
 const Songs = styled.div`
   flex: 1 0 auto;

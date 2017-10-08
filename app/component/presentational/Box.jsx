@@ -2,13 +2,12 @@ import React from 'react';
 import { string, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
 import { BASE } from '@app/config/api';
 
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
-const BoxContainer = withTheme(styled(Link)`
+const BoxContainer = styled(Link)`
   position: relative;
   flex: 0 0 25%;
   min-height: 25vh;
@@ -94,7 +93,7 @@ const BoxContainer = withTheme(styled(Link)`
   &:active {
     transform: scale(0.95);
   }
-`);
+`;
 
 function Box({ type, title, thumbnail, data, boxPlayingData, play }) {
   return (

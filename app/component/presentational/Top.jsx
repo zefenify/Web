@@ -2,11 +2,10 @@ import React from 'react';
 import { arrayOf, shape, func, number, bool } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
-const TopContainer = withTheme(styled.div`
+const TopContainer = styled.div`
   .title {
     display: flex;
     flex-direction: row;
@@ -30,9 +29,9 @@ const TopContainer = withTheme(styled.div`
     padding: 2em;
     padding-bottom: 0;
   }
-`);
+`;
 
-const NavLinkStyled = withTheme(styled(NavLink)`
+const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.navbarText};
   padding: 0 1em;
   font-size: 1.2em;
@@ -53,7 +52,7 @@ const NavLinkStyled = withTheme(styled(NavLink)`
     border-bottom: 2px solid ${props => props.theme.primary};
     background-color: ${props => props.theme.listBackgroundHover};
   }
-`);
+`;
 
 const Top = ({
   most,

@@ -1,7 +1,6 @@
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
-const WolfColaContainer = withTheme(styled.div`
+const WolfColaContainer = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -9,15 +8,15 @@ const WolfColaContainer = withTheme(styled.div`
   left: 0;
   display: flex;
   flex-direction: column;
-`);
+`;
 
-const ControlsContainer = withTheme(styled.div`
+const ControlsContainer = styled.div`
   flex: 0 0 70px;
   background-color: ${props => props.theme.controlBackground};
   color: ${props => props.theme.controlText};
   display: flex;
   flex-direction: row;
-`);
+`;
 
 const NavListContainer = styled.div`
   flex: 1 0 auto;
@@ -25,7 +24,7 @@ const NavListContainer = styled.div`
   flex-direction: row;
 `;
 
-const NavContainer = withTheme(styled.div`
+const NavContainer = styled.div`
   position: relative;
   flex: 0 0 200px;
   height: calc(100vh - 70px);
@@ -78,9 +77,9 @@ const NavContainer = withTheme(styled.div`
     margin-top: 2em;
     cursor: default;
   }
-`);
+`;
 
-const RouteContainer = withTheme(styled.div`
+const RouteContainer = styled.div`
   position: relative;
   flex: 1 0 auto;
   display: flex;
@@ -93,7 +92,7 @@ const RouteContainer = withTheme(styled.div`
   padding: 1em 2em;
   padding-bottom: 0;
   padding-top: 2em;
-`);
+`;
 
 module.exports = {
   WolfColaContainer,

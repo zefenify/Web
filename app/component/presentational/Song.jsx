@@ -2,7 +2,6 @@ import React from 'react';
 import { func, number, string, bool, arrayOf, shape } from 'prop-types';
 import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
-import { withTheme } from 'theming';
 
 import { human } from '@app/util/time';
 
@@ -61,7 +60,7 @@ const Volume = props => (
   </svg>
 );
 
-const SongContainer = withTheme(styled.div`
+const SongContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -163,7 +162,7 @@ const SongContainer = withTheme(styled.div`
       }
     }
   }
-`);
+`;
 
 const Song = ({
   fullDetail,

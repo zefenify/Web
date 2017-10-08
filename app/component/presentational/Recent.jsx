@@ -1,13 +1,12 @@
 import React from 'react';
 import { func, shape, bool, number, arrayOf } from 'prop-types';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
 import Song from '@app/component/presentational/Song';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
 
-const RecentContainer = withTheme(styled.div`
+const RecentContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -50,7 +49,7 @@ const RecentContainer = withTheme(styled.div`
       margin-bottom: 1px;
     }
   }
-`);
+`;
 
 const Recent = ({
   playing,

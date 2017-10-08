@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
-const MobileContainer = withTheme(styled.div`
+const MobileContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,7 +30,7 @@ const MobileContainer = withTheme(styled.div`
     margin-top: 0.25em;
     padding: 0 1em;
   }
-`);
+`;
 
 const Mobile = () => (
   <MobileContainer>

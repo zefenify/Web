@@ -2,13 +2,12 @@ import React from 'react';
 import { string, func, shape, oneOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
 
 import { BASE_S3 } from '@app/config/api';
 
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
-const PlaylistContainer = withTheme(styled(Link)`
+const PlaylistContainer = styled(Link)`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -106,7 +105,7 @@ const PlaylistContainer = withTheme(styled(Link)`
   &:active {
     transform: scale(0.95);
   }
-`);
+`;
 
 function Playlist({ type, id, playingId, name, description, songCount, cover, play }) {
   return (

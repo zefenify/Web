@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
 import axios from 'axios';
-import qs from 'qs';
 
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import { SEARCH } from '@app/config/api';
@@ -91,7 +90,7 @@ class SearchContainer extends Component {
         store.dispatch(loading(true));
 
         axios
-          .post(SEARCH, qs.stringify({ q: this.state.q }), { cancelToken: source.token })
+          .get(SEARCH, { params: { q: this.state.q } }, { cancelToken: source.token })
           .then((data) => {
             store.dispatch(loading(false));
 

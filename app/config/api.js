@@ -2,11 +2,11 @@ const HEADER = 'Authorization';
 const BASE = 'http://www.api.zefenify.io/';
 const BASE_S3 = 'http://api.zefenify.io/@S3/';
 const FAUTH = 'http://api.zefenify.io/fauth/';
+const SEARCH = 'http://api.zefenify.io/search';
 
 const FEATURED = 'http://api.zefenify.io/featured';
 const FEATURED_ALL = 'json/featured/all.json';
 const SURPRISE_ME = 'json/curated/surpriseme.php';
-const SEARCH = 'json/list/search.php';
 const GENRE_BASE = 'http://www.arifzefen.com/json/list/';
 const GENRE = [
   {

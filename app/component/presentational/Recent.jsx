@@ -63,7 +63,6 @@ const Recent = ({
   if (history.length === 0) {
     return (
       <RecentContainer className="center-content">
-        <h1 style={{ marginBottom: '0' }}>ላሽ ላሽ  ¯\_(ツ)_/¯</h1>
         <h2 className="mute">You have no recently played songs...yet</h2>
       </RecentContainer>
     );

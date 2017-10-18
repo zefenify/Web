@@ -27,7 +27,8 @@ const Header = styled.div`
     flex: 0 0 200px;
     height: 200px;
     width: 200px;
-    border-radius: 4px;
+    border-radius: 6px;
+    border: 1px solid ${props => props.theme.listDivider};
   }
 
   .info {

@@ -63,13 +63,6 @@ const SearchContainer = styled.div`
       font-size: 2em;
     }
 
-    &__artwork {
-      flex: 0 0 225px;
-      height: 225px;
-      border: 1px solid rgba(51, 51, 51, 0.25);
-      border-radius: 6px;
-    }
-
     &__list {
       flex: 1 1 auto;
 
@@ -102,6 +95,7 @@ const SearchContainer = styled.div`
       width: 100%;
       height: auto;
       border-radius: 50%;
+      border: 1px solid ${props => props.theme.listDivider};
     }
 
     &__name {
@@ -118,7 +112,8 @@ const SearchContainer = styled.div`
     &__cover {
       width: 100%;
       height: auto;
-      border-radius: 4px;
+      border-radius: 6px;
+      border: 1px solid ${props => props.theme.listDivider};
     }
 
     &__name {

@@ -42,6 +42,7 @@ const PlaylistContainer = styled(Link)`
     height: auto;
     min-height: 225px;
     border-radius: 6px;
+    border: 1px solid ${props => props.theme.listDivider};
 
     @media(min-width: 1284px) {
       height: 300px;

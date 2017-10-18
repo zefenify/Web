@@ -25,6 +25,7 @@ const ArtistContainer = styled.div`
       height: 200px;
       width: 200px;
       border-radius: 50%;
+      border: 1px solid ${props => props.theme.listDivider};
     }
 
     &__info {
@@ -71,7 +72,8 @@ const ArtistContainer = styled.div`
       width: 150px;
       height: 150px;
       flex: 0 0 150px;
-      border-radius: 4px;
+      border-radius: 6px;
+      border: 1px solid ${props => props.theme.listDivider};
     }
 
     &__info {
@@ -155,6 +157,7 @@ const ArtistContainer = styled.div`
       height: auto;
       min-height: 225px;
       border-radius: 6px;
+      border: 1px solid ${props => props.theme.listDivider};
 
       @media(min-width: 1284px) {
         height: 300px;

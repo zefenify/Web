@@ -1,9 +1,13 @@
+/* eslint max-len: off */
+
 import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
 import axios from 'axios';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
 import { SEARCH } from '@app/config/api';
+import track from '@app/util/track';
 
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
@@ -35,7 +39,7 @@ class SearchContainer extends Component {
   }
 
   togglePlayPauseSong(songId) {
-    if (this.props.current !== null && this.props.current.songId === songId) {
+    if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });
@@ -43,7 +47,7 @@ class SearchContainer extends Component {
       return;
     }
 
-    const songIdIndex = this.state.matches.songs.findIndex(song => song.songId === songId);
+    const songIdIndex = this.state.matches.track.findIndex(song => song.track_id === songId);
 
     if (songIdIndex === -1) {
       return;
@@ -52,9 +56,9 @@ class SearchContainer extends Component {
     store.dispatch({
       type: PLAY,
       payload: {
-        play: this.state.matches.songs[songIdIndex],
-        queue: this.state.matches.songs,
-        initialQueue: this.state.matches.songs,
+        play: this.state.matches.track[songIdIndex],
+        queue: this.state.matches.track,
+        initialQueue: this.state.matches.track,
       },
     });
   }
@@ -75,7 +79,7 @@ class SearchContainer extends Component {
 
     this.setState(() => ({ q }), () => {
       throttle = setTimeout(() => {
-        if (this.state.q === '') {
+        if (this.state.q === '' || this.state.q.length < 2) {
           this.setState(() => ({
             matches: null,
           }));
@@ -83,7 +87,8 @@ class SearchContainer extends Component {
           return;
         }
 
-        // recreating tokens...
+        // recreating token...
+        // eslint-disable-next-line
         CancelToken = axios.CancelToken;
         source = CancelToken.source();
 
@@ -94,9 +99,13 @@ class SearchContainer extends Component {
           .then((data) => {
             store.dispatch(loading(false));
 
-            this.setState(() => ({
-              matches: data.data,
-            }));
+            const matches = data.data.data;
+            matches.album = matches.album.map(album => Object.assign({}, album, { album_cover: cloneDeep(data.data.included.s3[album.album_cover]) }));
+            matches.artist = matches.artist.map(artist => Object.assign({}, artist, { artist_cover: cloneDeep(data.data.included.s3[artist.artist_cover]) }));
+            matches.playlist = matches.playlist.map(playlist => Object.assign({}, playlist, { playlist_cover: cloneDeep(data.data.included.s3[playlist.playlist_cover]) }));
+            matches.track = track(matches.track, data.data.included);
+
+            this.setState(() => ({ matches }));
           }, () => {
             store.dispatch(loading(false));
           });

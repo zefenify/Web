@@ -206,16 +206,6 @@ const NowPlayingContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    &__name {
-      margin-bottom: 0.5em;
-      color: ${props => props.theme.controlText};
-    }
-
-    &__artist a {
-      color: ${props => props.theme.controlMute};
-      text-decoration: none;
-    }
-
     &__name,
     &__artist {
       padding: 0;
@@ -224,6 +214,16 @@ const NowPlayingContainer = styled.div`
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+
+    &__name {
+      margin-bottom: 0.5em;
+      color: ${props => props.theme.controlText};
+    }
+
+    &__artist a {
+      color: ${props => props.theme.controlMute};
+      text-decoration: none;
     }
   }
 `;

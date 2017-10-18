@@ -73,26 +73,6 @@ class ArtistContainer extends Component {
     const tracks = track(data.relationships.track.map(trackId => included.track[trackId]), included);
     const flattenSongs = flatten(albums.map(album => album.relationships.track));
 
-    const queueIsByArtist = (artistAlbums, queue) => {
-      const queueIsBySingleArtist = queue.every(song => song.artist_id === data.artist_id);
-
-      if (queueIsBySingleArtist === false) {
-        return false;
-      }
-
-      // looking for album index to set `PAUSE`...
-      let albumIndex = -1;
-      const queueSongIdList = queue.map(song => song.songId);
-
-      artistAlbums.forEach((album, index) => {
-        if (albumIndex === -1 && album.relationships.track.every(song => queueSongIdList.includes(song.track_id))) {
-          albumIndex = index;
-        }
-      });
-
-      return albumIndex;
-    };
-
     let albumPlayingIndex = -1;
     albums.forEach((album, albumIndex) => {
       if (sameSongList(initialQueue, album.relationships.track) === true) {

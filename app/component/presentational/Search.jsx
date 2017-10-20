@@ -159,7 +159,6 @@ const Search = ({
     artist: [],
     playlist: [],
     track: [],
-    uplaylist: [],
   })) {
     return (
       <SearchContainer>

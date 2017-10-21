@@ -57,6 +57,7 @@ const SearchContainer = styled.div`
     margin-bottom: 1px;
 
     &.no-matches {
+      bottom: 70px;
       flex: 1 0 auto;
       justify-content: center;
       align-items: center;

@@ -141,7 +141,7 @@ const Search = ({
     return (
       <SearchContainer>
         <div className="search">
-          <div className="search__label">Search for Song, Artist, Album or Playlist</div>
+          <div className="search__label">Search for an Artist, Song, Album or Playlist</div>
           <input
             className="search__input"
             placeholder="Search"

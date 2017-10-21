@@ -6,11 +6,12 @@
 import { eventChannel, END, delay } from 'redux-saga';
 import { select, put, call, fork, take, throttle, takeEvery, takeLatest } from 'redux-saga/effects';
 import { Howl } from 'howler';
+import axios from 'axios';
 import random from 'lodash/fp/random';
 import notie from 'notie';
 
 import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE, PREVIOUS_THRESHOLD } from '@app/redux/constant/wolfCola';
-import { BASE_S3 } from '@app/config/api';
+import { BASE, HEADER, BASE_S3 } from '@app/config/api';
 
 import { current } from '@app/redux/action/current';
 import { queueSet, queueRemove } from '@app/redux/action/queue';
@@ -117,6 +118,12 @@ const tracker = (isTrackerInProgress = false) => {
 
         // checking for crossfade threshold...
         if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
+          // sending play-count [`track_popularity` and `trend`] will be set
+          axios.get(`${BASE}play-count/${stateCheck.current.track_id}`, {
+            headers: {
+              [HEADER]: stateCheck.user === null ? undefined : stateCheck.user.jwt,
+            },
+          }).then(() => {}, () => {});
           yield put({ type: NEXT });
         }
       }

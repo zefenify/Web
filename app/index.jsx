@@ -101,7 +101,7 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
               <Route exact path="/" component={HomeContainer} />
               <Route path="/:type(playlist|featured)/:id" component={PlaylistContainer} />
               <Route path="/artist/:id" component={ArtistContainer} />
-              <Route path="/album/:id" component={AlbumContainer} />
+              <Route path="/album/:id/:trackId?" component={AlbumContainer} />
               <Route path="/search" component={SearchContainer} />
               <Route path="/top/:category?" component={TopContainer} />
               <Route path="/:type(genre|ariflist)/:list?" component={BoxContainer} />

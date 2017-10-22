@@ -35,7 +35,18 @@ class AlbumContainer extends Component {
       this.cancelRequest = cancel;
     }).then(({ data, included }) => {
       // mapping track...
-      const albumTrack = data.relationships.track.map(trackId => included.track[trackId]);
+
+      const paramTrackId = this.props.match.params.trackId;
+      let albumTrack = [];
+
+      if (paramTrackId === undefined) {
+        albumTrack = data.relationships.track.map(trackId => included.track[trackId]);
+      } else {
+        albumTrack = data.relationships.track
+          .filter(trackId => Number.parseInt(paramTrackId, 10) === trackId)
+          .map(trackId => included.track[trackId]);
+      }
+
       const tracks = track(albumTrack, included);
 
       this.setState(() => ({

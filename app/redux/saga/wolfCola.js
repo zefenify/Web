@@ -118,8 +118,8 @@ const tracker = (isTrackerInProgress = false) => {
 
         // checking for crossfade threshold...
         if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
-          // sending play-count [`track_popularity` and `trend`] will be set
-          axios.get(`${BASE}play-count/${stateCheck.current.track_id}`, {
+          // sending played [`track_popularity` and `trend`] will be set
+          axios.get(`${BASE}played/${stateCheck.current.track_id}`, {
             headers: {
               [HEADER]: stateCheck.user === null ? undefined : stateCheck.user.jwt,
             },

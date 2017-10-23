@@ -46,7 +46,7 @@
     "precss": "^2.0.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "uglifyjs-webpack-plugin": "beta",
+    "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
   },

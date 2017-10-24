@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { human } from '@app/util/time';
 
 import ArtistList from '@app/component/presentational/ArtistList';
+import { Share } from '@app/component/presentational/SVG';
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
 const PlayPause = ({ onClick, playing, className }) => (
@@ -106,7 +107,7 @@ const SongContainer = styled.div`
   }
 
   &.full-detail .name {
-    flex: 0 0 42%;
+    flex: 0 0 38%;
   }
 
   & .name {
@@ -127,6 +128,15 @@ const SongContainer = styled.div`
 
   & .album-name {
     flex: 0 0 20%;
+  }
+
+  & .share {
+    flex: 0 0 4%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   & .duration {
@@ -196,6 +206,7 @@ const Song = ({
               : null
           }
         </div>
+        <div className="share"><Share /></div>
         <div className="duration">{ human(songDuration) }</div>
       </SongContainer>
     );
@@ -222,6 +233,7 @@ const Song = ({
       </div>
       <ArtistList className="artist-name" artists={songAlbum.album_artist} />
       <Link to={`/album/${songAlbum.album_id}`} className="album-name">{ songAlbum.album_name }</Link>
+      <div className="share"><Share /></div>
       <div className="duration">{ human(songDuration) }</div>
     </SongContainer>
   );

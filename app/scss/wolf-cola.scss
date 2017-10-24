@@ -46,3 +46,31 @@ h1 {
 h2 {
   font-size: 2em;
 }
+
+// emotion global injection is not needed here as <Button /> handles the theme
+.play-share {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+
+  button {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+  }
+
+  &__play-big {
+    width: 164px;
+  }
+
+  &__play-small {
+    width: 124px;
+  }
+
+  &__share {
+    display: flex;
+    margin-left: 1.25em;
+    width: 38px;
+  }
+}

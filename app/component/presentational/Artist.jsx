@@ -8,6 +8,7 @@ import { BASE_S3 } from '@app/config/api';
 import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 import Button from '@app/component/styled/Button';
+import { Share } from '@app/component/presentational/SVG';
 
 const ArtistContainer = styled.div`
   display: flex;
@@ -43,8 +44,7 @@ const ArtistContainer = styled.div`
         color: ${props => props.theme.controlMute};
       }
 
-      button {
-        width: 175px;
+      .play-share {
         margin-top: 1em;
       }
     }
@@ -106,10 +106,6 @@ const ArtistContainer = styled.div`
       text-overflow: ellipsis;
       text-decoration: none;
       color: inherit;
-    }
-
-    &__button {
-      width: 125px;
     }
   }
 
@@ -193,7 +189,10 @@ const Arist = ({
         <p>ARTIST</p>
         <h1>{ artist.artist_name }</h1>
         <p style={{ marginTop: '0.25em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
-        <Button onClick={togglePlayPauseArtist}>{`${playing && playingArist && albumPlayingIndex === -1 ? 'PAUSE' : 'PLAY'}`}</Button>
+        <div className="play-share">
+          <Button className="play-share__play-big" onClick={togglePlayPauseArtist}>{`${playing && playingArist && albumPlayingIndex === -1 ? 'PAUSE' : 'PLAY'}`}</Button>
+          <Button className="play-share__share" outline noPadding><Share /></Button>
+        </div>
       </div>
     </div>
 
@@ -211,7 +210,10 @@ const Arist = ({
                 <div className="album-cover__info album-info">
                   <p className="album-info__year">{ album.album_year }</p>
                   <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
-                  <Button className="album-info__button" onClick={() => togglePlayPauseAlbum(album, albumIndex)}>{`${playing && albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>
+                  <div className="play-share">
+                    <Button outline className="play-share__play-small" onClick={() => togglePlayPauseAlbum(album, albumIndex)}>{`${playing && albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>
+                    <Button className="play-share__share" outline noPadding><Share /></Button>
+                  </div>
                 </div>
               </div>
 

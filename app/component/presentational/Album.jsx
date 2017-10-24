@@ -8,6 +8,7 @@ import DJKhaled from '@app/component/hoc/DJKhaled';
 
 import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
+import { Share } from '@app/component/presentational/SVG';
 import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 
@@ -74,10 +75,8 @@ const Header = styled.div`
       color: ${props => props.theme.controlMute};
     }
 
-    &__button {
-      margin: 0;
+    .play-share {
       margin-top: 1em;
-      width: 175px;
     }
   }
 
@@ -120,7 +119,11 @@ const HeaderSongs = ({
             <ArtistList artists={artist} />
           </p>
           <p className="info-container__duration">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-          <Button className="info-container__button" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
+
+          <div className="play-share">
+            <Button className="play-share__play-big" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
+            <Button className="play-share__share" outline noPadding><Share /></Button>
+          </div>
         </div>
       </Header>
 

@@ -174,7 +174,7 @@ const Search = ({
         </div>
 
         <div className="result no-matches">
-          <h2>No matches</h2>
+          <h3>No Results</h3>
         </div>
       </SearchContainer>
     );

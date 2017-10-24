@@ -1,4 +1,5 @@
 /* global window */
+
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 

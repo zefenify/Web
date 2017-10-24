@@ -1,4 +1,4 @@
-/* eslint no-console: 0 */
+/* eslint no-console: off */
 
 import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';

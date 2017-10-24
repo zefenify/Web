@@ -1,4 +1,4 @@
-/* eslint no-console: 0 */
+/* eslint no-console: off */
 
 import { put, select, takeEvery } from 'redux-saga/effects';
 

@@ -1,4 +1,4 @@
-/* eslint no-console: 0 */
+/* eslint no-console: off */
 
 const http = require('http');
 const path = require('path');

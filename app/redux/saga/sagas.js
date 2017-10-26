@@ -15,6 +15,7 @@ import { watchSetQueueSet, watchSetQueueAdd, watchSetQueueRemove, watchSetQueueC
 import { watchSetCurrent } from '@app/redux/saga/current';
 import { userBootFromLF, watchSetUser } from '@app/redux/saga/user';
 import { watchPlay, watchPrevious, watchNext, watchSeek, watchTogglePlayPause } from '@app/redux/saga/wolfCola';
+import { watchContextMenuOn, watchContextMenuOff } from '@app/redux/saga/contextMenu';
 
 function* rootSaga() {
   yield all([
@@ -45,6 +46,8 @@ function* rootSaga() {
     watchTogglePlayPause(),
     userBootFromLF(),
     watchSetUser(),
+    watchContextMenuOn(),
+    watchContextMenuOff(),
   ]);
 }
 

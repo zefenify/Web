@@ -11,7 +11,7 @@ const MobileContainer = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 999;
+  z-index: 1000;
   background-color: ${props => props.theme.listBackground};
   color: ${props => props.theme.listText};
 

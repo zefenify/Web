@@ -1,13 +1,18 @@
 import styled from 'react-emotion';
 
+// #context-overlay-container = [98, 100]
+// #context-menu-container = 999
+// #mobile = 1000
 const WolfColaContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   display: flex;
   flex-direction: column;
+  z-index: 99;
+  transition: filter 250ms, transform 250ms;
 `;
 
 const ControlsContainer = styled.div`

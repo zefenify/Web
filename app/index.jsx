@@ -27,6 +27,8 @@ import SurpriseContainer from '@app/component/container/SurpriseContainer';
 import TopContainer from '@app/component/container/TopContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
 import BoxContainer from '@app/component/container/BoxContainer';
+import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
+import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
 
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
@@ -56,65 +58,69 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
   <Provider store={store}>
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <Router>
-        <WolfColaContainer>
-          <NavListContainer>
-            <NavContainer>
-              <Link className="brand" to="/">
-                <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.png" />
-                <span>Zefenify</span>
-                <Spinner loading={loading} />
-              </Link>
+        <div>
+          <WolfColaContainer id="wolf-cola-container">
+            <NavListContainer>
+              <NavContainer>
+                <Link className="brand" to="/">
+                  <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.png" />
+                  <span>Zefenify</span>
+                  <Spinner loading={loading} />
+                </Link>
 
-              <div className="nav-list">
-                <NavLinkStyled to="/search">
-                  <span>Search</span>
-                  <Search style={{ float: 'right' }} />
-                </NavLinkStyled>
-                <NavLinkStyled to="/top">Top Songs</NavLinkStyled>
-                <NavLinkStyled to="/genre">Genre</NavLinkStyled>
-                <NavLinkStyled to="/ariflist">ArifList</NavLinkStyled>
-                <NavLinkStyled to="/surprise">Surprise Me</NavLinkStyled>
+                <div className="nav-list">
+                  <NavLinkStyled to="/search">
+                    <span>Search</span>
+                    <Search style={{ float: 'right' }} />
+                  </NavLinkStyled>
+                  <NavLinkStyled to="/top">Top Songs</NavLinkStyled>
+                  <NavLinkStyled to="/genre">Genre</NavLinkStyled>
+                  <NavLinkStyled to="/ariflist">ArifList</NavLinkStyled>
+                  <NavLinkStyled to="/surprise">Surprise Me</NavLinkStyled>
 
-                <small className="small-text">YOUR MUSIC</small>
-                <Divider />
+                  <small className="small-text">YOUR MUSIC</small>
+                  <Divider />
 
-                <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
-                { /* <NavLinkStyled to="/songs">Songs</NavLinkStyled> */ }
+                  <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
+                  { /* <NavLinkStyled to="/songs">Songs</NavLinkStyled> */ }
 
-                {/*
-                <small className="small-text">YOUR PLAYLISTS</small>
-                <Divider />
+                  {/*
+                  <small className="small-text">YOUR PLAYLISTS</small>
+                  <Divider />
 
-                <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
-                <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
-                */}
+                  <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
+                  <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
+                  */}
 
-                <small className="small-text">SETTINGS</small>
-                <Divider />
+                  <small className="small-text">SETTINGS</small>
+                  <Divider />
 
-                <NavLinkStyled to="/setting">Settings</NavLinkStyled>
-                <div style={{ paddingBottom: '2em' }} />
-              </div>
-            </NavContainer>
+                  <NavLinkStyled to="/setting">Settings</NavLinkStyled>
+                  <div style={{ paddingBottom: '2em' }} />
+                </div>
+              </NavContainer>
 
-            <RouteContainer>
-              <Route exact path="/" component={HomeContainer} />
-              <Route path="/:type(playlist|featured)/:id" component={PlaylistContainer} />
-              <Route path="/artist/:id" component={ArtistContainer} />
-              <Route path="/album/:id/:trackId?" component={AlbumContainer} />
-              <Route path="/search" component={SearchContainer} />
-              <Route path="/top/:category?" component={TopContainer} />
-              <Route path="/:type(genre|ariflist)/:list?" component={BoxContainer} />
-              <Route path="/surprise" component={SurpriseContainer} />
-              <Route path="/recent" component={RecentContainer} />
-              <Route path="/setting" component={SettingContainer} />
-            </RouteContainer>
-          </NavListContainer>
+              <RouteContainer>
+                <Route exact path="/" component={HomeContainer} />
+                <Route path="/:type(playlist|featured)/:id" component={PlaylistContainer} />
+                <Route path="/artist/:id" component={ArtistContainer} />
+                <Route path="/album/:id/:trackId?" component={AlbumContainer} />
+                <Route path="/search" component={SearchContainer} />
+                <Route path="/top/:category?" component={TopContainer} />
+                <Route path="/:type(genre|ariflist)/:list?" component={BoxContainer} />
+                <Route path="/surprise" component={SurpriseContainer} />
+                <Route path="/recent" component={RecentContainer} />
+                <Route path="/setting" component={SettingContainer} />
+              </RouteContainer>
+            </NavListContainer>
 
-          <ControlContainer />
+            <ControlContainer />
+          </WolfColaContainer>
 
           <Mobile />
-        </WolfColaContainer>
+          <ContextOverlayContainer />
+          <ContextMenuContainer />
+        </div>
       </Router>
     </ThemeProvider>
   </Provider>

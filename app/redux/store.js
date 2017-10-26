@@ -18,6 +18,7 @@ import initialQueue from '@app/redux/reducer/initialQueue';
 import history from '@app/redux/reducer/history';
 import loading from '@app/redux/reducer/loading';
 import user from '@app/redux/reducer/user';
+import contextMenu from '@app/redux/reducer/contextMenu';
 
 import rootSaga from '@app/redux/saga/sagas';
 
@@ -39,6 +40,7 @@ const store = createStore(
     history,
     loading,
     user,
+    contextMenu,
   }),
   {
     theme: 'dark',
@@ -57,6 +59,7 @@ const store = createStore(
     shuffle: false,
     repeat: 'OFF',
     current: null, // current song object, *not* the Howler object
+    contextMenu: null, // context item to be rendered on `<ContextMenu />`
     // online: false,
     loading: false,
     user: null,

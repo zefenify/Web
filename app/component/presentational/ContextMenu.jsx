@@ -12,7 +12,7 @@ const ContextMenuContainer = styled.div`
   overflow-y: scroll;
   background-color: ${props => props.theme.navbarBackground};
   color: ${props => props.theme.navbarText};
-  box-shadow: -2px 0 4px 0 ${props => props.theme.navBarBoxShadow};
+  box-shadow: -2px 0 2px 0 ${props => props.theme.navBarBoxShadow};
   transform: translateX(264px);
   transition: transform 250ms;
 

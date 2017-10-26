@@ -59,6 +59,7 @@ const Recent = ({
   playingHistory,
   togglePlayPauseHistory,
   togglePlayPauseSong,
+  contextMenuSong,
 }) => {
   if (history.length === 0) {
     return (
@@ -94,6 +95,7 @@ const Recent = ({
               songFeaturing={song.track_featuring}
               songDuration={song.track_track.s3_meta.duration}
               songAlbum={song.track_album}
+              contextMenuSong={songId => contextMenuSong(songId, history)}
             />
           ))
         }
@@ -114,6 +116,7 @@ Recent.propTypes = {
   playingHistory: bool,
   togglePlayPauseHistory: func.isRequired,
   togglePlayPauseSong: func.isRequired,
+  contextMenuSong: func.isRequired,
 };
 
 Recent.defaultProps = {

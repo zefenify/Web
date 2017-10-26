@@ -3,6 +3,7 @@ import { bool, string, shape } from 'prop-types';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { SET_CONTEXT_MENU_ON, CONTEXT_SONG, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
@@ -28,6 +29,8 @@ class PlaylistContainer extends Component {
     };
     this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
     this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
+    this.contextMenuPlaylist = this.contextMenuPlaylist.bind(this);
+    this.contextMenuSong = this.contextMenuSong.bind(this);
   }
 
   componentDidMount() {
@@ -130,6 +133,32 @@ class PlaylistContainer extends Component {
     }));
   }
 
+  contextMenuPlaylist() {
+    store.dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        contextType: CONTEXT_PLAYLIST,
+        payload: this.state.featured,
+      },
+    });
+  }
+
+  contextMenuSong(songId) {
+    const songIndex = this.state.featured.playlist_track.findIndex(song => song.track_id === songId);
+
+    if (songIndex === -1) {
+      return;
+    }
+
+    store.dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        type: CONTEXT_SONG,
+        payload: this.state.featured.playlist_track[songIndex],
+      },
+    });
+  }
+
   render() {
     if (this.state.featured === null) {
       return null;
@@ -148,6 +177,8 @@ class PlaylistContainer extends Component {
         description={this.state.featured.playlist_description}
         cover={this.state.featured.playlist_cover}
         songs={this.state.featured.playlist_track}
+        contextMenuPlaylist={this.contextMenuPlaylist}
+        contextMenuSong={this.contextMenuSong}
       />
     );
   }

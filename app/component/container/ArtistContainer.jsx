@@ -7,6 +7,7 @@ import reverse from 'lodash/reverse';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { SET_CONTEXT_MENU_ON, CONTEXT_SONG, CONTEXT_ALBUM, CONTEXT_ARTIST } from '@app/redux/constant/contextMenu';
 
 import sameSongList from '@app/util/sameSongList';
 import api from '@app/util/api';
@@ -31,6 +32,9 @@ class ArtistContainer extends Component {
     this.togglePlayPauseArtist = this.togglePlayPauseArtist.bind(this);
     this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
     this.togglePlayPauseAlbum = this.togglePlayPauseAlbum.bind(this);
+    this.contextMenuArtist = this.contextMenuArtist.bind(this);
+    this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
+    this.contextMenuSong = this.contextMenuSong.bind(this);
     this.afterFetch = this.afterFetch.bind(this);
   }
 
@@ -175,6 +179,44 @@ class ArtistContainer extends Component {
     }));
   }
 
+  contextMenuArtist() {
+    store.dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        contextType: CONTEXT_ARTIST,
+        payload: this.state.artist,
+      },
+    });
+  }
+
+  contextMenuAlbum(albumId) {
+    const album = this.state.artist.relationships.album.filter(artistAlbum => artistAlbum.album_id === albumId)[0];
+
+    store.dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        contextType: CONTEXT_ALBUM,
+        payload: album,
+      },
+    });
+  }
+
+  contextMenuSong(songId) {
+    const songIndex = this.state.flattenSongs.findIndex(song => song.track_id === songId);
+
+    if (songIndex === -1) {
+      return;
+    }
+
+    store.dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        type: CONTEXT_SONG,
+        payload: this.state.flattenSongs[songIndex],
+      },
+    });
+  }
+
   render() {
     if (this.state.artist === null) {
       return null;
@@ -191,6 +233,9 @@ class ArtistContainer extends Component {
         togglePlayPauseArtist={this.togglePlayPauseArtist}
         togglePlayPauseSong={this.togglePlayPauseSong}
         togglePlayPauseAlbum={this.togglePlayPauseAlbum}
+        contextMenuArtist={this.contextMenuArtist}
+        contextMenuAlbum={this.contextMenuAlbum}
+        contextMenuSong={this.contextMenuSong}
       />
     );
   }

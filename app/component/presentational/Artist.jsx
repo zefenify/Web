@@ -181,6 +181,9 @@ const Arist = ({
   togglePlayPauseArtist,
   togglePlayPauseSong,
   togglePlayPauseAlbum,
+  contextMenuArtist,
+  contextMenuAlbum,
+  contextMenuSong,
 }) => (
   <ArtistContainer>
     <div className="artist">
@@ -191,7 +194,7 @@ const Arist = ({
         <p style={{ marginTop: '0.25em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
         <div className="play-share">
           <Button className="play-share__play-big" onClick={togglePlayPauseArtist}>{`${playing && playingArist && albumPlayingIndex === -1 ? 'PAUSE' : 'PLAY'}`}</Button>
-          <Button className="play-share__share" outline noPadding><Share /></Button>
+          <Button className="play-share__share" outline noPadding onClick={contextMenuArtist}><Share /></Button>
         </div>
       </div>
     </div>
@@ -212,7 +215,7 @@ const Arist = ({
                   <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
                   <div className="play-share">
                     <Button outline className="play-share__play-small" onClick={() => togglePlayPauseAlbum(album, albumIndex)}>{`${playing && albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>
-                    <Button className="play-share__share" outline noPadding><Share /></Button>
+                    <Button className="play-share__share" outline noPadding onClick={() => contextMenuAlbum(album.album_id)}><Share /></Button>
                   </div>
                 </div>
               </div>
@@ -232,6 +235,7 @@ const Arist = ({
                       songFeaturing={song.track_featuring}
                       songAlbum={album}
                       songDuration={song.track_track.s3_meta.duration}
+                      contextMenuSong={contextMenuSong}
                     />
                   ))
                 }
@@ -274,6 +278,9 @@ Arist.propTypes = {
   togglePlayPauseArtist: func.isRequired,
   togglePlayPauseSong: func.isRequired,
   togglePlayPauseAlbum: func.isRequired,
+  contextMenuArtist: func.isRequired,
+  contextMenuAlbum: func.isRequired,
+  contextMenuSong: func.isRequired,
 };
 
 Arist.defaultProps = {

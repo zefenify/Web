@@ -95,6 +95,8 @@ const HeaderSongs = ({
   duration,
   togglePlayPauseAll,
   togglePlayPauseSong,
+  contextMenuPlaylist,
+  contextMenuSong,
 }) => {
   const { hours, minutes, seconds } = duration;
 
@@ -109,7 +111,7 @@ const HeaderSongs = ({
           <p className="info-container__duration">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
           <div className="play-share">
             <Button className="play-share__play-big" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
-            <Button className="play-share__share" outline noPadding><Share /></Button>
+            <Button className="play-share__share" outline noPadding onClick={contextMenuPlaylist}><Share /></Button>
           </div>
         </div>
       </Header>
@@ -130,6 +132,7 @@ const HeaderSongs = ({
               songFeaturing={song.track_featuring}
               songDuration={song.track_track.s3_meta.duration}
               songAlbum={song.track_album}
+              contextMenuSong={contextMenuSong}
             />
           ))
         }
@@ -154,6 +157,8 @@ HeaderSongs.propTypes = {
   playingSongs: bool,
   togglePlayPauseAll: func.isRequired,
   togglePlayPauseSong: func.isRequired,
+  contextMenuPlaylist: func.isRequired,
+  contextMenuSong: func.isRequired,
 };
 
 HeaderSongs.defaultProps = {

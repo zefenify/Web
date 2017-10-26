@@ -185,10 +185,11 @@ const Song = ({
   songDuration,
   togglePlayPause,
   playing,
+  contextMenuSong,
 }) => {
   if (fullDetail === false) {
     return (
-      <SongContainer className={`${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+      <SongContainer onContextMenu={(e) => { e.preventDefault(); contextMenuSong(songId); }} className={`${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
         <div className="track-number-icon">
           <span className="track-number-icon__number">{ trackNumber }</span>
           <PlayPause
@@ -206,14 +207,14 @@ const Song = ({
               : null
           }
         </div>
-        <div className="share"><Share /></div>
+        <div className="share" onClick={() => contextMenuSong(songId)}><Share /></div>
         <div className="duration">{ human(songDuration) }</div>
       </SongContainer>
     );
   }
 
   return (
-    <SongContainer className={`full-detail ${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+    <SongContainer onContextMenu={(e) => { e.preventDefault(); contextMenuSong(songId); }} className={`full-detail ${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
       <div className="track-number-icon">
         <span className="track-number-icon__number">{ trackNumber }</span>
         <PlayPause
@@ -233,7 +234,7 @@ const Song = ({
       </div>
       <ArtistList className="artist-name" artists={songAlbum.album_artist} />
       <Link to={`/album/${songAlbum.album_id}`} className="album-name">{ songAlbum.album_name }</Link>
-      <div className="share"><Share /></div>
+      <div className="share" onClick={() => contextMenuSong(songId)}><Share /></div>
       <div className="duration">{ human(songDuration) }</div>
     </SongContainer>
   );
@@ -249,6 +250,7 @@ Song.propTypes = {
   songAlbum: shape({}).isRequired,
   songDuration: number.isRequired,
   togglePlayPause: func.isRequired,
+  contextMenuSong: func.isRequired,
   playing: bool.isRequired,
 };
 

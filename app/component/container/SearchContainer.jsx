@@ -6,6 +6,7 @@ import axios from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { SET_CONTEXT_MENU_ON, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
 import { SEARCH } from '@app/config/api';
 import track from '@app/util/track';
 
@@ -31,6 +32,7 @@ class SearchContainer extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
+    this.contextMenuSong = this.contextMenuSong.bind(this);
   }
 
   componentWillUnmount() {
@@ -113,6 +115,22 @@ class SearchContainer extends Component {
     });
   }
 
+  contextMenuSong(songId) {
+    const songIndex = this.state.matches.track.findIndex(song => song.track_id === songId);
+
+    if (songIndex === -1) {
+      return;
+    }
+
+    store.dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        type: CONTEXT_SONG,
+        payload: this.state.matches.track[songIndex],
+      },
+    });
+  }
+
   render() {
     return (
       <Search
@@ -122,6 +140,7 @@ class SearchContainer extends Component {
         playing={this.props.playing}
         handleChange={this.handleChange}
         togglePlayPauseSong={this.togglePlayPauseSong}
+        contextMenuSong={this.contextMenuSong}
       />
     );
   }

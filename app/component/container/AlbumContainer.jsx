@@ -3,6 +3,7 @@ import { bool, string, shape } from 'prop-types';
 
 import { BASE } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { SET_CONTEXT_MENU_ON, CONTEXT_SONG, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
@@ -28,6 +29,8 @@ class AlbumContainer extends Component {
     };
     this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
     this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
+    this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
+    this.contextMenuSong = this.contextMenuSong.bind(this);
   }
 
   componentDidMount() {
@@ -139,6 +142,32 @@ class AlbumContainer extends Component {
     }));
   }
 
+  contextMenuAlbum() {
+    store.dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        contextType: CONTEXT_ALBUM,
+        payload: this.state.album,
+      },
+    });
+  }
+
+  contextMenuSong(songId) {
+    const songIndex = this.state.album.relationships.track.findIndex(song => song.track_id === songId);
+
+    if (songIndex === -1) {
+      return;
+    }
+
+    store.dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        type: CONTEXT_SONG,
+        payload: this.state.album.relationships.track[songIndex],
+      },
+    });
+  }
+
   render() {
     if (this.state.album === null) {
       return null;
@@ -156,6 +185,8 @@ class AlbumContainer extends Component {
         cover={this.state.album.album_cover}
         artist={this.state.album.album_artist}
         songs={this.state.album.relationships.track}
+        contextMenuAlbum={this.contextMenuAlbum}
+        contextMenuSong={this.contextMenuSong}
       />
     );
   }

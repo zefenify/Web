@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { SET_CONTEXT_MENU_ON, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
 
 import historyDuration from '@app/redux/selector/historyDuration';
 import historyPlaying from '@app/redux/selector/historyPlaying';
@@ -57,6 +58,22 @@ module.exports = connect(state => ({
 
     dispatch({
       type: TOGGLE_PLAY_PAUSE,
+    });
+  },
+
+  contextMenuSong(songId, history) {
+    const songIndex = history.findIndex(song => song.track_id === songId);
+
+    if (songIndex === -1) {
+      return;
+    }
+
+    dispatch({
+      type: SET_CONTEXT_MENU_ON,
+      payload: {
+        type: CONTEXT_SONG,
+        payload: history[songIndex],
+      },
     });
   },
 }))(DJKhaled('playing', 'current', 'history')(RecentlyPlayed));

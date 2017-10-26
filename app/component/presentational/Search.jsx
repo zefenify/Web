@@ -136,6 +136,7 @@ const Search = ({
   playing,
   handleChange,
   togglePlayPauseSong,
+  contextMenuSong,
 }) => {
   // initial component mount
   if (matches === null) {
@@ -258,6 +259,7 @@ const Search = ({
                   songFeaturing={song.track_featuring}
                   songDuration={song.track_track.s3_meta.duration}
                   songAlbum={song.track_album}
+                  contextMenuSong={contextMenuSong}
                 />
               )) : null
           }
@@ -274,6 +276,7 @@ Search.propTypes = {
   playing: bool,
   handleChange: func.isRequired,
   togglePlayPauseSong: func.isRequired,
+  contextMenuSong: func.isRequired,
 };
 
 Search.defaultProps = {

@@ -6,7 +6,6 @@
     "postinstall": "rm -rf build && webpack -p --env production --progress --colors && cp -R app/static build/static"
   },
   "dependencies": {
-    "animejs": "^2.2.0",
     "axios": "^0.16.2",
     "compression": "^1.7.1",
     "emotion": "^8.0.5",

@@ -137,7 +137,7 @@ class PlaylistContainer extends Component {
     store.dispatch({
       type: SET_CONTEXT_MENU_ON,
       payload: {
-        contextType: CONTEXT_PLAYLIST,
+        context: CONTEXT_PLAYLIST,
         payload: this.state.featured,
       },
     });

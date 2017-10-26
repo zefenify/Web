@@ -183,7 +183,7 @@ class ArtistContainer extends Component {
     store.dispatch({
       type: SET_CONTEXT_MENU_ON,
       payload: {
-        contextType: CONTEXT_ARTIST,
+        type: CONTEXT_ARTIST,
         payload: this.state.artist,
       },
     });
@@ -195,7 +195,7 @@ class ArtistContainer extends Component {
     store.dispatch({
       type: SET_CONTEXT_MENU_ON,
       payload: {
-        contextType: CONTEXT_ALBUM,
+        context: CONTEXT_ALBUM,
         payload: album,
       },
     });

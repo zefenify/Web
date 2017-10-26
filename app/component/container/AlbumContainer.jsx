@@ -146,7 +146,7 @@ class AlbumContainer extends Component {
     store.dispatch({
       type: SET_CONTEXT_MENU_ON,
       payload: {
-        contextType: CONTEXT_ALBUM,
+        type: CONTEXT_ALBUM,
         payload: this.state.album,
       },
     });

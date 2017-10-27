@@ -2,6 +2,7 @@ import styled from 'react-emotion';
 
 const ClearButton = styled.button`
   display: block;
+  width: 100%;
   padding: 0;
   margin: 0;
   background-color: transparent;

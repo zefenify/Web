@@ -1,7 +1,8 @@
 /* global document */
 /* eslint no-console: off */
 
-import { put, select, takeEvery } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 
 import { SET_CONTEXT_MENU_ON, SET_CONTEXT_MENU_OFF } from '@app/redux/constant/contextMenu';
 import { contextMenuOn, contextMenuOff } from '@app/redux/action/contextMenu';
@@ -32,8 +33,6 @@ function* setContextMenuOn(action) {
 }
 
 function* setContextMenuOff() {
-  yield put(contextMenuOff(null));
-
   const ContextMenuContainer = document.querySelector('#context-menu-container');
   ContextMenuContainer.style.transform = 'translateX(264px)';
 
@@ -43,6 +42,9 @@ function* setContextMenuOff() {
   const WolfColaContainer = document.querySelector('#wolf-cola-container');
   WolfColaContainer.style.filter = 'blur(0px)';
   WolfColaContainer.style.transform = 'scale(1)';
+
+  yield call(delay, 750);
+  yield put(contextMenuOff(null));
 }
 
 function* watchContextMenuOn() {

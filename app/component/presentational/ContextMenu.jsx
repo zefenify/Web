@@ -2,6 +2,8 @@ import React from 'react';
 import { func } from 'prop-types';
 import styled from 'react-emotion';
 
+import { CloseSVG } from '@app/component/presentational/SVG';
+
 const ContextMenuContainer = styled.div`
   position: fixed;
   right: 0;
@@ -27,28 +29,6 @@ const ContextMenuContainer = styled.div`
   }
 `;
 
-const CloseSVG = () => (
-  <svg
-    width="32"
-    height="32"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#ff6d5e"
-    strokeWidth="1"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <line x1="15" y1="9" x2="9" y2="15" />
-    <line x1="9" y1="9" x2="15" y2="15" />
-  </svg>
-);
-
-const ContextMenu = ({ closeContextMenu }) => (
-  <ContextMenuContainer id="context-menu-container">
-    <div className="close-SVG-container" onClick={closeContextMenu}><CloseSVG /></div>
-  </ContextMenuContainer>
-);
 
 ContextMenu.propTypes = {
   closeContextMenu: func.isRequired,

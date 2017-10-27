@@ -43,7 +43,7 @@ function* setContextMenuOff() {
   WolfColaContainer.style.filter = 'blur(0px)';
   WolfColaContainer.style.transform = 'scale(1)';
 
-  yield call(delay, 750);
+  yield call(delay, 250);
   yield put(contextMenuOff(null));
 }
 

@@ -11,6 +11,7 @@ const MUTE_3 = '#404040';
 const MUTE_4 = '#ececec';
 const MUTE_5 = '#a1a1a1';
 const MUTE_6 = '#4e4e4e';
+const MUTE_7 = '#333333';
 
 const WHITE_1 = '#ffffff';
 const WHITE_2 = '#f7f7f7';
@@ -31,6 +32,7 @@ module.exports = {
     listBackground: DARK_2,
     listBackgroundHover: MUTE_2,
     listDivider: MUTE_2,
+    listDividerText: MUTE_7,
     listText: WHITE_1,
     listTextMute: MUTE_1,
     listTextActive: PRIMARY_1,
@@ -52,6 +54,7 @@ module.exports = {
     listBackground: WHITE_1,
     listBackgroundHover: DARK_4,
     listDivider: DARK_4,
+    listDividerText: MUTE_5,
     listText: MUTE_6,
     listTextMute: MUTE_4,
     listTextActive: PRIMARY_2,

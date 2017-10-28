@@ -127,6 +127,18 @@ const SearchContainer = styled.div`
       color: ${props => props.theme.controlMute};
     }
   }
+
+  .h-line {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.controlMute};
+
+    span {
+      content: '';
+      flex: 1 1 auto;
+      border-top: 1px solid ${props => props.theme.listDivider};
+    }
 `;
 
 const Search = ({
@@ -197,7 +209,7 @@ const Search = ({
       <div className="result">
         <div className="result__list">
           { /* artist */ }
-          { matches.artist.length > 0 ? <h2>Artists</h2> : null }
+          { matches.artist.length > 0 ? <h2 className="h-line">Artists&nbsp;<span /></h2> : null }
           {
             matches.artist.length > 0 ?
               <div className="result-match-list">
@@ -209,11 +221,10 @@ const Search = ({
                 }
               </div> : null
           }
-          { matches.artist.length > 0 ? <Divider /> : null }
 
           { /* album */ }
           { /* apu: album-playlist[-uplaylist] */ }
-          { matches.album.length > 0 ? <h2>Albums</h2> : null }
+          { matches.album.length > 0 ? <h2 className="h-line">Albums&nbsp;<span /></h2> : null }
           {
             matches.album.length > 0 ?
               <div className="result-match-list">
@@ -226,10 +237,9 @@ const Search = ({
                 }
               </div> : null
           }
-          { matches.album.length > 0 ? <Divider /> : null }
 
           { /* playlist */ }
-          { matches.playlist.length > 0 ? <h2>Playlists</h2> : null }
+          { matches.playlist.length > 0 ? <h2 className="h-line">Playlists&nbsp;<span /></h2> : null }
           {
             matches.playlist.length > 0 ?
               <div className="result-match-list">
@@ -241,10 +251,9 @@ const Search = ({
                 }
               </div> : null
           }
-          { matches.playlist.length > 0 ? <Divider /> : null }
 
           { /* track */ }
-          { matches.track.length > 0 ? <h2>Tracks</h2> : null }
+          { matches.track.length > 0 ? <h2 className="h-line">Tracks&nbsp;<span /></h2> : null }
           {
             matches.track.length > 0 ?
               matches.track.map((song, index) => (

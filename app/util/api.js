@@ -36,7 +36,7 @@ const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
 
   store.dispatch(loading(true));
 
-  const CancelToken = axios.CancelToken;
+  const { CancelToken } = axios;
   const source = CancelToken.source();
 
   axios
@@ -86,7 +86,7 @@ const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
 const postPatch = method => (URL, data, cancel) => new Promise((resolve, reject) => {
   store.dispatch(loading(true));
 
-  const CancelToken = axios.CancelToken;
+  const { CancelToken } = axios;
   const source = CancelToken.source();
 
   axios[method](URL, data, {

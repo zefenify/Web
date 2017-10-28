@@ -6,7 +6,6 @@ import isEqual from 'lodash/fp/isEqual';
 
 import { BASE_S3 } from '@app/config/api';
 
-import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 
 const SearchContainer = styled.div`
@@ -128,7 +127,7 @@ const SearchContainer = styled.div`
     }
   }
 
-  .h-line {
+  .search-h-line {
     flex: 0 0 auto;
     display: flex;
     align-items: center;
@@ -209,7 +208,7 @@ const Search = ({
       <div className="result">
         <div className="result__list">
           { /* artist */ }
-          { matches.artist.length > 0 ? <h2 className="h-line">Artists&nbsp;<span /></h2> : null }
+          { matches.artist.length > 0 ? <h2 className="search-h-line">Artists&nbsp;<span /></h2> : null }
           {
             matches.artist.length > 0 ?
               <div className="result-match-list">
@@ -224,7 +223,7 @@ const Search = ({
 
           { /* album */ }
           { /* apu: album-playlist[-uplaylist] */ }
-          { matches.album.length > 0 ? <h2 className="h-line">Albums&nbsp;<span /></h2> : null }
+          { matches.album.length > 0 ? <h2 className="search-h-line">Albums&nbsp;<span /></h2> : null }
           {
             matches.album.length > 0 ?
               <div className="result-match-list">
@@ -239,7 +238,7 @@ const Search = ({
           }
 
           { /* playlist */ }
-          { matches.playlist.length > 0 ? <h2 className="h-line">Playlists&nbsp;<span /></h2> : null }
+          { matches.playlist.length > 0 ? <h2 className="search-h-line">Playlists&nbsp;<span /></h2> : null }
           {
             matches.playlist.length > 0 ?
               <div className="result-match-list">
@@ -253,7 +252,7 @@ const Search = ({
           }
 
           { /* track */ }
-          { matches.track.length > 0 ? <h2 className="h-line">Tracks&nbsp;<span /></h2> : null }
+          { matches.track.length > 0 ? <h2 className="search-h-line">Tracks&nbsp;<span /></h2> : null }
           {
             matches.track.length > 0 ?
               matches.track.map((song, index) => (

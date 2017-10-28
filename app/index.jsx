@@ -34,7 +34,6 @@ import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
 
 import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
-import Divider from '@app/component/styled/Divider';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 
 const Search = props => (
@@ -78,9 +77,7 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
                   <NavLinkStyled to="/ariflist">ArifList</NavLinkStyled>
                   <NavLinkStyled to="/surprise">Surprise Me</NavLinkStyled>
 
-                  <small className="small-text">YOUR MUSIC</small>
-                  <Divider />
-
+                  <div className="nav-h-line">YOUR MUSIC&nbsp;<span /></div>
                   <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
                   { /* <NavLinkStyled to="/songs">Songs</NavLinkStyled> */ }
 
@@ -92,9 +89,7 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
                   <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
                   */}
 
-                  <small className="small-text">SETTINGS</small>
-                  <Divider />
-
+                  <div className="nav-h-line">SETTINGS&nbsp;<span /></div>
                   <NavLinkStyled to="/setting">Settings</NavLinkStyled>
                   <div style={{ paddingBottom: '2em' }} />
                 </div>

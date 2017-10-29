@@ -18,6 +18,10 @@ const ContextMenuContainer = styled.div`
   transform: translateX(264px);
   transition: transform 250ms;
 
+  &.context-menu-active {
+    transform: translateX(0px);
+  }
+
   display: flex;
   padding: 1em;
   flex-direction: column;

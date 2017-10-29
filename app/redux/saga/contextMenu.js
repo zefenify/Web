@@ -20,7 +20,7 @@ function* setContextMenuOn(action) {
 
   // brining it in...
   const ContextMenuContainer = document.querySelector('#context-menu-container');
-  ContextMenuContainer.style.transform = 'translateX(0px)';
+  ContextMenuContainer.classList.add('context-menu-active');
 
   // overly will be over wolf-cola-container i.e. click outside triggers close...
   const ContextOverlayContainer = document.querySelector('#context-overlay-container');
@@ -28,20 +28,18 @@ function* setContextMenuOn(action) {
 
   // wolf cola leaving the stage...
   const WolfColaContainer = document.querySelector('#wolf-cola-container');
-  WolfColaContainer.style.filter = 'blur(4px)';
-  WolfColaContainer.style.transform = 'scale(0.92)';
+  WolfColaContainer.classList.add('context-menu-active');
 }
 
 function* setContextMenuOff() {
   const ContextMenuContainer = document.querySelector('#context-menu-container');
-  ContextMenuContainer.style.transform = 'translateX(264px)';
+  ContextMenuContainer.classList.remove('context-menu-active');
 
   const ContextOverlayContainer = document.querySelector('#context-overlay-container');
   ContextOverlayContainer.style.zIndex = 98;
 
   const WolfColaContainer = document.querySelector('#wolf-cola-container');
-  WolfColaContainer.style.filter = 'blur(0px)';
-  WolfColaContainer.style.transform = 'scale(1)';
+  WolfColaContainer.classList.remove('context-menu-active');
 
   yield call(delay, 250);
   yield put(contextMenuOff(null));

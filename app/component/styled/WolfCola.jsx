@@ -12,7 +12,14 @@ const WolfColaContainer = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 99;
+  filter: blur(0px);
+  transform: scale(1);
   transition: filter 250ms, transform 250ms;
+
+  &.context-menu-active {
+    filter: blur(4px);
+    transform: scale(0.92);
+  }
 `;
 
 const ControlsContainer = styled.div`

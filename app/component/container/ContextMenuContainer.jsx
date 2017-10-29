@@ -41,4 +41,8 @@ const ContextMenuContainer = props => (<ContextMenu
   songRemove={songRemove}
 />);
 
+// NOTE:
+// `history` prop comes from React Router not state
+// clash-alaregem
+// to prevent future name collision TODO: rename `history` state entry
 module.exports = withRouter(DJKhaled('contextMenu', 'user', 'song')(ContextMenuContainer));

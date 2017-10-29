@@ -17,8 +17,6 @@ import Recent from '@app/component/presentational/Recent';
 const RecentlyPlayed = props => (<Recent {...props} />);
 
 module.exports = connect(state => ({
-  playing: state.playing,
-  current: state.current,
   history: state.history,
   totalDuration: historyDuration(state),
   playingHistory: historyPlaying(state),
@@ -76,4 +74,4 @@ module.exports = connect(state => ({
       },
     });
   },
-}))(DJKhaled('playing', 'current', 'history')(RecentlyPlayed));
+}))(DJKhaled('playing', 'current')(RecentlyPlayed));

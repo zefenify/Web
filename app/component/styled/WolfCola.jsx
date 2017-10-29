@@ -4,7 +4,7 @@ import styled from 'react-emotion';
 // #context-menu-container = 999
 // #mobile = 1000
 const WolfColaContainer = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;

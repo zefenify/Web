@@ -76,7 +76,7 @@ const Recent = ({
       <div className="recently-played">
         <h1 className="recently-played__title">Recently Played</h1>
         <p className="recently-played__info">{`${history.length} song${history.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-        <Button className="recently-played__button" onClick={() => togglePlayPauseHistory(playing, playingHistory, history)}>{`${(playing && playingHistory) ? 'PAUSE' : 'PLAY'}`}</Button>
+        <Button className="recently-played__button" onClick={() => togglePlayPauseHistory(playingHistory, history)}>{`${(playing && playingHistory) ? 'PAUSE' : 'PLAY'}`}</Button>
       </div>
 
       <Divider />

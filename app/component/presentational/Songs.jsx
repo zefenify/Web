@@ -76,7 +76,7 @@ const Songs = ({
       <div className="songs">
         <h1 className="songs__title">Songs</h1>
         <p className="songs__info">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-        <Button className="songs__button" onClick={() => togglePlayPauseSongs(playing, playingSongs, songs)}>{`${(playing && playingSongs) ? 'PAUSE' : 'PLAY'}`}</Button>
+        <Button className="songs__button" onClick={() => togglePlayPauseSongs(playingSongs, songs)}>{`${(playing && playingSongs) ? 'PAUSE' : 'PLAY'}`}</Button>
       </div>
 
       <Divider />

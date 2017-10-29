@@ -21,8 +21,8 @@ module.exports = connect(state => ({
   totalDuration: historyDuration(state),
   playingHistory: historyPlaying(state),
 }), dispatch => ({
-  togglePlayPauseHistory(playing, playingHistory, history) {
-    if (playing && playingHistory) {
+  togglePlayPauseHistory(playingHistory, history) {
+    if (playingHistory === true) {
       dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });

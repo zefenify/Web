@@ -21,8 +21,8 @@ module.exports = connect(state => ({
   totalDuration: songDuration(state),
   playingSongs: songPlaying(state),
 }), dispatch => ({
-  togglePlayPauseSongs(playing, playingSongs, songs) {
-    if (playing && playingSongs) {
+  togglePlayPauseSongs(playingSongs, songs) {
+    if (playingSongs === true) {
       dispatch({
         type: TOGGLE_PLAY_PAUSE,
       });

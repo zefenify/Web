@@ -19,6 +19,7 @@ import history from '@app/redux/reducer/history';
 import loading from '@app/redux/reducer/loading';
 import user from '@app/redux/reducer/user';
 import contextMenu from '@app/redux/reducer/contextMenu';
+import song from '@app/redux/reducer/song';
 
 import rootSaga from '@app/redux/saga/sagas';
 
@@ -41,6 +42,7 @@ const store = createStore(
     loading,
     user,
     contextMenu,
+    song,
   }),
   {
     theme: 'dark',
@@ -48,7 +50,7 @@ const store = createStore(
     queue: [],
     initialQueue: [], // queue of songs to be played [used on repeat `ALL` and queue is empty]
     history: [], // where played songs will are pushed [repeat `ONE` will only push once]
-    // saved: [],
+    song: null,
     // playlist: [],
     crossfade: 0,
     duration: 0,

@@ -23,6 +23,7 @@ import PlaylistContainer from '@app/component/container/PlaylistContainer';
 import ArtistContainer from '@app/component/container/ArtistContainer';
 import AlbumContainer from '@app/component/container/AlbumContainer';
 import RecentContainer from '@app/component/container/RecentContainer';
+import SongsContainer from '@app/component/container/SongsContainer';
 import SurpriseContainer from '@app/component/container/SurpriseContainer';
 import TopContainer from '@app/component/container/TopContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
@@ -84,6 +85,7 @@ const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
                   {/*
                   <small className="small-text">YOUR PLAYLISTS</small>
                   <Divider />
+                  <NavLinkStyled to="/songs">Songs</NavLinkStyled>
 
                   <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
                   <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>

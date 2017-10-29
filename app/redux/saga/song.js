@@ -69,7 +69,7 @@ function* setSongSave(action) {
     yield put(loading(true));
 
     const response = yield axios.patch(`${BASE}songs`, {
-      song_track: savedTrackIds.concat(trackId),
+      song_track: [trackId, ...savedTrackIds],
     }, {
       headers: {
         [HEADER]: state.user === null ? undefined : state.user.jwt,

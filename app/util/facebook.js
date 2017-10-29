@@ -14,6 +14,8 @@ const statusChangeCallback = (response) => {
         type: SET_USER,
         payload: data,
       });
+
+      // TODO: call booters [song, playlist]
     }, () => {});
   }
 };

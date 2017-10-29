@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { func, shape, bool, number, arrayOf } from 'prop-types';
 import styled from 'react-emotion';
 
@@ -54,6 +55,7 @@ const SongsContainer = styled.div`
 const Songs = ({
   playing,
   current,
+  user,
   songs,
   totalDuration,
   playingSongs,
@@ -61,6 +63,15 @@ const Songs = ({
   togglePlayPauseSong,
   contextMenuSong,
 }) => {
+  if (user === null) {
+    return (
+      <SongsContainer className="center-content">
+        <h2 className="mute">You need to be logged in to view saved songs</h2>
+        <Link to="/setting"><Button outline>Go to Settings</Button></Link>
+      </SongsContainer>
+    );
+  }
+
   if (songs.length === 0) {
     return (
       <SongsContainer className="center-content">
@@ -107,6 +118,7 @@ const Songs = ({
 Songs.propTypes = {
   playing: bool,
   current: shape({}),
+  user: shape({}),
   songs: arrayOf(shape({})),
   totalDuration: shape({
     hours: number,
@@ -122,6 +134,7 @@ Songs.propTypes = {
 Songs.defaultProps = {
   playing: false,
   current: null,
+  user: null,
   songs: [],
   totalDuration: {
     hours: 0,

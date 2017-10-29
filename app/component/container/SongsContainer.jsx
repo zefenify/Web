@@ -15,8 +15,6 @@ import Songs from '@app/component/presentational/Songs';
 const YourSongs = props => (<Songs {...props} />);
 
 module.exports = connect(state => ({
-  playing: state.playing,
-  current: state.current,
   songs: songTrack(state),
   totalDuration: songDuration(state),
   playingSongs: songPlaying(state),
@@ -74,4 +72,4 @@ module.exports = connect(state => ({
       },
     });
   },
-}))(DJKhaled()(YourSongs));
+}))(DJKhaled('current', 'playing', 'user')(YourSongs));

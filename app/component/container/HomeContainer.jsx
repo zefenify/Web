@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import isEqual from 'lodash/isEqual';
 
 import { BASE, FEATURED } from '@app/config/api';
 import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
@@ -27,7 +28,20 @@ class HomeContainer extends Component {
         featured: data.data.map(featured => Object.assign({}, featured, {
           playlist_cover: data.included.s3[featured.playlist_cover],
         })),
-      }));
+      }), () => {
+        // restoring `featuredPlayingId`...
+        const { initialQueue } = store.getState();
+        const initialQueueTrackId = initialQueue.map(queueTrack => queueTrack.track_id);
+        let featuredPlayingId = -1;
+
+        this.state.featured.forEach((featured) => {
+          if (isEqual(featured.playlist_track, initialQueueTrackId) === true) {
+            featuredPlayingId = featured.playlist_id;
+          }
+        });
+
+        this.setState(() => ({ featuredPlayingId }));
+      });
     }, () => { /* handle fetch error */ });
   }
 

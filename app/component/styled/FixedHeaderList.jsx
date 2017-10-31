@@ -14,6 +14,8 @@ const FixedHeaderList = styled.div`
     box-shadow: 0 0 4px ${props => props.theme.listBoxShadow};
     height: 60px;
     padding: 0 2em;
+    display: flex;
+    align-items: center;
   }
 
   .list {

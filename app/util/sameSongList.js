@@ -14,8 +14,8 @@ module.exports = (queue1 = [], queue2 = []) => {
     return false;
   }
 
-  const firstMatch = queue1[0].songId === queue2[0].songId;
-  const lastMatch = queue1[queue1.length - 1].songId === queue2[queue2.length - 1].songId;
+  const firstMatch = queue1[0].track_id === queue2[0].track_id;
+  const lastMatch = queue1[queue1.length - 1].track_id === queue2[queue2.length - 1].track_id;
 
   return firstMatch && lastMatch;
 };

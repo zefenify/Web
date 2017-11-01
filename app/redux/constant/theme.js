@@ -1,7 +1,7 @@
 const THEME = 'THEME';
-const SET_THEME = 'SET_THEME';
+const THEME_REQUEST = 'THEME_REQUEST';
 
 module.exports = {
   THEME,
-  SET_THEME,
+  THEME_REQUEST,
 };

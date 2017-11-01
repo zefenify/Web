@@ -1,7 +1,7 @@
 const REPEAT = 'REPEAT';
-const SET_REPEAT = 'SET_REPEAT';
+const REPEAT_REQUEST = 'REPEAT_REQUEST';
 
 module.exports = {
   REPEAT,
-  SET_REPEAT,
+  REPEAT_REQUEST,
 };

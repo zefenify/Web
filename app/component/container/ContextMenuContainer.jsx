@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import store from '@app/redux/store';
-import { SET_CONTEXT_MENU_OFF } from '@app/redux/constant/contextMenu';
+import { CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
 import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST } from '@app/redux/constant/song';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -16,7 +16,7 @@ const closeContextMenu = () => {
   }
 
   store.dispatch({
-    type: SET_CONTEXT_MENU_OFF,
+    type: CONTEXT_MENU_OFF_REQUEST,
   });
 };
 

@@ -1,10 +1,11 @@
 /* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
-import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
+import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
 
 import { crossfade } from '@app/redux/action/crossfade';
 
@@ -17,7 +18,7 @@ function* crossfadeBootFromLF() {
   }
 }
 
-function* setCrossfade(action) {
+function* _crossfade(action) {
   yield put(crossfade(action.payload));
 
   try {
@@ -27,11 +28,11 @@ function* setCrossfade(action) {
   }
 }
 
-function* watchSetCrossfade() {
-  yield takeEvery(SET_CROSSFADE, setCrossfade);
+function* crossfadeRequest() {
+  yield takeEvery(CROSSFADE_REQUEST, _crossfade);
 }
 
 module.exports = {
   crossfadeBootFromLF,
-  watchSetCrossfade,
+  crossfadeRequest,
 };

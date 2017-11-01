@@ -1,7 +1,7 @@
 const PLAYING = 'PLAYING';
-const SET_PLAYING = 'SET_PLAYING';
+const PLAYING_REQUEST = 'PLAYING_REQUEST';
 
 module.exports = {
   PLAYING,
-  SET_PLAYING,
+  PLAYING_REQUEST,
 };

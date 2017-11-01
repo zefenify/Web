@@ -1,8 +1,8 @@
-import { INITIAL_QUEUE } from '@app/redux/constant/initialQueue';
+import { QUEUE_INITIAL } from '@app/redux/constant/queueInitial';
 
 function initialQueue(state = [], action) {
   switch (action.type) {
-    case INITIAL_QUEUE:
+    case QUEUE_INITIAL:
       return action.payload;
 
     default:

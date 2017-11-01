@@ -4,8 +4,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
-import { SET_CONTEXT_MENU_ON, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
+import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
 
 import historyDuration from '@app/redux/selector/historyDuration';
 import historyPlaying from '@app/redux/selector/historyPlaying';
@@ -24,18 +24,18 @@ module.exports = connect(state => ({
   togglePlayPauseHistory(playingHistory, history) {
     if (playingHistory === true) {
       dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       return;
     }
 
     dispatch({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: history[0],
         queue: history,
-        initialQueue: history,
+        queueInitial: history,
       },
     });
   },
@@ -43,11 +43,11 @@ module.exports = connect(state => ({
   togglePlayPauseSong(songIndex, song, current, history) {
     if (current === null || current.track_id !== song.track_id) {
       dispatch({
-        type: PLAY,
+        type: PLAY_REQUEST,
         payload: {
           play: history[songIndex],
           queue: history,
-          initialQueue: history,
+          queueInitial: history,
         },
       });
 
@@ -55,7 +55,7 @@ module.exports = connect(state => ({
     }
 
     dispatch({
-      type: TOGGLE_PLAY_PAUSE,
+      type: PLAY_PAUSE_REQUEST,
     });
   },
 
@@ -67,7 +67,7 @@ module.exports = connect(state => ({
     }
 
     dispatch({
-      type: SET_CONTEXT_MENU_ON,
+      type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_SONG,
         payload: history[songIndex],

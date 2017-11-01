@@ -1,7 +1,7 @@
 const VOLUME = 'VOLUME';
-const SET_VOLUME = 'SET_VOLUME';
+const VOLUME_REQUEST = 'VOLUME_REQUEST';
 
 module.exports = {
   VOLUME,
-  SET_VOLUME,
+  VOLUME_REQUEST,
 };

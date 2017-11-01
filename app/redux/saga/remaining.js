@@ -1,10 +1,11 @@
 /* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
-import { SET_REMAINING } from '@app/redux/constant/remaining';
+import { REMAINING_REQUEST } from '@app/redux/constant/remaining';
 
 import { remaining } from '@app/redux/action/remaining';
 
@@ -17,7 +18,7 @@ function* remainingBootFromLF() {
   }
 }
 
-function* toggleRemaining() {
+function* _remaining() {
   const state = yield select();
   yield put(remaining(!state.remaining));
 
@@ -28,11 +29,11 @@ function* toggleRemaining() {
   }
 }
 
-function* watchToggleRemaining() {
-  yield takeEvery(SET_REMAINING, toggleRemaining);
+function* remainingRequest() {
+  yield takeEvery(REMAINING_REQUEST, _remaining);
 }
 
 module.exports = {
   remainingBootFromLF,
-  watchToggleRemaining,
+  remainingRequest,
 };

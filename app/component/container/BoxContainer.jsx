@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
 
 import { GENRE_BASE, GENRE, ARIFLIST_BASE, ARIFLIST } from '@app/config/api';
-import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import store from '@app/redux/store';
@@ -73,9 +73,9 @@ class BoxContainer extends Component {
           list: data,
           duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
         }), () => {
-          const { initialQueue } = store.getState();
+          const { queueInitial } = store.getState();
 
-          if (initialQueue.length === 0 || this.state.list.songs.length === 0) {
+          if (queueInitial.length === 0 || this.state.list.songs.length === 0) {
             this.setState(() => ({
               playingList: false,
             }));
@@ -83,7 +83,7 @@ class BoxContainer extends Component {
             return;
           }
 
-          if (sameSongList(this.state.list.songs, initialQueue)) {
+          if (sameSongList(this.state.list.songs, queueInitial)) {
             this.setState(() => ({
               playingList: true,
             }));
@@ -99,7 +99,7 @@ class BoxContainer extends Component {
   boxPlay(boxData) {
     if (this.state.boxPlayingData === boxData) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       this.setState(() => ({
@@ -118,11 +118,11 @@ class BoxContainer extends Component {
     })
       .then((data) => {
         store.dispatch({
-          type: PLAY,
+          type: PLAY_REQUEST,
           payload: {
             play: data.songs[0],
             queue: data.songs,
-            initialQueue: data.songs,
+            queueInitial: data.songs,
           },
         });
       }, () => {
@@ -140,11 +140,11 @@ class BoxContainer extends Component {
     // booting playlist
     if (this.props.current === null || this.state.playingList === false) {
       store.dispatch({
-        type: PLAY,
+        type: PLAY_REQUEST,
         payload: {
           play: this.state.list.songs[0],
           queue: this.state.list.songs,
-          initialQueue: this.state.list.songs,
+          queueInitial: this.state.list.songs,
         },
       });
 
@@ -154,7 +154,7 @@ class BoxContainer extends Component {
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
     }
   }
@@ -162,7 +162,7 @@ class BoxContainer extends Component {
   togglePlayPauseSong(songId) {
     if (this.props.current !== null && this.props.current.songId === songId) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       return;
@@ -175,11 +175,11 @@ class BoxContainer extends Component {
     }
 
     store.dispatch({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: this.state.list.songs[songIdIndex],
         queue: this.state.list.songs,
-        initialQueue: this.state.list.songs,
+        queueInitial: this.state.list.songs,
       },
     });
 

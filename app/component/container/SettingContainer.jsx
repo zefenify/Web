@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { alert, confirm } from 'notie';
 
 import statusChangeCallback from '@app/util/facebook';
-import { SET_THEME } from '@app/redux/constant/theme';
-import { SET_CROSSFADE } from '@app/redux/constant/crossfade';
-import { SET_USER } from '@app/redux/constant/user';
+import { THEME_REQUEST } from '@app/redux/constant/theme';
+import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
+import { USER_REQUEST } from '@app/redux/constant/user';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 
@@ -22,12 +22,12 @@ module.exports = connect(state => ({
 }), dispatch => ({
   toggleTheme() {
     dispatch({
-      type: SET_THEME,
+      type: THEME_REQUEST,
     });
   },
   crossfade(e) {
     dispatch({
-      type: SET_CROSSFADE,
+      type: CROSSFADE_REQUEST,
       payload: Number.parseInt(e.target.value, 10),
     });
   },
@@ -48,7 +48,7 @@ module.exports = connect(state => ({
       text: 'Logout?',
       submitCallback: () => {
         dispatch({
-          type: SET_USER,
+          type: USER_REQUEST,
           payload: null,
         });
 

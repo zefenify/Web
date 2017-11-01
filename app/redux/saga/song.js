@@ -1,3 +1,5 @@
+/* eslint no-underscore-dangle: off */
+
 import { put, select, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 import notie from 'notie';
@@ -50,7 +52,7 @@ function* songBoot() {
   }
 }
 
-function* songSave(action) {
+function* _songSave(action) {
   const state = yield select();
 
   if (state.song === null) {
@@ -99,7 +101,7 @@ function* songSave(action) {
   }
 }
 
-function* songRemove(action) {
+function* _songRemove(action) {
   const state = yield select();
 
   if (state.song === null) {
@@ -151,21 +153,21 @@ function* songRemove(action) {
   }
 }
 
-function* songSaveRequest() {
-  yield takeEvery(SONG_SAVE_REQUEST, songSave);
-}
-
-function* songRemoveRequest() {
-  yield takeEvery(SONG_REMOVE_REQUEST, songRemove);
-}
-
 function* songBootRequest() {
   yield takeEvery(SONG_BOOT_REQUEST, songBoot);
 }
 
+function* songSaveRequest() {
+  yield takeEvery(SONG_SAVE_REQUEST, _songSave);
+}
+
+function* songRemoveRequest() {
+  yield takeEvery(SONG_REMOVE_REQUEST, _songRemove);
+}
+
 module.exports = {
   songBoot,
+  songBootRequest,
   songSaveRequest,
   songRemoveRequest,
-  songBootRequest,
 };

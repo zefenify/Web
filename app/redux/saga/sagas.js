@@ -1,53 +1,53 @@
 import { all } from 'redux-saga/effects';
 
-import { themeBootFromLF, watchToggleTheme } from '@app/redux/saga/theme';
-import { volumeBootFromLF, watchSetVolume } from '@app/redux/saga/volume';
-import { repeatBootFromLF, watchSetRepeat } from '@app/redux/saga/repeat';
-import { shuffleBootFromLF, watchToggleShuffle } from '@app/redux/saga/shuffle';
-import { crossfadeBootFromLF, watchSetCrossfade } from '@app/redux/saga/crossfade';
-import { watchSetPlaying } from '@app/redux/saga/playing';
-import { watchSetDuration } from '@app/redux/saga/duration';
-import { watchSetPlaybackPosition } from '@app/redux/saga/playbackPosition';
-import { remainingBootFromLF, watchToggleRemaining } from '@app/redux/saga/remaining';
-import { watchSetQueueSet, watchSetQueueAdd, watchSetQueueRemove, watchSetQueueClear } from '@app/redux/saga/queue';
-import { watchSetCurrent } from '@app/redux/saga/current';
-import { userBootFromLF, watchSetUser } from '@app/redux/saga/user';
-import { watchPlay, watchPrevious, watchNext, watchSeek, watchTogglePlayPause } from '@app/redux/saga/wolfCola';
-import { watchContextMenuOn, watchContextMenuOff } from '@app/redux/saga/contextMenu';
-import { songBoot, songSaveRequest, songRemoveRequest, songBootRequest } from '@app/redux/saga/song';
+import { themeBootFromLF, themeRequest } from '@app/redux/saga/theme';
+import { volumeBootFromLF, volumeRequest } from '@app/redux/saga/volume';
+import { repeatBootFromLF, repeatRequest } from '@app/redux/saga/repeat';
+import { shuffleBootFromLF, shuffleRequest } from '@app/redux/saga/shuffle';
+import { crossfadeBootFromLF, crossfadeRequest } from '@app/redux/saga/crossfade';
+import { playingRequest } from '@app/redux/saga/playing';
+import { durationRequest } from '@app/redux/saga/duration';
+import { playbackPositionRequest } from '@app/redux/saga/playbackPosition';
+import { remainingBootFromLF, remainingRequest } from '@app/redux/saga/remaining';
+import { queueSetRequest, queueClearRequest, queueAddRequest, queueRemoveRequest } from '@app/redux/saga/queue';
+import { currentRequest } from '@app/redux/saga/current';
+import { userBootFromLF, userRequest } from '@app/redux/saga/user';
+import { playRequest, previousRequest, nextRequest, seekRequest, playPauseRequest } from '@app/redux/saga/wolfCola';
+import { contextMenuOnRequest, contextMenuOffRequest } from '@app/redux/saga/contextMenu';
+import { songBoot, songBootRequest, songSaveRequest, songRemoveRequest } from '@app/redux/saga/song';
 
 function* rootSaga() {
   yield userBootFromLF();
 
   yield all([
     themeBootFromLF(),
-    watchToggleTheme(),
+    themeRequest(),
     volumeBootFromLF(),
-    watchSetVolume(),
+    volumeRequest(),
     repeatBootFromLF(),
-    watchSetRepeat(),
+    repeatRequest(),
     shuffleBootFromLF(),
-    watchToggleShuffle(),
+    shuffleRequest(),
     crossfadeBootFromLF(),
-    watchSetCrossfade(),
-    watchSetPlaying(),
-    watchSetDuration(),
-    watchSetPlaybackPosition(),
+    crossfadeRequest(),
+    playingRequest(),
+    durationRequest(),
+    playbackPositionRequest(),
     remainingBootFromLF(),
-    watchToggleRemaining(),
-    watchSetQueueSet(),
-    watchSetQueueAdd(),
-    watchSetQueueRemove(),
-    watchSetQueueClear(),
-    watchSetCurrent(),
-    watchPlay(),
-    watchPrevious(),
-    watchNext(),
-    watchSeek(),
-    watchTogglePlayPause(),
-    watchSetUser(),
-    watchContextMenuOn(),
-    watchContextMenuOff(),
+    remainingRequest(),
+    queueSetRequest(),
+    queueClearRequest(),
+    queueAddRequest(),
+    queueRemoveRequest(),
+    currentRequest(),
+    playRequest(),
+    previousRequest(),
+    nextRequest(),
+    seekRequest(),
+    playPauseRequest(),
+    userRequest(),
+    contextMenuOnRequest(),
+    contextMenuOffRequest(),
     songBoot(),
     songBootRequest(),
     songSaveRequest(),

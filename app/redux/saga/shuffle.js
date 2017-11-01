@@ -1,10 +1,11 @@
 /* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
-import { SET_SHUFFLE } from '@app/redux/constant/shuffle';
+import { SHUFFLE_REQUEST } from '@app/redux/constant/shuffle';
 
 import { shuffle } from '@app/redux/action/shuffle';
 
@@ -17,7 +18,7 @@ function* shuffleBootFromLF() {
   }
 }
 
-function* toggleShuffle() {
+function* _shuffle() {
   const state = yield select();
   yield put(shuffle(!state.shuffle));
 
@@ -28,11 +29,11 @@ function* toggleShuffle() {
   }
 }
 
-function* watchToggleShuffle() {
-  yield takeEvery(SET_SHUFFLE, toggleShuffle);
+function* shuffleRequest() {
+  yield takeEvery(SHUFFLE_REQUEST, _shuffle);
 }
 
 module.exports = {
   shuffleBootFromLF,
-  watchToggleShuffle,
+  shuffleRequest,
 };

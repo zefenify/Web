@@ -1,7 +1,7 @@
 const USER = 'USER';
-const SET_USER = 'SET_USER';
+const USER_REQUEST = 'USER_REQUEST';
 
 module.exports = {
   USER,
-  SET_USER,
+  USER_REQUEST,
 };

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { bool, string, shape } from 'prop-types';
 
 import { BASE } from '@app/config/api';
-import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
-import { SET_CONTEXT_MENU_ON, CONTEXT_SONG, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
+import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
@@ -65,9 +65,9 @@ class AlbumContainer extends Component {
         },
         duration: human(tracks.reduce((totalD, t) => totalD + t.track_track.s3_meta.duration, 0), true),
       }), () => {
-        const { initialQueue } = store.getState();
+        const { queueInitial } = store.getState();
 
-        if (initialQueue.length === 0 || this.state.album.relationships.track.length === 0) {
+        if (queueInitial.length === 0 || this.state.album.relationships.track.length === 0) {
           this.setState(() => ({
             playingAlbum: false,
           }));
@@ -76,7 +76,7 @@ class AlbumContainer extends Component {
         }
 
         this.setState(() => ({
-          playingAlbum: sameSongList(this.state.album.relationships.track, initialQueue),
+          playingAlbum: sameSongList(this.state.album.relationships.track, queueInitial),
         }));
       });
     }, () => { /* handle fetch error */ });
@@ -94,11 +94,11 @@ class AlbumContainer extends Component {
     // booting playlist
     if (this.props.current === null || this.state.playingAlbum === false) {
       store.dispatch({
-        type: PLAY,
+        type: PLAY_REQUEST,
         payload: {
           play: this.state.album.relationships.track[0],
           queue: this.state.album.relationships.track,
-          initialQueue: this.state.album.relationships.track,
+          queueInitial: this.state.album.relationships.track,
         },
       });
 
@@ -108,7 +108,7 @@ class AlbumContainer extends Component {
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
     }
   }
@@ -116,7 +116,7 @@ class AlbumContainer extends Component {
   togglePlayPauseSong(songId) {
     if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       return;
@@ -129,11 +129,11 @@ class AlbumContainer extends Component {
     }
 
     store.dispatch({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: this.state.album.relationships.track[songIdIndex],
         queue: this.state.album.relationships.track,
-        initialQueue: this.state.album.relationships.track,
+        queueInitial: this.state.album.relationships.track,
       },
     });
 
@@ -144,7 +144,7 @@ class AlbumContainer extends Component {
 
   contextMenuAlbum() {
     store.dispatch({
-      type: SET_CONTEXT_MENU_ON,
+      type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_ALBUM,
         payload: this.state.album,
@@ -160,7 +160,7 @@ class AlbumContainer extends Component {
     }
 
     store.dispatch({
-      type: SET_CONTEXT_MENU_ON,
+      type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_SONG,
         payload: this.state.album.relationships.track[songIndex],

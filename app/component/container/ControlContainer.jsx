@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { SET_VOLUME } from '@app/redux/constant/volume';
-import { SET_REPEAT } from '@app/redux/constant/repeat';
-import { SET_SHUFFLE } from '@app/redux/constant/shuffle';
-import { SET_REMAINING } from '@app/redux/constant/remaining';
-import { NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { VOLUME_REQUEST } from '@app/redux/constant/volume';
+import { REPEAT_REQUEST } from '@app/redux/constant/repeat';
+import { SHUFFLE_REQUEST } from '@app/redux/constant/shuffle';
+import { REMAINING_REQUEST } from '@app/redux/constant/remaining';
+import { NEXT_REQUEST, PREVIOUS_REQUEST, SEEK_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 
 import Control from '@app/component/presentational/Control';
 
@@ -22,33 +22,33 @@ module.exports = connect(state => ({
   remaining: state.remaining,
 }), dispatch => () => ({
   seek(e) {
-    dispatch({ type: SEEK, payload: Number.parseInt(e.target.value, 10) });
+    dispatch({ type: SEEK_REQUEST, payload: Number.parseInt(e.target.value, 10) });
   },
   togglePlayPause() {
-    dispatch({ type: TOGGLE_PLAY_PAUSE });
+    dispatch({ type: PLAY_PAUSE_REQUEST });
   },
   next() {
-    dispatch({ type: NEXT });
+    dispatch({ type: NEXT_REQUEST });
   },
   previous() {
-    dispatch({ type: PREVIOUS });
+    dispatch({ type: PREVIOUS_REQUEST });
   },
   toggleShuffle() {
-    dispatch({ type: SET_SHUFFLE });
+    dispatch({ type: SHUFFLE_REQUEST });
   },
   toggleRemaining() {
-    dispatch({ type: SET_REMAINING });
+    dispatch({ type: REMAINING_REQUEST });
   },
   setRepeat() {
-    dispatch({ type: SET_REPEAT });
+    dispatch({ type: REPEAT_REQUEST });
   },
   setVolume(e) {
-    dispatch({ type: SET_VOLUME, payload: Number.parseFloat(e.target.value) });
+    dispatch({ type: VOLUME_REQUEST, payload: Number.parseFloat(e.target.value) });
   },
   muteVolume() {
-    dispatch({ type: SET_VOLUME, payload: 0 });
+    dispatch({ type: VOLUME_REQUEST, payload: 0 });
   },
   maxVolume() {
-    dispatch({ type: SET_VOLUME, payload: 1 });
+    dispatch({ type: VOLUME_REQUEST, payload: 1 });
   },
 }))(ControlContainer);

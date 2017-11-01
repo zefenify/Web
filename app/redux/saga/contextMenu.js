@@ -1,13 +1,14 @@
 /* global document */
 /* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import { delay } from 'redux-saga';
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 
-import { SET_CONTEXT_MENU_ON, SET_CONTEXT_MENU_OFF } from '@app/redux/constant/contextMenu';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
 import { contextMenuOn, contextMenuOff } from '@app/redux/action/contextMenu';
 
-function* setContextMenuOn(action) {
+function* _contextMenuOn(action) {
   const state = yield select();
 
   // this is not suppose to happen - only one context at at time
@@ -31,7 +32,7 @@ function* setContextMenuOn(action) {
   WolfColaContainer.classList.add('context-menu-active');
 }
 
-function* setContextMenuOff() {
+function* _contextMenuOff() {
   const ContextMenuContainer = document.querySelector('#context-menu-container');
   ContextMenuContainer.classList.remove('context-menu-active');
 
@@ -45,15 +46,15 @@ function* setContextMenuOff() {
   yield put(contextMenuOff(null));
 }
 
-function* watchContextMenuOn() {
-  yield takeEvery(SET_CONTEXT_MENU_ON, setContextMenuOn);
+function* contextMenuOnRequest() {
+  yield takeEvery(CONTEXT_MENU_ON_REQUEST, _contextMenuOn);
 }
 
-function* watchContextMenuOff() {
-  yield takeEvery(SET_CONTEXT_MENU_OFF, setContextMenuOff);
+function* contextMenuOffRequest() {
+  yield takeEvery(CONTEXT_MENU_OFF_REQUEST, _contextMenuOff);
 }
 
 module.exports = {
-  watchContextMenuOn,
-  watchContextMenuOff,
+  contextMenuOnRequest,
+  contextMenuOffRequest,
 };

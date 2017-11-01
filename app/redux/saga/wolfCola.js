@@ -1,3 +1,5 @@
+/* eslint no-underscore-dangle: off */
+
 /**
  * Everything to do with Howler is handled here. it doesn't necessary have
  * *direct* association with Redux store, but knows what sags to call
@@ -10,7 +12,7 @@ import axios from 'axios';
 import random from 'lodash/fp/random';
 import notie from 'notie';
 
-import { PLAY, NEXT, PREVIOUS, SEEK, TOGGLE_PLAY_PAUSE, PREVIOUS_THRESHOLD } from '@app/redux/constant/wolfCola';
+import { PLAY_REQUEST, NEXT_REQUEST, PREVIOUS_REQUEST, SEEK_REQUEST, PLAY_PAUSE_REQUEST, PREVIOUS_THRESHOLD } from '@app/redux/constant/wolfCola';
 import { BASE, HEADER, BASE_S3 } from '@app/config/api';
 
 import { current } from '@app/redux/action/current';
@@ -18,7 +20,7 @@ import { queueSet, queueRemove } from '@app/redux/action/queue';
 import { duration } from '@app/redux/action/duration';
 import { playbackPosition } from '@app/redux/action/playbackPosition';
 import { playing } from '@app/redux/action/playing';
-import { initialQueue } from '@app/redux/action/initialQueue';
+import { queueInitial } from '@app/redux/action/queueInitial';
 import { historyPush, historyPop, historyFront } from '@app/redux/action/history';
 import { loading } from '@app/redux/action/loading';
 
@@ -81,7 +83,7 @@ function* howlerEnd(key) {
   wolfCola[wolfCola.playingKey].unload();
   wolfCola[wolfCola.playingKey] = null;
   wolfCola.crossfadeInProgress = false;
-  yield put({ type: NEXT });
+  yield put({ type: NEXT_REQUEST });
 }
 
 function* howlerLoadError(key) {
@@ -124,7 +126,7 @@ const tracker = (isTrackerInProgress = false) => {
               [HEADER]: stateCheck.user === null ? undefined : stateCheck.user.jwt,
             },
           }).then(() => {}, () => {});
-          yield put({ type: NEXT });
+          yield put({ type: NEXT_REQUEST });
         }
       }
 
@@ -140,12 +142,12 @@ const tracker = (isTrackerInProgress = false) => {
 // `wolfCola` will only deal with Howl stuff
 const trackerSaga = tracker(false);
 
-function* play(action) {
+function* _play(action) {
   const state = yield select();
   const { payload } = action;
 
   // same song can be in different playlist hence the "optimization" has to be removed
-  yield put(initialQueue(payload.initialQueue));
+  yield put(queueInitial(payload.queueInitial));
   yield put(queueSet(payload.queue));
   if (state.shuffle === true) {
     yield put(queueRemove(payload.queue.findIndex(song => song.track_id === payload.play.track_id)));
@@ -250,7 +252,7 @@ function* play(action) {
   yield fork(trackerSaga);
 }
 
-function* seek(action) {
+function* _seek(action) {
   yield call(delay, 64);
   const { payload } = action;
   yield put(playbackPosition(payload));
@@ -260,7 +262,7 @@ function* seek(action) {
   }
 }
 
-function* next() {
+function* _next() {
   const state = yield select();
 
   // nothing playing - halting...
@@ -271,11 +273,11 @@ function* next() {
   // repeat one whatever was playing...
   if (state.repeat === 'ONE') {
     yield put({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: state.current,
         queue: state.queue,
-        initialQueue: state.initialQueue,
+        queueInitial: state.queueInitial,
       },
     });
 
@@ -304,14 +306,14 @@ function* next() {
 
   // played through the entire queue and repeat is `ALL`
   if (state.queue.length === 0 && state.repeat === 'ALL') {
-    const nextPlayIndex = state.shuffle ? random(0)(state.initialQueue.length - 1) : 0;
+    const nextPlayIndex = state.shuffle ? random(0)(state.queueInitial.length - 1) : 0;
 
     yield put({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
-        play: state.initialQueue[nextPlayIndex],
-        queue: state.initialQueue,
-        initialQueue: state.initialQueue,
+        play: state.queueInitial[nextPlayIndex],
+        queue: state.queueInitial,
+        queueInitial: state.queueInitial,
       },
     });
 
@@ -323,11 +325,11 @@ function* next() {
     const nextPlayIndex = random(0)(state.queue.length - 1);
 
     yield put({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: state.queue[nextPlayIndex],
         queue: state.queue,
-        initialQueue: state.initialQueue,
+        queueInitial: state.queueInitial,
       },
     });
 
@@ -335,9 +337,9 @@ function* next() {
   }
 
   // `nextPlayIndex` will not be -1 on `findIndex`
-  let nextPlayIndex = state.initialQueue.findIndex(song => song.track_id === state.current.track_id) + 1;
+  let nextPlayIndex = state.queueInitial.findIndex(song => song.track_id === state.current.track_id) + 1;
 
-  if (nextPlayIndex === state.initialQueue.length) {
+  if (nextPlayIndex === state.queueInitial.length) {
     if (state.repeat === 'ALL') {
       nextPlayIndex = 0;
     } else {
@@ -359,16 +361,16 @@ function* next() {
   }
 
   yield put({
-    type: PLAY,
+    type: PLAY_REQUEST,
     payload: {
-      play: state.initialQueue[nextPlayIndex],
-      queue: state.initialQueue,
-      initialQueue: state.initialQueue,
+      play: state.queueInitial[nextPlayIndex],
+      queue: state.queueInitial,
+      queueInitial: state.queueInitial,
     },
   });
 }
 
-function* previous() {
+function* _previous() {
   const state = yield select();
 
   // nothing playing - halting...
@@ -380,11 +382,11 @@ function* previous() {
   // previous triggered while crossfade > playbackPosition
   if (state.repeat === 'ONE' || (state.playbackPosition > PREVIOUS_THRESHOLD && state.crossfade > state.playbackPosition)) {
     yield put({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: state.current,
         queue: state.queue,
-        initialQueue: state.initialQueue,
+        queueInitial: state.queueInitial,
       },
     });
 
@@ -413,16 +415,16 @@ function* previous() {
 
   // witchcraft!
   yield put({
-    type: PLAY,
+    type: PLAY_REQUEST,
     payload: {
       play: state.history[0],
-      queue: state.shuffle ? [state.history[0], ...state.queue] : [...state.initialQueue],
-      initialQueue: state.initialQueue,
+      queue: state.shuffle ? [state.history[0], ...state.queue] : [...state.queueInitial],
+      queueInitial: state.queueInitial,
     },
   });
 }
 
-function* togglePlayPause() {
+function* _playPause() {
   const state = yield select();
 
   // nothing to pause play here, halting...
@@ -458,30 +460,30 @@ function* togglePlayPause() {
   yield fork(trackerSaga);
 }
 
-function* watchPlay() {
-  yield throttle(1000, PLAY, play);
+function* playRequest() {
+  yield throttle(1000, PLAY_REQUEST, _play);
 }
 
-function* watchSeek() {
-  yield takeLatest(SEEK, seek);
+function* seekRequest() {
+  yield takeLatest(SEEK_REQUEST, _seek);
 }
 
-function* watchNext() {
-  yield throttle(1000, NEXT, next);
+function* nextRequest() {
+  yield throttle(1000, NEXT_REQUEST, _next);
 }
 
-function* watchPrevious() {
-  yield throttle(1000, PREVIOUS, previous);
+function* previousRequest() {
+  yield throttle(1000, PREVIOUS_REQUEST, _previous);
 }
 
-function* watchTogglePlayPause() {
-  yield takeEvery(TOGGLE_PLAY_PAUSE, togglePlayPause);
+function* playPauseRequest() {
+  yield takeEvery(PLAY_PAUSE_REQUEST, _playPause);
 }
 
 module.exports = {
-  watchPlay,
-  watchPrevious,
-  watchNext,
-  watchSeek,
-  watchTogglePlayPause,
+  playRequest,
+  previousRequest,
+  nextRequest,
+  seekRequest,
+  playPauseRequest,
 };

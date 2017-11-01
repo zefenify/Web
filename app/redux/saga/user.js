@@ -1,11 +1,12 @@
 /* global window, document */
 /* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
-import { SET_USER } from '@app/redux/constant/user';
+import { USER_REQUEST } from '@app/redux/constant/user';
 
 import { user } from '@app/redux/action/user';
 
@@ -30,7 +31,7 @@ function* userBootFromLF() {
   }
 }
 
-function* setUser(action) {
+function* _user(action) {
   yield put(user(action.payload));
 
   try {
@@ -40,11 +41,11 @@ function* setUser(action) {
   }
 }
 
-function* watchSetUser() {
-  yield takeEvery(SET_USER, setUser);
+function* userRequest() {
+  yield takeEvery(USER_REQUEST, _user);
 }
 
 module.exports = {
   userBootFromLF,
-  watchSetUser,
+  userRequest,
 };

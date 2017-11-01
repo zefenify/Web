@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { string, bool, func, shape } from 'prop-types';
 
-import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 
@@ -76,9 +76,9 @@ class TopContainer extends Component {
           most: data,
           duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
         }), () => {
-          const { initialQueue } = store.getState();
+          const { queueInitial } = store.getState();
 
-          if (initialQueue.length === 0 || this.state.most.songs.length === 0) {
+          if (queueInitial.length === 0 || this.state.most.songs.length === 0) {
             this.setState(() => ({
               playingTheSameMost: false,
             }));
@@ -86,7 +86,7 @@ class TopContainer extends Component {
             return;
           }
 
-          if (sameSongList(this.state.most.songs, initialQueue)) {
+          if (sameSongList(this.state.most.songs, queueInitial)) {
             this.setState(() => ({
               playingTheSameMost: true,
             }));
@@ -109,11 +109,11 @@ class TopContainer extends Component {
     // booting playlist
     if (this.props.current === null || this.state.playingTheSameMost === false) {
       store.dispatch({
-        type: PLAY,
+        type: PLAY_REQUEST,
         payload: {
           play: this.state.most.songs[0],
           queue: this.state.most.songs,
-          initialQueue: this.state.most.songs,
+          queueInitial: this.state.most.songs,
         },
       });
 
@@ -123,7 +123,7 @@ class TopContainer extends Component {
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
     }
   }
@@ -131,7 +131,7 @@ class TopContainer extends Component {
   togglePlayPauseSong(songId) {
     if (this.props.current !== null && this.props.current.songId === songId) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       return;
@@ -144,11 +144,11 @@ class TopContainer extends Component {
     }
 
     store.dispatch({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: this.state.most.songs[songIdIndex],
         queue: this.state.most.songs,
-        initialQueue: this.state.most.songs,
+        queueInitial: this.state.most.songs,
       },
     });
 

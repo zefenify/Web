@@ -1,19 +1,20 @@
 /* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import { put, takeEvery } from 'redux-saga/effects';
 
-import { SET_PLAYING } from '@app/redux/constant/playing';
+import { PLAYING_REQUEST } from '@app/redux/constant/playing';
 
 import { playing } from '@app/redux/action/playing';
 
-function* setPlaying(action) {
+function* _playing(action) {
   yield put(playing(action.payload));
 }
 
-function* watchSetPlaying() {
-  yield takeEvery(SET_PLAYING, setPlaying);
+function* playingRequest() {
+  yield takeEvery(PLAYING_REQUEST, _playing);
 }
 
 module.exports = {
-  watchSetPlaying,
+  playingRequest,
 };

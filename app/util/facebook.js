@@ -3,8 +3,8 @@
 import store from '@app/redux/store';
 
 import { FAUTH } from '@app/config/api';
-import { SONG_BOOT } from '@app/redux/constant/song';
-import { SET_USER } from '@app/redux/constant/user';
+import { SONG_BOOT_REQUEST } from '@app/redux/constant/song';
+import { USER_REQUEST } from '@app/redux/constant/user';
 import api from '@app/util/api';
 
 const statusChangeCallback = (response) => {
@@ -12,7 +12,7 @@ const statusChangeCallback = (response) => {
   if (response.status === 'connected') {
     api(`${FAUTH}${response.authResponse.accessToken}`).then(({ data }) => {
       store.dispatch({
-        type: SET_USER,
+        type: USER_REQUEST,
         payload: data,
       });
 
@@ -20,7 +20,7 @@ const statusChangeCallback = (response) => {
       // - [X] song
       // - [ ] playlist
       store.dispatch({
-        type: SONG_BOOT,
+        type: SONG_BOOT_REQUEST,
       });
     }, () => {});
   }

@@ -6,8 +6,8 @@ import sortBy from 'lodash/sortBy';
 import reverse from 'lodash/reverse';
 
 import { BASE } from '@app/config/api';
-import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
-import { SET_CONTEXT_MENU_ON, CONTEXT_SONG, CONTEXT_ALBUM, CONTEXT_ARTIST } from '@app/redux/constant/contextMenu';
+import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_ALBUM, CONTEXT_ARTIST } from '@app/redux/constant/contextMenu';
 
 import sameSongList from '@app/util/sameSongList';
 import api from '@app/util/api';
@@ -26,7 +26,7 @@ class ArtistContainer extends Component {
       songCount: 0,
       flattenSongs: [], // all tracks in artist album flattened
       albumPlayingIndex: -1, // controls queue set on album play
-      playingArist: false, // checks the current initialQueue is filled with artists song [flat]
+      playingArist: false, // checks the current queueInitial is filled with artists song [flat]
     };
 
     this.togglePlayPauseArtist = this.togglePlayPauseArtist.bind(this);
@@ -63,7 +63,7 @@ class ArtistContainer extends Component {
   }
 
   afterFetch({ data, included }) {
-    const { initialQueue } = store.getState();
+    const { queueInitial } = store.getState();
 
     // sorting by `album.album_year` [ascending order] -> reversing
     const albums = reverse(sortBy(data.relationships.album.map((albumId) => {
@@ -79,7 +79,7 @@ class ArtistContainer extends Component {
 
     let albumPlayingIndex = -1;
     albums.forEach((album, albumIndex) => {
-      if (sameSongList(initialQueue, album.relationships.track) === true) {
+      if (sameSongList(queueInitial, album.relationships.track) === true) {
         albumPlayingIndex = albumIndex;
       }
     });
@@ -94,7 +94,7 @@ class ArtistContainer extends Component {
       }),
       flattenSongs,
       songCount: flattenSongs.length,
-      playingArist: sameSongList(initialQueue, flattenSongs),
+      playingArist: sameSongList(queueInitial, flattenSongs),
       albumPlayingIndex,
     }));
   }
@@ -107,11 +107,11 @@ class ArtistContainer extends Component {
     // booting playlist...
     if (this.props.current === null || this.state.playingArist === false) {
       store.dispatch({
-        type: PLAY,
+        type: PLAY_REQUEST,
         payload: {
           play: this.state.flattenSongs[0],
           queue: this.state.flattenSongs,
-          initialQueue: this.state.flattenSongs,
+          queueInitial: this.state.flattenSongs,
         },
       });
 
@@ -122,7 +122,7 @@ class ArtistContainer extends Component {
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
     }
   }
@@ -130,11 +130,11 @@ class ArtistContainer extends Component {
   togglePlayPauseAlbum(album, albumIndex) {
     if (this.props.current === null || this.state.albumPlayingIndex !== albumIndex) {
       store.dispatch({
-        type: PLAY,
+        type: PLAY_REQUEST,
         payload: {
           play: album.relationships.track[0],
           queue: album.relationships.track,
-          initialQueue: album.relationships.track,
+          queueInitial: album.relationships.track,
         },
       });
 
@@ -148,7 +148,7 @@ class ArtistContainer extends Component {
 
     if (this.state.albumPlayingIndex === albumIndex) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
     }
   }
@@ -158,18 +158,18 @@ class ArtistContainer extends Component {
 
     if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       return;
     }
 
     store.dispatch({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: this.state.flattenSongs[songIndex],
         queue: this.state.flattenSongs,
-        initialQueue: this.state.flattenSongs,
+        queueInitial: this.state.flattenSongs,
       },
     });
 
@@ -181,7 +181,7 @@ class ArtistContainer extends Component {
 
   contextMenuArtist() {
     store.dispatch({
-      type: SET_CONTEXT_MENU_ON,
+      type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_ARTIST,
         payload: this.state.artist,
@@ -193,7 +193,7 @@ class ArtistContainer extends Component {
     const album = this.state.artist.relationships.album.filter(artistAlbum => artistAlbum.album_id === albumId)[0];
 
     store.dispatch({
-      type: SET_CONTEXT_MENU_ON,
+      type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         context: CONTEXT_ALBUM,
         payload: album,
@@ -209,7 +209,7 @@ class ArtistContainer extends Component {
     }
 
     store.dispatch({
-      type: SET_CONTEXT_MENU_ON,
+      type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_SONG,
         payload: this.state.flattenSongs[songIndex],

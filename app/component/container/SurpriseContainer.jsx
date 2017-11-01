@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
 
 import { SURPRISE_ME } from '@app/config/api';
-import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
@@ -38,16 +38,16 @@ class SupriseContainer extends Component {
           surprise: data,
           duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
         }), () => {
-          const { initialQueue } = store.getState();
+          const { queueInitial } = store.getState();
 
-          if (initialQueue.length === 0 || this.state.surprise.songs.length === 0) {
+          if (queueInitial.length === 0 || this.state.surprise.songs.length === 0) {
             this.setState(() => ({
               playingSurprise: false,
             }));
             return;
           }
 
-          if (sameSongList(this.state.surprise.songs, initialQueue)) {
+          if (sameSongList(this.state.surprise.songs, queueInitial)) {
             this.setState(() => ({
               playingSurprise: true,
             }));
@@ -74,11 +74,11 @@ class SupriseContainer extends Component {
     // booting playlist
     if (this.props.current === null || this.state.playingSurprise === false) {
       store.dispatch({
-        type: PLAY,
+        type: PLAY_REQUEST,
         payload: {
           play: this.state.surprise.songs[0],
           queue: this.state.surprise.songs,
-          initialQueue: this.state.surprise.songs,
+          queueInitial: this.state.surprise.songs,
         },
       });
 
@@ -88,7 +88,7 @@ class SupriseContainer extends Component {
       // resuming / pausing playlist
     } else if (this.state.surprise !== null) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
     }
   }
@@ -96,7 +96,7 @@ class SupriseContainer extends Component {
   togglePlayPauseSong(songId) {
     if (this.props.current !== null && this.props.current.songId === songId) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       return;
@@ -109,11 +109,11 @@ class SupriseContainer extends Component {
     }
 
     store.dispatch({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
         play: this.state.surprise.songs[songIdIndex],
         queue: this.state.surprise.songs,
-        initialQueue: this.state.surprise.songs,
+        queueInitial: this.state.surprise.songs,
       },
     });
 

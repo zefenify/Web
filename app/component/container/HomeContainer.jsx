@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import isEqual from 'lodash/isEqual';
 
 import { BASE, FEATURED } from '@app/config/api';
-import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 import api from '@app/util/api';
 import track from '@app/util/track';
@@ -30,12 +30,12 @@ class HomeContainer extends Component {
         })),
       }), () => {
         // restoring `featuredPlayingId`...
-        const { initialQueue } = store.getState();
-        const initialQueueTrackId = initialQueue.map(queueTrack => queueTrack.track_id);
+        const { queueInitial } = store.getState();
+        const queueInitialTrackId = queueInitial.map(queueTrack => queueTrack.track_id);
         let featuredPlayingId = -1;
 
         this.state.featured.forEach((featured) => {
-          if (isEqual(featured.playlist_track, initialQueueTrackId) === true) {
+          if (isEqual(featured.playlist_track, queueInitialTrackId) === true) {
             featuredPlayingId = featured.playlist_id;
           }
         });
@@ -54,7 +54,7 @@ class HomeContainer extends Component {
     if (this.state.featuredPlayingId === fid) {
       // pausing whatever was playing...
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       // pausing icon...
@@ -80,11 +80,11 @@ class HomeContainer extends Component {
 
       // playing...
       store.dispatch({
-        type: PLAY,
+        type: PLAY_REQUEST,
         payload: {
           play: tracks[0],
           queue: tracks,
-          initialQueue: tracks,
+          queueInitial: tracks,
         },
       });
     }, () => {

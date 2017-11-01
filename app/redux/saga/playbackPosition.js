@@ -1,19 +1,20 @@
 /* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import { put, takeEvery } from 'redux-saga/effects';
 
-import { SET_PLAYBACK_POSITION } from '@app/redux/constant/playbackPosition';
+import { PLAYBACK_POSITION_REQUEST } from '@app/redux/constant/playbackPosition';
 
 import { playbackPosition } from '@app/redux/action/playbackPosition';
 
-function* setPlaybackPosition(action) {
+function* _playbackPosition(action) {
   yield put(playbackPosition(action.payload));
 }
 
-function* watchSetPlaybackPosition() {
-  yield takeEvery(SET_PLAYBACK_POSITION, setPlaybackPosition);
+function* playbackPositionRequest() {
+  yield takeEvery(PLAYBACK_POSITION_REQUEST, _playbackPosition);
 }
 
 module.exports = {
-  watchSetPlaybackPosition,
+  playbackPositionRequest,
 };

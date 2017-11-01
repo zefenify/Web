@@ -3,7 +3,7 @@ import axios from 'axios';
 import notie from 'notie';
 
 import { BASE, HEADER } from '@app/config/api';
-import { SET_SONG_SAVE, SET_SONG_REMOVE } from '@app/redux/constant/song';
+import { SET_SONG_SAVE, SONG_BOOT, SET_SONG_REMOVE } from '@app/redux/constant/song';
 
 import { song } from '@app/redux/action/song';
 import { loading } from '@app/redux/action/loading';
@@ -155,12 +155,17 @@ function* watchSetSongSave() {
   yield takeEvery(SET_SONG_SAVE, setSongSave);
 }
 
+function* watchSongBoot() {
+  yield takeEvery(SONG_BOOT, bootSong);
+}
+
 function* watchSetSongRemove() {
   yield takeEvery(SET_SONG_REMOVE, setSongRemove);
 }
 
 module.exports = {
   bootSong,
+  watchSongBoot,
   watchSetSongSave,
   watchSetSongRemove,
 };

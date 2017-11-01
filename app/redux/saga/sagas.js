@@ -14,7 +14,7 @@ import { watchSetCurrent } from '@app/redux/saga/current';
 import { userBootFromLF, watchSetUser } from '@app/redux/saga/user';
 import { watchPlay, watchPrevious, watchNext, watchSeek, watchTogglePlayPause } from '@app/redux/saga/wolfCola';
 import { watchContextMenuOn, watchContextMenuOff } from '@app/redux/saga/contextMenu';
-import { bootSong, watchSetSongSave, watchSetSongRemove } from '@app/redux/saga/song';
+import { bootSong, watchSongBoot, watchSetSongSave, watchSetSongRemove } from '@app/redux/saga/song';
 
 function* rootSaga() {
   yield userBootFromLF();
@@ -49,6 +49,7 @@ function* rootSaga() {
     watchContextMenuOn(),
     watchContextMenuOff(),
     bootSong(),
+    watchSongBoot(),
     watchSetSongSave(),
     watchSetSongRemove(),
   ]);

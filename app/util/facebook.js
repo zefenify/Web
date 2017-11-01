@@ -3,6 +3,7 @@
 import store from '@app/redux/store';
 
 import { FAUTH } from '@app/config/api';
+import { SONG_BOOT } from '@app/redux/constant/song';
 import { SET_USER } from '@app/redux/constant/user';
 import api from '@app/util/api';
 
@@ -15,7 +16,12 @@ const statusChangeCallback = (response) => {
         payload: data,
       });
 
-      // TODO: call booters [song, playlist]
+      // TODO: booters
+      // - [X] song
+      // - [ ] playlist
+      store.dispatch({
+        type: SONG_BOOT,
+      });
     }, () => {});
   }
 };

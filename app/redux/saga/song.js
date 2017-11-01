@@ -3,12 +3,12 @@ import axios from 'axios';
 import notie from 'notie';
 
 import { BASE, HEADER } from '@app/config/api';
-import { SET_SONG_SAVE, SONG_BOOT, SET_SONG_REMOVE } from '@app/redux/constant/song';
+import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST, SONG_BOOT_REQUEST } from '@app/redux/constant/song';
 
 import { song } from '@app/redux/action/song';
 import { loading } from '@app/redux/action/loading';
 
-function* bootSong() {
+function* songBoot() {
   const { user } = yield select();
 
   // no user, clearing song state...
@@ -50,7 +50,7 @@ function* bootSong() {
   }
 }
 
-function* setSongSave(action) {
+function* songSave(action) {
   const state = yield select();
 
   if (state.song === null) {
@@ -99,7 +99,7 @@ function* setSongSave(action) {
   }
 }
 
-function* setSongRemove(action) {
+function* songRemove(action) {
   const state = yield select();
 
   if (state.song === null) {
@@ -151,21 +151,21 @@ function* setSongRemove(action) {
   }
 }
 
-function* watchSetSongSave() {
-  yield takeEvery(SET_SONG_SAVE, setSongSave);
+function* songSaveRequest() {
+  yield takeEvery(SONG_SAVE_REQUEST, songSave);
 }
 
-function* watchSongBoot() {
-  yield takeEvery(SONG_BOOT, bootSong);
+function* songRemoveRequest() {
+  yield takeEvery(SONG_REMOVE_REQUEST, songRemove);
 }
 
-function* watchSetSongRemove() {
-  yield takeEvery(SET_SONG_REMOVE, setSongRemove);
+function* songBootRequest() {
+  yield takeEvery(SONG_BOOT_REQUEST, songBoot);
 }
 
 module.exports = {
-  bootSong,
-  watchSongBoot,
-  watchSetSongSave,
-  watchSetSongRemove,
+  songBoot,
+  songSaveRequest,
+  songRemoveRequest,
+  songBootRequest,
 };

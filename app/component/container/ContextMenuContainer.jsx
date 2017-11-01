@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 
 import store from '@app/redux/store';
 import { SET_CONTEXT_MENU_OFF } from '@app/redux/constant/contextMenu';
-import { SET_SONG_SAVE, SET_SONG_REMOVE } from '@app/redux/constant/song';
+import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST } from '@app/redux/constant/song';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import ContextMenu from '@app/component/presentational/ContextMenu';
@@ -22,14 +22,14 @@ const closeContextMenu = () => {
 
 const songSave = (track) => {
   store.dispatch({
-    type: SET_SONG_SAVE,
+    type: SONG_SAVE_REQUEST,
     payload: track,
   });
 };
 
 const songRemove = (track) => {
   store.dispatch({
-    type: SET_SONG_REMOVE,
+    type: SONG_REMOVE_REQUEST,
     payload: track,
   });
 };

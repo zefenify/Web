@@ -7,6 +7,7 @@ import isEqual from 'lodash/fp/isEqual';
 import { BASE_S3 } from '@app/config/api';
 
 import Song from '@app/component/presentational/Song';
+import Divider from '@app/component/styled/Divider';
 
 const SearchContainer = styled.div`
   display: flex;
@@ -255,21 +256,26 @@ const Search = ({
           { matches.track.length > 0 ? <h2 className="search-h-line">Tracks&nbsp;<span /></h2> : null }
           {
             matches.track.length > 0 ?
-              matches.track.map((song, index) => (
-                <Song
-                  key={song.track_id}
-                  currentSongId={current === null ? -1 : current.track_id}
-                  trackNumber={index + 1}
-                  togglePlayPause={togglePlayPauseSong}
-                  playing={playing}
-                  songId={song.track_id}
-                  songName={song.track_name}
-                  songFeaturing={song.track_featuring}
-                  songDuration={song.track_track.s3_meta.duration}
-                  songAlbum={song.track_album}
-                  contextMenuSong={contextMenuSong}
-                />
-              )) : null
+              <div>
+                <Divider />
+                {
+                  matches.track.map((song, index) => (
+                    <Song
+                      key={song.track_id}
+                      currentSongId={current === null ? -1 : current.track_id}
+                      trackNumber={index + 1}
+                      togglePlayPause={togglePlayPauseSong}
+                      playing={playing}
+                      songId={song.track_id}
+                      songName={song.track_name}
+                      songFeaturing={song.track_featuring}
+                      songDuration={song.track_track.s3_meta.duration}
+                      songAlbum={song.track_album}
+                      contextMenuSong={contextMenuSong}
+                    />
+                  ))
+                }
+              </div> : null
           }
         </div>
       </div>

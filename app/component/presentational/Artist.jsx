@@ -59,7 +59,7 @@ const ArtistContainer = styled.div`
 
   .album {
     &__song-list {
-      margin-top: 1em;
+      margin-top: 2em;
     }
   }
 
@@ -221,6 +221,7 @@ const Arist = ({
               </div>
 
               <div className="album__song-list song-list">
+                <Divider />
                 {
                   album.relationships.track.map((song, songIndex) => (
                     <Song

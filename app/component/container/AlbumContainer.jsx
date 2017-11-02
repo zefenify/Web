@@ -13,6 +13,7 @@ import DJKhaled from '@app/component/hoc/DJKhaled';
 
 import Album from '@app/component/presentational/Album';
 
+import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
 class AlbumContainer extends Component {
@@ -34,11 +35,11 @@ class AlbumContainer extends Component {
   }
 
   componentDidMount() {
-    api(`${BASE}album/${this.props.match.params.id}`, (cancel) => {
+    store.dispatch(loading(true));
+    api(`${BASE}album/${this.props.match.params.id}`, undefined, (cancel) => {
       this.cancelRequest = cancel;
     }).then(({ data, included }) => {
-      // mapping track...
-
+      store.dispatch(loading(false));
       const paramTrackId = this.props.match.params.trackId;
       let albumTrack = [];
 
@@ -79,10 +80,14 @@ class AlbumContainer extends Component {
           playingAlbum: sameSongList(this.state.album.relationships.track, queueInitial),
         }));
       });
-    }, () => { /* handle fetch error */ });
+    }, () => {
+      /* handle fetch error */
+      store.dispatch(loading(false));
+    });
   }
 
   componentWillUnmount() {
+    store.dispatch(loading(false));
     this.cancelRequest();
   }
 

@@ -37,6 +37,7 @@ class SearchContainer extends Component {
 
   componentWillUnmount() {
     clearTimeout(throttle);
+    store.dispatch(loading(true));
     source.cancel();
   }
 
@@ -95,12 +96,10 @@ class SearchContainer extends Component {
         source = CancelToken.source();
 
         store.dispatch(loading(true));
-
         axios
           .get(SEARCH, { params: { q: this.state.q } }, { cancelToken: source.token })
           .then((data) => {
             store.dispatch(loading(false));
-
             const matches = data.data.data;
             matches.album = matches.album.map(album => Object.assign({}, album, { album_cover: cloneDeep(data.data.included.s3[album.album_cover]) }));
             matches.artist = matches.artist.map(artist => Object.assign({}, artist, { artist_cover: cloneDeep(data.data.included.s3[artist.artist_cover]) }));
@@ -109,6 +108,7 @@ class SearchContainer extends Component {
 
             this.setState(() => ({ matches }));
           }, () => {
+            /* handle fetch error */
             store.dispatch(loading(false));
           });
       }, THROTTLE_TIMEOUT);

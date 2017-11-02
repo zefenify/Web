@@ -6,6 +6,7 @@ import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
+import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -30,10 +31,12 @@ class SupriseContainer extends Component {
 
   componentDidMount() {
     // calling...
-    api(SURPRISE_ME, (cancel) => {
+    store.dispatch(loading(true));
+    api(SURPRISE_ME, undefined, (cancel) => {
       this.cancelRequest = cancel;
     })
       .then((data) => {
+        store.dispatch(loading(false));
         this.setState(() => ({
           surprise: data,
           duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
@@ -57,12 +60,14 @@ class SupriseContainer extends Component {
             }));
           }
         });
-      }, (err) => {
+      }, () => {
         /* handle fetch error */
+        store.dispatch(loading(false));
       });
   }
 
   componentWillUnmount() {
+    store.dispatch(loading(false));
     this.cancelRequest();
   }
 

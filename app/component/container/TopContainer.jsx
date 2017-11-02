@@ -6,6 +6,7 @@ import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 
 import api from '@app/util/api';
+import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -50,6 +51,7 @@ class TopContainer extends Component {
   }
 
   componentWillUnmount() {
+    store.dispatch(loading(false));
     this.cancelRequest();
   }
 
@@ -68,10 +70,12 @@ class TopContainer extends Component {
       this.cancelRequest();
     }
 
-    api(`json/list/most${filter}.json`, (cancel) => {
+    store.dispatch(loading(true));
+    api(`json/list/most${filter}.json`, undefined, (cancel) => {
       this.cancelRequest = cancel;
     })
       .then((data) => {
+        store.dispatch(loading(false));
         this.setState(() => ({
           most: data,
           duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
@@ -97,7 +101,8 @@ class TopContainer extends Component {
           }
         });
       }, () => {
-        /* handle error */
+        /* handle fetch error */
+        store.dispatch(loading(false));
       });
   }
 

@@ -1,11 +1,11 @@
 /* global window */
 
 import store from '@app/redux/store';
+import api from '@app/util/api';
 
 import { FAUTH } from '@app/config/api';
 import { SONG_BOOT_REQUEST } from '@app/redux/constant/song';
 import { USER_REQUEST } from '@app/redux/constant/user';
-import api from '@app/util/api';
 
 const statusChangeCallback = (response) => {
   // user connected - booting `user`...
@@ -22,7 +22,7 @@ const statusChangeCallback = (response) => {
       store.dispatch({
         type: SONG_BOOT_REQUEST,
       });
-    }, () => {});
+    }, () => { /* handle fetch error */ });
   }
 };
 

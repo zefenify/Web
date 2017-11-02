@@ -12,6 +12,7 @@ import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_ALBUM, CONTEXT_ARTIST } 
 import sameSongList from '@app/util/sameSongList';
 import api from '@app/util/api';
 import track from '@app/util/track';
+import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -39,11 +40,16 @@ class ArtistContainer extends Component {
   }
 
   componentDidMount() {
-    api(`${BASE}artist/${this.props.match.params.id}`, (cancel) => {
+    store.dispatch(loading(true));
+    api(`${BASE}artist/${this.props.match.params.id}`, undefined, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
+      store.dispatch(loading(false));
       this.afterFetch(data);
-    }, () => { /* handle fetch error */ });
+    }, () => {
+      /* handle fetch error */
+      store.dispatch(loading(false));
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,14 +57,20 @@ class ArtistContainer extends Component {
       return;
     }
 
-    api(`${BASE}artist/${nextProps.match.params.id}`, (cancel) => {
+    store.dispatch(loading(true));
+    api(`${BASE}artist/${nextProps.match.params.id}`, undefined, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
+      store.dispatch(loading(false));
       this.afterFetch(data);
-    }, () => { /* handle fetch error */ });
+    }, () => {
+      /* handle fetch error */
+      store.dispatch(loading(false));
+    });
   }
 
   componentWillUnmount() {
+    store.dispatch(loading(false));
     this.cancelRequest();
   }
 

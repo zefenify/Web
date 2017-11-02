@@ -6,6 +6,7 @@ import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
 import { human } from '@app/util/time';
 import store from '@app/redux/store';
+import { loading } from '@app/redux/action/loading';
 import api from '@app/util/api';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -47,6 +48,7 @@ class BoxContainer extends Component {
   }
 
   componentWillUnmount() {
+    store.dispatch(loading(false));
     this.cancelRequest();
   }
 
@@ -67,8 +69,12 @@ class BoxContainer extends Component {
     }));
 
     // load songs...
-    api(`${type === 'genre' ? GENRE_BASE : ARIFLIST_BASE}${list}.json`)
+    store.dispatch(loading(true));
+    api(`${type === 'genre' ? GENRE_BASE : ARIFLIST_BASE}${list}.json`, undefined, (cancel) => {
+      this.cancelRequest = cancel;
+    })
       .then((data) => {
+        store.dispatch(loading(false));
         this.setState(() => ({
           list: data,
           duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
@@ -93,6 +99,9 @@ class BoxContainer extends Component {
             }));
           }
         });
+      }, () => {
+        /* handle fetch error */
+        store.dispatch(loading(false));
       });
   }
 
@@ -113,10 +122,12 @@ class BoxContainer extends Component {
       boxPlayingData: boxData,
     }));
 
-    api(`${this.props.match.params.type === 'genre' ? GENRE_BASE : ARIFLIST_BASE}${boxData}.json`, (cancel) => {
+    store.dispatch(loading(true));
+    api(`${this.props.match.params.type === 'genre' ? GENRE_BASE : ARIFLIST_BASE}${boxData}.json`, undefined, (cancel) => {
       this.cancelRequest = cancel;
     })
       .then((data) => {
+        store.dispatch(loading(false));
         store.dispatch({
           type: PLAY_REQUEST,
           payload: {
@@ -126,6 +137,7 @@ class BoxContainer extends Component {
           },
         });
       }, () => {
+        store.dispatch(loading(false));
         this.setState(() => ({
           boxPlayingData: 'Wolf-Cola',
         }));

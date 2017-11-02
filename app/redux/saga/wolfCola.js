@@ -8,12 +8,12 @@
 import { eventChannel, END, delay } from 'redux-saga';
 import { select, put, call, fork, take, throttle, takeEvery, takeLatest } from 'redux-saga/effects';
 import { Howl } from 'howler';
-import axios from 'axios';
 import random from 'lodash/fp/random';
 import notie from 'notie';
 
 import { PLAY_REQUEST, NEXT_REQUEST, PREVIOUS_REQUEST, SEEK_REQUEST, PLAY_PAUSE_REQUEST, PREVIOUS_THRESHOLD } from '@app/redux/constant/wolfCola';
-import { BASE, HEADER, BASE_S3 } from '@app/config/api';
+import { BASE, BASE_S3 } from '@app/config/api';
+import api from '@app/util/api';
 
 import { current } from '@app/redux/action/current';
 import { queueSet, queueRemove } from '@app/redux/action/queue';
@@ -120,12 +120,8 @@ const tracker = (isTrackerInProgress = false) => {
 
         // checking for crossfade threshold...
         if ((stateCheck.duration - stateCheck.playbackPosition) <= stateCheck.crossfade) {
-          // sending played [`track_popularity` and `trend`] will be set
-          axios.get(`${BASE}played/${stateCheck.current.track_id}`, {
-            headers: {
-              [HEADER]: stateCheck.user === null ? undefined : stateCheck.user.jwt,
-            },
-          }).then(() => {}, () => {});
+          // sending played, [`track_popularity` and `trend`] will be set
+          api(`${BASE}played/${stateCheck.current.track_id}`, stateCheck.user).then(() => {}, () => {});
           yield put({ type: NEXT_REQUEST });
         }
       }

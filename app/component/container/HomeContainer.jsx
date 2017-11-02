@@ -3,6 +3,7 @@ import isEqual from 'lodash/isEqual';
 
 import { BASE, FEATURED } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
+import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 import api from '@app/util/api';
 import track from '@app/util/track';
@@ -21,9 +22,11 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    api(FEATURED, (cancel) => {
+    store.dispatch(loading(true));
+    api(FEATURED, undefined, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
+      store.dispatch(loading(false));
       this.setState(() => ({
         featured: data.data.map(featured => Object.assign({}, featured, {
           playlist_cover: data.included.s3[featured.playlist_cover],
@@ -42,10 +45,14 @@ class HomeContainer extends Component {
 
         this.setState(() => ({ featuredPlayingId }));
       });
-    }, () => { /* handle fetch error */ });
+    }, () => {
+      /* handle fetch error */
+      store.dispatch(loading(false));
+    });
   }
 
   componentWillUnmount() {
+    store.dispatch(loading(false));
     this.cancelRequest();
   }
 

@@ -13,6 +13,7 @@ import DJKhaled from '@app/component/hoc/DJKhaled';
 
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
+import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
 class PlaylistContainer extends Component {
@@ -34,9 +35,11 @@ class PlaylistContainer extends Component {
   }
 
   componentDidMount() {
-    api(`${BASE}playlist/${this.props.match.params.id}`, (cancel) => {
+    store.dispatch(loading(true));
+    api(`${BASE}playlist/${this.props.match.params.id}`, undefined, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
+      store.dispatch(loading(false));
       // mapping track...
       const playlistTrack = Object.assign({}, data.data, {
         playlist_track: data.data.playlist_track.map(trackId => data.included.track[trackId]),
@@ -70,10 +73,14 @@ class PlaylistContainer extends Component {
           }));
         }
       });
-    }, () => { /* handle fetch error */ });
+    }, () => {
+      /* handle fetch error */
+      store.dispatch(loading(false));
+    });
   }
 
   componentWillUnmount() {
+    store.dispatch(loading(false));
     this.cancelRequest();
   }
 

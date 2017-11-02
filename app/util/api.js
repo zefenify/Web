@@ -1,29 +1,22 @@
-// Breaking SAGA! 😔
 import axios from 'axios';
 import notie from 'notie';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { BASE, HEADER } from '@app/config/api';
-import store from '@app/redux/store';
-import { loading } from '@app/redux/action/loading';
 
 axios.defaults.baseURL = BASE;
 
 const API_CACHE = {}; // caches GET requests { [URL]: response }
-let user = null; // to be used when sending header [JWT]
-
-store.subscribe(() => {
-  user = store.getState().user;
-});
 
 /**
  * sends a GET request
  *
- * @param  {String}   URL
- * @param  {Function} cancel
+ * @param {String} URL
+ * @param {Object} user
+ * @param {Function} cancel
  * @param {Boolean} force - whether or not to bypass API_CACHE
  */
-const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
+const api = (URL, user = null, cancel, force = false) => new Promise((resolve, reject) => {
   if (force === false && Object.prototype.hasOwnProperty.call(API_CACHE, URL) === true) {
     if (cancel !== undefined) {
       // calling with an empty function as no axios will be called...
@@ -33,8 +26,6 @@ const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
     resolve(cloneDeep(API_CACHE[URL]));
     return;
   }
-
-  store.dispatch(loading(true));
 
   const { CancelToken } = axios;
   const source = CancelToken.source();
@@ -47,13 +38,9 @@ const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
       },
     })
     .then((data) => {
-      store.dispatch(loading(false));
-
       API_CACHE[URL] = data.data;
       resolve(cloneDeep(API_CACHE[URL]));
     }, (err) => {
-      store.dispatch(loading(false));
-
       // request cancellation will not reject
       if (axios.isCancel(err)) {
         return;
@@ -83,9 +70,7 @@ const api = (URL, cancel, force = false) => new Promise((resolve, reject) => {
  * @param  {Object}   data
  * @param  {Function} cancel
  */
-const postPatch = method => (URL, data, cancel) => new Promise((resolve, reject) => {
-  store.dispatch(loading(true));
-
+const postPatch = method => (URL, user = null, data, cancel) => new Promise((resolve, reject) => {
   const { CancelToken } = axios;
   const source = CancelToken.source();
 
@@ -96,11 +81,8 @@ const postPatch = method => (URL, data, cancel) => new Promise((resolve, reject)
     },
   })
     .then((response) => {
-      store.dispatch(loading(false));
       resolve(cloneDeep(response));
     }, (err) => {
-      store.dispatch(loading(false));
-
       // request cancellation will not reject
       if (axios.isCancel(err)) {
         return;

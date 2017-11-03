@@ -16,4 +16,16 @@ const Button = styled.button`
   }
 `;
 
+Button.ClearButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  text-align: left;
+  color: inherit;
+  border: none;
+  border-radius: 0;
+`;
+
 module.exports = Button;

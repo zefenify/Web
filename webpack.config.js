@@ -130,10 +130,6 @@ module.exports = (env) => {
       }),
       new UglifyJSPlugin({
         parallel: true,
-        uglifyOptions: {
-          mangle: false,
-          compress: false,
-        },
       }),
     ].concat(commonPlugins) : [
       // add development plugins here

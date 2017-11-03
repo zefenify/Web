@@ -7,7 +7,7 @@ import { BASE_S3 } from '@app/config/api';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import { CloseSVG } from '@app/component/presentational/SVG';
-import ClearButton from '@app/component/styled/ClearButton';
+import { ClearButton } from '@app/component/styled/Button';
 
 const ContextMenuContainer = styled.div`
   position: fixed;
@@ -39,6 +39,11 @@ const ContextMenuContainer = styled.div`
     left: 0;
     padding-left: 1em;
     padding-top: 1em;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
   }
 
   .link {

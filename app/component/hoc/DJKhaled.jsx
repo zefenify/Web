@@ -10,7 +10,7 @@ import store from '@app/redux/store';
  * @param  {...String} stateKeys DJ Khaled 🔑
  * @return {HOC}
  */
-module.exports = (...stateKeys) => (WrappedComponent) => {
+module.exports = (stateKeys = []) => (WrappedComponent) => {
   if (stateKeys.length === 0) {
     return class extends React.Component {
       shouldComponentUpdate(nextProps) {

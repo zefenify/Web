@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const commonPlugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
@@ -62,20 +62,7 @@ module.exports = (env) => {
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              plugins: [
-                'emotion',
-                'transform-react-inline-elements',
-                ['transform-runtime', { helpers: false, polyfill: false }],
-              ],
-              presets: [
-                ['env', { targets: { safari: 10, uglify: true }, useBuiltIns: true, debug: true }], // 100% ES2015
-                'react',
-              ],
-            },
-          },
+          use: { loader: 'babel-loader' },
         },
 
         // css
@@ -141,7 +128,13 @@ module.exports = (env) => {
         disable: false,
         allChunks: true,
       }),
-      new UglifyJsPlugin(),
+      new UglifyJSPlugin({
+        parallel: true,
+        uglifyOptions: {
+          mangle: false,
+          compress: false,
+        },
+      }),
     ].concat(commonPlugins) : [
       // add development plugins here
     ].concat(commonPlugins),

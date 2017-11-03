@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    "emotion",
+    "transform-react-inline-elements",
+    ["transform-runtime", { "helpers": false, "polyfill": false }]
+  ],
+  "presets": [
+    [
+      "env", {
+        "targets": { "safari": 10, "uglify": true },
+        "debug": true,
+        "useBuiltIns": true
+      }
+    ],
+    "react",
+  ]
+}

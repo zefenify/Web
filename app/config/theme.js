@@ -21,7 +21,7 @@ const PRIMARY_1 = '#1ed660';
 const PRIMARY_2 = '#31a8e6';
 
 module.exports = {
-  darkTheme: {
+  themeDark: {
     primary: PRIMARY_1,
 
     navbarBackground: DARK_1,
@@ -43,7 +43,7 @@ module.exports = {
     controlMute: MUTE_1,
   },
 
-  lightTheme: {
+  themeLight: {
     primary: PRIMARY_2,
 
     navbarBackground: WHITE_2,

@@ -20,6 +20,7 @@ import loading from '@app/redux/reducer/loading';
 import user from '@app/redux/reducer/user';
 import contextMenu from '@app/redux/reducer/contextMenu';
 import song from '@app/redux/reducer/song';
+import notification from '@app/redux/reducer/notification';
 
 import rootSaga from '@app/redux/saga/sagas';
 
@@ -43,6 +44,7 @@ const store = createStore(
     user,
     contextMenu,
     song,
+    notification,
   }),
   {
     theme: 'dark',
@@ -65,6 +67,7 @@ const store = createStore(
     // online: false,
     loading: false,
     user: null,
+    notification: null,
   },
   window.devToolsExtension
     ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension())

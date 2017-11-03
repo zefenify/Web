@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'emotion-theming';
 
 import 'normalize.css';
-import '@app/scss/notie.scss';
 import '@app/scss/wolf-cola.scss';
 
 import '@app/util/facebook';
@@ -29,6 +28,7 @@ import SearchContainer from '@app/component/container/SearchContainer';
 import BoxContainer from '@app/component/container/BoxContainer';
 import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
+import NotificationContainer from '@app/component/container/NotificationContainer';
 
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
@@ -138,6 +138,8 @@ class WolfCola extends Component {
                     <Route path="/songs" component={SongsContainer} />
                     <Route path="/albums" component={AlbumsContainer} />
                     <Route path="/setting" component={SettingContainer} />
+
+                    <NotificationContainer />
                   </RouteContainer>
                 </NavListContainer>
 

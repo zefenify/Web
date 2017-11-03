@@ -1,5 +1,4 @@
 import axios from 'axios';
-import notie from 'notie';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { BASE, HEADER } from '@app/config/api';
@@ -46,14 +45,6 @@ const api = (URL, user = null, cancel, force = false) => new Promise((resolve, r
         return;
       }
 
-      if (err.message === 'Network Error') {
-        notie.alert({
-          type: 'error',
-          text: 'ጭራሽ ጭጭ - Network',
-          time: 5,
-        });
-      }
-
       reject(err);
     });
 
@@ -86,14 +77,6 @@ const postPatch = method => (URL, user = null, data, cancel) => new Promise((res
       // request cancellation will not reject
       if (axios.isCancel(err)) {
         return;
-      }
-
-      if (err.message === 'Network Error') {
-        notie.alert({
-          type: 'error',
-          text: 'ጭራሽ ጭጭ - Network',
-          time: 5,
-        });
       }
 
       reject(err);

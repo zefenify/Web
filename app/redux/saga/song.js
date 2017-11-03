@@ -2,9 +2,9 @@
 
 import { put, select, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
-import notie from 'notie';
 
 import { BASE, HEADER } from '@app/config/api';
+import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST, SONG_BOOT_REQUEST } from '@app/redux/constant/song';
 
 import { song } from '@app/redux/action/song';
@@ -35,19 +35,32 @@ function* songBoot() {
     yield put(song(null));
 
     if (err.message === 'Network Error') {
-      notie.alert({
-        type: 'error',
-        text: 'ጭራሽ ጭጭ - Network',
-        time: 5,
+      yield put({
+        type: NOTIFICATION_ON_REQUEST,
+        payload: {
+          message: 'ይቅርታ, unable to fetch Your Library',
+        },
       });
 
       return;
     }
 
-    notie.alert({
-      type: 'error',
-      text: 'ይቅርታ, Unable to fetch Your Library',
-      time: 5,
+    if (err.message === 'Network Error') {
+      yield put({
+        type: NOTIFICATION_ON_REQUEST,
+        payload: {
+          message: 'No Internet connection. Please try again later',
+        },
+      });
+
+      return;
+    }
+
+    yield put({
+      type: NOTIFICATION_ON_REQUEST,
+      payload: {
+        message: 'ይቅርታ, unable to fetch Your Library',
+      },
     });
   }
 }
@@ -84,19 +97,22 @@ function* _songSave(action) {
     yield put(loading(false));
 
     if (err.message === 'Network Error') {
-      notie.alert({
-        type: 'error',
-        text: 'ጭራሽ ጭጭ - Network',
-        time: 5,
+      yield put({
+        type: NOTIFICATION_ON_REQUEST,
+        payload: {
+          message: 'No Internet connection. Please try again later',
+        },
       });
 
       return;
     }
 
-    notie.alert({
-      type: 'error',
-      text: 'ይቅርታ, Unable to save song to Your Library',
-      time: 5,
+
+    yield put({
+      type: NOTIFICATION_ON_REQUEST,
+      payload: {
+        message: 'ይቅርታ, Unable to save song to Your Library',
+      },
     });
   }
 }
@@ -136,19 +152,21 @@ function* _songRemove(action) {
     yield put(loading(false));
 
     if (err.message === 'Network Error') {
-      notie.alert({
-        type: 'error',
-        text: 'ጭራሽ ጭጭ - Network',
-        time: 5,
+      yield put({
+        type: NOTIFICATION_ON_REQUEST,
+        payload: {
+          message: 'No Internet connection. Please try again later',
+        },
       });
 
       return;
     }
 
-    notie.alert({
-      type: 'error',
-      text: 'ይቅርታ, Unable to remove song from Your Library',
-      time: 5,
+    yield put({
+      type: NOTIFICATION_ON_REQUEST,
+      payload: {
+        message: 'ይቅርታ, Unable to remove song from Your Library',
+      },
     });
   }
 }

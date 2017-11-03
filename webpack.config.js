@@ -40,7 +40,6 @@ module.exports = (env) => {
         'reselect',
         'emotion',
         'emotion-theming',
-        'notie',
         'howler',
       ],
       app: [

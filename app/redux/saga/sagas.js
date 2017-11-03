@@ -15,6 +15,7 @@ import { userBootFromLF, userRequest } from '@app/redux/saga/user';
 import { playRequest, previousRequest, nextRequest, seekRequest, playPauseRequest } from '@app/redux/saga/wolfCola';
 import { contextMenuOnRequest, contextMenuOffRequest } from '@app/redux/saga/contextMenu';
 import { songBoot, songBootRequest, songSaveRequest, songRemoveRequest } from '@app/redux/saga/song';
+import { notificationOnRequest, notificationOffRequest } from '@app/redux/saga/notification';
 
 function* rootSaga() {
   yield userBootFromLF();
@@ -52,6 +53,8 @@ function* rootSaga() {
     songBootRequest(),
     songSaveRequest(),
     songRemoveRequest(),
+    notificationOnRequest(),
+    notificationOffRequest(),
   ]);
 }
 

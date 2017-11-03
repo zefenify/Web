@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
 
+import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
 import { SEARCH } from '@app/config/api';
@@ -106,9 +107,26 @@ class SearchContainer extends Component {
             matches.track = track(matches.track, data.data.included);
 
             this.setState(() => ({ matches }));
-          }, () => {
-            /* handle fetch error */
+          }, (err) => {
             store.dispatch(loading(false));
+
+            if (err.message === 'Network Error') {
+              store.dispatch({
+                type: NOTIFICATION_ON_REQUEST,
+                payload: {
+                  message: 'No Internet connection. Please try again later',
+                },
+              });
+
+              return;
+            }
+
+            store.dispatch({
+              type: NOTIFICATION_ON_REQUEST,
+              payload: {
+                message: 'ይቅርታ, unable to fetch results',
+              },
+            });
           });
       }, THROTTLE_TIMEOUT);
     });

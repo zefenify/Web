@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
+import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { SURPRISE_ME } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
@@ -59,9 +60,26 @@ class SupriseContainer extends Component {
             }));
           }
         });
-      }, () => {
-        /* handle fetch error */
+      }, (err) => {
         store.dispatch(loading(false));
+
+        if (err.message === 'Network Error') {
+          store.dispatch({
+            type: NOTIFICATION_ON_REQUEST,
+            payload: {
+              message: 'No Internet connection. Please try again later',
+            },
+          });
+
+          return;
+        }
+
+        store.dispatch({
+          type: NOTIFICATION_ON_REQUEST,
+          payload: {
+            message: 'ይቅርታ, unable to fetch Surprise',
+          },
+        });
       });
   }
 

@@ -3,6 +3,7 @@ import { bool, string, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
+import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import sameSongList from '@app/util/sameSongList';
@@ -79,9 +80,26 @@ class AlbumContainer extends Component {
           playingAlbum: sameSongList(this.state.album.relationships.track, queueInitial),
         }));
       });
-    }, () => {
-      /* handle fetch error */
+    }, (err) => {
       store.dispatch(loading(false));
+
+      if (err.message === 'Network Error') {
+        store.dispatch({
+          type: NOTIFICATION_ON_REQUEST,
+          payload: {
+            message: 'No Internet connection. Please try again later',
+          },
+        });
+
+        return;
+      }
+
+      store.dispatch({
+        type: NOTIFICATION_ON_REQUEST,
+        payload: {
+          message: 'ይቅርታ, unable to fetch Album',
+        },
+      });
     });
   }
 

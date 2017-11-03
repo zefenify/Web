@@ -8,13 +8,14 @@ import songDuration from '@app/redux/selector/songDuration';
 import songPlaying from '@app/redux/selector/songPlaying';
 import songTrack from '@app/redux/selector/songTrack';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
-
 import Songs from '@app/component/presentational/Songs';
 
 const YourSongs = props => (<Songs {...props} />);
 
 module.exports = connect(state => ({
+  current: state.current,
+  playing: state.playing,
+  user: state.user,
   songs: songTrack(state),
   totalDuration: songDuration(state),
   playingSongs: songPlaying(state),
@@ -72,4 +73,4 @@ module.exports = connect(state => ({
       },
     });
   },
-}))(DJKhaled('current', 'playing', 'user')(YourSongs));
+}))(YourSongs);

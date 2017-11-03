@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
+import { connect } from 'react-redux';
 
 import { GENRE_BASE, GENRE, ARIFLIST_BASE, ARIFLIST } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -9,7 +10,6 @@ import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
 import api from '@app/util/api';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import BoxList from '@app/component/presentational/BoxList';
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
@@ -245,4 +245,7 @@ BoxContainer.defaultProps = {
   current: null,
 };
 
-module.exports = DJKhaled('current', 'playing')(BoxContainer);
+module.exports = connect(state => ({
+  current: state.current,
+  playing: state.playing,
+}))(BoxContainer);

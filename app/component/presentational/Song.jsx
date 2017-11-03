@@ -7,7 +7,6 @@ import { human } from '@app/util/time';
 
 import ArtistList from '@app/component/presentational/ArtistList';
 import { Share } from '@app/component/presentational/SVG';
-import DJKhaled from '@app/component/hoc/DJKhaled';
 
 const PlayPause = ({ onClick, playing, className }) => (
   <svg
@@ -258,4 +257,4 @@ Song.defaultProps = {
   fullDetail: true,
 };
 
-module.exports = DJKhaled()(Song);
+module.exports = Song;

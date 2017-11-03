@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
+import { connect } from 'react-redux';
 
 import { SURPRISE_ME } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -8,8 +9,6 @@ import { human } from '@app/util/time';
 import api from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
-
-import DJKhaled from '@app/component/hoc/DJKhaled';
 
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
@@ -156,4 +155,7 @@ SupriseContainer.defaultProps = {
   playing: false,
 };
 
-module.exports = DJKhaled('playing', 'current')(SupriseContainer);
+module.exports = connect(state => ({
+  playing: state.playing,
+  current: state.current,
+}))(SupriseContainer);

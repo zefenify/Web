@@ -9,8 +9,6 @@ import { THEME_REQUEST } from '@app/redux/constant/theme';
 import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
 import { USER_REQUEST } from '@app/redux/constant/user';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
-
 import Setting from '@app/component/presentational/Setting';
 
 const SettingContainer = props => (<Setting {...props} />);
@@ -65,4 +63,4 @@ module.exports = connect(state => ({
       },
     });
   },
-}))(DJKhaled('currentTheme', 'currentCrossfade', 'user')(SettingContainer));
+}))(SettingContainer);

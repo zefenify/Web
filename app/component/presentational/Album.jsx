@@ -4,8 +4,6 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
-
 import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
 import { Share } from '@app/component/presentational/SVG';
@@ -189,4 +187,4 @@ HeaderSongs.defaultProps = {
   playingSongs: false,
 };
 
-module.exports = DJKhaled()(HeaderSongs);
+module.exports = HeaderSongs;

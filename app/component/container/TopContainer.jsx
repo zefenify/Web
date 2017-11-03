@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { string, bool, func, shape } from 'prop-types';
+import { connect } from 'react-redux';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
@@ -8,8 +9,6 @@ import { human } from '@app/util/time';
 import api from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
-
-import DJKhaled from '@app/component/hoc/DJKhaled';
 
 import Top from '@app/component/presentational/Top';
 
@@ -195,4 +194,7 @@ TopContainer.defaultProps = {
   current: null,
 };
 
-module.exports = DJKhaled('current', 'playing')(TopContainer);
+module.exports = connect(state => ({
+  current: state.current,
+  playing: state.playing,
+}))(TopContainer);

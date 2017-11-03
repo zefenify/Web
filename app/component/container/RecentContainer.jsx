@@ -10,13 +10,13 @@ import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG } from '@app/redux/constant/conte
 import historyDuration from '@app/redux/selector/historyDuration';
 import historyPlaying from '@app/redux/selector/historyPlaying';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
-
 import Recent from '@app/component/presentational/Recent';
 
 const RecentlyPlayed = props => (<Recent {...props} />);
 
 module.exports = connect(state => ({
+  playing: state.playing,
+  current: state.current,
   history: state.history,
   totalDuration: historyDuration(state),
   playingHistory: historyPlaying(state),
@@ -74,4 +74,4 @@ module.exports = connect(state => ({
       },
     });
   },
-}))(DJKhaled('playing', 'current')(RecentlyPlayed));
+}))(RecentlyPlayed);

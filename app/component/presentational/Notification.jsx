@@ -15,7 +15,7 @@ const NotificationContainer = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 0.5em 1em;
-  transform: translateY(-64px);
+  transform: translateY(-128px);
   transition: transform 500ms;
 
   .message {

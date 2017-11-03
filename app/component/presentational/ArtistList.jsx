@@ -3,6 +3,8 @@ import { string, arrayOf, shape } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
+
 const Muted = styled.span`
   color: ${props => props.theme.controlMute};
 `;
@@ -29,4 +31,4 @@ ArtistList.defaultProps = {
   artists: [],
 };
 
-module.exports = ArtistList;
+module.exports = DJKhaled(ArtistList);

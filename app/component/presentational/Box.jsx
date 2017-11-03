@@ -5,6 +5,7 @@ import styled from 'react-emotion';
 
 import { BASE } from '@app/config/api';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
 const BoxContainer = styled(Link)`
@@ -129,4 +130,4 @@ Box.defaultProps = {
   boxPlayingData: '',
 };
 
-module.exports = Box;
+module.exports = DJKhaled(Box);

@@ -2,6 +2,7 @@ import React from 'react';
 import { func, string, arrayOf, shape } from 'prop-types';
 import styled from 'react-emotion';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Box from '@app/component/presentational/Box';
 
 const BoxListContainer = styled.div`
@@ -69,4 +70,4 @@ BoxList.defaultProps = {
   boxPlayingData: '',
 };
 
-module.exports = BoxList;
+module.exports = DJKhaled(BoxList);

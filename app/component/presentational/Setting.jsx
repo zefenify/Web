@@ -2,6 +2,7 @@ import React from 'react';
 import { func, string, number, shape } from 'prop-types';
 import styled from 'react-emotion';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Button from '@app/component/styled/Button';
 import Divider from '@app/component/styled/Divider';
 import Range from '@app/component/styled/Range';
@@ -136,4 +137,4 @@ Setting.defaultProps = {
   user: null,
 };
 
-module.exports = Setting;
+module.exports = DJKhaled(Setting);

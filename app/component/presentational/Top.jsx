@@ -3,6 +3,7 @@ import { arrayOf, shape, func, number, bool } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'react-emotion';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import HeaderSongs from '@app/component/presentational/HeaderSongs';
 
 const TopContainer = styled.div`
@@ -126,4 +127,4 @@ Top.defaultProps = {
   playingTheSameMost: false,
 };
 
-module.exports = Top;
+module.exports = DJKhaled(Top);

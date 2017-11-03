@@ -5,6 +5,7 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Divider from '@app/component/styled/Divider';
 import Song from '@app/component/presentational/Song';
 import Button from '@app/component/styled/Button';
@@ -293,4 +294,4 @@ Arist.defaultProps = {
   playingArist: false,
 };
 
-module.exports = Arist;
+module.exports = DJKhaled(Arist);

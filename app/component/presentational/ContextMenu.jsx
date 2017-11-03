@@ -5,6 +5,7 @@ import styled from 'react-emotion';
 import { CONTEXT_SONG, CONTEXT_ALBUM, CONTEXT_ARTIST, CONTEXT_PLAYLIST, CONTEXT_UPLAYLIST } from '@app/redux/constant/contextMenu';
 import { BASE_S3 } from '@app/config/api';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import { CloseSVG } from '@app/component/presentational/SVG';
 import ClearButton from '@app/component/styled/ClearButton';
 
@@ -190,4 +191,4 @@ ContextMenu.defaultProps = {
   history: null,
 };
 
-module.exports = ContextMenu;
+module.exports = DJKhaled(ContextMenu);

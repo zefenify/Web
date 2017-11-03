@@ -1,10 +1,11 @@
 import React from 'react';
-import { string, func, shape, oneOf } from 'prop-types';
+import { string, func, number, shape, oneOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
 const PlaylistContainer = styled(Link)`
@@ -122,18 +123,18 @@ function Playlist({ type, id, playingId, name, description, songCount, cover, pl
 
       <strong className="playlist-title">{ name }</strong>
       <p className="playlist-description">{ description }</p>
-      <small className="playlist-count">{`${songCount} SONG${Number.parseInt(songCount, 10) > 1 ? 'S' : ''}`}</small>
+      <small className="playlist-count">{`${songCount} SONG${songCount > 1 ? 'S' : ''}`}</small>
     </PlaylistContainer>
   );
 }
 
 Playlist.propTypes = {
   type: oneOf(['featured', 'playlist']),
-  id: string,
-  playingId: string,
+  id: number,
+  playingId: number,
   name: string,
   description: string,
-  songCount: string,
+  songCount: number,
   cover: shape({}),
   play: func.isRequired,
 };
@@ -148,4 +149,4 @@ Playlist.defaultProps = {
   cover: {},
 };
 
-module.exports = Playlist;
+module.exports = DJKhaled(Playlist);

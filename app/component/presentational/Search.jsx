@@ -6,6 +6,7 @@ import isEqual from 'lodash/fp/isEqual';
 
 import { BASE_S3 } from '@app/config/api';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Song from '@app/component/presentational/Song';
 import Divider from '@app/component/styled/Divider';
 
@@ -300,4 +301,4 @@ Search.defaultProps = {
   playing: false,
 };
 
-module.exports = Search;
+module.exports = DJKhaled(Search);

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'react-emotion';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
+
 const MobileContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,4 +45,4 @@ Mobile.propTypes = {};
 
 Mobile.defaultProps = {};
 
-module.exports = Mobile;
+module.exports = DJKhaled(Mobile);

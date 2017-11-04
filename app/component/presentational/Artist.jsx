@@ -250,7 +250,7 @@ const Arist = ({
 
     {
       artist.relationships.track.length === 0 ? null : <div style={{ marginTop: '2em' }}>
-        <h2>Appears On</h2>
+        <h2><Divider color="#ffffff">Appears On&nbsp;</Divider></h2>
 
         <div className="appears-container">
           <div className="appears-container__list appears-list">

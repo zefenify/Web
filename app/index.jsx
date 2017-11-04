@@ -30,6 +30,7 @@ import ContextMenuContainer from '@app/component/container/ContextMenuContainer'
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
 import NotificationContainer from '@app/component/container/NotificationContainer';
 
+import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
 
@@ -105,7 +106,7 @@ class WolfCola extends Component {
                       */
                       }
 
-                      <div className="nav-h-line">YOUR MUSIC&nbsp;<span /></div>
+                      <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
                       <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
                       <NavLinkStyled to="/songs">Songs</NavLinkStyled>
                       <NavLinkStyled to="/albums">Albums</NavLinkStyled>
@@ -119,7 +120,7 @@ class WolfCola extends Component {
                       */
                       }
 
-                      <div className="nav-h-line">SETTINGS&nbsp;<span /></div>
+                      <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">SETTINGS&nbsp;</Divider>
                       <NavLinkStyled to="/setting">Settings</NavLinkStyled>
                       <div style={{ paddingBottom: '2em' }} />
                     </div>

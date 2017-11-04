@@ -8,6 +8,7 @@ import { BASE_S3 } from '@app/config/api';
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import { CloseSVG } from '@app/component/presentational/SVG';
 import { ClearButton } from '@app/component/styled/Button';
+import Divider from '@app/component/styled/Divider';
 
 const ContextMenuContainer = styled.div`
   position: fixed;
@@ -92,21 +93,6 @@ const ContextMenuContainer = styled.div`
       color: ${props => props.theme.navbarText};
     }
   }
-
-  .h-line {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    padding-left: 1em;
-    font-size: 0.8em;
-    color: ${props => props.theme.listDividerText};
-
-    span {
-      content: '';
-      flex: 1 1 auto;
-      border-top: 1px solid ${props => props.theme.listDivider};
-    }
-  }
 `;
 
 const ContextMenu = ({
@@ -151,23 +137,23 @@ const ContextMenu = ({
             <p className="song__album">{ payload.track_album.album_name }</p>
           </div>
 
-          <div className="h-line">Artist&nbsp;<span /></div>
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
           <div className="artist">
             { payload.track_album.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
             { payload.track_featuring.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
-          <div className="h-line">Album&nbsp;<span /></div>
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Album&nbsp;</Divider>
           <ClearButton className="link" disabled={`/album/${payload.track_album.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.track_album.album_id}`); }}>Go to Album</ClearButton>
 
-          <div className="h-line">Your Library&nbsp;<span /></div>
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Your Library&nbsp;</Divider>
           {
             songSaved
               ? <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songRemove(payload); }}>Remove from Your Library</ClearButton>
               : <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songSave(payload); }}>Save to Your Library</ClearButton>
           }
 
-          <div className="h-line">Share&nbsp;<span /></div>
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Telegram</a>

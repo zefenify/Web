@@ -82,22 +82,6 @@ const NavContainer = styled.div`
     overflow-y: auto;
   }
 
-  .nav-h-line {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    padding: 1em 0.5em;
-    font-size: 0.75em;
-    color: ${props => props.theme.listDividerText};
-    padding-left: 2em;
-
-    span {
-      content: '';
-      flex: 1 1 auto;
-      border-top: 1px solid ${props => props.theme.listDivider};
-    }
-  }
-
   .small-text {
     padding: 1em 0.5em;
     border-left: 1.25em solid transparent;

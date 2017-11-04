@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, number, shape, oneOf } from 'prop-types';
+import { string, bool, func, number, shape, oneOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
@@ -109,14 +109,14 @@ const PlaylistContainer = styled(Link)`
   }
 `;
 
-function Playlist({ type, id, playingId, name, description, songCount, cover, play }) {
+function Playlist({ type, id, playing, playingId, name, description, songCount, cover, play }) {
   return (
     <PlaylistContainer to={`/${type}/${id}`} className={`${id === playingId ? 'active' : ''}`}>
       <div className="playlist-cover" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }}>
         <div className="playlist-cover__overlay">
           <PlayPauseSVG
             onClick={(e) => { e.preventDefault(); play(id); }}
-            playing={id === playingId}
+            playing={id === playingId && playing}
           />
         </div>
       </div>
@@ -131,6 +131,7 @@ function Playlist({ type, id, playingId, name, description, songCount, cover, pl
 Playlist.propTypes = {
   type: oneOf(['featured', 'playlist']),
   id: string,
+  playing: bool,
   playingId: string,
   name: string,
   description: string,
@@ -142,6 +143,7 @@ Playlist.propTypes = {
 Playlist.defaultProps = {
   type: 'playlist',
   id: '',
+  playing: false,
   playingId: '',
   name: '',
   description: '',

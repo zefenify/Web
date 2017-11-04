@@ -1,11 +1,11 @@
 import React from 'react';
-import { func, string, arrayOf, shape } from 'prop-types';
+import { bool, func, string, arrayOf, shape } from 'prop-types';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Playlist from '@app/component/presentational/Playlist';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 
-const Home = ({ featured, featuredPlayingId, playFeatured }) => (
+const Home = ({ playing, featured, featuredPlayingId, playFeatured }) => (
   <FixedHeaderList>
     <div className="title">
       <h2>Featured</h2>
@@ -16,6 +16,7 @@ const Home = ({ featured, featuredPlayingId, playFeatured }) => (
         featured.map(f => (
           <Playlist
             key={f.playlist_id}
+            playing={playing}
             play={playFeatured}
             playingId={featuredPlayingId}
             type="featured"
@@ -32,12 +33,14 @@ const Home = ({ featured, featuredPlayingId, playFeatured }) => (
 );
 
 Home.propTypes = {
+  playing: bool,
   featured: arrayOf(shape({})),
   featuredPlayingId: string,
   playFeatured: func.isRequired,
 };
 
 Home.defaultProps = {
+  playing: false,
   featured: [],
   featuredPlayingId: '',
 };

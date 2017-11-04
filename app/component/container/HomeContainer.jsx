@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { bool } from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import { connect } from 'react-redux';
 
 import { BASE, FEATURED } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
@@ -84,7 +86,7 @@ class HomeContainer extends Component {
 
       // pausing icon...
       this.setState(() => ({
-        featuredPlayingId: '',
+        featuredPlayingId: fid,
       }));
 
       return;
@@ -122,6 +124,7 @@ class HomeContainer extends Component {
   render() {
     return (
       <Home
+        playing={this.props.playing}
         featured={this.state.featured}
         featuredPlayingId={this.state.featuredPlayingId}
         playFeatured={this.playFeatured}
@@ -130,4 +133,14 @@ class HomeContainer extends Component {
   }
 }
 
-module.exports = HomeContainer;
+HomeContainer.propTypes = {
+  playing: bool,
+};
+
+HomeContainer.defaultProps = {
+  playing: false,
+};
+
+module.exports = connect(state => ({
+  playing: state.playing,
+}))(HomeContainer);

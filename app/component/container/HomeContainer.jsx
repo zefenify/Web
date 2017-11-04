@@ -36,7 +36,7 @@ class HomeContainer extends Component {
         // restoring `featuredPlayingId`...
         const { queueInitial } = store.getState();
         const queueInitialTrackId = queueInitial.map(queueTrack => queueTrack.track_id);
-        let featuredPlayingId = -1;
+        let featuredPlayingId = '';
 
         this.state.featured.forEach((featured) => {
           if (isEqual(featured.playlist_track, queueInitialTrackId) === true) {

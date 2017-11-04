@@ -87,7 +87,7 @@ const Recent = ({
           history.map((song, index) => (
             <Song
               key={song.track_id}
-              currentSongId={current === null ? -1 : current.track_id}
+              currentSongId={current === null ? '' : current.track_id}
               trackNumber={index + 1}
               togglePlayPause={() => togglePlayPauseSong(index, song, current, history)}
               playing={playing && playingHistory}

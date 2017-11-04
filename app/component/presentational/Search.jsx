@@ -251,7 +251,7 @@ const Search = ({
                   matches.track.map((song, index) => (
                     <Song
                       key={song.track_id}
-                      currentSongId={current === null ? -1 : current.track_id}
+                      currentSongId={current === null ? '' : current.track_id}
                       trackNumber={index + 1}
                       togglePlayPause={togglePlayPauseSong}
                       playing={playing}

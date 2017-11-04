@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { func, number, shape, bool, arrayOf } from 'prop-types';
+import { func, string, shape, bool, arrayOf } from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
@@ -182,7 +182,7 @@ Albums.propTypes = {
   playing: bool,
   albums: arrayOf(shape({})),
   user: shape({}),
-  albumsPlayingId: number,
+  albumsPlayingId: string,
   togglePlayPauseAlbum: func.isRequired,
 };
 
@@ -190,7 +190,7 @@ Albums.defaultProps = {
   playing: false,
   albums: [],
   user: null,
-  albumsPlayingId: -1,
+  albumsPlayingId: '',
 };
 
 module.exports = DJKhaled(Albums);

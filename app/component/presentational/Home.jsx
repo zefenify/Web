@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, number, arrayOf, shape } from 'prop-types';
+import { func, string, arrayOf, shape } from 'prop-types';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Playlist from '@app/component/presentational/Playlist';
@@ -33,13 +33,13 @@ const Home = ({ featured, featuredPlayingId, playFeatured }) => (
 
 Home.propTypes = {
   featured: arrayOf(shape({})),
-  featuredPlayingId: number,
+  featuredPlayingId: string,
   playFeatured: func.isRequired,
 };
 
 Home.defaultProps = {
   featured: [],
-  featuredPlayingId: -1,
+  featuredPlayingId: '',
 };
 
 module.exports = DJKhaled(Home);

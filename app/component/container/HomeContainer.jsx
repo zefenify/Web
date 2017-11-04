@@ -16,7 +16,7 @@ class HomeContainer extends Component {
     super(props);
     this.state = {
       featured: [],
-      featuredPlayingId: -1,
+      featuredPlayingId: '',
     };
 
     this.playFeatured = this.playFeatured.bind(this);
@@ -84,7 +84,7 @@ class HomeContainer extends Component {
 
       // pausing icon...
       this.setState(() => ({
-        featuredPlayingId: -1,
+        featuredPlayingId: '',
       }));
 
       return;
@@ -114,7 +114,7 @@ class HomeContainer extends Component {
       });
     }, () => {
       this.setState(() => ({
-        featuredPlayingId: -1,
+        featuredPlayingId: '',
       }));
     });
   }

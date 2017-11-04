@@ -130,8 +130,8 @@ function Playlist({ type, id, playingId, name, description, songCount, cover, pl
 
 Playlist.propTypes = {
   type: oneOf(['featured', 'playlist']),
-  id: number,
-  playingId: number,
+  id: string,
+  playingId: string,
   name: string,
   description: string,
   songCount: number,
@@ -141,8 +141,8 @@ Playlist.propTypes = {
 
 Playlist.defaultProps = {
   type: 'playlist',
-  id: -1,
-  playingId: -1,
+  id: '',
+  playingId: '',
   name: '',
   description: '',
   songCount: 0,

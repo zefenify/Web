@@ -16,7 +16,7 @@ class AlbumsContainer extends Component {
     super(props);
     this.state = {
       albums: [],
-      albumsPlayingId: -1,
+      albumsPlayingId: '',
     };
 
     this.togglePlayPauseAlbum = this.togglePlayPauseAlbum.bind(this);
@@ -30,7 +30,7 @@ class AlbumsContainer extends Component {
     if (nextProps.user === null || nextProps.song === null) {
       this.setState(() => ({
         albums: [],
-        albumsPlayingId: -1,
+        albumsPlayingId: '',
       }));
 
       return;

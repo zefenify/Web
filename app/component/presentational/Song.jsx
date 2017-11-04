@@ -243,7 +243,7 @@ const Song = ({
 Song.propTypes = {
   fullDetail: bool,
   currentSongId: number.isRequired,
-  songId: number.isRequired,
+  songId: string.isRequired,
   trackNumber: number.isRequired,
   songName: string.isRequired,
   songFeaturing: arrayOf(shape({})).isRequired,

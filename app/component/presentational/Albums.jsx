@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { func, string, shape, bool, arrayOf } from 'prop-types';
+import { func, string, number, shape, bool, arrayOf, oneOfType } from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
@@ -10,6 +10,8 @@ import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
+
+import Album from '@app/component/presentational/Album';
 
 const AlbumsContainer = styled.div`
   display: flex;
@@ -127,10 +129,18 @@ const AlbumContainer = styled.div`
 `;
 
 const Albums = ({
-  user,
-  albums,
-  albumsPlayingId,
+  current,
   playing,
+  user,
+  albumId,
+  albums,
+  albumPlaying,
+  duration,
+  togglePlayPauseAlbumAlbum,
+  togglePlayPauseSong,
+  contextMenuAlbum,
+  contextMenuSong,
+  albumsPlayingId,
   togglePlayPauseAlbum,
 }) => {
   if (user === null) {
@@ -147,6 +157,25 @@ const Albums = ({
       <AlbumsContainer className="center-content">
         <h2 className="mute">You have no saved albums...yet</h2>
       </AlbumsContainer>
+    );
+  }
+
+  if (albumId !== undefined && albums.length === 1) {
+    return (
+      <Album
+        current={current}
+        playing={playing}
+        playingSongs={playing && albumPlaying}
+        duration={duration}
+        togglePlayPauseAll={togglePlayPauseAlbumAlbum}
+        togglePlayPauseSong={togglePlayPauseSong}
+        title={albums[0].album_name}
+        cover={albums[0].album_cover}
+        artist={albums[0].album_artist}
+        songs={albums[0].relationships.track}
+        contextMenuAlbum={contextMenuAlbum}
+        contextMenuSong={contextMenuSong}
+      />
     );
   }
 
@@ -182,16 +211,36 @@ const Albums = ({
 Albums.propTypes = {
   playing: bool,
   albums: arrayOf(shape({})),
+  albumId: oneOfType([shape({}), string]),
   user: shape({}),
+  albumPlaying: bool,
   albumsPlayingId: string,
   togglePlayPauseAlbum: func.isRequired,
+  current: shape({}),
+  duration: shape({
+    hours: number,
+    minutes: number,
+    seconds: number,
+  }),
+  togglePlayPauseAlbumAlbum: func.isRequired,
+  togglePlayPauseSong: func.isRequired,
+  contextMenuAlbum: func.isRequired,
+  contextMenuSong: func.isRequired,
 };
 
 Albums.defaultProps = {
   playing: false,
+  current: null,
+  albumPlaying: false,
   albums: [],
+  albumId: undefined,
   user: null,
   albumsPlayingId: '',
+  duration: {
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  },
 };
 
 module.exports = DJKhaled(Albums);

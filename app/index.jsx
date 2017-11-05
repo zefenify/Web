@@ -137,7 +137,7 @@ class WolfCola extends Component {
                     <Route path="/surprise" component={SurpriseContainer} />
                     <Route path="/recent" component={RecentContainer} />
                     <Route path="/songs" component={SongsContainer} />
-                    <Route path="/albums" component={AlbumsContainer} />
+                    <Route path="/albums/:id?" component={AlbumsContainer} />
                     <Route path="/setting" component={SettingContainer} />
 
                     <NotificationContainer />

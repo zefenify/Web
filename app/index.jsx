@@ -99,26 +99,12 @@ class WolfCola extends Component {
                       </NavLinkStyled>
                       <NavLinkStyled to="/top">Top Songs</NavLinkStyled>
                       <NavLinkStyled to="/genre">Genres &amp; Moods</NavLinkStyled>
-                      {
-                      /*
-                      <NavLinkStyled to="/ariflist">ArifList</NavLinkStyled>
-                      <NavLinkStyled to="/surprise">Surprise Me</NavLinkStyled>
-                      */
-                      }
 
                       <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
                       <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
                       <NavLinkStyled to="/songs">Songs</NavLinkStyled>
                       <NavLinkStyled to="/albums">Albums</NavLinkStyled>
                       <NavLinkStyled to="/artists">Artists</NavLinkStyled>
-
-                      {
-                      /*
-                      <div className="nav-h-line">PLAYLISTS&nbsp;<span /></div>
-                      <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
-                      <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
-                      */
-                      }
 
                       <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">SETTINGS&nbsp;</Divider>
                       <NavLinkStyled to="/setting">Settings</NavLinkStyled>

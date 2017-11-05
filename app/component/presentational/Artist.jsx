@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, bool, number, func } from 'prop-types';
+import { shape, bool, number, string, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
@@ -177,7 +177,7 @@ const Arist = ({
   current,
   playing,
   songCount,
-  albumPlayingIndex,
+  albumPlayingId,
   playingArist,
   togglePlayPauseArtist,
   togglePlayPauseSong,
@@ -194,7 +194,7 @@ const Arist = ({
         <h1>{ artist.artist_name }</h1>
         <p style={{ marginTop: '0.25em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
         <div className="play-share">
-          <Button className="play-share__play-big" onClick={togglePlayPauseArtist}>{`${playing && playingArist && albumPlayingIndex === -1 ? 'PAUSE' : 'PLAY'}`}</Button>
+          <Button className="play-share__play-big" onClick={togglePlayPauseArtist}>{`${playing && playingArist && albumPlayingId === '' ? 'PAUSE' : 'PLAY'}`}</Button>
           <Button className="play-share__share" outline noPadding onClick={contextMenuArtist}><Share /></Button>
         </div>
       </div>
@@ -207,7 +207,7 @@ const Arist = ({
         <h2>Albums</h2>
 
         {
-          artist.relationships.album.map((album, albumIndex) => (
+          artist.relationships.album.map(album => (
             <div className="album-list__album album" key={`${artist.artist_id}-${album.album_id}`}>
               <div className="album-cover">
                 <Link to={`/album/${album.album_id}`} className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
@@ -215,8 +215,8 @@ const Arist = ({
                   <p className="album-info__year">{ album.album_year }</p>
                   <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
                   <div className="play-share">
-                    <Button outline className="play-share__play-small" onClick={() => togglePlayPauseAlbum(album, albumIndex)}>{`${playing && albumPlayingIndex === albumIndex ? 'PAUSE' : 'PLAY'}`}</Button>
-                    <Button className="play-share__share" outline noPadding onClick={() => contextMenuAlbum(album.album_id)}><Share /></Button>
+                    <Button outline className="play-share__play-small" onClick={() => togglePlayPauseAlbum(album)}>{`${playing && albumPlayingId === album.album_id ? 'PAUSE' : 'PLAY'}`}</Button>
+                    <Button className="play-share__share" outline noPadding onClick={() => contextMenuAlbum(album)}><Share /></Button>
                   </div>
                 </div>
               </div>
@@ -275,7 +275,7 @@ Arist.propTypes = {
   current: shape({}),
   playing: bool,
   songCount: number,
-  albumPlayingIndex: number,
+  albumPlayingId: string,
   playingArist: bool,
   togglePlayPauseArtist: func.isRequired,
   togglePlayPauseSong: func.isRequired,
@@ -290,7 +290,7 @@ Arist.defaultProps = {
   current: null,
   playing: false,
   songCount: 0,
-  albumPlayingIndex: -1,
+  albumPlayingId: '',
   playingArist: false,
 };
 

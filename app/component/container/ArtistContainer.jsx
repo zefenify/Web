@@ -26,7 +26,7 @@ class ArtistContainer extends Component {
       artist: null,
       songCount: 0,
       flattenSongs: [], // all tracks in artist album flattened
-      albumPlayingIndex: -1, // controls queue set on album play
+      albumPlayingId: '', // controls queue set on album play
       playingArist: false, // checks the current queueInitial is filled with artists song [flat]
     };
 
@@ -106,10 +106,10 @@ class ArtistContainer extends Component {
     const tracks = track(data.relationships.track.map(trackId => included.track[trackId]), included);
     const flattenSongs = flatten(albums.map(album => album.relationships.track));
 
-    let albumPlayingIndex = -1;
-    albums.forEach((album, albumIndex) => {
+    let albumPlayingId = '';
+    albums.forEach((album) => {
       if (sameSongList(queueInitial, album.relationships.track) === true) {
-        albumPlayingIndex = albumIndex;
+        albumPlayingId = album.album_id;
       }
     });
 
@@ -124,7 +124,7 @@ class ArtistContainer extends Component {
       flattenSongs,
       songCount: flattenSongs.length,
       playingArist: sameSongList(queueInitial, flattenSongs),
-      albumPlayingIndex,
+      albumPlayingId,
     }));
   }
 
@@ -145,7 +145,7 @@ class ArtistContainer extends Component {
       });
 
       this.setState(() => ({
-        albumPlayingIndex: -1,
+        albumPlayingId: '',
         playingArist: true,
       }));
       // resuming / pausing playlist
@@ -156,8 +156,8 @@ class ArtistContainer extends Component {
     }
   }
 
-  togglePlayPauseAlbum(album, albumIndex) {
-    if (this.props.current === null || this.state.albumPlayingIndex !== albumIndex) {
+  togglePlayPauseAlbum(album) {
+    if (this.props.current === null || this.state.albumPlayingId !== album.album_id) {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
@@ -168,14 +168,14 @@ class ArtistContainer extends Component {
       });
 
       this.setState(() => ({
-        albumPlayingIndex: albumIndex,
+        albumPlayingId: album.album_id,
         playingArist: true,
       }));
 
       return;
     }
 
-    if (this.state.albumPlayingIndex === albumIndex) {
+    if (this.state.albumPlayingId === album.album_id) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -203,7 +203,7 @@ class ArtistContainer extends Component {
     });
 
     this.setState(() => ({
-      albumPlayingIndex: -1,
+      albumPlayingId: '',
       playingArist: true,
     }));
   }
@@ -218,8 +218,8 @@ class ArtistContainer extends Component {
     });
   }
 
-  contextMenuAlbum(albumId) {
-    const album = this.state.artist.relationships.album.filter(artistAlbum => artistAlbum.album_id === albumId)[0];
+  contextMenuAlbum(albumContext) {
+    const album = this.state.artist.relationships.albumContext.filter(artistAlbum => artistAlbum.album_id === albumContext.album_id)[0];
 
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
@@ -257,7 +257,7 @@ class ArtistContainer extends Component {
         current={this.props.current}
         playing={this.props.playing}
         songCount={this.state.songCount}
-        albumPlayingIndex={this.state.albumPlayingIndex}
+        albumPlayingId={this.state.albumPlayingId}
         playingArist={this.state.playingArist}
         togglePlayPauseArtist={this.togglePlayPauseArtist}
         togglePlayPauseSong={this.togglePlayPauseSong}

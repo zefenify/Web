@@ -41,7 +41,11 @@ class AlbumsContainer extends Component {
 
   buildAlbums(props) {
     if (props.user === null || props.song === null) {
-      this.setState(() => ({ albums: [], albumsPlayingId: -1 }));
+      this.setState(() => ({
+        albums: [],
+        albumsPlayingId: '',
+      }));
+
       return;
     }
 
@@ -53,7 +57,7 @@ class AlbumsContainer extends Component {
     const included = cloneDeep(props.song.included);
     const albums = Object.values(included.album);
     const savedTrackIds = props.song.data.song_track;
-    let albumsPlayingId = -1;
+    let albumsPlayingId = '';
 
     // fix your face, I'm going to be mutating albums...
     // removing tracks that are not saved in album relationship...

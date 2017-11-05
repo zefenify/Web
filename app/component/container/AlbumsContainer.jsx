@@ -217,7 +217,6 @@ class AlbumsContainer extends Component {
         playing={this.props.playing}
         togglePlayPauseAlbum={this.togglePlayPauseAlbum}
         albumsPlayingId={this.state.albumsPlayingId}
-
         current={this.props.current}
         albumId={this.props.match.params.id}
         albumPlaying={this.state.albumPlaying}

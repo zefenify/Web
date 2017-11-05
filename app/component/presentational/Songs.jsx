@@ -101,7 +101,7 @@ const Songs = ({
               currentSongId={current === null ? '' : current.track_id}
               trackNumber={index + 1}
               togglePlayPause={() => togglePlayPauseSong(index, song, current, songs)}
-              playing={playing && playingSongs}
+              playing={playing}
               songId={song.track_id}
               songName={song.track_name}
               songFeaturing={song.track_featuring}

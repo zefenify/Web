@@ -47,7 +47,7 @@ class AlbumContainer extends Component {
         albumTrack = data.relationships.track.map(trackId => included.track[trackId]);
       } else {
         albumTrack = data.relationships.track
-          .filter(trackId => Number.parseInt(paramTrackId, 10) === trackId)
+          .filter(trackId => paramTrackId === trackId)
           .map(trackId => included.track[trackId]);
       }
 

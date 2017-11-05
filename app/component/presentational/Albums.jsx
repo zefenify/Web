@@ -109,6 +109,7 @@ const AlbumContainer = styled.div`
     line-height: 125%;
     margin-top: 0.5em;
     font-size: 1.25em;
+    color: ${props => props.theme.listText};
   }
 
   .album-artist {

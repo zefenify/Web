@@ -23,15 +23,6 @@ class AlbumsContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.user === null || nextProps.song === null) {
-      this.setState(() => ({
-        albums: [],
-        albumsPlayingId: '',
-      }));
-
-      return;
-    }
-
     this.setState(() => albumsBuild(nextProps));
   }
 

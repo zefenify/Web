@@ -99,10 +99,10 @@ const HeaderSongs = ({
   songs,
   current,
   playing,
-  playingSongs,
+  albumPlaying,
   duration,
-  togglePlayPauseAll,
-  togglePlayPauseSong,
+  albumPlayPause,
+  songPlayPause,
   contextMenuAlbum,
   contextMenuSong,
 }) => {
@@ -122,7 +122,7 @@ const HeaderSongs = ({
           <p className="info-container__duration">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
 
           <div className="play-share">
-            <Button className="play-share__play-big" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
+            <Button className="play-share__play-big" onClick={albumPlayPause}>{`${albumPlaying && playing ? 'PAUSE' : 'PLAY'}`}</Button>
             <Button className="play-share__share" outline noPadding onClick={contextMenuAlbum}><Share /></Button>
           </div>
         </div>
@@ -138,7 +138,7 @@ const HeaderSongs = ({
               key={song.track_id}
               currentSongId={current === null ? '' : current.track_id}
               trackNumber={index + 1}
-              togglePlayPause={togglePlayPauseSong}
+              togglePlayPause={songPlayPause}
               playing={playing}
               songId={song.track_id}
               songName={song.track_name}
@@ -166,9 +166,9 @@ HeaderSongs.propTypes = {
     seconds: number,
   }),
   playing: bool,
-  playingSongs: bool,
-  togglePlayPauseAll: func.isRequired,
-  togglePlayPauseSong: func.isRequired,
+  albumPlaying: bool,
+  albumPlayPause: func.isRequired,
+  songPlayPause: func.isRequired,
   contextMenuAlbum: func.isRequired,
   contextMenuSong: func.isRequired,
 };
@@ -185,7 +185,7 @@ HeaderSongs.defaultProps = {
     seconds: 0,
   },
   playing: false,
-  playingSongs: false,
+  albumPlaying: false,
 };
 
 module.exports = DJKhaled(HeaderSongs);

@@ -26,10 +26,10 @@ class AlbumContainer extends Component {
         minutes: 0,
         seconds: 0,
       },
-      playingAlbum: false,
+      albumPlaying: false,
     };
-    this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
-    this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
+    this.albumPlayPause = this.albumPlayPause.bind(this);
+    this.songPlayPause = this.songPlayPause.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
     this.contextMenuSong = this.contextMenuSong.bind(this);
   }
@@ -70,14 +70,14 @@ class AlbumContainer extends Component {
 
         if (queueInitial.length === 0 || this.state.album.relationships.track.length === 0) {
           this.setState(() => ({
-            playingAlbum: false,
+            albumPlaying: false,
           }));
 
           return;
         }
 
         this.setState(() => ({
-          playingAlbum: sameSongList(this.state.album.relationships.track, queueInitial),
+          albumPlaying: sameSongList(this.state.album.relationships.track, queueInitial),
         }));
       });
     }, (err) => {
@@ -108,13 +108,13 @@ class AlbumContainer extends Component {
     this.cancelRequest();
   }
 
-  togglePlayPauseAll() {
+  albumPlayPause() {
     if (this.state.album === null) {
       return;
     }
 
     // booting playlist
-    if (this.props.current === null || this.state.playingAlbum === false) {
+    if (this.props.current === null || this.state.albumPlaying === false) {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
@@ -125,7 +125,7 @@ class AlbumContainer extends Component {
       });
 
       this.setState(() => ({
-        playingAlbum: true,
+        albumPlaying: true,
       }));
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
@@ -135,7 +135,7 @@ class AlbumContainer extends Component {
     }
   }
 
-  togglePlayPauseSong(songId) {
+  songPlayPause(songId) {
     if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
@@ -160,7 +160,7 @@ class AlbumContainer extends Component {
     });
 
     this.setState(() => ({
-      playingAlbum: true,
+      albumPlaying: true,
     }));
   }
 
@@ -199,14 +199,14 @@ class AlbumContainer extends Component {
       <Album
         current={this.props.current}
         playing={this.props.playing}
-        playingSongs={this.props.playing && this.state.playingAlbum}
+        albumPlaying={this.state.albumPlaying}
         duration={this.state.duration}
-        togglePlayPauseAll={this.togglePlayPauseAll}
-        togglePlayPauseSong={this.togglePlayPauseSong}
         title={this.state.album.album_name}
         cover={this.state.album.album_cover}
         artist={this.state.album.album_artist}
         songs={this.state.album.relationships.track}
+        albumPlayPause={this.albumPlayPause}
+        songPlayPause={this.songPlayPause}
         contextMenuAlbum={this.contextMenuAlbum}
         contextMenuSong={this.contextMenuSong}
       />

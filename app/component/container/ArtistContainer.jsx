@@ -25,14 +25,14 @@ class ArtistContainer extends Component {
     this.state = {
       artist: null,
       songCount: 0,
-      flattenSongs: [], // all tracks in artist album flattened
+      songsFlatten: [], // all tracks in artist album flattened
       albumPlayingId: '', // controls queue set on album play
-      playingArist: false, // checks the current queueInitial is filled with artists song [flat]
+      aristPlaying: false, // checks the current queueInitial is filled with artists song [flat]
     };
 
-    this.togglePlayPauseArtist = this.togglePlayPauseArtist.bind(this);
-    this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
-    this.togglePlayPauseAlbum = this.togglePlayPauseAlbum.bind(this);
+    this.artistPlayPause = this.artistPlayPause.bind(this);
+    this.songPlayPause = this.songPlayPause.bind(this);
+    this.albumPlayPause = this.albumPlayPause.bind(this);
     this.contextMenuArtist = this.contextMenuArtist.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
     this.contextMenuSong = this.contextMenuSong.bind(this);
@@ -104,7 +104,7 @@ class ArtistContainer extends Component {
     }), album => album.album_year));
 
     const tracks = track(data.relationships.track.map(trackId => included.track[trackId]), included);
-    const flattenSongs = flatten(albums.map(album => album.relationships.track));
+    const songsFlatten = flatten(albums.map(album => album.relationships.track));
 
     let albumPlayingId = '';
     albums.forEach((album) => {
@@ -121,32 +121,32 @@ class ArtistContainer extends Component {
           track: tracks,
         },
       }),
-      flattenSongs,
-      songCount: flattenSongs.length,
-      playingArist: sameSongList(queueInitial, flattenSongs),
+      songsFlatten,
+      songCount: songsFlatten.length,
+      aristPlaying: sameSongList(queueInitial, songsFlatten),
       albumPlayingId,
     }));
   }
 
-  togglePlayPauseArtist() {
-    if (this.state.artist === null || this.state.flattenSongs.length === 0) {
+  artistPlayPause() {
+    if (this.state.artist === null || this.state.songsFlatten.length === 0) {
       return;
     }
 
     // booting playlist...
-    if (this.props.current === null || this.state.playingArist === false) {
+    if (this.props.current === null || this.state.aristPlaying === false) {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: this.state.flattenSongs[0],
-          queue: this.state.flattenSongs,
-          queueInitial: this.state.flattenSongs,
+          play: this.state.songsFlatten[0],
+          queue: this.state.songsFlatten,
+          queueInitial: this.state.songsFlatten,
         },
       });
 
       this.setState(() => ({
         albumPlayingId: '',
-        playingArist: true,
+        aristPlaying: true,
       }));
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
@@ -156,7 +156,7 @@ class ArtistContainer extends Component {
     }
   }
 
-  togglePlayPauseAlbum(album) {
+  albumPlayPause(album) {
     if (this.props.current === null || this.state.albumPlayingId !== album.album_id) {
       store.dispatch({
         type: PLAY_REQUEST,
@@ -169,7 +169,7 @@ class ArtistContainer extends Component {
 
       this.setState(() => ({
         albumPlayingId: album.album_id,
-        playingArist: true,
+        aristPlaying: true,
       }));
 
       return;
@@ -182,8 +182,8 @@ class ArtistContainer extends Component {
     }
   }
 
-  togglePlayPauseSong(songId) {
-    const songIndex = this.state.flattenSongs.findIndex(song => song.track_id === songId);
+  songPlayPause(songId) {
+    const songIndex = this.state.songsFlatten.findIndex(song => song.track_id === songId);
 
     if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
@@ -196,15 +196,15 @@ class ArtistContainer extends Component {
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.flattenSongs[songIndex],
-        queue: this.state.flattenSongs,
-        queueInitial: this.state.flattenSongs,
+        play: this.state.songsFlatten[songIndex],
+        queue: this.state.songsFlatten,
+        queueInitial: this.state.songsFlatten,
       },
     });
 
     this.setState(() => ({
       albumPlayingId: '',
-      playingArist: true,
+      aristPlaying: true,
     }));
   }
 
@@ -231,7 +231,7 @@ class ArtistContainer extends Component {
   }
 
   contextMenuSong(songId) {
-    const songIndex = this.state.flattenSongs.findIndex(song => song.track_id === songId);
+    const songIndex = this.state.songsFlatten.findIndex(song => song.track_id === songId);
 
     if (songIndex === -1) {
       return;
@@ -241,7 +241,7 @@ class ArtistContainer extends Component {
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_SONG,
-        payload: this.state.flattenSongs[songIndex],
+        payload: this.state.songsFlatten[songIndex],
       },
     });
   }
@@ -258,10 +258,10 @@ class ArtistContainer extends Component {
         playing={this.props.playing}
         songCount={this.state.songCount}
         albumPlayingId={this.state.albumPlayingId}
-        playingArist={this.state.playingArist}
-        togglePlayPauseArtist={this.togglePlayPauseArtist}
-        togglePlayPauseSong={this.togglePlayPauseSong}
-        togglePlayPauseAlbum={this.togglePlayPauseAlbum}
+        aristPlaying={this.state.aristPlaying}
+        artistPlayPause={this.artistPlayPause}
+        songPlayPause={this.songPlayPause}
+        albumPlayPause={this.albumPlayPause}
         contextMenuArtist={this.contextMenuArtist}
         contextMenuAlbum={this.contextMenuAlbum}
         contextMenuSong={this.contextMenuSong}

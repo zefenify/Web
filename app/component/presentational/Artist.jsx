@@ -178,10 +178,10 @@ const Arist = ({
   playing,
   songCount,
   albumPlayingId,
-  playingArist,
-  togglePlayPauseArtist,
-  togglePlayPauseSong,
-  togglePlayPauseAlbum,
+  aristPlaying,
+  artistPlayPause,
+  songPlayPause,
+  albumPlayPause,
   contextMenuArtist,
   contextMenuAlbum,
   contextMenuSong,
@@ -194,7 +194,7 @@ const Arist = ({
         <h1>{ artist.artist_name }</h1>
         <p style={{ marginTop: '0.25em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
         <div className="play-share">
-          <Button className="play-share__play-big" onClick={togglePlayPauseArtist}>{`${playing && playingArist && albumPlayingId === '' ? 'PAUSE' : 'PLAY'}`}</Button>
+          <Button className="play-share__play-big" onClick={artistPlayPause}>{`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}</Button>
           <Button className="play-share__share" outline noPadding onClick={contextMenuArtist}><Share /></Button>
         </div>
       </div>
@@ -215,7 +215,7 @@ const Arist = ({
                   <p className="album-info__year">{ album.album_year }</p>
                   <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
                   <div className="play-share">
-                    <Button outline className="play-share__play-small" onClick={() => togglePlayPauseAlbum(album)}>{`${playing && albumPlayingId === album.album_id ? 'PAUSE' : 'PLAY'}`}</Button>
+                    <Button outline className="play-share__play-small" onClick={() => albumPlayPause(album)}>{`${playing && albumPlayingId === album.album_id ? 'PAUSE' : 'PLAY'}`}</Button>
                     <Button className="play-share__share" outline noPadding onClick={() => contextMenuAlbum(album)}><Share /></Button>
                   </div>
                 </div>
@@ -230,7 +230,7 @@ const Arist = ({
                       key={song.track_id}
                       currentSongId={current === null ? '' : current.track_id}
                       trackNumber={songIndex + 1}
-                      togglePlayPause={togglePlayPauseSong}
+                      togglePlayPause={songPlayPause}
                       playing={playing}
                       songId={song.track_id}
                       songName={song.track_name}
@@ -276,10 +276,10 @@ Arist.propTypes = {
   playing: bool,
   songCount: number,
   albumPlayingId: string,
-  playingArist: bool,
-  togglePlayPauseArtist: func.isRequired,
-  togglePlayPauseSong: func.isRequired,
-  togglePlayPauseAlbum: func.isRequired,
+  aristPlaying: bool,
+  artistPlayPause: func.isRequired,
+  songPlayPause: func.isRequired,
+  albumPlayPause: func.isRequired,
   contextMenuArtist: func.isRequired,
   contextMenuAlbum: func.isRequired,
   contextMenuSong: func.isRequired,
@@ -291,7 +291,7 @@ Arist.defaultProps = {
   playing: false,
   songCount: 0,
   albumPlayingId: '',
-  playingArist: false,
+  aristPlaying: false,
 };
 
 module.exports = DJKhaled(Arist);

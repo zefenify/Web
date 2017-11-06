@@ -169,7 +169,7 @@ class ArtistContainer extends Component {
 
       this.setState(() => ({
         albumPlayingId: album.album_id,
-        aristPlaying: true,
+        aristPlaying: sameSongList(album.relationships.track, this.state.songsFlatten),
       }));
 
       return;

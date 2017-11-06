@@ -202,7 +202,7 @@ const Arist = ({
 
     {
       artist.relationships.album.length === 0 ? null : <div className="album-list">
-        <h2><Divider color="#ffffff">Albums&nbsp;</Divider></h2>
+        <h2><Divider textTheme>Albums&nbsp;</Divider></h2>
 
         {
           artist.relationships.album.map(album => (
@@ -248,7 +248,7 @@ const Arist = ({
 
     {
       artist.relationships.track.length === 0 ? null : <div style={{ marginTop: '2em' }}>
-        <h2><Divider color="#ffffff">Appears On&nbsp;</Divider></h2>
+        <h2><Divider textTheme>Appears On&nbsp;</Divider></h2>
 
         <div className="appears-container">
           <div className="appears-container__list appears-list">

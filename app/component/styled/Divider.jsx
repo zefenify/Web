@@ -5,7 +5,7 @@ const Divider = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  color: ${props => props.color || props.theme.listDividerText};
+  color: ${props => props.textTheme ? props.theme.listText : props.theme.listDividerText};
   padding: ${props => props.padding || '0'};
   font-size: ${props => props.fontSize || '1em'};
 

@@ -198,7 +198,7 @@ const Search = ({
       <div className="result">
         <div className="result__list">
           { /* artist */ }
-          { matches.artist.length > 0 ? <h2><Divider>Artists&nbsp;</Divider></h2> : null }
+          { matches.artist.length > 0 ? <h2><Divider textTheme>Artists&nbsp;</Divider></h2> : null }
           {
             matches.artist.length > 0 ?
               <div className="result-match-list">
@@ -213,7 +213,7 @@ const Search = ({
 
           { /* album */ }
           { /* apu: album-playlist[-uplaylist] */ }
-          { matches.album.length > 0 ? <h2><Divider>Albums&nbsp;</Divider></h2> : null }
+          { matches.album.length > 0 ? <h2><Divider textTheme>Albums&nbsp;</Divider></h2> : null }
           {
             matches.album.length > 0 ?
               <div className="result-match-list">
@@ -228,7 +228,7 @@ const Search = ({
           }
 
           { /* playlist */ }
-          { matches.playlist.length > 0 ? <h2><Divider>Playlists&nbsp;</Divider></h2> : null }
+          { matches.playlist.length > 0 ? <h2><Divider textTheme>Playlists&nbsp;</Divider></h2> : null }
           {
             matches.playlist.length > 0 ?
               <div className="result-match-list">
@@ -242,7 +242,7 @@ const Search = ({
           }
 
           { /* track */ }
-          { matches.track.length > 0 ? <h2><Divider>Tracks&nbsp;</Divider></h2> : null }
+          { matches.track.length > 0 ? <h2><Divider textTheme>Tracks&nbsp;</Divider></h2> : null }
           {
             matches.track.length > 0 ?
               <div>

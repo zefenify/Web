@@ -238,7 +238,6 @@ class ArtistsContainer extends Component {
 
 ArtistsContainer.propTypes = {
   user: shape({}),
-  song: shape({}),
   current: shape({}),
   playing: bool,
   match: shape({
@@ -250,7 +249,6 @@ ArtistsContainer.propTypes = {
 
 ArtistsContainer.defaultProps = {
   user: null,
-  song: null,
   current: null,
   playing: false,
 };

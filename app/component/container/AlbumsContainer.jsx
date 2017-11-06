@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bool, shape, arrayOf, oneOfType, string } from 'prop-types';
+import { bool, shape, oneOfType, string } from 'prop-types';
 
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -165,7 +165,6 @@ AlbumsContainer.propTypes = {
     }),
   }),
   user: shape({}),
-  song: shape({}),
 };
 
 AlbumsContainer.defaultProps = {
@@ -173,7 +172,6 @@ AlbumsContainer.defaultProps = {
   current: null,
   match: { params: { id: undefined } },
   user: null,
-  song: null,
 };
 
 module.exports = connect(state => ({

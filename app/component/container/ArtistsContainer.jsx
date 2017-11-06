@@ -7,7 +7,7 @@ import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_ALBUM, CONTEXT_ARTIST } from '@app/redux/constant/contextMenu';
 
 import store from '@app/redux/store';
-import buildArtistsSelector from '@app/redux/selector/buildArtists';
+import artistsBuild from '@app/redux/selector/artistsBuild';
 
 import Artists from '@app/component/presentational/Artists';
 
@@ -28,11 +28,10 @@ class ArtistsContainer extends Component {
     this.contextMenuArtist = this.contextMenuArtist.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
     this.contextMenuSong = this.contextMenuSong.bind(this);
-    this.buildArtists = this.buildArtists.bind(this);
   }
 
   componentDidMount() {
-    this.buildArtists(this.props);
+    this.setState(() => artistsBuild(this.props));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -46,11 +45,7 @@ class ArtistsContainer extends Component {
       return;
     }
 
-    this.buildArtists(nextProps);
-  }
-
-  buildArtists(props) {
-    this.setState(() => buildArtistsSelector(props));
+    this.setState(() => artistsBuild(nextProps));
   }
 
   artistPlayPauseBuild(artistId) {

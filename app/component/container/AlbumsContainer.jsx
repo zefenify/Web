@@ -52,6 +52,8 @@ class AlbumsContainer extends Component {
   }
 
   buildAlbums(props) {
+    console.log('build albums...');
+
     if (props.user === null || props.song === null) {
       this.setState(() => ({
         albums: [],
@@ -104,8 +106,8 @@ class AlbumsContainer extends Component {
     }
   }
 
-  albumPlayPause(album) {
-    if (album.album_id === this.state.albumsPlayingId) {
+  albumPlayPause(albumId) {
+    if (albumId === this.state.albumsPlayingId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -113,16 +115,22 @@ class AlbumsContainer extends Component {
       return;
     }
 
+    const albumIndex = this.state.albums.findIndex(album => album.album_id === albumId);
+
+    if (albumIndex === -1) {
+      return;
+    }
+
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: album.relationships.track[0],
-        queue: album.relationships.track,
-        queueInitial: album.relationships.track,
+        play: this.state.albums[albumIndex].relationships.track[0],
+        queue: this.state.albums[albumIndex].relationships.track,
+        queueInitial: this.state.albums[albumIndex].relationships.track,
       },
     });
 
-    this.setState(() => ({ albumsPlayingId: album.album_id }));
+    this.setState(() => ({ albumsPlayingId: albumId }));
   }
 
   // [x]

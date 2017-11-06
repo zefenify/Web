@@ -192,7 +192,7 @@ const Albums = ({
               <div className="album-cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }}>
                 <Link to={`/albums/${album.album_id}`} className="album-cover__overlay">
                   <PlayPauseSVG
-                    onClick={(e) => { e.preventDefault(); albumPlayPause(album); }}
+                    onClick={(e) => { e.preventDefault(); albumPlayPause(album.album_id); }}
                     playing={playing && album.album_id === albumsPlayingId}
                   />
                 </Link>

@@ -14,11 +14,7 @@ import Artists from '@app/component/presentational/Artists';
 class ArtistsContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      artists: [],
-      artistPlayingId: '',
-      albumPlayingId: '',
-    };
+    this.state = artistsBuild(props);
 
     this.artistsPlayPause = this.artistsPlayPause.bind(this);
     this.artistPlayPause = this.artistPlayPause.bind(this);
@@ -28,10 +24,6 @@ class ArtistsContainer extends Component {
     this.contextMenuArtist = this.contextMenuArtist.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
     this.contextMenuSong = this.contextMenuSong.bind(this);
-  }
-
-  componentDidMount() {
-    this.setState(() => artistsBuild(this.props));
   }
 
   componentWillReceiveProps(nextProps) {

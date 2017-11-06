@@ -136,12 +136,12 @@ const Albums = ({
   albums,
   albumPlaying,
   duration,
-  togglePlayPauseAlbumAlbum,
-  togglePlayPauseSong,
+  albumsPlayPause,
+  songPlayPause,
   contextMenuAlbum,
   contextMenuSong,
   albumsPlayingId,
-  togglePlayPauseAlbum,
+  albumPlayPause,
 }) => {
   if (user === null) {
     return (
@@ -163,16 +163,16 @@ const Albums = ({
   if (albumId !== undefined && albums.length === 1) {
     return (
       <Album
-        current={current}
-        playing={playing}
-        playingSongs={playing && albumPlaying}
-        duration={duration}
-        togglePlayPauseAll={togglePlayPauseAlbumAlbum}
-        togglePlayPauseSong={togglePlayPauseSong}
         title={albums[0].album_name}
         cover={albums[0].album_cover}
         artist={albums[0].album_artist}
         songs={albums[0].relationships.track}
+        current={current}
+        playing={playing}
+        albumPlaying={albumPlaying}
+        duration={duration}
+        albumPlayPause={albumsPlayPause}
+        songPlayPause={songPlayPause}
         contextMenuAlbum={contextMenuAlbum}
         contextMenuSong={contextMenuSong}
       />
@@ -192,7 +192,7 @@ const Albums = ({
               <div className="album-cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }}>
                 <Link to={`/albums/${album.album_id}`} className="album-cover__overlay">
                   <PlayPauseSVG
-                    onClick={(e) => { e.preventDefault(); togglePlayPauseAlbum(album); }}
+                    onClick={(e) => { e.preventDefault(); albumPlayPause(album); }}
                     playing={playing && album.album_id === albumsPlayingId}
                   />
                 </Link>
@@ -215,15 +215,15 @@ Albums.propTypes = {
   user: shape({}),
   albumPlaying: bool,
   albumsPlayingId: string,
-  togglePlayPauseAlbum: func.isRequired,
+  albumPlayPause: func.isRequired,
   current: shape({}),
   duration: shape({
     hours: number,
     minutes: number,
     seconds: number,
   }),
-  togglePlayPauseAlbumAlbum: func.isRequired,
-  togglePlayPauseSong: func.isRequired,
+  albumsPlayPause: func.isRequired,
+  songPlayPause: func.isRequired,
   contextMenuAlbum: func.isRequired,
   contextMenuSong: func.isRequired,
 };

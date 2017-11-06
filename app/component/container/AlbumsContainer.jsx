@@ -27,9 +27,9 @@ class AlbumsContainer extends Component {
       },
     };
 
-    this.togglePlayPauseAlbum = this.togglePlayPauseAlbum.bind(this);
-    this.togglePlayPauseAlbumAlbum = this.togglePlayPauseAlbumAlbum.bind(this);
-    this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
+    this.albumPlayPause = this.albumPlayPause.bind(this);
+    this.albumsPlayPause = this.albumsPlayPause.bind(this);
+    this.songPlayPause = this.songPlayPause.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
     this.contextMenuSong = this.contextMenuSong.bind(this);
   }
@@ -104,7 +104,7 @@ class AlbumsContainer extends Component {
     }
   }
 
-  togglePlayPauseAlbum(album) {
+  albumPlayPause(album) {
     if (album.album_id === this.state.albumsPlayingId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
@@ -126,7 +126,7 @@ class AlbumsContainer extends Component {
   }
 
   // [x]
-  togglePlayPauseAlbumAlbum() {
+  albumsPlayPause() {
     if (this.state.albums === null) {
       return;
     }
@@ -153,7 +153,7 @@ class AlbumsContainer extends Component {
     }
   }
 
-  togglePlayPauseSong(songId) {
+  songPlayPause(songId) {
     if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
@@ -215,14 +215,14 @@ class AlbumsContainer extends Component {
         user={this.props.user}
         albums={this.state.albums}
         playing={this.props.playing}
-        togglePlayPauseAlbum={this.togglePlayPauseAlbum}
+        albumPlayPause={this.albumPlayPause}
         albumsPlayingId={this.state.albumsPlayingId}
         current={this.props.current}
         albumId={this.props.match.params.id}
         albumPlaying={this.state.albumPlaying}
         duration={this.state.duration}
-        togglePlayPauseAlbumAlbum={this.togglePlayPauseAlbumAlbum}
-        togglePlayPauseSong={this.togglePlayPauseSong}
+        albumsPlayPause={this.albumsPlayPause}
+        songPlayPause={this.songPlayPause}
         contextMenuAlbum={this.contextMenuAlbum}
         contextMenuSong={this.contextMenuSong}
       />

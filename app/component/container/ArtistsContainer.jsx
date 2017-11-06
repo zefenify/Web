@@ -27,16 +27,6 @@ class ArtistsContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.user === null || nextProps.song === null) {
-      this.setState(() => ({
-        artists: [],
-        albumPlayingId: '',
-        artistPlayingId: '',
-      }));
-
-      return;
-    }
-
     this.setState(() => artistsBuild(nextProps));
   }
 
@@ -177,7 +167,6 @@ class ArtistsContainer extends Component {
     if (artistIndex === -1) {
       return;
     }
-
 
     const albumIndex = this.state.artists[artistIndex].relationships.album.findIndex(album => album.album_id === albumId);
 

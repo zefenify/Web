@@ -200,11 +200,9 @@ const Arist = ({
       </div>
     </div>
 
-    <Divider />
-
     {
       artist.relationships.album.length === 0 ? null : <div className="album-list">
-        <h2>Albums</h2>
+        <h2><Divider color="#ffffff">Albums&nbsp;</Divider></h2>
 
         {
           artist.relationships.album.map(album => (

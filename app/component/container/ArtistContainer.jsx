@@ -156,26 +156,32 @@ class ArtistContainer extends Component {
     }
   }
 
-  albumPlayPause(album) {
-    if (this.props.current === null || this.state.albumPlayingId !== album.album_id) {
+  albumPlayPause(albumId) {
+    if (this.props.current === null || this.state.albumPlayingId !== albumId) {
+      const albumIndex = this.state.artist.relationships.album.findIndex(album => album.album_id === albumId);
+
+      if (albumIndex === -1) {
+        return;
+      }
+
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: album.relationships.track[0],
-          queue: album.relationships.track,
-          queueInitial: album.relationships.track,
+          play: this.state.artist.relationships.album[albumIndex].relationships.track[0],
+          queue: this.state.artist.relationships.album[albumIndex].relationships.track,
+          queueInitial: this.state.artist.relationships.album[albumIndex].relationships.track,
         },
       });
 
       this.setState(() => ({
-        albumPlayingId: album.album_id,
-        aristPlaying: sameSongList(album.relationships.track, this.state.songsFlatten),
+        albumPlayingId: albumId,
+        aristPlaying: sameSongList(this.state.artist.relationships.album[albumIndex].relationships.track, this.state.songsFlatten),
       }));
 
       return;
     }
 
-    if (this.state.albumPlayingId === album.album_id) {
+    if (this.state.albumPlayingId === albumId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -218,14 +224,18 @@ class ArtistContainer extends Component {
     });
   }
 
-  contextMenuAlbum(albumContext) {
-    const album = this.state.artist.relationships.albumContext.filter(artistAlbum => artistAlbum.album_id === albumContext.album_id)[0];
+  contextMenuAlbum(albumId) {
+    const albumIndex = this.state.artist.relationships.album.findIndex(album => album.album_id === albumId);
+
+    if (albumIndex === -1) {
+      return;
+    }
 
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         context: CONTEXT_ALBUM,
-        payload: album,
+        payload: this.state.artist.relationships.album[albumIndex],
       },
     });
   }

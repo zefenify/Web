@@ -215,8 +215,8 @@ const Arist = ({
                   <p className="album-info__year">{ album.album_year }</p>
                   <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
                   <div className="play-share">
-                    <Button outline className="play-share__play-small" onClick={() => albumPlayPause(album)}>{`${playing && albumPlayingId === album.album_id ? 'PAUSE' : 'PLAY'}`}</Button>
-                    <Button className="play-share__share" outline noPadding onClick={() => contextMenuAlbum(album)}><Share /></Button>
+                    <Button outline className="play-share__play-small" onClick={() => albumPlayPause(album.album_id)}>{`${playing && albumPlayingId === album.album_id ? 'PAUSE' : 'PLAY'}`}</Button>
+                    <Button className="play-share__share" outline noPadding onClick={() => contextMenuAlbum(album.album_id)}><Share /></Button>
                   </div>
                 </div>
               </div>

@@ -24,7 +24,7 @@ import SongsContainer from '@app/component/container/SongsContainer';
 import AlbumsContainer from '@app/component/container/AlbumsContainer';
 import ArtistsContainer from '@app/component/container/ArtistsContainer';
 import SurpriseContainer from '@app/component/container/SurpriseContainer';
-import TopContainer from '@app/component/container/TopContainer';
+import TrendingContainer from '@app/component/container/TrendingContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
 import BoxContainer from '@app/component/container/BoxContainer';
 import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
@@ -38,23 +38,6 @@ import { Search, Trending, Settings } from '@app/component/presentational/SVG';
 
 import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
-
-const Search = props => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <circle cx="10.5" cy="10.5" r="7.5" />
-    <line x1="21" y1="21" x2="15.8" y2="15.8" />
-  </svg>
-);
 
 class WolfCola extends Component {
   constructor(props) {
@@ -99,7 +82,10 @@ class WolfCola extends Component {
                         <span>Search</span>
                         <Search style={{ float: 'right' }} />
                       </NavLinkStyled>
-                      <NavLinkStyled to="/top">Top Songs</NavLinkStyled>
+                      <NavLinkStyled to="/trending">
+                        <span>Trending</span>
+                        <Trending style={{ float: 'right' }} />
+                      </NavLinkStyled>
                       <NavLinkStyled to="/genre">Genres &amp; Moods</NavLinkStyled>
 
                       <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
@@ -123,7 +109,7 @@ class WolfCola extends Component {
                     <Route path="/artist/:id" component={ArtistContainer} />
                     <Route path="/album/:id/:trackId?" component={AlbumContainer} />
                     <Route path="/search" component={SearchContainer} />
-                    <Route path="/top/:category?" component={TopContainer} />
+                    <Route path="/trending/:category?" component={TrendingContainer} />
                     <Route path="/:type(genre|ariflist)/:list?" component={BoxContainer} />
                     <Route path="/surprise" component={SurpriseContainer} />
                     <Route path="/recent" component={RecentContainer} />

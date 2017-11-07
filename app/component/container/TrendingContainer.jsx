@@ -2,37 +2,41 @@ import React, { Component } from 'react';
 import { string, bool, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
+import { BASE } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import sameSongList from '@app/util/sameSongList';
+import track from '@app/util/track';
 import { human } from '@app/util/time';
 
 import api from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
-import Top from '@app/component/presentational/Top';
+import Trending from '@app/component/presentational/Trending';
 
-class TopContainer extends Component {
+class TrendingContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      most: null,
+      trending: null,
       duration: {
         hours: 0,
         minutes: 0,
         seconds: 0,
       },
-      playingTheSameMost: false,
+      trendingPlaying: false,
     };
 
-    this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
-    this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
+    this.trendingPlayPause = this.trendingPlayPause.bind(this);
+    this.songPlayPause = this.songPlayPause.bind(this);
+    this.contextMenuSong = this.contextMenuSong.bind(this);
   }
 
   componentDidMount() {
     if (this.props.match.params.category === undefined) {
-      this.props.history.replace('/top/recent');
+      this.props.history.replace('/trending/yesterday');
       return;
     }
 
@@ -41,7 +45,7 @@ class TopContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.category === undefined) {
-      this.props.history.replace('/top/recent');
+      this.props.history.replace('/trending/yesterday');
       return;
     }
 
@@ -56,14 +60,14 @@ class TopContainer extends Component {
   }
 
   loadSongs(filter) {
-    if (['recent', 'liked', 'played'].includes(filter) === false) {
-      this.props.history.replace('/top/recent');
+    if (['yesterday', 'today', 'week', 'popularity'].includes(filter) === false) {
+      this.props.history.replace('/trending/yesterday');
       return;
     }
 
     // this makes sure tab navigation clears previous render
     this.setState(() => ({
-      most: null,
+      trending: null,
     }));
 
     if (this.cancelRequest !== undefined) {
@@ -71,34 +75,31 @@ class TopContainer extends Component {
     }
 
     store.dispatch(loading(true));
-    api(`json/list/most${filter}.json`, undefined, (cancel) => {
+    api(`${BASE}trending/${filter}`, undefined, (cancel) => {
       this.cancelRequest = cancel;
-    })
+    }, filter === 'today')
       .then((data) => {
         store.dispatch(loading(false));
+
+        const trending = track(data.data, data.included);
+
         this.setState(() => ({
-          most: data,
-          duration: human(data.songs.reduce((totalD, song) => totalD + song.playtime, 0), true),
+          trending,
+          duration: human(trending.reduce((totalDuration, t) => totalDuration + t.track_track.s3_meta.duration, 0), true),
         }), () => {
           const { queueInitial } = store.getState();
 
-          if (queueInitial.length === 0 || this.state.most.songs.length === 0) {
+          if (queueInitial.length === 0 || this.state.trending.length === 0) {
             this.setState(() => ({
-              playingTheSameMost: false,
+              trendingPlaying: false,
             }));
 
             return;
           }
 
-          if (sameSongList(this.state.most.songs, queueInitial)) {
-            this.setState(() => ({
-              playingTheSameMost: true,
-            }));
-          } else {
-            this.setState(() => ({
-              playingTheSameMost: false,
-            }));
-          }
+          this.setState(() => ({
+            trendingPlaying: sameSongList(this.state.trending, queueInitial),
+          }));
         });
       }, (err) => {
         store.dispatch(loading(false));
@@ -117,41 +118,42 @@ class TopContainer extends Component {
         store.dispatch({
           type: NOTIFICATION_ON_REQUEST,
           payload: {
-            message: 'ይቅርታ, unable to fetch Top',
+            message: 'ይቅርታ, unable to fetch Trending',
           },
         });
       });
   }
 
-  togglePlayPauseAll() {
-    if (this.state.most === null) {
+  trendingPlayPause() {
+    if (this.state.trending === null) {
       return;
     }
 
-    // booting playlist
-    if (this.props.current === null || this.state.playingTheSameMost === false) {
+    // booting playlist...
+    if (this.props.current === null || this.state.trendingPlaying === false) {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: this.state.most.songs[0],
-          queue: this.state.most.songs,
-          queueInitial: this.state.most.songs,
+          play: this.state.trending[0],
+          queue: this.state.trending,
+          queueInitial: this.state.trending,
         },
       });
 
       this.setState(() => ({
-        playingTheSameMost: true,
+        trendingPlaying: true,
       }));
-      // resuming / pausing playlist
-    } else if (this.props.current !== null) {
-      store.dispatch({
-        type: PLAY_PAUSE_REQUEST,
-      });
+
+      return;
     }
+
+    store.dispatch({
+      type: PLAY_PAUSE_REQUEST,
+    });
   }
 
-  togglePlayPauseSong(songId) {
-    if (this.props.current !== null && this.props.current.songId === songId) {
+  songPlayPause(songId) {
+    if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -159,42 +161,64 @@ class TopContainer extends Component {
       return;
     }
 
-    const songIdIndex = this.state.most.songs.findIndex(song => song.songId === songId);
+    const songIndex = this.state.trending.findIndex(t => t.track_id === songId);
 
-    if (songIdIndex === -1) {
+    if (songIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.most.songs[songIdIndex],
-        queue: this.state.most.songs,
-        queueInitial: this.state.most.songs,
+        play: this.state.trending[songIndex],
+        queue: this.state.trending,
+        queueInitial: this.state.trending,
       },
     });
 
     this.setState(() => ({
-      playingTheSameMost: true,
+      trendingPlaying: true,
     }));
+  }
+
+  contextMenuSong(songId) {
+    if (this.state.trending === null) {
+      return;
+    }
+
+    const songIndex = this.state.trending.findIndex(song => song.track_id === songId);
+
+    if (songIndex === -1) {
+      return;
+    }
+
+    store.dispatch({
+      type: CONTEXT_MENU_ON_REQUEST,
+      payload: {
+        type: CONTEXT_SONG,
+        payload: this.state.trending[songIndex],
+      },
+    });
   }
 
   render() {
     return (
-      <Top
-        most={this.state.most}
+      <Trending
         current={this.props.current}
         playing={this.props.playing}
+        category={this.props.match.params.category}
+        trending={this.state.trending}
         duration={this.state.duration}
-        playingTheSameMost={this.state.playingTheSameMost}
-        togglePlayPauseAll={this.togglePlayPauseAll}
-        togglePlayPauseSong={this.togglePlayPauseSong}
+        trendingPlaying={this.state.trendingPlaying}
+        trendingPlayPause={this.trendingPlayPause}
+        songPlayPause={this.songPlayPause}
+        contextMenuSong={this.contextMenuSong}
       />
     );
   }
 }
 
-TopContainer.propTypes = {
+TrendingContainer.propTypes = {
   playing: bool,
   current: shape({}),
   history: shape({
@@ -202,12 +226,12 @@ TopContainer.propTypes = {
   }).isRequired,
   match: shape({
     params: shape({
-      id: string,
+      category: string,
     }),
   }).isRequired,
 };
 
-TopContainer.defaultProps = {
+TrendingContainer.defaultProps = {
   playing: false,
   current: null,
 };
@@ -215,4 +239,4 @@ TopContainer.defaultProps = {
 module.exports = connect(state => ({
   current: state.current,
   playing: state.playing,
-}))(TopContainer);
+}))(TrendingContainer);

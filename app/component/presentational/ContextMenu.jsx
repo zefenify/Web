@@ -64,7 +64,8 @@ const ContextMenuContainer = styled.div`
   }
 
   .song,
-  .album {
+  .album,
+  .artist {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,6 +76,14 @@ const ContextMenuContainer = styled.div`
 
     & > * {
       margin: 0;
+    }
+
+    &__artist-image {
+      width: 164px;
+      height: 164px;
+      border-radius: 50%;
+      border: 1px solid ${props => props.theme.listDivider};
+      margin-bottom: 0.75em;
     }
 
     &__album-image {
@@ -139,7 +148,7 @@ const ContextMenu = ({
           </div>
 
           <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
-          <div className="artist">
+          <div>
             { payload.track_album.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
             { payload.track_featuring.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
@@ -174,7 +183,7 @@ const ContextMenu = ({
           </div>
 
           <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
-          <div className="artist">
+          <div>
             { payload.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
@@ -185,6 +194,25 @@ const ContextMenu = ({
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/album/${payload.album_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Telegram</a>
+        </ContextMenuContainer>
+      );
+
+    case CONTEXT_ARTIST:
+      return (
+        <ContextMenuContainer id="context-menu-container">
+          <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
+            <CloseSVG />
+          </ClearButton>
+
+          <div className="artist">
+            <div className="artist__artist-image" style={{ background: `transparent url('${BASE_S3}${payload.artist_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+            <p className="artist__name">{ payload.artist_name }</p>
+          </div>
+
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/artist/${payload.artist_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 

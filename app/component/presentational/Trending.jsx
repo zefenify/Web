@@ -157,7 +157,7 @@ const Trending = ({
                   currentSongId={current === null ? '' : current.track_id}
                   trackNumber={index + 1}
                   togglePlayPause={songPlayPause}
-                  playing={playing && trendingPlaying}
+                  playing={playing}
                   songId={song.track_id}
                   songName={song.track_name}
                   songFeaturing={song.track_featuring}

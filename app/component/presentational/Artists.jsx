@@ -32,11 +32,11 @@ const ArtistContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 0 0 20%;
+  flex: 0 0 25%;
   padding: 0 1em;
-  margin-bottom: 3em;
-  text-decoration: none;
   align-items: center;
+  text-decoration: none;
+  margin-bottom: 2em;
   color: #fff;
 
   &.active {
@@ -59,7 +59,7 @@ const ArtistContainer = styled.div`
 
   .artist {
     position: relative;
-    width: 100%;
+    width: 92%;
 
     &__image {
       width: 100%;
@@ -80,6 +80,7 @@ const ArtistContainer = styled.div`
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 50%;
       color: inherit;
+      border: 1px solid ${props => props.theme.listDivider};
 
       svg {
         display: flex;

@@ -57,9 +57,9 @@ const Recent = ({
   current,
   history,
   totalDuration,
-  playingHistory,
-  togglePlayPauseHistory,
-  togglePlayPauseSong,
+  historyPlaying,
+  historyPlayPause,
+  songPlayPause,
   contextMenuSong,
 }) => {
   if (history.length === 0) {
@@ -77,7 +77,7 @@ const Recent = ({
       <div className="recently-played">
         <h1 className="recently-played__title">Recently Played</h1>
         <p className="recently-played__info">{`${history.length} song${history.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-        <Button className="recently-played__button" onClick={() => togglePlayPauseHistory(playingHistory, history)}>{`${(playing && playingHistory) ? 'PAUSE' : 'PLAY'}`}</Button>
+        <Button className="recently-played__button" onClick={historyPlayPause}>{`${(playing && historyPlaying) ? 'PAUSE' : 'PLAY'}`}</Button>
       </div>
 
       <Divider />
@@ -89,14 +89,14 @@ const Recent = ({
               key={song.track_id}
               currentSongId={current === null ? '' : current.track_id}
               trackNumber={index + 1}
-              togglePlayPause={() => togglePlayPauseSong(index, song, current, history)}
-              playing={playing && playingHistory}
+              togglePlayPause={songPlayPause}
+              playing={playing && historyPlaying}
               songId={song.track_id}
               songName={song.track_name}
               songFeaturing={song.track_featuring}
               songDuration={song.track_track.s3_meta.duration}
               songAlbum={song.track_album}
-              contextMenuSong={songId => contextMenuSong(songId, history)}
+              contextMenuSong={contextMenuSong}
             />
           ))
         }
@@ -114,9 +114,9 @@ Recent.propTypes = {
     minutes: number,
     seconds: number,
   }),
-  playingHistory: bool,
-  togglePlayPauseHistory: func.isRequired,
-  togglePlayPauseSong: func.isRequired,
+  historyPlaying: bool,
+  historyPlayPause: func.isRequired,
+  songPlayPause: func.isRequired,
   contextMenuSong: func.isRequired,
 };
 
@@ -129,7 +129,7 @@ Recent.defaultProps = {
     minutes: 0,
     seconds: 0,
   },
-  playingHistory: false,
+  historyPlaying: false,
 };
 
 module.exports = DJKhaled(Recent);

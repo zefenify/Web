@@ -9,9 +9,9 @@ import { THEME_REQUEST } from '@app/redux/constant/theme';
 import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
 import { USER_REQUEST } from '@app/redux/constant/user';
 
-import Setting from '@app/component/presentational/Setting';
+import Settings from '@app/component/presentational/Settings';
 
-const SettingContainer = props => (<Setting {...props} />);
+const SettingsContainer = props => (<Settings {...props} />);
 
 module.exports = connect(state => ({
   currentTheme: state.theme,
@@ -60,4 +60,4 @@ module.exports = connect(state => ({
       }(document, 'script', 'facebook-jssdk'));
     }
   },
-}))(SettingContainer);
+}))(SettingsContainer);

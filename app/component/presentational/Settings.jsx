@@ -7,7 +7,7 @@ import Button from '@app/component/styled/Button';
 import Divider from '@app/component/styled/Divider';
 import Range from '@app/component/styled/Range';
 
-const SettingContainer = styled.div`
+const SettingsContainer = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@ const SettingContainer = styled.div`
   }
 `;
 
-const Setting = ({
+const Settings = ({
   currentTheme,
   currentCrossfade,
   crossfade,
@@ -56,7 +56,7 @@ const Setting = ({
 
   if (user === null) {
     return (
-      <SettingContainer>
+      <SettingsContainer>
         <h1>Settings</h1>
 
         <Divider />
@@ -83,12 +83,12 @@ const Setting = ({
             step="1"
           />
         </div>
-      </SettingContainer>
+      </SettingsContainer>
     );
   }
 
   return (
-    <SettingContainer>
+    <SettingsContainer>
       <h1>Settings</h1>
 
       <Divider />
@@ -117,11 +117,11 @@ const Setting = ({
           step="1"
         />
       </div>
-    </SettingContainer>
+    </SettingsContainer>
   );
 };
 
-Setting.propTypes = {
+Settings.propTypes = {
   currentTheme: string,
   user: shape({}),
   currentCrossfade: number,
@@ -131,10 +131,10 @@ Setting.propTypes = {
   logout: func.isRequired,
 };
 
-Setting.defaultProps = {
+Settings.defaultProps = {
   currentTheme: 'light',
   currentCrossfade: 0,
   user: null,
 };
 
-module.exports = DJKhaled(Setting);
+module.exports = DJKhaled(Settings);

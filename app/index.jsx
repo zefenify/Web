@@ -14,7 +14,7 @@ import store from '@app/redux/store';
 import { themeLight, themeDark } from '@app/config/theme';
 
 import HomeContainer from '@app/component/container/HomeContainer';
-import SettingContainer from '@app/component/container/SettingContainer';
+import SettingsContainer from '@app/component/container/SettingsContainer';
 import ControlContainer from '@app/component/container/ControlContainer';
 import PlaylistContainer from '@app/component/container/PlaylistContainer';
 import ArtistContainer from '@app/component/container/ArtistContainer';
@@ -34,6 +34,7 @@ import NotificationContainer from '@app/component/container/NotificationContaine
 import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
+import { Search, Trending, Settings } from '@app/component/presentational/SVG';
 
 import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
@@ -108,7 +109,10 @@ class WolfCola extends Component {
                       <NavLinkStyled to="/artists">Artists</NavLinkStyled>
 
                       <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">SETTINGS&nbsp;</Divider>
-                      <NavLinkStyled to="/setting">Settings</NavLinkStyled>
+                      <NavLinkStyled to="/settings">
+                        <span>Settings</span>
+                        <Settings style={{ float: 'right' }} />
+                      </NavLinkStyled>
                       <div style={{ paddingBottom: '2em' }} />
                     </div>
                   </NavContainer>
@@ -126,7 +130,7 @@ class WolfCola extends Component {
                     <Route path="/songs" component={SongsContainer} />
                     <Route path="/albums/:id?" component={AlbumsContainer} />
                     <Route path="/artists/:id?" component={ArtistsContainer} />
-                    <Route path="/setting" component={SettingContainer} />
+                    <Route path="/settings" component={SettingsContainer} />
 
                     <NotificationContainer />
                   </RouteContainer>

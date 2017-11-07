@@ -63,7 +63,8 @@ const ContextMenuContainer = styled.div`
     }
   }
 
-  .song {
+  .song,
+  .album {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -157,6 +158,33 @@ const ContextMenu = ({
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Telegram</a>
+        </ContextMenuContainer>
+      );
+
+    case CONTEXT_ALBUM:
+      return (
+        <ContextMenuContainer id="context-menu-container">
+          <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
+            <CloseSVG />
+          </ClearButton>
+
+          <div className="album">
+            <div className="album__album-image" style={{ background: `transparent url('${BASE_S3}${payload.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+            <p className="album__name">{ payload.album_name }</p>
+          </div>
+
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
+          <div className="artist">
+            { payload.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
+          </div>
+
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Album&nbsp;</Divider>
+          <ClearButton className="link" disabled={`/album/${payload.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.album_id}`); }}>Go to Album</ClearButton>
+
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/album/${payload.album_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 

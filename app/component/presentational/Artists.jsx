@@ -54,7 +54,7 @@ const ArtistContainer = styled.div`
   }
 
   @media(min-width: 1282px) {
-    flex: 0 0 16.66%;
+    flex: 0 0 20%;
   }
 
   .artist {

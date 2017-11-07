@@ -177,7 +177,7 @@ class ArtistsContainer extends Component {
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
-        context: CONTEXT_ALBUM,
+        type: CONTEXT_ALBUM,
         payload: this.state.artists[artistIndex].relationships.album[albumIndex],
       },
     });

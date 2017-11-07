@@ -97,6 +97,7 @@ class ArtistContainer extends Component {
     // sorting by `album.album_year` [ascending order] -> reversing
     const albums = reverse(sortBy(data.relationships.album.map((albumId) => {
       const album = cloneDeep(included.album[albumId]);
+      album.album_artist = album.album_artist.map(artistId => included.artist[artistId]);
       album.relationships.track = track(album.relationships.track.map(trackId => included.track[trackId]), included);
       album.album_cover = included.s3[album.album_cover];
 

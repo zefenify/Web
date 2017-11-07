@@ -30,7 +30,7 @@ const ContextMenuContainer = styled.div`
 
   display: flex;
   padding: 1em 0;
-  padding-top: 64px;
+  padding-top: 48px;
   flex-direction: column;
 
   .close-SVG-container {
@@ -45,6 +45,13 @@ const ContextMenuContainer = styled.div`
       width: 32px;
       height: 32px;
     }
+  }
+
+  .title {
+    font-size: 1em;
+    margin-bottom: 12px;
+    text-align: center;
+    color: ${props => props.theme.listDividerText};
   }
 
   .link {
@@ -143,6 +150,8 @@ const ContextMenu = ({
             <CloseSVG />
           </ClearButton>
 
+          <div className="title">SONG</div>
+
           <div className="song">
             <div className="song__album-image" style={{ background: `transparent url('${BASE_S3}${payload.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
             <p className="song__name">{ payload.track_name }</p>
@@ -179,6 +188,8 @@ const ContextMenu = ({
             <CloseSVG />
           </ClearButton>
 
+          <div className="title">ALBUM</div>
+
           <div className="album">
             <div className="album__album-image" style={{ background: `transparent url('${BASE_S3}${payload.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
             <p className="album__name">{ payload.album_name }</p>
@@ -206,6 +217,8 @@ const ContextMenu = ({
             <CloseSVG />
           </ClearButton>
 
+          <div className="title">ARTIST</div>
+
           <div className="artist">
             <div className="artist__artist-image" style={{ background: `transparent url('${BASE_S3}${payload.artist_cover.s3_name}') 50% 50% / cover no-repeat` }} />
             <p className="artist__name">{ payload.artist_name }</p>
@@ -224,6 +237,8 @@ const ContextMenu = ({
           <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
             <CloseSVG />
           </ClearButton>
+
+          <div className="title">PLAYLIST</div>
 
           <div className="playlist">
             <div className="playlist__playlist-image" style={{ background: `transparent url('${BASE_S3}${payload.playlist_cover.s3_name}') 50% 50% / cover no-repeat` }} />

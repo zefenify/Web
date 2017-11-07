@@ -3,7 +3,7 @@ import { bool } from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
 
-import { BASE, FEATURED } from '@app/config/api';
+import { BASE } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { loading } from '@app/redux/action/loading';
@@ -21,12 +21,12 @@ class HomeContainer extends Component {
       featuredPlayingId: '',
     };
 
-    this.playFeatured = this.playFeatured.bind(this);
+    this.featuredPlay = this.featuredPlay.bind(this);
   }
 
   componentDidMount() {
     store.dispatch(loading(true));
-    api(FEATURED, undefined, (cancel) => {
+    api(`${BASE}featured`, undefined, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -76,7 +76,7 @@ class HomeContainer extends Component {
     this.cancelRequest();
   }
 
-  playFeatured(fid) {
+  featuredPlay(fid) {
     // trigger _stop_...
     if (this.state.featuredPlayingId === fid) {
       // pausing whatever was playing...
@@ -127,7 +127,7 @@ class HomeContainer extends Component {
         playing={this.props.playing}
         featured={this.state.featured}
         featuredPlayingId={this.state.featuredPlayingId}
-        playFeatured={this.playFeatured}
+        featuredPlay={this.featuredPlay}
       />
     );
   }

@@ -5,7 +5,7 @@ import DJKhaled from '@app/component/hoc/DJKhaled';
 import Playlist from '@app/component/presentational/Playlist';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 
-const Home = ({ playing, featured, featuredPlayingId, playFeatured }) => (
+const Home = ({ playing, featured, featuredPlayingId, featuredPlay }) => (
   <FixedHeaderList>
     <div className="title">
       <h2>Featured</h2>
@@ -17,7 +17,7 @@ const Home = ({ playing, featured, featuredPlayingId, playFeatured }) => (
           <Playlist
             key={f.playlist_id}
             playing={playing}
-            play={playFeatured}
+            play={featuredPlay}
             playingId={featuredPlayingId}
             type="featured"
             id={f.playlist_id}
@@ -36,7 +36,7 @@ Home.propTypes = {
   playing: bool,
   featured: arrayOf(shape({})),
   featuredPlayingId: string,
-  playFeatured: func.isRequired,
+  featuredPlay: func.isRequired,
 };
 
 Home.defaultProps = {

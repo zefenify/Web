@@ -28,8 +28,8 @@ class PlaylistContainer extends Component {
       },
       playingFeatured: false,
     };
-    this.togglePlayPauseAll = this.togglePlayPauseAll.bind(this);
-    this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
+    this.songsPlayPause = this.songsPlayPause.bind(this);
+    this.songPlayPause = this.songPlayPause.bind(this);
     this.contextMenuPlaylist = this.contextMenuPlaylist.bind(this);
     this.contextMenuSong = this.contextMenuSong.bind(this);
   }
@@ -101,7 +101,7 @@ class PlaylistContainer extends Component {
     this.cancelRequest();
   }
 
-  togglePlayPauseAll() {
+  songsPlayPause() {
     if (this.state.featured === null) {
       return;
     }
@@ -128,7 +128,7 @@ class PlaylistContainer extends Component {
     }
   }
 
-  togglePlayPauseSong(songId) {
+  songPlayPause(songId) {
     if (this.props.current !== null && this.props.current.track_id === songId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
@@ -195,8 +195,8 @@ class PlaylistContainer extends Component {
         playing={this.props.playing}
         playingSongs={this.props.playing && this.state.playingFeatured}
         duration={this.state.duration}
-        togglePlayPauseAll={this.togglePlayPauseAll}
-        togglePlayPauseSong={this.togglePlayPauseSong}
+        songsPlayPause={this.songsPlayPause}
+        songPlayPause={this.songPlayPause}
         title={this.state.featured.playlist_name}
         description={this.state.featured.playlist_description}
         cover={this.state.featured.playlist_cover}

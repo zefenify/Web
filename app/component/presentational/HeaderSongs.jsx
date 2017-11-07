@@ -92,8 +92,8 @@ const HeaderSongs = ({
   playingSongs,
   songs,
   duration,
-  togglePlayPauseAll,
-  togglePlayPauseSong,
+  songsPlayPause,
+  songPlayPause,
   contextMenuPlaylist,
   contextMenuSong,
 }) => {
@@ -109,7 +109,7 @@ const HeaderSongs = ({
           <p className="info-container__description">{description}</p>
           <p className="info-container__duration">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
           <div className="play-share">
-            <Button className="play-share__play-big" onClick={togglePlayPauseAll}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
+            <Button className="play-share__play-big" onClick={songsPlayPause}>{`${playingSongs ? 'PAUSE' : 'PLAY'}`}</Button>
             <Button className="play-share__share" outline noPadding onClick={contextMenuPlaylist}><Share /></Button>
           </div>
         </div>
@@ -124,7 +124,7 @@ const HeaderSongs = ({
               key={song.track_id}
               currentSongId={current === null ? '' : current.track_id}
               trackNumber={index + 1}
-              togglePlayPause={togglePlayPauseSong}
+              togglePlayPause={songPlayPause}
               playing={playing}
               songId={song.track_id}
               songName={song.track_name}
@@ -154,8 +154,8 @@ HeaderSongs.propTypes = {
   }),
   playing: bool,
   playingSongs: bool,
-  togglePlayPauseAll: func.isRequired,
-  togglePlayPauseSong: func.isRequired,
+  songsPlayPause: func.isRequired,
+  songPlayPause: func.isRequired,
   contextMenuPlaylist: func.isRequired,
   contextMenuSong: func.isRequired,
 };

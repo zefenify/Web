@@ -118,7 +118,7 @@ const ContextMenu = ({
   const { type, payload } = contextMenu;
   let songSaved = false;
 
-  if (song !== null) {
+  if (song !== null && type === CONTEXT_SONG) {
     const savedTracks = song.data.song_track;
     const trackId = payload.track_id;
     songSaved = savedTracks.includes(trackId);

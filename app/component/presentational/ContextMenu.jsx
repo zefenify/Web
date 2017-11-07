@@ -65,7 +65,8 @@ const ContextMenuContainer = styled.div`
 
   .song,
   .album,
-  .artist {
+  .artist,
+  .playlist {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -86,6 +87,7 @@ const ContextMenuContainer = styled.div`
       margin-bottom: 0.75em;
     }
 
+    &__playlist-image,
     &__album-image {
       width: 164px;
       height: 164px;
@@ -213,6 +215,25 @@ const ContextMenu = ({
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/artist/${payload.artist_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Telegram</a>
+        </ContextMenuContainer>
+      );
+
+    case CONTEXT_PLAYLIST:
+      return (
+        <ContextMenuContainer id="context-menu-container">
+          <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
+            <CloseSVG />
+          </ClearButton>
+
+          <div className="playlist">
+            <div className="playlist__playlist-image" style={{ background: `transparent url('${BASE_S3}${payload.playlist_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+            <p className="playlist__name">{ payload.playlist_name }</p>
+          </div>
+
+          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/playlist/${payload.playlist_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 

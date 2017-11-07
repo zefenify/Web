@@ -30,7 +30,6 @@ const ContextMenuContainer = styled.div`
 
   display: flex;
   padding: 1em 0;
-  padding-top: 48px;
   flex-direction: column;
 
   .close-SVG-container {
@@ -48,10 +47,24 @@ const ContextMenuContainer = styled.div`
   }
 
   .title {
-    font-size: 1em;
-    margin-bottom: 12px;
+    flex: 0 0 auto;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 0.85em;
+    margin-bottom: 16px;
     text-align: center;
+    font-weight: bold;
+    padding-left: calc(40px + 1em);
     color: ${props => props.theme.listDividerText};
+
+    &:after {
+      height: 0;
+      content: '';
+      flex: 1 1 auto;
+      border-top: 1px solid ${props => props.theme.listDivider};
+    }
   }
 
   .link {
@@ -150,7 +163,7 @@ const ContextMenu = ({
             <CloseSVG />
           </ClearButton>
 
-          <div className="title">SONG</div>
+          <div className="title">SONG&nbsp;</div>
 
           <div className="song">
             <div className="song__album-image" style={{ background: `transparent url('${BASE_S3}${payload.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
@@ -188,7 +201,7 @@ const ContextMenu = ({
             <CloseSVG />
           </ClearButton>
 
-          <div className="title">ALBUM</div>
+          <div className="title">ALBUM&nbsp;</div>
 
           <div className="album">
             <div className="album__album-image" style={{ background: `transparent url('${BASE_S3}${payload.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
@@ -217,7 +230,7 @@ const ContextMenu = ({
             <CloseSVG />
           </ClearButton>
 
-          <div className="title">ARTIST</div>
+          <div className="title">ARTIST&nbsp;</div>
 
           <div className="artist">
             <div className="artist__artist-image" style={{ background: `transparent url('${BASE_S3}${payload.artist_cover.s3_name}') 50% 50% / cover no-repeat` }} />
@@ -238,7 +251,7 @@ const ContextMenu = ({
             <CloseSVG />
           </ClearButton>
 
-          <div className="title">PLAYLIST</div>
+          <div className="title">PLAYLIST&nbsp;</div>
 
           <div className="playlist">
             <div className="playlist__playlist-image" style={{ background: `transparent url('${BASE_S3}${payload.playlist_cover.s3_name}') 50% 50% / cover no-repeat` }} />

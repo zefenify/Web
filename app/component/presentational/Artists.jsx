@@ -32,8 +32,7 @@ const ArtistContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 0 0 25%;
-  min-height: 25vh;
+  flex: 0 0 20%;
   padding: 0 1em;
   margin-bottom: 3em;
   text-decoration: none;
@@ -55,26 +54,25 @@ const ArtistContainer = styled.div`
   }
 
   @media(min-width: 1282px) {
-    flex: 0 0 20%;
+    flex: 0 0 16.66%;
   }
 
-  .artist-cover {
+  .artist {
     position: relative;
-    width: 225px;
-    height: 225px;
-    border-radius: 50%;
-    border: 1px solid ${props => props.theme.listDivider};
+    width: 100%;
 
-    @media(min-width: 1284px) {
-      width: 300px;
-      height: 300px;
+    &__image {
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+      border: 1px solid ${props => props.theme.listDivider};
     }
 
     &__overlay {
       position: absolute;
       top: 0;
       right: 0;
-      bottom: 0;
+      bottom: 3px;
       left: 0;
       display: flex;
       justify-content: center;
@@ -94,11 +92,11 @@ const ArtistContainer = styled.div`
       }
     }
 
-    .artist-cover__overlay {
+    .artist__overlay {
       opacity: 0;
     }
 
-    &:hover .artist-cover__overlay {
+    &:hover .artist__overlay {
       opacity: 1;
     }
   }
@@ -181,8 +179,9 @@ const Artists = ({
         {
           artists.map(artist => (
             <ArtistContainer className={artist.artist_id === artistPlayingId ? 'active' : ''}>
-              <div className="artist-cover" style={{ background: `transparent url('${BASE_S3}${artist.artist_cover.s3_name}') 50% 50% / cover no-repeat` }}>
-                <Link to={`/artists/${artist.artist_id}`} className="artist-cover__overlay">
+              <div className="artist">
+                <img alt={`${artist.artist_name}`} className="artist__image" src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
+                <Link to={`/artists/${artist.artist_id}`} className="artist__overlay">
                   <PlayPauseSVG
                     onClick={(e) => { e.preventDefault(); artistsPlayPause(artist.artist_id); }}
                     playing={playing && artist.artist_id === artistPlayingId}

@@ -17,7 +17,7 @@ class CollectionContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collectionName: 'Genre and Moods',
+      collectionName: 'Genre & Moods',
       collection: null,
       playlistPlayingId: '',
     };
@@ -98,7 +98,7 @@ class CollectionContainer extends Component {
         }));
 
         this.setState(() => ({
-          collectionName: 'Genre and Moods',
+          collectionName: 'Genre & Moods',
           collection,
         }));
       }, error(store));

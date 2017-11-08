@@ -9,7 +9,7 @@ import isEqual from 'lodash/fp/isEqual';
  */
 module.exports = WrappedComponent => class extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return isEqual(this.props)(nextProps) === false;
+    return isEqual(this.props, nextProps) === false;
   }
 
   render() {

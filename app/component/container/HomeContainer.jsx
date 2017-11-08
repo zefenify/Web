@@ -13,6 +13,28 @@ import track from '@app/util/track';
 
 import Home from '@app/component/presentational/Home';
 
+const error = (err) => {
+  store.dispatch(loading(false));
+
+  if (err.message === 'Network Error') {
+    store.dispatch({
+      type: NOTIFICATION_ON_REQUEST,
+      payload: {
+        message: 'No Internet connection. Please try again later',
+      },
+    });
+
+    return;
+  }
+
+  store.dispatch({
+    type: NOTIFICATION_ON_REQUEST,
+    payload: {
+      message: 'ይቅርታ, unable to fetch Featured Playlist',
+    },
+  });
+};
+
 class HomeContainer extends Component {
   constructor(props) {
     super(props);
@@ -50,27 +72,7 @@ class HomeContainer extends Component {
 
         this.setState(() => ({ featuredPlayingId }));
       });
-    }, (err) => {
-      store.dispatch(loading(false));
-
-      if (err.message === 'Network Error') {
-        store.dispatch({
-          type: NOTIFICATION_ON_REQUEST,
-          payload: {
-            message: 'No Internet connection. Please try again later',
-          },
-        });
-
-        return;
-      }
-
-      store.dispatch({
-        type: NOTIFICATION_ON_REQUEST,
-        payload: {
-          message: 'ይቅርታ, unable to fetch Featured Playlist',
-        },
-      });
-    });
+    }, error);
   }
 
   componentWillUnmount() {
@@ -86,17 +88,8 @@ class HomeContainer extends Component {
         type: PLAY_PAUSE_REQUEST,
       });
 
-      // pausing icon...
-      this.setState(() => ({
-        featuredPlayingId: fid,
-      }));
-
       return;
     }
-
-    this.setState(() => ({
-      featuredPlayingId: fid,
-    }));
 
     api(`${BASE}playlist/${fid}`, (cancel) => {
       this.cancelRequest = cancel;
@@ -105,7 +98,12 @@ class HomeContainer extends Component {
       const playlistTrack = Object.assign({}, data.data, {
         playlist_track: data.data.playlist_track.map(trackId => data.included.track[trackId]),
       });
+
       const tracks = track(playlistTrack.playlist_track, data.included);
+
+      this.setState(() => ({
+        featuredPlayingId: fid,
+      }));
 
       // playing...
       store.dispatch({
@@ -116,11 +114,7 @@ class HomeContainer extends Component {
           queueInitial: tracks,
         },
       });
-    }, () => {
-      this.setState(() => ({
-        featuredPlayingId: '',
-      }));
-    });
+    }, error);
   }
 
   render() {

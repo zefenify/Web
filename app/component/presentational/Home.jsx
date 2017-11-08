@@ -24,7 +24,7 @@ const Home = ({ playing, featured, featuredPlayingId, featuredPlay }) => (
             name={f.playlist_name}
             description={f.playlist_description}
             cover={f.playlist_cover}
-            songCount={f.playlist_track.length}
+            trackCount={f.playlist_track.length}
           />
         ))
       }

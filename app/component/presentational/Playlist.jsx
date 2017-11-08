@@ -109,7 +109,7 @@ const PlaylistContainer = styled(Link)`
   }
 `;
 
-function Playlist({ type, id, playing, playingId, name, description, songCount, cover, play }) {
+function Playlist({ type, id, playing, playingId, name, description, trackCount, cover, play }) {
   return (
     <PlaylistContainer to={`/${type}/${id}`} className={`${id === playingId ? 'active' : ''}`}>
       <div className="playlist-cover" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }}>
@@ -123,7 +123,7 @@ function Playlist({ type, id, playing, playingId, name, description, songCount, 
 
       <strong className="playlist-title">{ name }</strong>
       <p className="playlist-description">{ description }</p>
-      <small className="playlist-count">{`${songCount} SONG${songCount > 1 ? 'S' : ''}`}</small>
+      <small className="playlist-count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
     </PlaylistContainer>
   );
 }
@@ -135,7 +135,7 @@ Playlist.propTypes = {
   playingId: string,
   name: string,
   description: string,
-  songCount: number,
+  trackCount: number,
   cover: shape({}),
   play: func.isRequired,
 };
@@ -147,7 +147,7 @@ Playlist.defaultProps = {
   playingId: '',
   name: '',
   description: '',
-  songCount: 0,
+  trackCount: 0,
   cover: {},
 };
 

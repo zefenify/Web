@@ -11,17 +11,18 @@ const MUTE_3 = '#404040';
 const MUTE_4 = '#ececec';
 const MUTE_5 = '#a1a1a1';
 const MUTE_6 = '#4e4e4e';
+const MUTE_7 = '#333333';
 
 const WHITE_1 = '#ffffff';
 const WHITE_2 = '#f7f7f7';
 const WHITE_3 = '#d8d8d8';
 
-const GREEN_1 = '#1ed660';
-const PINK_1 = '#f94263';
+const PRIMARY_1 = '#1ed660';
+const PRIMARY_2 = '#31a8e6';
 
 module.exports = {
-  darkTheme: {
-    primary: GREEN_1,
+  themeDark: {
+    primary: PRIMARY_1,
 
     navbarBackground: DARK_1,
     navbarText: MUTE_1,
@@ -31,9 +32,10 @@ module.exports = {
     listBackground: DARK_2,
     listBackgroundHover: MUTE_2,
     listDivider: MUTE_2,
+    listDividerText: MUTE_7,
     listText: WHITE_1,
     listTextMute: MUTE_1,
-    listTextActive: GREEN_1,
+    listTextActive: PRIMARY_1,
     listBoxShadow: DARK_6,
 
     controlBackground: DARK_3,
@@ -41,8 +43,8 @@ module.exports = {
     controlMute: MUTE_1,
   },
 
-  lightTheme: {
-    primary: PINK_1,
+  themeLight: {
+    primary: PRIMARY_2,
 
     navbarBackground: WHITE_2,
     navbarText: MUTE_3,
@@ -52,9 +54,10 @@ module.exports = {
     listBackground: WHITE_1,
     listBackgroundHover: DARK_4,
     listDivider: DARK_4,
+    listDividerText: MUTE_5,
     listText: MUTE_6,
     listTextMute: MUTE_4,
-    listTextActive: PINK_1,
+    listTextActive: PRIMARY_2,
     listBoxShadow: DARK_5,
 
     controlBackground: DARK_4,

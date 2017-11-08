@@ -1,13 +1,12 @@
 import React from 'react';
 import { func, shape, bool, number, arrayOf } from 'prop-types';
-import styled from 'emotion/react';
-import { withTheme } from 'theming';
+import styled from 'react-emotion';
 
-import Song from '@app/component/presentational/Song';
+import Track from '@app/component/presentational/Track';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
 
-const RecentContainer = withTheme(styled.div`
+const RecentContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -18,11 +17,11 @@ const RecentContainer = withTheme(styled.div`
     align-items: center;
   }
 
-  & .mute {
+  .mute {
     color: ${props => props.theme.controlMute};
   }
 
-  & .recently-played {
+  .recently-played {
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
@@ -43,28 +42,28 @@ const RecentContainer = withTheme(styled.div`
     }
   }
 
-  & .song {
+  .track {
     flex: 1 1 auto;
 
     & > *:last-child {
       margin-bottom: 1px;
     }
   }
-`);
+`;
 
 const Recent = ({
   playing,
   current,
   history,
   totalDuration,
-  playingHistory,
-  togglePlayPauseHistory,
-  togglePlayPauseSong,
+  historyPlaying,
+  historyPlayPause,
+  trackPlayPause,
+  contextMenuTrack,
 }) => {
   if (history.length === 0) {
     return (
       <RecentContainer className="center-content">
-        <h1 style={{ marginBottom: '0' }}>ላሽ ላሽ  ¯\_(ツ)_/¯</h1>
         <h2 className="mute">You have no recently played songs...yet</h2>
       </RecentContainer>
     );
@@ -77,21 +76,26 @@ const Recent = ({
       <div className="recently-played">
         <h1 className="recently-played__title">Recently Played</h1>
         <p className="recently-played__info">{`${history.length} song${history.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-        <Button className="recently-played__button" onClick={() => togglePlayPauseHistory(playing, playingHistory, history)}>{`${(playing && playingHistory) ? 'PAUSE' : 'PLAY'}`}</Button>
+        <Button className="recently-played__button" onClick={historyPlayPause}>{`${(playing && historyPlaying) ? 'PAUSE' : 'PLAY'}`}</Button>
       </div>
 
       <Divider />
 
-      <div className="song">
+      <div className="track">
         {
-          history.map((song, index) => (
-            <Song
-              key={song.songId}
-              currentSongId={current === null ? -1 : current.songId}
+          history.map((track, index) => (
+            <Track
+              key={track.track_id}
+              currentTrackId={current === null ? '' : current.track_id}
               trackNumber={index + 1}
-              togglePlayPause={() => togglePlayPauseSong(index, song, current, history)}
-              playing={playing && playingHistory}
-              {...song}
+              trackPlayPause={trackPlayPause}
+              playing={playing}
+              trackId={track.track_id}
+              trackName={track.track_name}
+              trackFeaturing={track.track_featuring}
+              trackDuration={track.track_track.s3_meta.duration}
+              trackAlbum={track.track_album}
+              contextMenuTrack={contextMenuTrack}
             />
           ))
         }
@@ -109,9 +113,10 @@ Recent.propTypes = {
     minutes: number,
     seconds: number,
   }),
-  playingHistory: bool,
-  togglePlayPauseHistory: func.isRequired,
-  togglePlayPauseSong: func.isRequired,
+  historyPlaying: bool,
+  historyPlayPause: func.isRequired,
+  trackPlayPause: func.isRequired,
+  contextMenuTrack: func.isRequired,
 };
 
 Recent.defaultProps = {
@@ -123,7 +128,7 @@ Recent.defaultProps = {
     minutes: 0,
     seconds: 0,
   },
-  playingHistory: false,
+  historyPlaying: false,
 };
 
 module.exports = Recent;

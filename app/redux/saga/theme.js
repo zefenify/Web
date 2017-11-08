@@ -1,10 +1,11 @@
-/* eslint no-console: 0 */
+/* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
-import { SET_THEME } from '@app/redux/constant/theme';
+import { THEME_REQUEST } from '@app/redux/constant/theme';
 
 import { theme } from '@app/redux/action/theme';
 
@@ -18,7 +19,7 @@ function* themeBootFromLF() {
 }
 
 // worker Saga: will perform the async theme task
-function* toggleTheme() {
+function* _theme() {
   const state = yield select();
   const nextThemeState = state.theme === 'light' ? 'dark' : 'light';
 
@@ -32,11 +33,11 @@ function* toggleTheme() {
 }
 
 // watcher Saga: spawn a new themeAsync task on each `THEME_ASYNC`
-function* watchToggleTheme() {
-  yield takeEvery(SET_THEME, toggleTheme);
+function* themeRequest() {
+  yield takeEvery(THEME_REQUEST, _theme);
 }
 
 module.exports = {
   themeBootFromLF,
-  watchToggleTheme,
+  themeRequest,
 };

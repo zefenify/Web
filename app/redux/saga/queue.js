@@ -1,28 +1,21 @@
-/* eslint no-console: 0 */
+/* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { SET_QUEUE_SET, SET_QUEUE_ADD, SET_QUEUE_REMOVE, SET_QUEUE_CLEAR } from '@app/redux/constant/queue';
+import { QUEUE_SET_REQUEST, QUEUE_ADD_REQUEST, QUEUE_REMOVE_REQUEST, QUEUE_CLEAR_REQUEST } from '@app/redux/constant/queue';
 
 import { queueSet, queueAdd, queueRemove, queueClear } from '@app/redux/action/queue';
 
-function* setQueueSet(action) {
+function* _queueSet(action) {
   yield put(queueSet(action.payload));
 }
 
-function* watchSetQueueSet() {
-  yield takeEvery(SET_QUEUE_SET, setQueueSet);
-}
-
-function* setQueueAdd(action) {
+function* _queueAdd(action) {
   yield put(queueAdd(action.payload));
 }
 
-function* watchSetQueueAdd() {
-  yield takeEvery(SET_QUEUE_ADD, setQueueAdd);
-}
-
-function* setQueueRemove(action) {
+function* _queueRemove(action) {
   const { queue } = yield select();
   let songIndex = -1;
   const l = queue.length;
@@ -39,21 +32,29 @@ function* setQueueRemove(action) {
   }
 }
 
-function* watchSetQueueRemove() {
-  yield takeEvery(SET_QUEUE_REMOVE, setQueueRemove);
-}
-
-function* setQueueClear() {
+function* _queueClear() {
   yield put(queueClear());
 }
 
-function* watchSetQueueClear() {
-  yield takeEvery(SET_QUEUE_CLEAR, setQueueClear);
+function* queueSetRequest() {
+  yield takeEvery(QUEUE_SET_REQUEST, _queueSet);
+}
+
+function* queueAddRequest() {
+  yield takeEvery(QUEUE_ADD_REQUEST, _queueAdd);
+}
+
+function* queueRemoveRequest() {
+  yield takeEvery(QUEUE_REMOVE_REQUEST, _queueRemove);
+}
+
+function* queueClearRequest() {
+  yield takeEvery(QUEUE_CLEAR_REQUEST, _queueClear);
 }
 
 module.exports = {
-  watchSetQueueSet,
-  watchSetQueueAdd,
-  watchSetQueueRemove,
-  watchSetQueueClear,
+  queueSetRequest,
+  queueClearRequest,
+  queueAddRequest,
+  queueRemoveRequest,
 };

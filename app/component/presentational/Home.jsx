@@ -1,42 +1,11 @@
 import React from 'react';
-import { func, number, arrayOf, shape } from 'prop-types';
-import styled from 'emotion/react';
-import { withTheme } from 'theming';
+import { bool, func, string, arrayOf, shape } from 'prop-types';
 
-import Collection from '@app/component/presentational/Collection';
+import Playlist from '@app/component/presentational/Playlist';
+import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 
-const HomeContainer = withTheme(styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-  ovefflow-y: auto;
-
-  & .title {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    box-shadow: 0 0 4px ${props => props.theme.listBoxShadow};
-    height: 60px;
-    padding: 0 2em;
-  }
-
-  & .list {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    overflow-y: auto;
-    padding: 1em 1em;
-  }
-`);
-
-const Home = ({ featured, featuredPlayingId, playFeatured }) => (
-  <HomeContainer>
+const Home = ({ playing, featured, featuredPlayingId, featuredPlay }) => (
+  <FixedHeaderList>
     <div className="title">
       <h2>Featured</h2>
     </div>
@@ -44,27 +13,35 @@ const Home = ({ featured, featuredPlayingId, playFeatured }) => (
     <div className="list">
       {
         featured.map(f => (
-          <Collection
-            play={playFeatured}
-            key={f.id}
+          <Playlist
+            key={f.playlist_id}
+            playing={playing}
+            play={featuredPlay}
             playingId={featuredPlayingId}
-            {...f}
+            type="featured"
+            id={f.playlist_id}
+            name={f.playlist_name}
+            description={f.playlist_description}
+            cover={f.playlist_cover}
+            trackCount={f.playlist_track.length}
           />
         ))
       }
     </div>
-  </HomeContainer>
+  </FixedHeaderList>
 );
 
 Home.propTypes = {
+  playing: bool,
   featured: arrayOf(shape({})),
-  featuredPlayingId: number,
-  playFeatured: func.isRequired,
+  featuredPlayingId: string,
+  featuredPlay: func.isRequired,
 };
 
 Home.defaultProps = {
+  playing: false,
   featured: [],
-  featuredPlayingId: -1,
+  featuredPlayingId: '',
 };
 
 module.exports = Home;

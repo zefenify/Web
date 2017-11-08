@@ -1,104 +1,140 @@
 /* global document */
 
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'theming';
+import { ThemeProvider } from 'emotion-theming';
 
 import 'normalize.css';
-import '@app/scss/notie.scss';
-import '@app/static/icoMoon/style.scss';
 import '@app/scss/wolf-cola.scss';
 
+import '@app/util/facebook';
 import store from '@app/redux/store';
-import { lightTheme, darkTheme } from '@app/config/theme';
-
-import DJKhaled from '@app/component/hoc/DJKhaled';
+import { themeLight, themeDark } from '@app/config/theme';
 
 import HomeContainer from '@app/component/container/HomeContainer';
-import SettingContainer from '@app/component/container/SettingContainer';
+import SettingsContainer from '@app/component/container/SettingsContainer';
 import ControlContainer from '@app/component/container/ControlContainer';
-import FeaturedContainer from '@app/component/container/FeaturedContainer';
+import PlaylistContainer from '@app/component/container/PlaylistContainer';
 import ArtistContainer from '@app/component/container/ArtistContainer';
+import AlbumContainer from '@app/component/container/AlbumContainer';
 import RecentContainer from '@app/component/container/RecentContainer';
-import SurpriseContainer  from '@app/component/container/SurpriseContainer';
-import TopContainer from '@app/component/container/TopContainer';
+import SongsContainer from '@app/component/container/SongsContainer';
+import AlbumsContainer from '@app/component/container/AlbumsContainer';
+import ArtistsContainer from '@app/component/container/ArtistsContainer';
+import TrendingContainer from '@app/component/container/TrendingContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
-import BoxContainer from '@app/component/container/BoxContainer';
+import CollectionContainer from '@app/component/container/CollectionContainer';
+import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
+import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
+import NotificationContainer from '@app/component/container/NotificationContainer';
 
+import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
+import { Search, Trending, Settings } from '@app/component/presentational/SVG';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
-import Divider from '@app/component/styled/Divider';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 
-const WolfCola = DJKhaled('loading', 'theme')(({ loading, theme }) => (
-  <Provider store={store}>
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <Router>
-        <WolfColaContainer>
-          <NavListContainer>
-            <NavContainer>
-              <Link className="brand" to="/">
-                <img src="static/image/brand.png" className="brand-image" alt="ArifZefen" />
-                <span>ArifZefen</span>
-                <Spinner loading={loading} />
-              </Link>
+class WolfCola extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      theme: 'dark',
+    };
+  }
 
-              <div className="nav-list">
-                <NavLinkStyled to="/search">
-                  <span>Search</span>
-                  <i className="icon-ion-ios-search-strong" style={{ float: 'right' }} />
-                </NavLinkStyled>
-                <NavLinkStyled to="/top">Top Songs</NavLinkStyled>
-                <NavLinkStyled to="/genre">Genre</NavLinkStyled>
-                <NavLinkStyled to="/ariflist">ArifList</NavLinkStyled>
-                <NavLinkStyled to="/surprise">Surprise Me</NavLinkStyled>
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() => {
+      const state = store.getState();
+      this.setState(() => ({
+        loading: state.loading,
+        theme: state.theme,
+      }));
+    });
+  }
 
-                <small className="small-text">YOUR MUSIC</small>
-                <Divider />
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
-                <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
-                { /* <NavLinkStyled to="/songs">Songs</NavLinkStyled> */ }
+  render() {
+    return (
+      <Provider store={store}>
+        <ThemeProvider theme={this.state.theme === 'light' ? themeLight : themeDark}>
+          <Router>
+            <div>
+              <WolfColaContainer id="wolf-cola-container">
+                <NavListContainer>
+                  <NavContainer>
+                    <Link className="brand" to="/">
+                      <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.png" />
+                      <span>Zefenify</span>
+                      <Spinner loading={this.state.loading} />
+                    </Link>
 
-                {/*
-                <small className="small-text">YOUR PLAYLISTS</small>
-                <Divider />
+                    <div className="nav-list">
+                      <NavLinkStyled to="/search">
+                        <span>Search</span>
+                        <Search style={{ float: 'right' }} />
+                      </NavLinkStyled>
+                      <NavLinkStyled to="/trending">
+                        <span>Trending</span>
+                        <Trending style={{ float: 'right' }} />
+                      </NavLinkStyled>
+                      <NavLinkStyled to="/collection">Genres &amp; Moods</NavLinkStyled>
 
-                <NavLinkStyled to="/playlist/ላሽ-ላሽ">ላሽ ላሽ</NavLinkStyled>
-                <NavLinkStyled to="/playlist/Hip-Hop">Hip-Hop</NavLinkStyled>
-                */}
+                      <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
+                      <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
+                      <NavLinkStyled to="/songs">Songs</NavLinkStyled>
+                      <NavLinkStyled to="/albums">Albums</NavLinkStyled>
+                      <NavLinkStyled to="/artists">Artists</NavLinkStyled>
 
-                <small className="small-text">SETTINGS</small>
-                <Divider />
+                      <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">SETTINGS&nbsp;</Divider>
+                      <NavLinkStyled to="/settings">
+                        <span>Settings</span>
+                        <Settings style={{ float: 'right' }} />
+                      </NavLinkStyled>
+                      <div style={{ paddingBottom: '2em' }} />
+                    </div>
+                  </NavContainer>
 
-                <NavLinkStyled to="/setting">Settings</NavLinkStyled>
-                <div style={{ paddingBottom: '2em' }} />
-              </div>
-            </NavContainer>
+                  <RouteContainer>
+                    <Route exact path="/" component={HomeContainer} />
+                    <Route path="/:type(playlist|featured)/:id" component={PlaylistContainer} />
+                    <Route path="/artist/:id" component={ArtistContainer} />
+                    <Route path="/album/:id/:trackId?" component={AlbumContainer} />
+                    <Route path="/search" component={SearchContainer} />
+                    <Route path="/trending/:category?" component={TrendingContainer} />
+                    <Route path="/collection/:id?" component={CollectionContainer} />
+                    <Route path="/recent" component={RecentContainer} />
+                    <Route path="/songs" component={SongsContainer} />
+                    <Route path="/albums/:id?" component={AlbumsContainer} />
+                    <Route path="/artists/:id?" component={ArtistsContainer} />
+                    <Route path="/settings" component={SettingsContainer} />
 
-            <RouteContainer>
-              <Route exact path="/" component={HomeContainer} />
-              <Route path="/featured/:id" component={FeaturedContainer} />
-              <Route path="/artist/:id" component={ArtistContainer} />
-              <Route path="/search" component={SearchContainer} />
-              <Route path="/top/:category?" component={TopContainer} />
-              <Route path="/:type(genre|ariflist)/:list?" component={BoxContainer} />
-              <Route path="/surprise" component={SurpriseContainer} />
-              <Route path="/recent" component={RecentContainer} />
-              <Route path="/setting" component={SettingContainer} />
-            </RouteContainer>
-          </NavListContainer>
+                    <NotificationContainer />
+                  </RouteContainer>
+                </NavListContainer>
 
-          <ControlContainer />
+                <ControlContainer />
+              </WolfColaContainer>
 
-          <Mobile />
-        </WolfColaContainer>
-      </Router>
-    </ThemeProvider>
-  </Provider>
-));
+              <Mobile />
+              <ContextOverlayContainer />
+              <ContextMenuContainer />
+            </div>
+          </Router>
+        </ThemeProvider>
+      </Provider>
+    );
+  }
+}
 
-render(<WolfCola />, document.querySelector('#wolf-cola'));
+const WolfColaDJKhaled = DJKhaled(WolfCola);
+
+render(<WolfColaDJKhaled />, document.querySelector('#wolf-cola'));

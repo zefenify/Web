@@ -1,11 +1,12 @@
-/* eslint no-console: 0 */
+/* eslint no-console: off */
+/* eslint no-underscore-dangle: off */
 
 import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';
 import { Howler } from 'howler';
 
 import { LF_STORE } from '@app/config/localforage';
-import { SET_VOLUME } from '@app/redux/constant/volume';
+import { VOLUME_REQUEST } from '@app/redux/constant/volume';
 
 import { volume } from '@app/redux/action/volume';
 
@@ -19,7 +20,7 @@ function* volumeBootFromLF() {
   }
 }
 
-function* setVolume(action) {
+function* _volume(action) {
   yield put(volume(action.payload));
   Howler.volume(action.payload);
 
@@ -30,11 +31,11 @@ function* setVolume(action) {
   }
 }
 
-function* watchSetVolume() {
-  yield takeEvery(SET_VOLUME, setVolume);
+function* volumeRequest() {
+  yield takeEvery(VOLUME_REQUEST, _volume);
 }
 
 module.exports = {
   volumeBootFromLF,
-  watchSetVolume,
+  volumeRequest,
 };

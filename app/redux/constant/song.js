@@ -1,0 +1,11 @@
+const SONG = 'SONG';
+const SONG_BOOT_REQUEST = 'SONG_BOOT_REQUEST'; // to be called after login...
+const SONG_SAVE_REQUEST = 'SONG_SAVE_REQUEST';
+const SONG_REMOVE_REQUEST = 'SONG_REMOVE_REQUEST';
+
+module.exports = {
+  SONG,
+  SONG_BOOT_REQUEST,
+  SONG_SAVE_REQUEST,
+  SONG_REMOVE_REQUEST,
+};

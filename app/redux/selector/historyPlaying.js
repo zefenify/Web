@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 
 // eslint-disable-next-line
-module.exports = createSelector([state => state.history, state => state.initialQueue], (history, initialQueue) => {
+module.exports = createSelector([state => state.history, state => state.queueInitial], (history, queueInitial) => {
   let playingHistory = false;
 
-  if (initialQueue.length === history.length) {
-    const initialQueueSongIds = initialQueue.map(song => song.songId);
-    const historySongIds = history.map(song => song.songId);
-    playingHistory = historySongIds.every(songId => initialQueueSongIds.includes(songId));
+  if (queueInitial.length === history.length) {
+    const queueInitialTrackIds = queueInitial.map(track => track.track_id);
+    const historyTrackIds = history.map(track => track.track_id);
+    playingHistory = historyTrackIds.every(trackId => queueInitialTrackIds.includes(trackId));
   }
 
   return playingHistory;

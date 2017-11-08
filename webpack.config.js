@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const commonPlugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
@@ -38,12 +38,13 @@ module.exports = (env) => {
         'redux',
         'redux-saga',
         'reselect',
-        'theming',
         'emotion',
-        'notie',
+        'emotion-theming',
         'howler',
       ],
-      app: ['./app/index.jsx'],
+      app: [
+        './app/index.jsx',
+      ],
     },
     output: {
       filename: '[name].bundle.js',
@@ -60,21 +61,7 @@ module.exports = (env) => {
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              plugins: [
-                'emotion/babel',
-                'transform-react-inline-elements',
-                'transform-class-properties',
-                ['transform-runtime', { helpers: false, polyfill: false }],
-              ],
-              presets: [
-                ['env', { targets: { safari: 10, uglify: true }, useBuiltIns: true, debug: true }], // 100% ES2015
-                'react',
-              ],
-            },
-          },
+          use: { loader: 'babel-loader' },
         },
 
         // css
@@ -132,7 +119,7 @@ module.exports = (env) => {
     plugins: PRODUCTION ? [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify('production'),
+          NODE_ENV: '"production"',
         },
       }),
       new ExtractTextPlugin({
@@ -140,7 +127,9 @@ module.exports = (env) => {
         disable: false,
         allChunks: true,
       }),
-      new UglifyJsPlugin(),
+      new UglifyJSPlugin({
+        parallel: true,
+      }),
     ].concat(commonPlugins) : [
       // add development plugins here
     ].concat(commonPlugins),

@@ -1,13 +1,12 @@
-import styled from 'emotion/react';
-import { withTheme } from 'theming';
+import styled from 'react-emotion';
 
 // https://codepen.io/aronwoost/pen/nlyrf + some styling tweaks, theme and Firefox fix
-const Range = withTheme(styled.input`
+const Range = styled.input`
   &[type="range"] {
     -webkit-appearance: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     width: 100%;
-    height: 4px;
+    height: 2px;
     margin: 0;
     border: none;
     padding: 1px 2px;
@@ -49,10 +48,10 @@ const Range = withTheme(styled.input`
 
   &[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
     background-color: ${props => props.theme.listText};
     transition: all 125ms linear;
 
@@ -89,6 +88,6 @@ const Range = withTheme(styled.input`
       transform: scale(1.25);
     }
   }
-`);
+`;
 
 module.exports = Range;

@@ -11,6 +11,7 @@ const config = {
     SHUFFLE: 'SHUFFLE',
     CROSSFADE: 'CROSSFADE',
     REMAINING: 'REMAINING',
+    USER: 'USER',
   },
 };
 

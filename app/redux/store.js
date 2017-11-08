@@ -1,4 +1,5 @@
 /* global window */
+
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
@@ -13,9 +14,13 @@ import playbackPosition from '@app/redux/reducer/playbackPosition';
 import remaining from '@app/redux/reducer/remaining';
 import queue from '@app/redux/reducer/queue';
 import current from '@app/redux/reducer/current';
-import initialQueue from '@app/redux/reducer/initialQueue';
+import queueInitial from '@app/redux/reducer/queueInitial';
 import history from '@app/redux/reducer/history';
 import loading from '@app/redux/reducer/loading';
+import user from '@app/redux/reducer/user';
+import contextMenu from '@app/redux/reducer/contextMenu';
+import song from '@app/redux/reducer/song';
+import notification from '@app/redux/reducer/notification';
 
 import rootSaga from '@app/redux/saga/sagas';
 
@@ -33,17 +38,21 @@ const store = createStore(
     remaining,
     queue,
     current,
-    initialQueue,
+    queueInitial,
     history,
     loading,
+    user,
+    contextMenu,
+    song,
+    notification,
   }),
   {
     theme: 'dark',
     volume: 1,
     queue: [],
-    initialQueue: [], // queue of songs to be played [used on repeat `ALL` and queue is empty]
-    history: [], // where played songs will are pushed [repeat `ONE` will only push once]
-    // saved: [],
+    queueInitial: [], // queue of tracks to be played [used on repeat `ALL` and queue is empty]
+    history: [], // where played tracks will are pushed [repeat `ONE` will only push once]
+    song: null, // saved tracks
     // playlist: [],
     crossfade: 0,
     duration: 0,
@@ -53,9 +62,12 @@ const store = createStore(
     playing: false,
     shuffle: false,
     repeat: 'OFF',
-    current: null, // current song object, *not* the Howler object
+    current: null, // current track object, *not* the Howler object
+    contextMenu: null, // context item to be rendered on `<ContextMenu />`
     // online: false,
     loading: false,
+    user: null,
+    notification: null,
   },
   window.devToolsExtension
     ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension())

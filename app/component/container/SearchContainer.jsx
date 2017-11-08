@@ -1,21 +1,25 @@
+/* eslint max-len: off */
+
 import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
-import axios from 'axios';
-import qs from 'qs';
+import { connect } from 'react-redux';
+import cloneDeep from 'lodash/cloneDeep';
 
-import { PLAY, TOGGLE_PLAY_PAUSE } from '@app/redux/constant/wolfCola';
+import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 import { SEARCH } from '@app/config/api';
+import track from '@app/util/track';
 
 import store from '@app/redux/store';
+import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
-
 import Search from '@app/component/presentational/Search';
 
+const THROTTLE_TIMEOUT = 500; // in milliseconds
+let cancelRequest = () => {};
 let throttle = null;
-let CancelToken = axios.CancelToken;
-let source = CancelToken.source();
 
 class SearchContainer extends Component {
   constructor(props) {
@@ -26,35 +30,37 @@ class SearchContainer extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
+    this.trackPlayPause = this.trackPlayPause.bind(this);
+    this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
   componentWillUnmount() {
     clearTimeout(throttle);
-    source.cancel();
+    cancelRequest();
+    store.dispatch(loading(false));
   }
 
-  togglePlayPauseSong(songId) {
-    if (this.props.current !== null && this.props.current.songId === songId) {
+  trackPlayPause(trackId) {
+    if (this.props.current !== null && this.props.current.track_id === trackId) {
       store.dispatch({
-        type: TOGGLE_PLAY_PAUSE,
+        type: PLAY_PAUSE_REQUEST,
       });
 
       return;
     }
 
-    const songIdIndex = this.state.matches.songs.findIndex(song => song.songId === songId);
+    const trackIdIndex = this.state.matches.track.findIndex(t => t.track_id === trackId);
 
-    if (songIdIndex === -1) {
+    if (trackIdIndex === -1) {
       return;
     }
 
     store.dispatch({
-      type: PLAY,
+      type: PLAY_REQUEST,
       payload: {
-        play: this.state.matches.songs[songIdIndex],
-        queue: this.state.matches.songs,
-        initialQueue: this.state.matches.songs,
+        play: this.state.matches.track[trackIdIndex],
+        queue: this.state.matches.track,
+        queueInitial: this.state.matches.track,
       },
     });
   }
@@ -67,7 +73,7 @@ class SearchContainer extends Component {
     }
 
     clearTimeout(throttle);
-    source.cancel();
+    cancelRequest();
 
     this.setState(() => ({
       matches: null,
@@ -75,7 +81,7 @@ class SearchContainer extends Component {
 
     this.setState(() => ({ q }), () => {
       throttle = setTimeout(() => {
-        if (this.state.q === '') {
+        if (this.state.q === '' || this.state.q.length < 2) {
           this.setState(() => ({
             matches: null,
           }));
@@ -83,24 +89,36 @@ class SearchContainer extends Component {
           return;
         }
 
-        // recreating tokens...
-        CancelToken = axios.CancelToken;
-        source = CancelToken.source();
-
         store.dispatch(loading(true));
+        api(`${SEARCH}?q=${q}`, this.props.user, (cancel) => {
+          cancelRequest = cancel;
+        }).then((data) => {
+          store.dispatch(loading(false));
+          const matches = data.data;
+          matches.album = matches.album.map(album => Object.assign({}, album, { album_cover: cloneDeep(data.included.s3[album.album_cover]) }));
+          matches.artist = matches.artist.map(artist => Object.assign({}, artist, { artist_cover: cloneDeep(data.included.s3[artist.artist_cover]) }));
+          matches.playlist = matches.playlist.map(playlist => Object.assign({}, playlist, { playlist_cover: cloneDeep(data.included.s3[playlist.playlist_cover]) }));
+          matches.track = track(matches.track, data.included);
 
-        axios
-          .post(SEARCH, qs.stringify({ q: this.state.q }), { cancelToken: source.token })
-          .then((data) => {
-            store.dispatch(loading(false));
+          this.setState(() => ({ matches }));
+        }, error(store));
+      }, THROTTLE_TIMEOUT);
+    });
+  }
 
-            this.setState(() => ({
-              matches: data.data,
-            }));
-          }, () => {
-            store.dispatch(loading(false));
-          });
-      }, 500);
+  contextMenuTrack(trackId) {
+    const trackIndex = this.state.matches.track.findIndex(t => t.track_id === trackId);
+
+    if (trackIndex === -1) {
+      return;
+    }
+
+    store.dispatch({
+      type: CONTEXT_MENU_ON_REQUEST,
+      payload: {
+        type: CONTEXT_TRACK,
+        payload: this.state.matches.track[trackIndex],
+      },
     });
   }
 
@@ -112,7 +130,8 @@ class SearchContainer extends Component {
         current={this.props.current}
         playing={this.props.playing}
         handleChange={this.handleChange}
-        togglePlayPauseSong={this.togglePlayPauseSong}
+        trackPlayPause={this.trackPlayPause}
+        contextMenuTrack={this.contextMenuTrack}
       />
     );
   }
@@ -121,11 +140,17 @@ class SearchContainer extends Component {
 SearchContainer.propTypes = {
   playing: bool,
   current: shape({}),
+  user: shape({}),
 };
 
 SearchContainer.defaultProps = {
   playing: false,
   current: null,
+  user: null,
 };
 
-module.exports = DJKhaled('current', 'playing')(SearchContainer);
+module.exports = DJKhaled(connect(state => ({
+  user: state.user,
+  current: state.current,
+  playing: state.playing,
+}))(SearchContainer));

@@ -1,37 +1,34 @@
-import styled from 'emotion/react';
-import { withTheme } from 'theming';
+import styled from 'react-emotion';
 
-const WolfColaContainer = withTheme(styled.div`
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-radius: 0;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background-color: ${props => props.theme.controlMute};
-  }
-
-  position: absolute;
+// #context-overlay-container = [98, 100]
+// #context-menu-container = 999
+// #mobile = 1000
+const WolfColaContainer = styled.div`
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   display: flex;
   flex-direction: column;
-`);
+  z-index: 99;
+  filter: blur(0px);
+  transform: scale(1);
+  transition: filter 250ms, transform 250ms;
 
-const ControlsContainer = withTheme(styled.div`
+  &.context-menu-active {
+    filter: blur(4px);
+    transform: scale(0.92);
+  }
+`;
+
+const ControlsContainer = styled.div`
   flex: 0 0 70px;
   background-color: ${props => props.theme.controlBackground};
   color: ${props => props.theme.controlText};
   display: flex;
   flex-direction: row;
-`);
+`;
 
 const NavListContainer = styled.div`
   flex: 1 0 auto;
@@ -39,9 +36,9 @@ const NavListContainer = styled.div`
   flex-direction: row;
 `;
 
-const NavContainer = withTheme(styled.div`
+const NavContainer = styled.div`
   position: relative;
-  flex: 0 0 220px;
+  flex: 0 0 200px;
   height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
@@ -50,7 +47,7 @@ const NavContainer = withTheme(styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 
-  & .brand {
+  .brand {
     position: absolute;
     left: 0;
     right: 0;
@@ -67,15 +64,14 @@ const NavContainer = withTheme(styled.div`
     color: inherit;
     box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
 
-    & > img.brand-image {
+    & > img.brand-img {
       width: 40px;
       height: 40px;
-      border-radius: 3px;
       margin-right: 0.75em;
     }
   }
 
-  & .nav-list {
+  .nav-list {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -86,16 +82,16 @@ const NavContainer = withTheme(styled.div`
     overflow-y: auto;
   }
 
-  & .small-text {
+  .small-text {
     padding: 1em 0.5em;
     border-left: 1.25em solid transparent;
     font-size: 0.75em;
     margin-top: 2em;
     cursor: default;
   }
-`);
+`;
 
-const RouteContainer = withTheme(styled.div`
+const RouteContainer = styled.div`
   position: relative;
   flex: 1 0 auto;
   display: flex;
@@ -103,11 +99,12 @@ const RouteContainer = withTheme(styled.div`
   background-color: ${props => props.theme.listBackground};
   color: ${props => props.theme.listText};
   max-height: calc(100vh - 70px);
+  max-width: calc(100vw - 200px);
   overflow-y: auto;
   padding: 1em 2em;
   padding-bottom: 0;
   padding-top: 2em;
-`);
+`;
 
 module.exports = {
   WolfColaContainer,

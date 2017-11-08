@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { bool, string, shape } from 'prop-types';
+import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
@@ -74,6 +75,10 @@ class PlaylistContainer extends Component {
         }
       });
     }, error(store));
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return isEqual(nextProps, this.props) === false || isEqual(nextState, this.state) === false;
   }
 
   componentWillUnmount() {

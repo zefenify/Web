@@ -1,8 +1,6 @@
 import React from 'react';
 import { string, bool, func } from 'prop-types';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
-
 const PlayPauseSVG = ({ onClick, playing, className }) => (
   <svg
     width="24"
@@ -38,4 +36,4 @@ PlayPauseSVG.defaultProps = {
   className: '',
 };
 
-module.exports = DJKhaled(PlayPauseSVG);
+module.exports = PlayPauseSVG;

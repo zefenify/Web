@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 import { human } from '@app/util/time';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import ArtistList from '@app/component/presentational/ArtistList';
 import { Share } from '@app/component/presentational/SVG';
 
@@ -258,4 +257,4 @@ Track.defaultProps = {
   fullDetail: true,
 };
 
-module.exports = DJKhaled(Track);
+module.exports = Track;

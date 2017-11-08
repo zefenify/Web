@@ -5,7 +5,6 @@ import styled from 'react-emotion';
 import { BASE_S3 } from '@app/config/api';
 import { human } from '@app/util/time';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import { ControlsContainer } from '@app/component/styled/WolfCola';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Range from '@app/component/styled/Range';
@@ -443,4 +442,4 @@ Control.defaultProps = {
   playbackPosition: 0,
 };
 
-module.exports = DJKhaled(Control);
+module.exports = Control;

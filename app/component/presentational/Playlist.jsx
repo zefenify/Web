@@ -5,7 +5,6 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 
 const PlaylistContainer = styled(Link)`
@@ -151,4 +150,4 @@ Playlist.defaultProps = {
   cover: {},
 };
 
-module.exports = DJKhaled(Playlist);
+module.exports = Playlist;

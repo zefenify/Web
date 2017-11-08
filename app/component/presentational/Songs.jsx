@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { func, shape, bool, number, arrayOf } from 'prop-types';
 import styled from 'react-emotion';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Track from '@app/component/presentational/Track';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
@@ -145,4 +144,4 @@ Songs.defaultProps = {
   songsPlaying: false,
 };
 
-module.exports = DJKhaled(Songs);
+module.exports = Songs;

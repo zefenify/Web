@@ -3,8 +3,6 @@ import { bool } from 'prop-types';
 import styled from 'react-emotion';
 import { keyframes } from 'emotion';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
-
 const bounce = keyframes`
   0%, 100% {
     transform: scale(0.0);
@@ -65,4 +63,4 @@ Spinner.defaultProps = {
   loading: false,
 };
 
-module.exports = DJKhaled(Spinner);
+module.exports = Spinner;

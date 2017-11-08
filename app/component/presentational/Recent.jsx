@@ -2,7 +2,6 @@ import React from 'react';
 import { func, shape, bool, number, arrayOf } from 'prop-types';
 import styled from 'react-emotion';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Track from '@app/component/presentational/Track';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
@@ -132,4 +131,4 @@ Recent.defaultProps = {
   historyPlaying: false,
 };
 
-module.exports = DJKhaled(Recent);
+module.exports = Recent;

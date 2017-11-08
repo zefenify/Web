@@ -5,7 +5,6 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 import ArtistList from '@app/component/presentational/ArtistList';
@@ -243,4 +242,4 @@ Albums.defaultProps = {
   },
 };
 
-module.exports = DJKhaled(Albums);
+module.exports = Albums;

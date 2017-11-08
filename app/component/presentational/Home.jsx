@@ -1,7 +1,6 @@
 import React from 'react';
 import { bool, func, string, arrayOf, shape } from 'prop-types';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Playlist from '@app/component/presentational/Playlist';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 
@@ -45,4 +44,4 @@ Home.defaultProps = {
   featuredPlayingId: '',
 };
 
-module.exports = DJKhaled(Home);
+module.exports = Home;

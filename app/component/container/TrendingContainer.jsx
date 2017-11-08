@@ -125,7 +125,7 @@ class TrendingContainer extends Component {
   }
 
   trendingPlayPause() {
-    if (this.state.trending === null) {
+    if (this.state.trending === null || this.state.trending.length === 0) {
       return;
     }
 

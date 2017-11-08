@@ -25,7 +25,7 @@ import AlbumsContainer from '@app/component/container/AlbumsContainer';
 import ArtistsContainer from '@app/component/container/ArtistsContainer';
 import TrendingContainer from '@app/component/container/TrendingContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
-import BoxContainer from '@app/component/container/BoxContainer';
+import CollectionContainer from '@app/component/container/CollectionContainer';
 import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
 import NotificationContainer from '@app/component/container/NotificationContainer';
@@ -85,7 +85,7 @@ class WolfCola extends Component {
                         <span>Trending</span>
                         <Trending style={{ float: 'right' }} />
                       </NavLinkStyled>
-                      <NavLinkStyled to="/genre">Genres &amp; Moods</NavLinkStyled>
+                      <NavLinkStyled to="/collection">Genres &amp; Moods</NavLinkStyled>
 
                       <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
                       <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
@@ -109,7 +109,7 @@ class WolfCola extends Component {
                     <Route path="/album/:id/:trackId?" component={AlbumContainer} />
                     <Route path="/search" component={SearchContainer} />
                     <Route path="/trending/:category?" component={TrendingContainer} />
-                    <Route path="/:type(genre|ariflist)/:list?" component={BoxContainer} />
+                    <Route path="/collection/:id?" component={CollectionContainer} />
                     <Route path="/recent" component={RecentContainer} />
                     <Route path="/songs" component={SongsContainer} />
                     <Route path="/albums/:id?" component={AlbumsContainer} />

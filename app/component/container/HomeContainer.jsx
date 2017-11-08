@@ -41,6 +41,8 @@ class HomeContainer extends Component {
         let featuredPlayingId = '';
 
         this.state.featured.forEach((featured) => {
+          // NOTE:
+          // not using `trackSameList` because we're going to be comparing `track_id` of each feature playlist...
           if (isEqual(featured.playlist_track, queueInitialTrackId) === true) {
             featuredPlayingId = featured.playlist_id;
           }

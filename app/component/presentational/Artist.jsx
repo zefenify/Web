@@ -176,7 +176,7 @@ const Arist = ({
   artist,
   current,
   playing,
-  songCount,
+  trackCount,
   albumPlayingId,
   aristPlaying,
   artistPlayPause,
@@ -192,7 +192,7 @@ const Arist = ({
       <div className="artist__info">
         <p>ARTIST</p>
         <h1>{ artist.artist_name }</h1>
-        <p style={{ marginTop: '0.25em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${songCount} song${songCount > 1 ? 's' : ''}`}</p>
+        <p style={{ marginTop: '0.25em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${trackCount} song${trackCount > 1 ? 's' : ''}`}</p>
         <div className="play-share">
           <Button className="play-share__play-big" onClick={artistPlayPause}>{`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}</Button>
           <Button className="play-share__share" outline noPadding onClick={contextMenuArtist}><Share /></Button>
@@ -272,22 +272,22 @@ Arist.propTypes = {
   artist: shape({}),
   current: shape({}),
   playing: bool,
-  songCount: number,
+  trackCount: number,
   albumPlayingId: string,
   aristPlaying: bool,
   artistPlayPause: func.isRequired,
-  songPlayPause: func.isRequired,
+  trackPlayPause: func.isRequired,
   albumPlayPause: func.isRequired,
   contextMenuArtist: func.isRequired,
   contextMenuAlbum: func.isRequired,
-  contextMenuSong: func.isRequired,
+  contextMenuTrack: func.isRequired,
 };
 
 Arist.defaultProps = {
   artist: null,
   current: null,
   playing: false,
-  songCount: 0,
+  trackCount: 0,
   albumPlayingId: '',
   aristPlaying: false,
 };

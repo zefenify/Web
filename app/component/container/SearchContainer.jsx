@@ -3,24 +3,22 @@
 import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
 
-import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 import { SEARCH } from '@app/config/api';
 import track from '@app/util/track';
 
 import store from '@app/redux/store';
+import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 
 import Search from '@app/component/presentational/Search';
 
-const THROTTLE_TIMEOUT = 500;
+const THROTTLE_TIMEOUT = 500; // in milliseconds
+let cancelRequest = () => {};
 let throttle = null;
-let { CancelToken } = axios;
-let source = CancelToken.source();
 
 class SearchContainer extends Component {
   constructor(props) {
@@ -37,8 +35,8 @@ class SearchContainer extends Component {
 
   componentWillUnmount() {
     clearTimeout(throttle);
-    store.dispatch(loading(true));
-    source.cancel();
+    this.cancelRequest();
+    store.dispatch(loading(false));
   }
 
   trackPlayPause(trackId) {
@@ -74,7 +72,7 @@ class SearchContainer extends Component {
     }
 
     clearTimeout(throttle);
-    source.cancel();
+    cancelRequest();
 
     this.setState(() => ({
       matches: null,
@@ -90,44 +88,19 @@ class SearchContainer extends Component {
           return;
         }
 
-        // recreating token...
-        // eslint-disable-next-line
-        CancelToken = axios.CancelToken;
-        source = CancelToken.source();
-
         store.dispatch(loading(true));
-        axios
-          .get(SEARCH, { params: { q: this.state.q } }, { cancelToken: source.token })
-          .then((data) => {
-            store.dispatch(loading(false));
-            const matches = data.data.data;
-            matches.album = matches.album.map(album => Object.assign({}, album, { album_cover: cloneDeep(data.data.included.s3[album.album_cover]) }));
-            matches.artist = matches.artist.map(artist => Object.assign({}, artist, { artist_cover: cloneDeep(data.data.included.s3[artist.artist_cover]) }));
-            matches.playlist = matches.playlist.map(playlist => Object.assign({}, playlist, { playlist_cover: cloneDeep(data.data.included.s3[playlist.playlist_cover]) }));
-            matches.track = track(matches.track, data.data.included);
+        api(`${SEARCH}?q=${q}`, undefined, (cancel) => {
+          cancelRequest = cancel;
+        }).then((data) => {
+          store.dispatch(loading(false));
+          const matches = data.data;
+          matches.album = matches.album.map(album => Object.assign({}, album, { album_cover: cloneDeep(data.included.s3[album.album_cover]) }));
+          matches.artist = matches.artist.map(artist => Object.assign({}, artist, { artist_cover: cloneDeep(data.included.s3[artist.artist_cover]) }));
+          matches.playlist = matches.playlist.map(playlist => Object.assign({}, playlist, { playlist_cover: cloneDeep(data.included.s3[playlist.playlist_cover]) }));
+          matches.track = track(matches.track, data.included);
 
-            this.setState(() => ({ matches }));
-          }, (err) => {
-            store.dispatch(loading(false));
-
-            if (err.message === 'Network Error') {
-              store.dispatch({
-                type: NOTIFICATION_ON_REQUEST,
-                payload: {
-                  message: 'No Internet connection. Please try again later',
-                },
-              });
-
-              return;
-            }
-
-            store.dispatch({
-              type: NOTIFICATION_ON_REQUEST,
-              payload: {
-                message: 'ይቅርታ, unable to fetch results',
-              },
-            });
-          });
+          this.setState(() => ({ matches }));
+        }, error(store));
       }, THROTTLE_TIMEOUT);
     });
   }

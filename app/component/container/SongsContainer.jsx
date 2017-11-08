@@ -1,76 +1,143 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { bool, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 
+import store from '@app/redux/store';
 import songDuration from '@app/redux/selector/songDuration';
 import songPlaying from '@app/redux/selector/songPlaying';
 import songTrack from '@app/redux/selector/songTrack';
 
 import Songs from '@app/component/presentational/Songs';
 
-const YourSongs = props => (<Songs {...props} />);
+class SongsContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      songs: songTrack(props),
+      totalDuration: songDuration(props),
+      songsPlaying: songPlaying(props),
+    };
 
-module.exports = connect(state => ({
-  current: state.current,
-  playing: state.playing,
-  user: state.user,
-  songs: songTrack(state),
-  totalDuration: songDuration(state),
-  songsPlaying: songPlaying(state),
-}), dispatch => ({
-  togglePlayPauseSongs(playingSongs, songs) {
-    if (playingSongs === true) {
-      dispatch({
+    this.songsPlayPause = this.songsPlayPause.bind(this);
+    this.trackPlayPause = this.trackPlayPause.bind(this);
+    this.contextMenuTrack = this.contextMenuTrack.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(() => ({
+      current: nextProps.current,
+      playing: nextProps.playing,
+      user: nextProps.user,
+      songs: songTrack(nextProps),
+      totalDuration: songDuration(nextProps),
+      songsPlaying: songPlaying(nextProps),
+    }));
+  }
+
+  songsPlayPause() {
+    if (this.state.songsPlaying === true) {
+      store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
 
       return;
     }
 
-    dispatch({
+    store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: songs[0],
-        queue: songs,
-        queueInitial: songs,
+        play: this.state.songs[0],
+        queue: this.state.songs,
+        queueInitial: this.state.songs,
       },
     });
-  },
+  }
 
-  togglePlayPauseSong(songIndex, song, current, songs) {
-    if (current === null || current.track_id !== song.track_id) {
-      dispatch({
-        type: PLAY_REQUEST,
-        payload: {
-          play: songs[songIndex],
-          queue: songs,
-          queueInitial: songs,
-        },
+  trackPlayPause(trackId) {
+    if (this.props.current !== null && this.props.current.track_id === trackId) {
+      store.dispatch({
+        type: PLAY_PAUSE_REQUEST,
       });
 
       return;
     }
 
-    dispatch({
-      type: PLAY_PAUSE_REQUEST,
-    });
-  },
+    const trackIndex = this.state.songs.findIndex(t => t.track_id === trackId);
 
-  contextMenuSong(songId, songs) {
-    const songIndex = songs.findIndex(song => song.track_id === songId);
-
-    if (songIndex === -1) {
+    if (trackIndex === -1) {
       return;
     }
 
-    dispatch({
+    store.dispatch({
+      type: PLAY_REQUEST,
+      payload: {
+        play: this.state.songs[trackIndex],
+        queue: this.state.songs,
+        queueInitial: this.state.songs,
+      },
+    });
+
+    this.setState(() => ({
+      songsPlaying: true,
+    }));
+  }
+
+  contextMenuTrack(trackId) {
+    if (this.state.songs === null) {
+      return;
+    }
+
+    const trackIndex = this.state.songs.findIndex(t => t.track_id === trackId);
+
+    if (trackIndex === -1) {
+      return;
+    }
+
+    store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_TRACK,
-        payload: songs[songIndex],
+        payload: this.state.songs[trackIndex],
       },
     });
-  },
-}))(YourSongs);
+  }
+
+  render() {
+    return (
+      <Songs
+        current={this.props.current}
+        playing={this.props.playing}
+        user={this.props.user}
+        songs={this.state.songs}
+        totalDuration={this.state.totalDuration}
+        songsPlaying={this.state.songsPlaying}
+        songsPlayPause={this.songsPlayPause}
+        trackPlayPause={this.trackPlayPause}
+        contextMenuTrack={this.contextMenuTrack}
+      />
+    );
+  }
+}
+
+SongsContainer.propTypes = {
+  playing: bool,
+  current: shape({}),
+  user: shape({}),
+};
+
+SongsContainer.defaultProps = {
+  playing: false,
+  current: null,
+  user: null,
+};
+
+module.exports = connect(state => ({
+  current: state.current,
+  playing: state.playing,
+  user: state.user,
+  song: state.song,
+  queueInitial: state.queueInitial,
+}))(SongsContainer);

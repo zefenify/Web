@@ -2,7 +2,7 @@ import React from 'react';
 import { func, shape } from 'prop-types';
 import styled from 'react-emotion';
 
-import { CONTEXT_SONG, CONTEXT_ALBUM, CONTEXT_ARTIST, CONTEXT_PLAYLIST, CONTEXT_UPLAYLIST } from '@app/redux/constant/contextMenu';
+import { CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
 import { BASE_S3 } from '@app/config/api';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -83,7 +83,7 @@ const ContextMenuContainer = styled.div`
     }
   }
 
-  .song,
+  .track,
   .album,
   .artist,
   .playlist {
@@ -147,28 +147,28 @@ const ContextMenu = ({
   }
 
   const { type, payload } = contextMenu;
-  let songSaved = false;
+  let trackSaved = false;
 
-  if (song !== null && type === CONTEXT_SONG) {
+  if (song !== null && type === CONTEXT_TRACK) {
     const savedTracks = song.data.song_track;
     const trackId = payload.track_id;
-    songSaved = savedTracks.includes(trackId);
+    trackSaved = savedTracks.includes(trackId);
   }
 
   switch (type) {
-    case CONTEXT_SONG:
+    case CONTEXT_TRACK:
       return (
         <ContextMenuContainer id="context-menu-container">
           <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
             <CloseSVG />
           </ClearButton>
 
-          <div className="title">SONG&nbsp;</div>
+          <div className="title">TRACK&nbsp;</div>
 
-          <div className="song">
-            <div className="song__album-image" style={{ background: `transparent url('${BASE_S3}${payload.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-            <p className="song__name">{ payload.track_name }</p>
-            <p className="song__album">{ payload.track_album.album_name }</p>
+          <div className="track">
+            <div className="track__album-image" style={{ background: `transparent url('${BASE_S3}${payload.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+            <p className="track__name">{ payload.track_name }</p>
+            <p className="track__album">{ payload.track_album.album_name }</p>
           </div>
 
           <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
@@ -182,7 +182,7 @@ const ContextMenu = ({
 
           <Divider padding="0 0 0 1em" fontSize="0.8em">Your Library&nbsp;</Divider>
           {
-            songSaved
+            trackSaved
               ? <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songRemove(payload); }}>Remove from Your Library</ClearButton>
               : <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songSave(payload); }}>Save to Your Library</ClearButton>
           }

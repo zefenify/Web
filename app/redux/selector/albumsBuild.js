@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { human } from '@app/util/time';
-import sameSongList from '@app/util/sameSongList';
+import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
 
 // eslint-disable-next-line
@@ -54,7 +54,7 @@ module.exports = createSelector([props => props.song, props => props.user, props
   if (id === undefined && queueInitial.length > 0) {
     // finding `albumsPlayingIndex`...
     albums.forEach((album) => {
-      if (sameSongList(album.relationships.track, queueInitial) === true) {
+      if (trackListSame(album.relationships.track, queueInitial) === true) {
         albumsPlayingId = album.album_id;
       }
     });
@@ -66,7 +66,7 @@ module.exports = createSelector([props => props.song, props => props.user, props
       albums,
       albumsPlayingId,
       duration: human(albums[0].relationships.track.reduce((totalD, t) => totalD + t.track_track.s3_meta.duration, 0), true),
-      albumPlaying: sameSongList(albums[0].relationships.track, queueInitial),
+      albumPlaying: trackListSame(albums[0].relationships.track, queueInitial),
     };
   }
 

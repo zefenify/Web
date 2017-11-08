@@ -5,7 +5,7 @@ import sortBy from 'lodash/sortBy';
 import reverse from 'lodash/reverse';
 import uniqBy from 'lodash/uniqBy';
 
-import sameSongList from '@app/util/sameSongList';
+import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
 
 // eslint-disable-next-line
@@ -60,12 +60,12 @@ module.exports = createSelector([props => props.song, props => props.user, props
   let artistPlayingId = '';
   let albumPlayingId = '';
   Object.values(artistsWithFeaturingRemoved).forEach((artist) => {
-    if (sameSongList(flatten(artist.relationships.album.map(album => album.relationships.track)), queueInitial) === true) {
+    if (trackListSame(flatten(artist.relationships.album.map(album => album.relationships.track)), queueInitial) === true) {
       artistPlayingId = artist.artist_id;
     }
 
     artist.relationships.album.forEach((album) => {
-      if (sameSongList(album.relationships.track, queueInitial) === true) {
+      if (trackListSame(album.relationships.track, queueInitial) === true) {
         albumPlayingId = album.album_id;
       }
     });

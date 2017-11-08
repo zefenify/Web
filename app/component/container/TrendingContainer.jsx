@@ -10,7 +10,7 @@ import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
 import { human } from '@app/util/time';
 
-import api from '@app/util/api';
+import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
@@ -101,27 +101,7 @@ class TrendingContainer extends Component {
             trendingPlaying: trackListSame(this.state.trending, queueInitial),
           }));
         });
-      }, (err) => {
-        store.dispatch(loading(false));
-
-        if (err.message === 'Network Error') {
-          store.dispatch({
-            type: NOTIFICATION_ON_REQUEST,
-            payload: {
-              message: 'No Internet connection. Please try again later',
-            },
-          });
-
-          return;
-        }
-
-        store.dispatch({
-          type: NOTIFICATION_ON_REQUEST,
-          payload: {
-            message: 'ይቅርታ, unable to fetch Trending',
-          },
-        });
-      });
+      }, error(store));
   }
 
   trendingPlayPause() {

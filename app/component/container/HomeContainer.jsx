@@ -4,36 +4,13 @@ import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
-import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
-import api from '@app/util/api';
+import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
 import Home from '@app/component/presentational/Home';
-
-const error = (err) => {
-  store.dispatch(loading(false));
-
-  if (err.message === 'Network Error') {
-    store.dispatch({
-      type: NOTIFICATION_ON_REQUEST,
-      payload: {
-        message: 'No Internet connection. Please try again later',
-      },
-    });
-
-    return;
-  }
-
-  store.dispatch({
-    type: NOTIFICATION_ON_REQUEST,
-    payload: {
-      message: 'ይቅርታ, unable to fetch Featured Playlist',
-    },
-  });
-};
 
 class HomeContainer extends Component {
   constructor(props) {
@@ -72,7 +49,7 @@ class HomeContainer extends Component {
 
         this.setState(() => ({ featuredPlayingId }));
       });
-    }, error);
+    }, error(store));
   }
 
   componentWillUnmount() {
@@ -114,7 +91,7 @@ class HomeContainer extends Component {
           queueInitial: tracks,
         },
       });
-    }, error);
+    }, error(store));
   }
 
   render() {

@@ -2,6 +2,8 @@ import axios from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { BASE, HEADER } from '@app/config/api';
+import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
+import { loading } from '@app/redux/action/loading';
 
 axios.defaults.baseURL = BASE;
 
@@ -91,5 +93,28 @@ const postPatch = method => (URL, user = null, data, cancel) => new Promise((res
 api.save = postPatch('post');
 
 api.patch = postPatch('patch');
+
+// this is a helper function, still doesn't break "pure-ity"
+api.error = store => (error) => {
+  store.dispatch(loading(false));
+
+  if (error.message === 'Network Error') {
+    store.dispatch({
+      type: NOTIFICATION_ON_REQUEST,
+      payload: {
+        message: 'No Internet connection. Please try again later',
+      },
+    });
+
+    return;
+  }
+
+  store.dispatch({
+    type: NOTIFICATION_ON_REQUEST,
+    payload: {
+      message: 'ይቅርታ, unable to fetch Featured Playlist',
+    },
+  });
+};
 
 module.exports = api;

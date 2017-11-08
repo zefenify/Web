@@ -8,32 +8,10 @@ import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
-import api from '@app/util/api';
+import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
 import Collection from '@app/component/presentational/Collection';
-
-const error = (err) => {
-  store.dispatch(loading(false));
-
-  if (err.message === 'Network Error') {
-    store.dispatch({
-      type: NOTIFICATION_ON_REQUEST,
-      payload: {
-        message: 'No Internet connection. Please try again later',
-      },
-    });
-
-    return;
-  }
-
-  store.dispatch({
-    type: NOTIFICATION_ON_REQUEST,
-    payload: {
-      message: 'ይቅርታ, unable to fetch Featured Playlist',
-    },
-  });
-};
 
 class CollectionContainer extends Component {
   constructor(props) {
@@ -99,7 +77,7 @@ class CollectionContainer extends Component {
           queueInitial: tracks,
         },
       });
-    }, error);
+    }, error(store));
   }
 
   build(props) {
@@ -127,7 +105,7 @@ class CollectionContainer extends Component {
           collectionName: 'Genre and Moods',
           collection,
         }));
-      }, error);
+      }, error(store));
 
       return;
     }
@@ -159,7 +137,7 @@ class CollectionContainer extends Component {
         collection,
         playlistPlayingId,
       }));
-    }, error);
+    }, error(store));
   }
 
   render() {

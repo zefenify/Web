@@ -35,7 +35,7 @@ class SearchContainer extends Component {
 
   componentWillUnmount() {
     clearTimeout(throttle);
-    this.cancelRequest();
+    cancelRequest();
     store.dispatch(loading(false));
   }
 

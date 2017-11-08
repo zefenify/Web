@@ -10,6 +10,7 @@ import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Album from '@app/component/presentational/Album';
 
 import { loading } from '@app/redux/action/loading';
@@ -34,9 +35,8 @@ class AlbumContainer extends Component {
   }
 
   componentDidMount() {
-    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}album/${this.props.match.params.id}`, user, (cancel) => {
+    api(`${BASE}album/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then(({ data, included }) => {
       store.dispatch(loading(false));
@@ -202,14 +202,17 @@ AlbumContainer.propTypes = {
       id: string,
     }),
   }).isRequired,
+  user: shape({}),
 };
 
 AlbumContainer.defaultProps = {
   current: null,
   playing: false,
+  user: null,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   current: state.current,
   playing: state.playing,
-}))(AlbumContainer);
+  user: state.user,
+}))(AlbumContainer));

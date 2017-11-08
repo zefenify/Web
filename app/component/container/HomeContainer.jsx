@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool } from 'prop-types';
+import { bool, shape } from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
 
@@ -10,6 +10,7 @@ import store from '@app/redux/store';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Home from '@app/component/presentational/Home';
 
 class HomeContainer extends Component {
@@ -24,9 +25,8 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}featured`, user, (cancel) => {
+    api(`${BASE}featured`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -69,8 +69,7 @@ class HomeContainer extends Component {
       return;
     }
 
-    const { user } = store.getState();
-    api(`${BASE}playlist/${fid}`, user, (cancel) => {
+    api(`${BASE}playlist/${fid}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       // mapping track...
@@ -110,12 +109,15 @@ class HomeContainer extends Component {
 
 HomeContainer.propTypes = {
   playing: bool,
+  user: shape({}),
 };
 
 HomeContainer.defaultProps = {
   playing: false,
+  user: null,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
+  user: state.user,
   playing: state.playing,
-}))(HomeContainer);
+}))(HomeContainer));

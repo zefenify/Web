@@ -7,11 +7,12 @@ import { SHUFFLE_REQUEST } from '@app/redux/constant/shuffle';
 import { REMAINING_REQUEST } from '@app/redux/constant/remaining';
 import { NEXT_REQUEST, PREVIOUS_REQUEST, SEEK_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Control from '@app/component/presentational/Control';
 
 const ControlContainer = props => (<Control {...props} />);
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   current: state.current,
   duration: state.duration,
   playbackPosition: state.playbackPosition,
@@ -51,4 +52,4 @@ module.exports = connect(state => ({
   maxVolume() {
     dispatch({ type: VOLUME_REQUEST, payload: 1 });
   },
-}))(ControlContainer);
+}))(ControlContainer));

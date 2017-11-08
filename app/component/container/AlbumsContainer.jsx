@@ -8,6 +8,7 @@ import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import store from '@app/redux/store';
 import albumsBuild from '@app/redux/selector/albumsBuild';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Albums from '@app/component/presentational/Albums';
 
 class AlbumsContainer extends Component {
@@ -174,10 +175,10 @@ AlbumsContainer.defaultProps = {
   user: null,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   user: state.user,
   song: state.song,
   playing: state.playing,
   current: state.current,
   queueInitial: state.queueInitial,
-}))(AlbumsContainer);
+}))(AlbumsContainer));

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { bool, string, shape } from 'prop-types';
-import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
@@ -11,6 +10,7 @@ import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import HeaderTracks from '@app/component/presentational/HeaderTracks';
 
 import { loading } from '@app/redux/action/loading';
@@ -35,9 +35,8 @@ class PlaylistContainer extends Component {
   }
 
   componentDidMount() {
-    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}playlist/${this.props.match.params.id}`, user, (cancel) => {
+    api(`${BASE}playlist/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -75,10 +74,6 @@ class PlaylistContainer extends Component {
         }
       });
     }, error(store));
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return isEqual(nextProps, this.props) === false || isEqual(nextState, this.state) === false;
   }
 
   componentWillUnmount() {
@@ -196,6 +191,7 @@ class PlaylistContainer extends Component {
 PlaylistContainer.propTypes = {
   current: shape({}),
   playing: bool,
+  user: shape({}),
   match: shape({
     params: shape({
       id: string,
@@ -206,9 +202,11 @@ PlaylistContainer.propTypes = {
 PlaylistContainer.defaultProps = {
   current: null,
   playing: false,
+  user: null,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   current: state.current,
   playing: state.playing,
-}))(PlaylistContainer);
+  user: state.user,
+}))(PlaylistContainer));

@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 
 import { BASE } from '@app/config/api';
-import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Collection from '@app/component/presentational/Collection';
 
 class CollectionContainer extends Component {
@@ -36,10 +36,6 @@ class CollectionContainer extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return isEqual(nextProps, this.props) === false || isEqual(nextState, this.state) === false;
-  }
-
   componentWillUnmount() {
     store.dispatch(loading(false));
     this.cancelRequest();
@@ -54,8 +50,7 @@ class CollectionContainer extends Component {
       return;
     }
 
-    const { user } = store.getState();
-    api(`${BASE}playlist/${playlistId}`, user, (cancel) => {
+    api(`${BASE}playlist/${playlistId}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       // mapping track...
@@ -89,10 +84,8 @@ class CollectionContainer extends Component {
       collection: null,
     }));
 
-    const { user } = store.getState();
-
     if (props.match.params.id === undefined) {
-      api(`${BASE}collection`, user, (cancel) => {
+      api(`${BASE}collection`, this.props.user, (cancel) => {
         this.cancelRequest = cancel;
       }).then((data) => {
         store.dispatch(loading(false));
@@ -113,7 +106,7 @@ class CollectionContainer extends Component {
       return;
     }
 
-    api(`${BASE}collection/${props.match.params.id}`, user, (cancel) => {
+    api(`${BASE}collection/${props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -165,6 +158,7 @@ CollectionContainer.propTypes = {
       id: string,
     }),
   }),
+  user: shape({}),
 };
 
 CollectionContainer.defaultProps = {
@@ -175,9 +169,11 @@ CollectionContainer.defaultProps = {
       id: '',
     },
   },
+  user: null,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   playing: state.playing,
   queueInitial: state.queueInitial,
-}))(CollectionContainer);
+  user: state.user,
+}))(CollectionContainer));

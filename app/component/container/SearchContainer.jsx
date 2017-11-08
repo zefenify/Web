@@ -14,6 +14,7 @@ import store from '@app/redux/store';
 import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Search from '@app/component/presentational/Search';
 
 const THROTTLE_TIMEOUT = 500; // in milliseconds
@@ -88,10 +89,8 @@ class SearchContainer extends Component {
           return;
         }
 
-        const { user } = store.getState();
-
         store.dispatch(loading(true));
-        api(`${SEARCH}?q=${q}`, user, (cancel) => {
+        api(`${SEARCH}?q=${q}`, this.props.user, (cancel) => {
           cancelRequest = cancel;
         }).then((data) => {
           store.dispatch(loading(false));
@@ -141,14 +140,17 @@ class SearchContainer extends Component {
 SearchContainer.propTypes = {
   playing: bool,
   current: shape({}),
+  user: shape({}),
 };
 
 SearchContainer.defaultProps = {
   playing: false,
   current: null,
+  user: null,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
+  user: state.user,
   current: state.current,
   playing: state.playing,
-}))(SearchContainer);
+}))(SearchContainer));

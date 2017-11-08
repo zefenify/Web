@@ -9,6 +9,7 @@ import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST }
 import store from '@app/redux/store';
 import artistsBuild from '@app/redux/selector/artistsBuild';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Artists from '@app/component/presentational/Artists';
 
 class ArtistsContainer extends Component {
@@ -253,10 +254,10 @@ ArtistsContainer.defaultProps = {
   playing: false,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   song: state.song,
   user: state.user,
   current: state.current,
   playing: state.playing,
   queueInitial: state.queueInitial,
-}))(ArtistsContainer);
+}))(ArtistsContainer));

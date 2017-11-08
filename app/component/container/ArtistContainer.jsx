@@ -16,6 +16,7 @@ import track from '@app/util/track';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Artist from '@app/component/presentational/Artist';
 
 class ArtistContainer extends Component {
@@ -39,9 +40,8 @@ class ArtistContainer extends Component {
   }
 
   componentDidMount() {
-    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}artist/${this.props.match.params.id}`, user, (cancel) => {
+    api(`${BASE}artist/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -54,9 +54,8 @@ class ArtistContainer extends Component {
       return;
     }
 
-    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}artist/${nextProps.match.params.id}`, user, (cancel) => {
+    api(`${BASE}artist/${nextProps.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -267,14 +266,16 @@ ArtistContainer.propTypes = {
       id: string,
     }),
   }).isRequired,
+  user: shape({}),
 };
 
 ArtistContainer.defaultProps = {
   current: null,
   playing: false,
+  user: null,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   current: state.current,
   playing: state.playing,
-}))(ArtistContainer);
+}))(ArtistContainer));

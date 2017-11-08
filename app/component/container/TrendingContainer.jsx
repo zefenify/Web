@@ -3,7 +3,6 @@ import { string, bool, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
-import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import trackListSame from '@app/util/trackListSame';
@@ -14,6 +13,7 @@ import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Trending from '@app/component/presentational/Trending';
 
 class TrendingContainer extends Component {
@@ -74,9 +74,8 @@ class TrendingContainer extends Component {
       this.cancelRequest();
     }
 
-    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}trending/${filter}`, user, (cancel) => {
+    api(`${BASE}trending/${filter}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }, filter === 'today')
       .then((data) => {
@@ -210,14 +209,17 @@ TrendingContainer.propTypes = {
       category: string,
     }),
   }).isRequired,
+  user: shape({}),
 };
 
 TrendingContainer.defaultProps = {
   playing: false,
   current: null,
+  user: null,
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
+  user: state.user,
   current: state.current,
   playing: state.playing,
-}))(TrendingContainer);
+}))(TrendingContainer));

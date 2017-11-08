@@ -35,6 +35,7 @@ import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
 import { Search, Trending, Settings } from '@app/component/presentational/SVG';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 
@@ -134,4 +135,6 @@ class WolfCola extends Component {
   }
 }
 
-render(<WolfCola />, document.querySelector('#wolf-cola'));
+const WolfColaDJKhaled = DJKhaled(WolfCola);
+
+render(<WolfColaDJKhaled />, document.querySelector('#wolf-cola'));

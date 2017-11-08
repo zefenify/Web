@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bool, shape, arrayOf } from 'prop-types';
 import { connect } from 'react-redux';
-import isEqual from 'lodash/isEqual';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
@@ -11,6 +10,7 @@ import songDuration from '@app/redux/selector/songDuration';
 import songPlaying from '@app/redux/selector/songPlaying';
 import songTrack from '@app/redux/selector/songTrack';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Songs from '@app/component/presentational/Songs';
 
 class SongsContainer extends Component {
@@ -36,20 +36,6 @@ class SongsContainer extends Component {
       totalDuration: songDuration(nextProps),
       songsPlaying: songPlaying(nextProps),
     }));
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return isEqual({
-      playing: this.props.playing,
-      user: this.props.user,
-      song: this.props.song,
-      history: this.props.history,
-    }, {
-      playing: nextProps.playing,
-      user: nextProps.user,
-      song: nextProps.song,
-      history: nextProps.history,
-    }) === false;
   }
 
   songsPlayPause() {
@@ -141,23 +127,19 @@ SongsContainer.propTypes = {
   playing: bool,
   current: shape({}),
   user: shape({}),
-  song: shape({}),
-  history: arrayOf(shape({})),
 };
 
 SongsContainer.defaultProps = {
   playing: false,
   current: null,
   user: null,
-  song: null,
-  history: [],
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   current: state.current,
   playing: state.playing,
   user: state.user,
   song: state.song,
   queueInitial: state.queueInitial,
   history: state.history,
-}))(SongsContainer);
+}))(SongsContainer));

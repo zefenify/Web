@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import { bool, shape, arrayOf } from 'prop-types';
 import { connect } from 'react-redux';
-import isEqual from 'lodash/isEqual';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
@@ -13,6 +12,7 @@ import store from '@app/redux/store';
 import historyDuration from '@app/redux/selector/historyDuration';
 import historyPlaying from '@app/redux/selector/historyPlaying';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Recent from '@app/component/presentational/Recent';
 
 class RecentContainer extends Component {
@@ -33,18 +33,6 @@ class RecentContainer extends Component {
       totalDuration: historyDuration(nextProps),
       historyPlaying: historyPlaying(nextProps),
     }));
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return isEqual({
-      history: this.props.history,
-      queueInitial: this.props.queueInitial,
-      playing: this.props.playing,
-    }, {
-      history: nextProps.history,
-      queueInitial: nextProps.queueInitial,
-      playing: nextProps.playing,
-    }) === false;
   }
 
   historyPlayPause() {
@@ -137,11 +125,11 @@ RecentContainer.defaultProps = {
   queueInitial: [],
 };
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   playing: state.playing,
   current: state.current,
   history: state.history,
   queueInitial: state.queueInitial,
   totalDuration: historyDuration(state),
   historyPlaying: historyPlaying(state),
-}))(RecentContainer);
+}))(RecentContainer));

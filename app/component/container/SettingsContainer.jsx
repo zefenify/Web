@@ -9,11 +9,12 @@ import { THEME_REQUEST } from '@app/redux/constant/theme';
 import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
 import { USER_REQUEST } from '@app/redux/constant/user';
 
+import DJKhaled from '@app/component/hoc/DJKhaled';
 import Settings from '@app/component/presentational/Settings';
 
 const SettingsContainer = props => (<Settings {...props} />);
 
-module.exports = connect(state => ({
+module.exports = DJKhaled(connect(state => ({
   currentTheme: state.theme,
   currentCrossfade: state.crossfade,
   user: state.user,
@@ -60,4 +61,4 @@ module.exports = connect(state => ({
       }(document, 'script', 'facebook-jssdk'));
     }
   },
-}))(SettingsContainer);
+}))(SettingsContainer));

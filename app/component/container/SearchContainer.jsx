@@ -88,8 +88,10 @@ class SearchContainer extends Component {
           return;
         }
 
+        const { user } = store.getState();
+
         store.dispatch(loading(true));
-        api(`${SEARCH}?q=${q}`, undefined, (cancel) => {
+        api(`${SEARCH}?q=${q}`, user, (cancel) => {
           cancelRequest = cancel;
         }).then((data) => {
           store.dispatch(loading(false));

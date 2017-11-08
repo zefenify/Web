@@ -3,7 +3,6 @@ import { bool, string, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
-import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
 import trackListSame from '@app/util/trackListSame';
@@ -35,8 +34,9 @@ class PlaylistContainer extends Component {
   }
 
   componentDidMount() {
+    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}playlist/${this.props.match.params.id}`, undefined, (cancel) => {
+    api(`${BASE}playlist/${this.props.match.params.id}`, user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));

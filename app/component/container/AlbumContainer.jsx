@@ -34,8 +34,9 @@ class AlbumContainer extends Component {
   }
 
   componentDidMount() {
+    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}album/${this.props.match.params.id}`, undefined, (cancel) => {
+    api(`${BASE}album/${this.props.match.params.id}`, user, (cancel) => {
       this.cancelRequest = cancel;
     }).then(({ data, included }) => {
       store.dispatch(loading(false));

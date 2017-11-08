@@ -7,7 +7,6 @@ import sortBy from 'lodash/sortBy';
 import reverse from 'lodash/reverse';
 
 import { BASE } from '@app/config/api';
-import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST } from '@app/redux/constant/contextMenu';
 
@@ -40,8 +39,9 @@ class ArtistContainer extends Component {
   }
 
   componentDidMount() {
+    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}artist/${this.props.match.params.id}`, undefined, (cancel) => {
+    api(`${BASE}artist/${this.props.match.params.id}`, user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -54,8 +54,9 @@ class ArtistContainer extends Component {
       return;
     }
 
+    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}artist/${nextProps.match.params.id}`, undefined, (cancel) => {
+    api(`${BASE}artist/${nextProps.match.params.id}`, user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));

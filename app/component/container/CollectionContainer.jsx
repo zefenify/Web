@@ -54,7 +54,8 @@ class CollectionContainer extends Component {
       return;
     }
 
-    api(`${BASE}playlist/${playlistId}`, (cancel) => {
+    const { user } = store.getState();
+    api(`${BASE}playlist/${playlistId}`, user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       // mapping track...
@@ -88,8 +89,10 @@ class CollectionContainer extends Component {
       collection: null,
     }));
 
+    const { user } = store.getState();
+
     if (props.match.params.id === undefined) {
-      api(`${BASE}collection`, undefined, (cancel) => {
+      api(`${BASE}collection`, user, (cancel) => {
         this.cancelRequest = cancel;
       }).then((data) => {
         store.dispatch(loading(false));
@@ -110,7 +113,7 @@ class CollectionContainer extends Component {
       return;
     }
 
-    api(`${BASE}collection/${props.match.params.id}`, undefined, (cancel) => {
+    api(`${BASE}collection/${props.match.params.id}`, user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));

@@ -74,8 +74,9 @@ class TrendingContainer extends Component {
       this.cancelRequest();
     }
 
+    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}trending/${filter}`, undefined, (cancel) => {
+    api(`${BASE}trending/${filter}`, user, (cancel) => {
       this.cancelRequest = cancel;
     }, filter === 'today')
       .then((data) => {

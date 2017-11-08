@@ -24,8 +24,9 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
+    const { user } = store.getState();
     store.dispatch(loading(true));
-    api(`${BASE}featured`, undefined, (cancel) => {
+    api(`${BASE}featured`, user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -68,7 +69,8 @@ class HomeContainer extends Component {
       return;
     }
 
-    api(`${BASE}playlist/${fid}`, (cancel) => {
+    const { user } = store.getState();
+    api(`${BASE}playlist/${fid}`, user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       // mapping track...

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 
 import store from '@app/redux/store';
 import historyDuration from '@app/redux/selector/historyDuration';
@@ -24,8 +24,8 @@ class RecentContainer extends Component {
     };
 
     this.historyPlayPause = this.historyPlayPause.bind(this);
-    this.songPlayPause = this.songPlayPause.bind(this);
-    this.contextMenuSong = this.contextMenuSong.bind(this);
+    this.trackPlayPause = this.trackPlayPause.bind(this);
+    this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,18 +66,18 @@ class RecentContainer extends Component {
     });
   }
 
-  songPlayPause(songId) {
-    if (this.props.current === null || this.props.current.track_id !== songId) {
-      const songIndex = this.props.history.findIndex(track => track.track_id === songId);
+  trackPlayPause(trackId) {
+    if (this.props.current === null || this.props.current.track_id !== trackId) {
+      const trackIndex = this.props.history.findIndex(track => track.track_id === trackId);
 
-      if (songIndex === -1) {
+      if (trackIndex === -1) {
         return;
       }
 
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: this.props.history[songIndex],
+          play: this.props.history[trackIndex],
           queue: this.props.history,
           queueInitial: this.props.history,
         },
@@ -91,18 +91,18 @@ class RecentContainer extends Component {
     });
   }
 
-  contextMenuSong(songId) {
-    const songIndex = this.props.history.findIndex(track => track.track_id === songId);
+  contextMenuTrack(trackId) {
+    const trackIndex = this.props.history.findIndex(track => track.track_id === trackId);
 
-    if (songIndex === -1) {
+    if (trackIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
-        type: CONTEXT_SONG,
-        payload: this.props.history[songIndex],
+        type: CONTEXT_TRACK,
+        payload: this.props.history[trackIndex],
       },
     });
   }
@@ -116,8 +116,8 @@ class RecentContainer extends Component {
         totalDuration={this.state.totalDuration}
         historyPlaying={this.state.historyPlaying}
         historyPlayPause={this.historyPlayPause}
-        songPlayPause={this.songPlayPause}
-        contextMenuSong={this.contextMenuSong}
+        trackPlayPause={this.trackPlayPause}
+        contextMenuTrack={this.contextMenuTrack}
       />
     );
   }

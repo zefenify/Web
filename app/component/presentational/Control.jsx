@@ -184,7 +184,7 @@ const NowPlayingContainer = styled.div`
   display: flex;
   align-items: center;
 
-  .song {
+  .track {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -203,7 +203,7 @@ const NowPlayingContainer = styled.div`
     }
   }
 
-  .song-name {
+  .track-name {
     display: flex;
     flex-direction: column;
 
@@ -336,11 +336,11 @@ const Control = ({
       {
         current !== null
           ? (
-            <div className="song">
-              <div className="song__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-              <div className="song__name song-name">
-                <p className="song-name__name">{ current.track_name }</p>
-                <div className="song-name__artist">
+            <div className="track">
+              <div className="track__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+              <div className="track__name track-name">
+                <p className="track-name__name">{ current.track_name }</p>
+                <div className="track-name__artist">
                   <ArtistList artists={current.track_album.album_artist} />
                 </div>
               </div>

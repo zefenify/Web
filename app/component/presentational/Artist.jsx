@@ -7,7 +7,7 @@ import { BASE_S3 } from '@app/config/api';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Divider from '@app/component/styled/Divider';
-import Song from '@app/component/presentational/Song';
+import Track from '@app/component/presentational/Track';
 import Button from '@app/component/styled/Button';
 import { Share } from '@app/component/presentational/SVG';
 
@@ -59,7 +59,7 @@ const ArtistContainer = styled.div`
   }
 
   .album {
-    &__song-list {
+    &__track-list {
       margin-top: 2em;
     }
   }
@@ -110,7 +110,7 @@ const ArtistContainer = styled.div`
     }
   }
 
-  .song-list {
+  .track-list {
     display: flex;
     flex-direction: column;
   }
@@ -180,11 +180,11 @@ const Arist = ({
   albumPlayingId,
   aristPlaying,
   artistPlayPause,
-  songPlayPause,
+  trackPlayPause,
   albumPlayPause,
   contextMenuArtist,
   contextMenuAlbum,
-  contextMenuSong,
+  contextMenuTrack,
 }) => (
   <ArtistContainer>
     <div className="artist">
@@ -219,23 +219,23 @@ const Arist = ({
                 </div>
               </div>
 
-              <div className="album__song-list song-list">
+              <div className="album__track-list track-list">
                 <Divider />
                 {
-                  album.relationships.track.map((song, songIndex) => (
-                    <Song
+                  album.relationships.track.map((track, index) => (
+                    <Track
                       fullDetail={false}
-                      key={song.track_id}
-                      currentSongId={current === null ? '' : current.track_id}
-                      trackNumber={songIndex + 1}
-                      togglePlayPause={songPlayPause}
+                      key={track.track_id}
+                      currentTrackId={current === null ? '' : current.track_id}
+                      trackNumber={index + 1}
+                      trackPlayPause={trackPlayPause}
                       playing={playing}
-                      songId={song.track_id}
-                      songName={song.track_name}
-                      songFeaturing={song.track_featuring}
-                      songAlbum={album}
-                      songDuration={song.track_track.s3_meta.duration}
-                      contextMenuSong={contextMenuSong}
+                      trackId={track.track_id}
+                      trackName={track.track_name}
+                      trackFeaturing={track.track_featuring}
+                      trackAlbum={album}
+                      trackDuration={track.track_track.s3_meta.duration}
+                      contextMenuTrack={contextMenuTrack}
                     />
                   ))
                 }

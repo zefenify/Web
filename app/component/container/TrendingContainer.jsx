@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
-import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import sameSongList from '@app/util/sameSongList';
+import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
 import { human } from '@app/util/time';
 
@@ -30,8 +30,8 @@ class TrendingContainer extends Component {
     };
 
     this.trendingPlayPause = this.trendingPlayPause.bind(this);
-    this.songPlayPause = this.songPlayPause.bind(this);
-    this.contextMenuSong = this.contextMenuSong.bind(this);
+    this.trackPlayPause = this.trackPlayPause.bind(this);
+    this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +40,7 @@ class TrendingContainer extends Component {
       return;
     }
 
-    this.loadSongs(this.props.match.params.category);
+    this.loadTracks(this.props.match.params.category);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,7 +50,7 @@ class TrendingContainer extends Component {
     }
 
     if (nextProps.match.params.category !== this.props.match.params.category) {
-      this.loadSongs(nextProps.match.params.category);
+      this.loadTracks(nextProps.match.params.category);
     }
   }
 
@@ -59,7 +59,7 @@ class TrendingContainer extends Component {
     this.cancelRequest();
   }
 
-  loadSongs(filter) {
+  loadTracks(filter) {
     if (['yesterday', 'today', 'week', 'popularity'].includes(filter) === false) {
       this.props.history.replace('/trending/yesterday');
       return;
@@ -98,7 +98,7 @@ class TrendingContainer extends Component {
           }
 
           this.setState(() => ({
-            trendingPlaying: sameSongList(this.state.trending, queueInitial),
+            trendingPlaying: trackListSame(this.state.trending, queueInitial),
           }));
         });
       }, (err) => {
@@ -152,8 +152,8 @@ class TrendingContainer extends Component {
     });
   }
 
-  songPlayPause(songId) {
-    if (this.props.current !== null && this.props.current.track_id === songId) {
+  trackPlayPause(trackId) {
+    if (this.props.current !== null && this.props.current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -161,16 +161,16 @@ class TrendingContainer extends Component {
       return;
     }
 
-    const songIndex = this.state.trending.findIndex(t => t.track_id === songId);
+    const trackIndex = this.state.trending.findIndex(t => t.track_id === trackId);
 
-    if (songIndex === -1) {
+    if (trackIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.trending[songIndex],
+        play: this.state.trending[trackIndex],
         queue: this.state.trending,
         queueInitial: this.state.trending,
       },
@@ -181,22 +181,22 @@ class TrendingContainer extends Component {
     }));
   }
 
-  contextMenuSong(songId) {
+  contextMenuTrack(trackId) {
     if (this.state.trending === null) {
       return;
     }
 
-    const songIndex = this.state.trending.findIndex(song => song.track_id === songId);
+    const trackIndex = this.state.trending.findIndex(t => t.track_id === trackId);
 
-    if (songIndex === -1) {
+    if (trackIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
-        type: CONTEXT_SONG,
-        payload: this.state.trending[songIndex],
+        type: CONTEXT_TRACK,
+        payload: this.state.trending[trackIndex],
       },
     });
   }
@@ -211,8 +211,8 @@ class TrendingContainer extends Component {
         duration={this.state.duration}
         trendingPlaying={this.state.trendingPlaying}
         trendingPlayPause={this.trendingPlayPause}
-        songPlayPause={this.songPlayPause}
-        contextMenuSong={this.contextMenuSong}
+        trackPlayPause={this.trackPlayPause}
+        contextMenuTrack={this.contextMenuTrack}
       />
     );
   }

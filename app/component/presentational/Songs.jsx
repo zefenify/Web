@@ -4,7 +4,7 @@ import { func, shape, bool, number, arrayOf } from 'prop-types';
 import styled from 'react-emotion';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
-import Song from '@app/component/presentational/Song';
+import Track from '@app/component/presentational/Track';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
 
@@ -44,7 +44,7 @@ const SongsContainer = styled.div`
     }
   }
 
-  .song {
+  .track {
     flex: 1 1 auto;
 
     & > *:last-child {
@@ -59,10 +59,10 @@ const Songs = ({
   user,
   songs,
   totalDuration,
-  playingSongs,
-  togglePlayPauseSongs,
-  togglePlayPauseSong,
-  contextMenuSong,
+  songsPlaying,
+  songsPlayPause,
+  trackPlayPause,
+  contextMenuTrack,
 }) => {
   if (user === null) {
     return (
@@ -88,26 +88,26 @@ const Songs = ({
       <div className="songs">
         <h1 className="songs__title">Songs</h1>
         <p className="songs__info">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-        <Button className="songs__button" onClick={() => togglePlayPauseSongs(playingSongs, songs)}>{`${(playing && playingSongs) ? 'PAUSE' : 'PLAY'}`}</Button>
+        <Button className="songs__button" onClick={songsPlayPause}>{`${(playing && songsPlaying) ? 'PAUSE' : 'PLAY'}`}</Button>
       </div>
 
       <Divider />
 
-      <div className="song">
+      <div className="track">
         {
-          songs.map((song, index) => (
-            <Song
-              key={song.track_id}
-              currentSongId={current === null ? '' : current.track_id}
+          songs.map((track, index) => (
+            <Track
+              key={track.track_id}
+              currentTrackId={current === null ? '' : current.track_id}
               trackNumber={index + 1}
-              togglePlayPause={() => togglePlayPauseSong(index, song, current, songs)}
+              trackPlayPause={trackPlayPause}
               playing={playing}
-              songId={song.track_id}
-              songName={song.track_name}
-              songFeaturing={song.track_featuring}
-              songDuration={song.track_track.s3_meta.duration}
-              songAlbum={song.track_album}
-              contextMenuSong={songId => contextMenuSong(songId, songs)}
+              trackId={track.track_id}
+              trackName={track.track_name}
+              trackFeaturing={track.track_featuring}
+              trackDuration={track.track_track.s3_meta.duration}
+              trackAlbum={track.track_album}
+              contextMenuTrack={contextMenuTrack}
             />
           ))
         }
@@ -126,10 +126,10 @@ Songs.propTypes = {
     minutes: number,
     seconds: number,
   }),
-  playingSongs: bool,
-  togglePlayPauseSongs: func.isRequired,
-  togglePlayPauseSong: func.isRequired,
-  contextMenuSong: func.isRequired,
+  songsPlaying: bool,
+  songsPlayPause: func.isRequired,
+  trackPlayPause: func.isRequired,
+  contextMenuTrack: func.isRequired,
 };
 
 Songs.defaultProps = {
@@ -142,7 +142,7 @@ Songs.defaultProps = {
     minutes: 0,
     seconds: 0,
   },
-  playingSongs: false,
+  songsPlaying: false,
 };
 
 module.exports = DJKhaled(Songs);

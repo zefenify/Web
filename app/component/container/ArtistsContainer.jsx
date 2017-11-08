@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import flatten from 'lodash/flatten';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_ALBUM, CONTEXT_ARTIST } from '@app/redux/constant/contextMenu';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST } from '@app/redux/constant/contextMenu';
 
 import store from '@app/redux/store';
 import artistsBuild from '@app/redux/selector/artistsBuild';
@@ -19,11 +19,11 @@ class ArtistsContainer extends Component {
     this.artistsPlayPause = this.artistsPlayPause.bind(this);
     this.artistPlayPause = this.artistPlayPause.bind(this);
     this.artistPlayPauseBuild = this.artistPlayPauseBuild.bind(this);
-    this.songPlayPause = this.songPlayPause.bind(this);
+    this.trackPlayPause = this.trackPlayPause.bind(this);
     this.albumPlayPause = this.albumPlayPause.bind(this);
     this.contextMenuArtist = this.contextMenuArtist.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
-    this.contextMenuSong = this.contextMenuSong.bind(this);
+    this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,15 +41,15 @@ class ArtistsContainer extends Component {
       return;
     }
 
-    const songsFlatten = flatten(this.state.artists[artistIndex].relationships.album.map(album => album.relationships.track));
+    const tracksFlatten = flatten(this.state.artists[artistIndex].relationships.album.map(album => album.relationships.track));
 
     if (this.props.current === null || this.state.artistPlayingId !== artistId) {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: songsFlatten[0],
-          queue: songsFlatten,
-          queueInitial: songsFlatten,
+          play: tracksFlatten[0],
+          queue: tracksFlatten,
+          queueInitial: tracksFlatten,
         },
       });
 
@@ -107,8 +107,8 @@ class ArtistsContainer extends Component {
     }
   }
 
-  songPlayPause(songId) {
-    if (this.props.current !== null && this.props.current.track_id === songId) {
+  trackPlayPause(trackId) {
+    if (this.props.current !== null && this.props.current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -116,31 +116,31 @@ class ArtistsContainer extends Component {
       return;
     }
 
-    let song = null;
-    const songsFlatten = [];
+    let track = null;
+    const tracksFlatten = [];
 
     this.state.artists.forEach((artist) => {
       artist.relationships.album.forEach((album) => {
-        songsFlatten.push(...album.relationships.track);
+        tracksFlatten.push(...album.relationships.track);
 
         album.relationships.track.forEach((t) => {
-          if (t.track_id === songId) {
-            song = t;
+          if (t.track_id === trackId) {
+            track = t;
           }
         });
       });
     });
 
-    if (song === null) {
+    if (track === null) {
       return;
     }
 
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: song,
-        queue: songsFlatten,
-        queueInitial: songsFlatten,
+        play: track,
+        queue: tracksFlatten,
+        queueInitial: tracksFlatten,
       },
     });
   }
@@ -183,28 +183,28 @@ class ArtistsContainer extends Component {
     });
   }
 
-  contextMenuSong(songId) {
-    let song = null;
+  contextMenuTrack(trackId) {
+    let track = null;
 
     this.state.artists.forEach((artist) => {
       artist.relationships.album.forEach((album) => {
         album.relationships.track.forEach((t) => {
-          if (t.track_id === songId) {
-            song = t;
+          if (t.track_id === trackId) {
+            track = t;
           }
         });
       });
     });
 
-    if (song === null) {
+    if (track === null) {
       return;
     }
 
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
-        type: CONTEXT_SONG,
-        payload: song,
+        type: CONTEXT_TRACK,
+        payload: track,
       },
     });
   }
@@ -222,15 +222,15 @@ class ArtistsContainer extends Component {
         user={this.props.user}
         artistPlayingId={this.state.artistPlayingId}
         artists={this.state.artists}
-        songCount={this.state.songCount}
+        trackCount={this.state.trackCount}
         albumPlayingId={this.state.albumPlayingId}
         artistsPlayPause={this.artistsPlayPause}
         artistPlayPause={this.artistPlayPause}
-        songPlayPause={this.songPlayPause}
+        trackPlayPause={this.trackPlayPause}
         albumPlayPause={this.albumPlayPause}
         contextMenuArtist={this.contextMenuArtist}
         contextMenuAlbum={this.contextMenuAlbum}
-        contextMenuSong={this.contextMenuSong}
+        contextMenuTrack={this.contextMenuTrack}
       />
     );
   }

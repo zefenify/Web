@@ -3,7 +3,7 @@ import { arrayOf, shape, func, number, bool, string } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'react-emotion';
 
-import Song from '@app/component/presentational/Song';
+import Track from '@app/component/presentational/Track';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
 
@@ -69,7 +69,7 @@ const TrendingListContainer = styled.div`
     }
   }
 
-  .song {
+  .track {
     flex: 1 1 auto;
 
     & > *:last-child {
@@ -108,8 +108,8 @@ const Trending = ({
   duration,
   trendingPlayPause,
   trendingPlaying,
-  songPlayPause,
-  contextMenuSong,
+  trackPlayPause,
+  contextMenuTrack,
   category,
 }) => {
   if (trending === null) {
@@ -149,21 +149,21 @@ const Trending = ({
 
           <Divider />
 
-          <div className="song">
+          <div className="track">
             {
-              trending.map((song, index) => (
-                <Song
-                  key={song.track_id}
-                  currentSongId={current === null ? '' : current.track_id}
+              trending.map((track, index) => (
+                <Track
+                  key={track.track_id}
+                  currentTrackId={current === null ? '' : current.track_id}
                   trackNumber={index + 1}
-                  togglePlayPause={songPlayPause}
+                  trackPlayPause={trackPlayPause}
                   playing={playing}
-                  songId={song.track_id}
-                  songName={song.track_name}
-                  songFeaturing={song.track_featuring}
-                  songDuration={song.track_track.s3_meta.duration}
-                  songAlbum={song.track_album}
-                  contextMenuSong={contextMenuSong}
+                  trackId={track.track_id}
+                  trackName={track.track_name}
+                  trackFeaturing={track.track_featuring}
+                  trackDuration={track.track_track.s3_meta.duration}
+                  trackAlbum={track.track_album}
+                  contextMenuTrack={contextMenuTrack}
                 />
               ))
             }
@@ -186,8 +186,8 @@ Trending.propTypes = {
   }),
   trendingPlaying: bool,
   trendingPlayPause: func.isRequired,
-  songPlayPause: func.isRequired,
-  contextMenuSong: func.isRequired,
+  trackPlayPause: func.isRequired,
+  contextMenuTrack: func.isRequired,
 };
 
 Trending.defaultProps = {

@@ -7,7 +7,7 @@ import isEqual from 'lodash/fp/isEqual';
 import { BASE_S3 } from '@app/config/api';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
-import Song from '@app/component/presentational/Song';
+import Track from '@app/component/presentational/Track';
 import Divider from '@app/component/styled/Divider';
 
 const SearchContainer = styled.div`
@@ -136,8 +136,8 @@ const Search = ({
   current,
   playing,
   handleChange,
-  togglePlayPauseSong,
-  contextMenuSong,
+  trackPlayPause,
+  contextMenuTrack,
 }) => {
   // initial component mount
   if (matches === null) {
@@ -248,19 +248,19 @@ const Search = ({
               <div>
                 <Divider />
                 {
-                  matches.track.map((song, index) => (
-                    <Song
-                      key={song.track_id}
-                      currentSongId={current === null ? '' : current.track_id}
+                  matches.track.map((track, index) => (
+                    <Track
+                      key={track.track_id}
+                      currentTrackId={current === null ? '' : current.track_id}
                       trackNumber={index + 1}
-                      togglePlayPause={togglePlayPauseSong}
+                      trackPlayPause={trackPlayPause}
                       playing={playing}
-                      songId={song.track_id}
-                      songName={song.track_name}
-                      songFeaturing={song.track_featuring}
-                      songDuration={song.track_track.s3_meta.duration}
-                      songAlbum={song.track_album}
-                      contextMenuSong={contextMenuSong}
+                      trackId={track.track_id}
+                      trackName={track.track_name}
+                      trackFeaturing={track.track_featuring}
+                      trackDuration={track.track_track.s3_meta.duration}
+                      trackAlbum={track.track_album}
+                      contextMenuTrack={contextMenuTrack}
                     />
                   ))
                 }
@@ -278,8 +278,8 @@ Search.propTypes = {
   current: shape({}),
   playing: bool,
   handleChange: func.isRequired,
-  togglePlayPauseSong: func.isRequired,
-  contextMenuSong: func.isRequired,
+  trackPlayPause: func.isRequired,
+  contextMenuTrack: func.isRequired,
 };
 
 Search.defaultProps = {

@@ -137,9 +137,9 @@ const Albums = ({
   albumPlaying,
   duration,
   albumsPlayPause,
-  songPlayPause,
+  trackPlayPause,
   contextMenuAlbum,
-  contextMenuSong,
+  contextMenuTrack,
   albumsPlayingId,
   albumPlayPause,
 }) => {
@@ -166,15 +166,15 @@ const Albums = ({
         title={albums[0].album_name}
         cover={albums[0].album_cover}
         artist={albums[0].album_artist}
-        songs={albums[0].relationships.track}
+        tracks={albums[0].relationships.track}
         current={current}
         playing={playing}
         albumPlaying={albumPlaying}
         duration={duration}
         albumPlayPause={albumsPlayPause}
-        songPlayPause={songPlayPause}
+        trackPlayPause={trackPlayPause}
         contextMenuAlbum={contextMenuAlbum}
-        contextMenuSong={contextMenuSong}
+        contextMenuTrack={contextMenuTrack}
       />
     );
   }
@@ -223,9 +223,9 @@ Albums.propTypes = {
     seconds: number,
   }),
   albumsPlayPause: func.isRequired,
-  songPlayPause: func.isRequired,
+  trackPlayPause: func.isRequired,
   contextMenuAlbum: func.isRequired,
-  contextMenuSong: func.isRequired,
+  contextMenuTrack: func.isRequired,
 };
 
 Albums.defaultProps = {

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { BASE } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
-import sameSongList from '@app/util/sameSongList';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
+import trackListSame from '@app/util/trackListSame';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
 import track from '@app/util/track';
@@ -29,9 +29,9 @@ class AlbumContainer extends Component {
       albumPlaying: false,
     };
     this.albumPlayPause = this.albumPlayPause.bind(this);
-    this.songPlayPause = this.songPlayPause.bind(this);
+    this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
-    this.contextMenuSong = this.contextMenuSong.bind(this);
+    this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
   componentDidMount() {
@@ -77,7 +77,7 @@ class AlbumContainer extends Component {
         }
 
         this.setState(() => ({
-          albumPlaying: sameSongList(this.state.album.relationships.track, queueInitial),
+          albumPlaying: trackListSame(this.state.album.relationships.track, queueInitial),
         }));
       });
     }, (err) => {
@@ -135,8 +135,8 @@ class AlbumContainer extends Component {
     }
   }
 
-  songPlayPause(songId) {
-    if (this.props.current !== null && this.props.current.track_id === songId) {
+  trackPlayPause(trackId) {
+    if (this.props.current !== null && this.props.current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -144,16 +144,16 @@ class AlbumContainer extends Component {
       return;
     }
 
-    const songIdIndex = this.state.album.relationships.track.findIndex(song => song.track_id === songId);
+    const trackIdIndex = this.state.album.relationships.track.findIndex(t => t.track_id === trackId);
 
-    if (songIdIndex === -1) {
+    if (trackIdIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.album.relationships.track[songIdIndex],
+        play: this.state.album.relationships.track[trackIdIndex],
         queue: this.state.album.relationships.track,
         queueInitial: this.state.album.relationships.track,
       },
@@ -174,18 +174,18 @@ class AlbumContainer extends Component {
     });
   }
 
-  contextMenuSong(songId) {
-    const songIndex = this.state.album.relationships.track.findIndex(song => song.track_id === songId);
+  contextMenuTrack(trackId) {
+    const trackIndex = this.state.album.relationships.track.findIndex(t => t.track_id === trackId);
 
-    if (songIndex === -1) {
+    if (trackIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
-        type: CONTEXT_SONG,
-        payload: this.state.album.relationships.track[songIndex],
+        type: CONTEXT_TRACK,
+        payload: this.state.album.relationships.track[trackIndex],
       },
     });
   }
@@ -204,11 +204,11 @@ class AlbumContainer extends Component {
         title={this.state.album.album_name}
         cover={this.state.album.album_cover}
         artist={this.state.album.album_artist}
-        songs={this.state.album.relationships.track}
+        tracks={this.state.album.relationships.track}
         albumPlayPause={this.albumPlayPause}
-        songPlayPause={this.songPlayPause}
+        trackPlayPause={this.trackPlayPause}
         contextMenuAlbum={this.contextMenuAlbum}
-        contextMenuSong={this.contextMenuSong}
+        contextMenuTrack={this.contextMenuTrack}
       />
     );
   }

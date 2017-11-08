@@ -9,9 +9,9 @@ import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
 import { Share } from '@app/component/presentational/SVG';
 import Divider from '@app/component/styled/Divider';
-import Song from '@app/component/presentational/Song';
+import Track from '@app/component/presentational/Track';
 
-const HeaderSongsContainer = styled.div`
+const HeaderTracksContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -84,7 +84,7 @@ const Header = styled.div`
   }
 `;
 
-const Songs = styled.div`
+const Tracks = styled.div`
   flex: 1 0 auto;
 
   & > *:last-child {
@@ -92,24 +92,24 @@ const Songs = styled.div`
   }
 `;
 
-const HeaderSongs = ({
+const HeaderTracks = ({
   title,
   cover,
   artist,
-  songs,
+  tracks,
   current,
   playing,
   albumPlaying,
   duration,
   albumPlayPause,
-  songPlayPause,
+  trackPlayPause,
   contextMenuAlbum,
-  contextMenuSong,
+  contextMenuTrack,
 }) => {
   const { hours, minutes, seconds } = duration;
 
   return (
-    <HeaderSongsContainer>
+    <HeaderTracksContainer>
       <Header>
         <div className="image" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }} />
         <div className="info info-container">
@@ -119,7 +119,7 @@ const HeaderSongs = ({
             <span className="text-muted">By&nbsp;</span>
             <ArtistList artists={artist} />
           </p>
-          <p className="info-container__duration">{`${songs.length} song${songs.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
+          <p className="info-container__duration">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
 
           <div className="play-share">
             <Button className="play-share__play-big" onClick={albumPlayPause}>{`${albumPlaying && playing ? 'PAUSE' : 'PLAY'}`}</Button>
@@ -130,36 +130,36 @@ const HeaderSongs = ({
 
       <Divider />
 
-      <Songs>
+      <Tracks>
         {
-          songs.map((song, index) => (
-            <Song
+          tracks.map((track, index) => (
+            <Track
               fullDetail={false}
-              key={song.track_id}
-              currentSongId={current === null ? '' : current.track_id}
+              key={track.track_id}
+              currentTrackId={current === null ? '' : current.track_id}
               trackNumber={index + 1}
-              togglePlayPause={songPlayPause}
+              trackPlayPause={trackPlayPause}
               playing={playing}
-              songId={song.track_id}
-              songName={song.track_name}
-              songFeaturing={song.track_featuring}
-              songDuration={song.track_track.s3_meta.duration}
-              songAlbum={song.track_album}
-              contextMenuSong={contextMenuSong}
+              trackId={track.track_id}
+              trackName={track.track_name}
+              trackFeaturing={track.track_featuring}
+              trackDuration={track.track_track.s3_meta.duration}
+              trackAlbum={track.track_album}
+              contextMenuTrack={contextMenuTrack}
             />
           ))
         }
-      </Songs>
-    </HeaderSongsContainer>
+      </Tracks>
+    </HeaderTracksContainer>
   );
 };
 
-HeaderSongs.propTypes = {
+HeaderTracks.propTypes = {
   cover: shape({}),
   title: string,
   artist: arrayOf(shape({})),
   current: shape({}),
-  songs: arrayOf(shape({})),
+  tracks: arrayOf(shape({})),
   duration: shape({
     hours: number,
     minutes: number,
@@ -168,17 +168,17 @@ HeaderSongs.propTypes = {
   playing: bool,
   albumPlaying: bool,
   albumPlayPause: func.isRequired,
-  songPlayPause: func.isRequired,
+  trackPlayPause: func.isRequired,
   contextMenuAlbum: func.isRequired,
-  contextMenuSong: func.isRequired,
+  contextMenuTrack: func.isRequired,
 };
 
-HeaderSongs.defaultProps = {
+HeaderTracks.defaultProps = {
   cover: {},
   title: '',
   artist: [],
   current: null,
-  songs: [],
+  tracks: [],
   duration: {
     hours: 0,
     minutes: 0,
@@ -188,4 +188,4 @@ HeaderSongs.defaultProps = {
   albumPlaying: false,
 };
 
-module.exports = DJKhaled(HeaderSongs);
+module.exports = DJKhaled(HeaderTracks);

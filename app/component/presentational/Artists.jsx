@@ -161,11 +161,11 @@ const Artists = ({
         albumPlayingId={albumPlayingId}
         playingArist={false}
         artistPlayPause={artistPlayPause}
-        songPlayPause={songPlayPause}
+        trackPlayPause={trackPlayPause}
         albumPlayPause={albumPlayPause}
         contextMenuArtist={contextMenuArtist}
         contextMenuAlbum={contextMenuAlbum}
-        contextMenuSong={contextMenuSong}
+        contextMenuTrack={contextMenuTrack}
       />
     );
   }
@@ -210,11 +210,11 @@ Artists.propTypes = {
   artistPlayingId: string,
   artistsPlayPause: func.isRequired,
   artistPlayPause: func.isRequired,
-  songPlayPause: func.isRequired,
+  trackPlayPause: func.isRequired,
   albumPlayPause: func.isRequired,
   contextMenuArtist: func.isRequired,
   contextMenuAlbum: func.isRequired,
-  contextMenuSong: func.isRequired,
+  contextMenuTrack: func.isRequired,
 };
 
 Artists.defaultProps = {

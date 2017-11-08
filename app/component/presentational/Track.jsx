@@ -61,7 +61,7 @@ const Volume = props => (
   </svg>
 );
 
-const SongContainer = styled.div`
+const TrackContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -174,88 +174,88 @@ const SongContainer = styled.div`
   }
 `;
 
-const Song = ({
+const Track = ({
   fullDetail,
-  currentSongId,
+  currentTrackId,
   trackNumber,
-  songId,
-  songName,
-  songFeaturing,
-  songAlbum,
-  songDuration,
-  togglePlayPause,
+  trackId,
+  trackName,
+  trackFeaturing,
+  trackAlbum,
+  trackDuration,
+  trackPlayPause,
   playing,
-  contextMenuSong,
+  contextMenuTrack,
 }) => {
   if (fullDetail === false) {
     return (
-      <SongContainer onContextMenu={(e) => { e.preventDefault(); contextMenuSong(songId); }} className={`${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+      <TrackContainer onContextMenu={(e) => { e.preventDefault(); contextMenuTrack(trackId); }} className={`${currentTrackId === trackId ? 'active' : ''} ${(currentTrackId === trackId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => trackPlayPause(trackId)}>
         <div className="track-number-icon">
           <span className="track-number-icon__number">{ trackNumber }</span>
           <PlayPause
             className="track-number-icon__icon"
-            playing={currentSongId === songId && playing}
-            onClick={() => togglePlayPause(songId)}
+            playing={currentTrackId === trackId && playing}
+            onClick={() => trackPlayPause(trackId)}
           />
-          <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} />
+          <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentTrackId === trackId && playing) ? 'block' : 'none'}` }} />
         </div>
         <div className="name">
-          <span>{ songName }</span>
+          <span>{ trackName }</span>
           {
-            songFeaturing.length > 0
-              ? <span className="name__featuring"> - <ArtistList artists={songFeaturing} /></span>
+            trackFeaturing.length > 0
+              ? <span className="name__featuring"> - <ArtistList artists={trackFeaturing} /></span>
               : null
           }
         </div>
-        <div className="share" onClick={() => contextMenuSong(songId)}><Share /></div>
-        <div className="duration">{ human(songDuration) }</div>
-      </SongContainer>
+        <div className="share" onClick={() => contextMenuTrack(trackId)}><Share /></div>
+        <div className="duration">{ human(trackDuration) }</div>
+      </TrackContainer>
     );
   }
 
   return (
-    <SongContainer onContextMenu={(e) => { e.preventDefault(); contextMenuSong(songId); }} className={`full-detail ${currentSongId === songId ? 'active' : ''} ${(currentSongId === songId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => togglePlayPause(songId)}>
+    <TrackContainer onContextMenu={(e) => { e.preventDefault(); contextMenuTrack(trackId); }} className={`full-detail ${currentTrackId === trackId ? 'active' : ''} ${(currentTrackId === trackId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => trackPlayPause(trackId)}>
       <div className="track-number-icon">
         <span className="track-number-icon__number">{ trackNumber }</span>
         <PlayPause
           className="track-number-icon__icon"
-          playing={currentSongId === songId && playing}
-          onClick={() => togglePlayPause(songId)}
+          playing={currentTrackId === trackId && playing}
+          onClick={() => trackPlayPause(trackId)}
         />
-        <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentSongId === songId && playing) ? 'block' : 'none'}` }} />
+        <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentTrackId === trackId && playing) ? 'block' : 'none'}` }} />
       </div>
       <div className="name">
-        <span>{ songName }</span>
+        <span>{ trackName }</span>
         {
-          songFeaturing.length > 0
-            ? <span className="name__featuring"> - <ArtistList artists={songFeaturing} /></span>
+          trackFeaturing.length > 0
+            ? <span className="name__featuring"> - <ArtistList artists={trackFeaturing} /></span>
             : null
         }
       </div>
-      <ArtistList className="artist-name" artists={songAlbum.album_artist} />
-      <Link to={`/album/${songAlbum.album_id}`} className="album-name">{ songAlbum.album_name }</Link>
-      <div className="share" onClick={() => contextMenuSong(songId)}><Share /></div>
-      <div className="duration">{ human(songDuration) }</div>
-    </SongContainer>
+      <ArtistList className="artist-name" artists={trackAlbum.album_artist} />
+      <Link to={`/album/${trackAlbum.album_id}`} className="album-name">{ trackAlbum.album_name }</Link>
+      <div className="share" onClick={() => contextMenuTrack(trackId)}><Share /></div>
+      <div className="duration">{ human(trackDuration) }</div>
+    </TrackContainer>
   );
 };
 
-Song.propTypes = {
+Track.propTypes = {
   fullDetail: bool,
-  currentSongId: string.isRequired,
-  songId: string.isRequired,
+  currentTrackId: string.isRequired,
+  trackId: string.isRequired,
   trackNumber: number.isRequired,
-  songName: string.isRequired,
-  songFeaturing: arrayOf(shape({})).isRequired,
-  songAlbum: shape({}).isRequired,
-  songDuration: number.isRequired,
-  togglePlayPause: func.isRequired,
-  contextMenuSong: func.isRequired,
+  trackName: string.isRequired,
+  trackFeaturing: arrayOf(shape({})).isRequired,
+  trackAlbum: shape({}).isRequired,
+  trackDuration: number.isRequired,
+  trackPlayPause: func.isRequired,
+  contextMenuTrack: func.isRequired,
   playing: bool.isRequired,
 };
 
-Song.defaultProps = {
+Track.defaultProps = {
   fullDetail: true,
 };
 
-module.exports = DJKhaled(Song);
+module.exports = DJKhaled(Track);

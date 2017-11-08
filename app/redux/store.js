@@ -50,9 +50,9 @@ const store = createStore(
     theme: 'dark',
     volume: 1,
     queue: [],
-    queueInitial: [], // queue of songs to be played [used on repeat `ALL` and queue is empty]
-    history: [], // where played songs will are pushed [repeat `ONE` will only push once]
-    song: null,
+    queueInitial: [], // queue of tracks to be played [used on repeat `ALL` and queue is empty]
+    history: [], // where played tracks will are pushed [repeat `ONE` will only push once]
+    song: null, // saved tracks
     // playlist: [],
     crossfade: 0,
     duration: 0,
@@ -62,7 +62,7 @@ const store = createStore(
     playing: false,
     shuffle: false,
     repeat: 'OFF',
-    current: null, // current song object, *not* the Howler object
+    current: null, // current track object, *not* the Howler object
     contextMenu: null, // context item to be rendered on `<ContextMenu />`
     // online: false,
     loading: false,

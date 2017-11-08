@@ -23,7 +23,6 @@ import RecentContainer from '@app/component/container/RecentContainer';
 import SongsContainer from '@app/component/container/SongsContainer';
 import AlbumsContainer from '@app/component/container/AlbumsContainer';
 import ArtistsContainer from '@app/component/container/ArtistsContainer';
-import SurpriseContainer from '@app/component/container/SurpriseContainer';
 import TrendingContainer from '@app/component/container/TrendingContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
 import BoxContainer from '@app/component/container/BoxContainer';
@@ -111,7 +110,6 @@ class WolfCola extends Component {
                     <Route path="/search" component={SearchContainer} />
                     <Route path="/trending/:category?" component={TrendingContainer} />
                     <Route path="/:type(genre|ariflist)/:list?" component={BoxContainer} />
-                    <Route path="/surprise" component={SurpriseContainer} />
                     <Route path="/recent" component={RecentContainer} />
                     <Route path="/songs" component={SongsContainer} />
                     <Route path="/albums/:id?" component={AlbumsContainer} />

@@ -8,7 +8,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 import { SEARCH } from '@app/config/api';
 import track from '@app/util/track';
 
@@ -31,8 +31,8 @@ class SearchContainer extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.togglePlayPauseSong = this.togglePlayPauseSong.bind(this);
-    this.contextMenuSong = this.contextMenuSong.bind(this);
+    this.trackPlayPause = this.trackPlayPause.bind(this);
+    this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
   componentWillUnmount() {
@@ -41,8 +41,8 @@ class SearchContainer extends Component {
     source.cancel();
   }
 
-  togglePlayPauseSong(songId) {
-    if (this.props.current !== null && this.props.current.track_id === songId) {
+  trackPlayPause(trackId) {
+    if (this.props.current !== null && this.props.current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -50,16 +50,16 @@ class SearchContainer extends Component {
       return;
     }
 
-    const songIdIndex = this.state.matches.track.findIndex(song => song.track_id === songId);
+    const trackIdIndex = this.state.matches.track.findIndex(t => t.track_id === trackId);
 
-    if (songIdIndex === -1) {
+    if (trackIdIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.matches.track[songIdIndex],
+        play: this.state.matches.track[trackIdIndex],
         queue: this.state.matches.track,
         queueInitial: this.state.matches.track,
       },
@@ -132,18 +132,18 @@ class SearchContainer extends Component {
     });
   }
 
-  contextMenuSong(songId) {
-    const songIndex = this.state.matches.track.findIndex(song => song.track_id === songId);
+  contextMenuTrack(trackId) {
+    const trackIndex = this.state.matches.track.findIndex(t => t.track_id === trackId);
 
-    if (songIndex === -1) {
+    if (trackIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
-        type: CONTEXT_SONG,
-        payload: this.state.matches.track[songIndex],
+        type: CONTEXT_TRACK,
+        payload: this.state.matches.track[trackIndex],
       },
     });
   }
@@ -156,8 +156,8 @@ class SearchContainer extends Component {
         current={this.props.current}
         playing={this.props.playing}
         handleChange={this.handleChange}
-        togglePlayPauseSong={this.togglePlayPauseSong}
-        contextMenuSong={this.contextMenuSong}
+        trackPlayPause={this.trackPlayPause}
+        contextMenuTrack={this.contextMenuTrack}
       />
     );
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG } from '@app/redux/constant/contextMenu';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 
 import songDuration from '@app/redux/selector/songDuration';
 import songPlaying from '@app/redux/selector/songPlaying';
@@ -18,7 +18,7 @@ module.exports = connect(state => ({
   user: state.user,
   songs: songTrack(state),
   totalDuration: songDuration(state),
-  playingSongs: songPlaying(state),
+  songsPlaying: songPlaying(state),
 }), dispatch => ({
   togglePlayPauseSongs(playingSongs, songs) {
     if (playingSongs === true) {
@@ -68,7 +68,7 @@ module.exports = connect(state => ({
     dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
-        type: CONTEXT_SONG,
+        type: CONTEXT_TRACK,
         payload: songs[songIndex],
       },
     });

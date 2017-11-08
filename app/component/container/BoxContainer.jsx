@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { GENRE_BASE, GENRE, ARIFLIST_BASE, ARIFLIST } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import sameSongList from '@app/util/sameSongList';
+import sametrackListSame from '@app/util/trackListSame';
 import { human } from '@app/util/time';
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
 import api from '@app/util/api';
 
 import BoxList from '@app/component/presentational/BoxList';
-import HeaderSongs from '@app/component/presentational/HeaderSongs';
+import HeaderTracks from '@app/component/presentational/HeaderTracks';
 
 class BoxContainer extends Component {
   constructor(props) {
@@ -90,7 +90,7 @@ class BoxContainer extends Component {
             return;
           }
 
-          if (sameSongList(this.state.list.songs, queueInitial)) {
+          if (trackListSame(this.state.list.songs, queueInitial)) {
             this.setState(() => ({
               playingList: true,
             }));

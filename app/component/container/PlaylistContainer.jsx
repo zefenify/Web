@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { BASE } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import { CONTEXT_MENU_ON_REQUEST, CONTEXT_SONG, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
-import sameSongList from '@app/util/sameSongList';
+import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
+import trackListSame from '@app/util/trackListSame';
 import { human } from '@app/util/time';
 import api from '@app/util/api';
 import track from '@app/util/track';
 
-import HeaderSongs from '@app/component/presentational/HeaderSongs';
+import HeaderTracks from '@app/component/presentational/HeaderTracks';
 
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
@@ -28,10 +28,10 @@ class PlaylistContainer extends Component {
       },
       playingFeatured: false,
     };
-    this.songsPlayPause = this.songsPlayPause.bind(this);
-    this.songPlayPause = this.songPlayPause.bind(this);
+    this.tracksPlayPause = this.tracksPlayPause.bind(this);
+    this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuPlaylist = this.contextMenuPlaylist.bind(this);
-    this.contextMenuSong = this.contextMenuSong.bind(this);
+    this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
   componentDidMount() {
@@ -63,7 +63,7 @@ class PlaylistContainer extends Component {
           return;
         }
 
-        if (sameSongList(this.state.featured.playlist_track, queueInitial)) {
+        if (trackListSame(this.state.featured.playlist_track, queueInitial)) {
           this.setState(() => ({
             playingFeatured: true,
           }));
@@ -101,7 +101,7 @@ class PlaylistContainer extends Component {
     this.cancelRequest();
   }
 
-  songsPlayPause() {
+  tracksPlayPause() {
     if (this.state.featured === null) {
       return;
     }
@@ -128,8 +128,8 @@ class PlaylistContainer extends Component {
     }
   }
 
-  songPlayPause(songId) {
-    if (this.props.current !== null && this.props.current.track_id === songId) {
+  trackPlayPause(trackId) {
+    if (this.props.current !== null && this.props.current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -137,16 +137,16 @@ class PlaylistContainer extends Component {
       return;
     }
 
-    const songIdIndex = this.state.featured.playlist_track.findIndex(song => song.track_id === songId);
+    const trackIdIndex = this.state.featured.playlist_track.findIndex(t => t.track_id === trackId);
 
-    if (songIdIndex === -1) {
+    if (trackIdIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.featured.playlist_track[songIdIndex],
+        play: this.state.featured.playlist_track[trackIdIndex],
         queue: this.state.featured.playlist_track,
         queueInitial: this.state.featured.playlist_track,
       },
@@ -167,18 +167,18 @@ class PlaylistContainer extends Component {
     });
   }
 
-  contextMenuSong(songId) {
-    const songIndex = this.state.featured.playlist_track.findIndex(song => song.track_id === songId);
+  contextMenuTrack(trackId) {
+    const trackIndex = this.state.featured.playlist_track.findIndex(t => t.track_id === trackId);
 
-    if (songIndex === -1) {
+    if (trackIndex === -1) {
       return;
     }
 
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
-        type: CONTEXT_SONG,
-        payload: this.state.featured.playlist_track[songIndex],
+        type: CONTEXT_TRACK,
+        payload: this.state.featured.playlist_track[trackIndex],
       },
     });
   }
@@ -189,20 +189,20 @@ class PlaylistContainer extends Component {
     }
 
     return (
-      <HeaderSongs
+      <HeaderTracks
         type={this.props.match.params.type}
         current={this.props.current}
         playing={this.props.playing}
-        playingSongs={this.props.playing && this.state.playingFeatured}
+        tracksPlaying={this.props.playing && this.state.playingFeatured}
         duration={this.state.duration}
-        songsPlayPause={this.songsPlayPause}
-        songPlayPause={this.songPlayPause}
+        tracksPlayPause={this.tracksPlayPause}
+        trackPlayPause={this.trackPlayPause}
         title={this.state.featured.playlist_name}
         description={this.state.featured.playlist_description}
         cover={this.state.featured.playlist_cover}
-        songs={this.state.featured.playlist_track}
+        tracks={this.state.featured.playlist_track}
         contextMenuPlaylist={this.contextMenuPlaylist}
-        contextMenuSong={this.contextMenuSong}
+        contextMenuTrack={this.contextMenuTrack}
       />
     );
   }

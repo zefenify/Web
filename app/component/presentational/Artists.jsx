@@ -122,16 +122,16 @@ const Artists = ({
   artistId,
   user,
   artists,
-  songCount,
+  trackCount,
   albumPlayingId,
   artistPlayingId,
   artistsPlayPause,
   artistPlayPause,
-  songPlayPause,
+  trackPlayPause,
   albumPlayPause,
   contextMenuArtist,
   contextMenuAlbum,
-  contextMenuSong,
+  contextMenuTrack,
 }) => {
   if (user === null) {
     return (
@@ -157,7 +157,7 @@ const Artists = ({
         current={current}
         playing={playing}
         aristPlaying={artistPlayingId === artists[0].artist_id}
-        songCount={songCount}
+        trackCount={trackCount}
         albumPlayingId={albumPlayingId}
         playingArist={false}
         artistPlayPause={artistPlayPause}
@@ -206,7 +206,7 @@ Artists.propTypes = {
   artists: arrayOf(shape({})),
   playing: bool,
   albumPlayingId: string,
-  songCount: number,
+  trackCount: number,
   artistPlayingId: string,
   artistsPlayPause: func.isRequired,
   artistPlayPause: func.isRequired,
@@ -225,7 +225,7 @@ Artists.defaultProps = {
   playing: false,
   artistPlayingId: '',
   albumPlayingId: '',
-  songCount: 0,
+  trackCount: 0,
 };
 
 module.exports = DJKhaled(Artists);

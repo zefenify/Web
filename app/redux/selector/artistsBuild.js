@@ -15,7 +15,7 @@ module.exports = createSelector([props => props.song, props => props.user, props
       artists: [],
       artistPlayingId: '',
       albumPlayingId: '',
-      songCount: 0,
+      trackCount: 0,
     };
   }
 
@@ -77,7 +77,7 @@ module.exports = createSelector([props => props.song, props => props.user, props
         artists: artistsWithFeaturingRemoved[id] === undefined ? [] : [artistsWithFeaturingRemoved[id]],
         albumPlayingId,
         artistPlayingId,
-        songCount: 0,
+        trackCount: 0,
       };
     }
 
@@ -90,7 +90,7 @@ module.exports = createSelector([props => props.song, props => props.user, props
       artists: artistsWithFeaturingRemoved[id] === undefined ? [] : [artistsWithFeaturingRemoved[id]],
       albumPlayingId,
       artistPlayingId,
-      songCount: artistTracksFlat.length,
+      trackCount: artistTracksFlat.length,
     };
   }
 
@@ -98,6 +98,6 @@ module.exports = createSelector([props => props.song, props => props.user, props
     artists: Object.values(artistsWithFeaturingRemoved),
     albumPlayingId,
     artistPlayingId,
-    songCount: 0,
+    trackCount: 0,
   };
 });

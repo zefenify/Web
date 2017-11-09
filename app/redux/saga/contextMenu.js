@@ -13,7 +13,7 @@ const options = {
   iterationStart: 0,
   delay: 0,
   endDelay: 0,
-  duration: 275,
+  duration: 225,
   fill: 'forwards',
   easing: 'ease',
 };

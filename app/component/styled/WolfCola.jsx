@@ -18,7 +18,7 @@ const WolfColaContainer = styled.div`
   transition: all 250ms;
 
   &.context-menu-active {
-    opacity: 0.8;
+    opacity: 0.92;
     filter: blur(4px);
     transform: scale(0.92);
   }

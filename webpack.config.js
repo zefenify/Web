@@ -53,7 +53,7 @@ module.exports = (env) => {
     },
     resolve: {
       alias: { '@app': path.resolve(__dirname, './app') },
-      extensions: ['.js', '.jsx', '.scss'],
+      extensions: ['.js', '.jsx'],
     },
     module: {
       rules: [
@@ -73,7 +73,7 @@ module.exports = (env) => {
             use: {
               loader: 'css-loader',
               options: {
-                sourceMap: true,
+                minimize: true,
               },
             },
           }) : ['style-loader', { loader: 'css-loader', options: { modules: true } }],
@@ -87,8 +87,8 @@ module.exports = (env) => {
             use: {
               loader: 'css-loader',
               options: {
-                sourceMap: true,
                 modules: true,
+                minimize: true,
               },
             },
           }) : ['style-loader', { loader: 'css-loader' }],
@@ -98,15 +98,6 @@ module.exports = (env) => {
         {
           test: /\.(woff(2)?|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           loader: 'file-loader?name=static/[name].[ext]',
-        },
-
-        // sass
-        {
-          test: /\.scss$/,
-          use: PRODUCTION ? ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader', 'postcss-loader', 'sass-loader'],
-          }) : ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
         },
       ],
     },

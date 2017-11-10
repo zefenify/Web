@@ -113,7 +113,10 @@ PlayPause.defaultProps = {
   playing: true,
 };
 
-const Volume = ({ onClick, volume }) => (
+const Volume = ({
+  onClick,
+  volume,
+}) => (
   <svg
     width="24"
     height="24"

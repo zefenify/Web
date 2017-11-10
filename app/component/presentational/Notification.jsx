@@ -39,7 +39,10 @@ const NotificationContainer = styled.div`
   }
 `;
 
-const Notification = ({ notification, close }) => (
+const Notification = ({
+  notification,
+  close,
+}) => (
   <NotificationContainer id="notification-container">
     <div className="message">{ notification === null ? null : notification.message }</div>
     <ClearButton className="close-button" onClick={close}><CloseSVG /></ClearButton>

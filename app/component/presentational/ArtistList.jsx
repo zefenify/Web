@@ -7,7 +7,10 @@ const Muted = styled.span`
   color: ${props => props.theme.controlMute};
 `;
 
-const ArtistList = ({ className, artists }) => (
+const ArtistList = ({
+  className,
+  artists,
+}) => (
   <span className={className}>
     {
       artists.map((artist, index) => (

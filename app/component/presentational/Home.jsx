@@ -4,7 +4,12 @@ import { bool, func, string, arrayOf, shape } from 'prop-types';
 import Playlist from '@app/component/presentational/Playlist';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 
-const Home = ({ playing, featured, featuredPlayingId, featuredPlay }) => (
+const Home = ({
+  playing,
+  featured,
+  featuredPlayingId,
+  featuredPlay,
+}) => (
   <FixedHeaderList>
     <div className="title">
       <h2>Featured</h2>

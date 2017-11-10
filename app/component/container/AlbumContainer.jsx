@@ -32,9 +32,25 @@ class AlbumContainer extends Component {
     this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
+    this.buildArtist = this.buildArtist.bind(this);
   }
 
+
+
   componentDidMount() {
+    this.buildArtist();
+  }
+
+  componentWillReceiveProps() {
+    this.buildArtist();
+  }
+
+  componentWillUnmount() {
+    store.dispatch(loading(false));
+    this.cancelRequest();
+  }
+
+  buildArtist() {
     store.dispatch(loading(true));
     api(`${BASE}album/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
@@ -81,11 +97,6 @@ class AlbumContainer extends Component {
         }));
       });
     }, error(store));
-  }
-
-  componentWillUnmount() {
-    store.dispatch(loading(false));
-    this.cancelRequest();
   }
 
   albumPlayPause() {

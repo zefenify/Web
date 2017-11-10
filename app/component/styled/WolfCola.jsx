@@ -12,11 +12,13 @@ const WolfColaContainer = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 99;
+  opacity: 1;
   filter: blur(0px);
   transform: scale(1);
-  transition: filter 250ms, transform 250ms;
+  transition: all 250ms;
 
   &.context-menu-active {
+    opacity: 0.92;
     filter: blur(4px);
     transform: scale(0.92);
   }

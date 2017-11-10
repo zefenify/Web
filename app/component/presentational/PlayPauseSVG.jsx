@@ -1,7 +1,11 @@
 import React from 'react';
 import { string, bool, func } from 'prop-types';
 
-const PlayPauseSVG = ({ onClick, playing, className }) => (
+const PlayPauseSVG = ({
+  onClick,
+  playing,
+  className,
+}) => (
   <svg
     width="24"
     height="24"

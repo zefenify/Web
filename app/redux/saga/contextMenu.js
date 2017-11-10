@@ -8,6 +8,16 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
 import { contextMenuOn, contextMenuOff } from '@app/redux/action/contextMenu';
 
+const options = {
+  iterations: 1,
+  iterationStart: 0,
+  delay: 0,
+  endDelay: 0,
+  duration: 225,
+  fill: 'forwards',
+  easing: 'ease',
+};
+
 function* _contextMenuOn(action) {
   const state = yield select();
 
@@ -21,7 +31,17 @@ function* _contextMenuOn(action) {
 
   // brining it in...
   const ContextMenuContainer = document.querySelector('#context-menu-container');
-  ContextMenuContainer.classList.add('context-menu-active');
+
+  if (ContextMenuContainer.animate === undefined) {
+    ContextMenuContainer.classList.add('context-menu-active');
+  } else {
+    const keyframes = [
+      { transform: 'translateX(264px)' },
+      { transform: 'translateX(0px)' },
+    ];
+
+    ContextMenuContainer.animate(keyframes, options);
+  }
 
   // overly will be over wolf-cola-container i.e. click outside triggers close...
   const ContextOverlayContainer = document.querySelector('#context-overlay-container');
@@ -34,7 +54,17 @@ function* _contextMenuOn(action) {
 
 function* _contextMenuOff() {
   const ContextMenuContainer = document.querySelector('#context-menu-container');
-  ContextMenuContainer.classList.remove('context-menu-active');
+
+  if (ContextMenuContainer.animate === undefined) {
+    ContextMenuContainer.classList.remove('context-menu-active');
+  } else {
+    const keyframes = [
+      { transform: 'translateX(0px)' },
+      { transform: 'translateX(264px)' },
+    ];
+
+    ContextMenuContainer.animate(keyframes, options);
+  }
 
   const ContextOverlayContainer = document.querySelector('#context-overlay-container');
   ContextOverlayContainer.style.zIndex = 98;

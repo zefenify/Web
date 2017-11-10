@@ -11,7 +11,9 @@ const ContextOverlayContainer = styled.div`
   z-index: 98;
 `;
 
-const ContextOverlay = ({ closeContextMenu }) => <ContextOverlayContainer id="context-overlay-container" onClick={closeContextMenu} />;
+const ContextOverlay = ({
+  closeContextMenu,
+}) => <ContextOverlayContainer id="context-overlay-container" onClick={closeContextMenu} />;
 
 ContextOverlay.propTypes = {
   closeContextMenu: func.isRequired,

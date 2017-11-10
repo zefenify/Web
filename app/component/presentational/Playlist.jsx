@@ -84,6 +84,7 @@ const PlaylistContainer = styled(Link)`
     padding: 0;
     margin: 0;
     line-height: 125%;
+    font-size: 1.25em;
     font-weight: bold;
     margin-top: 0.5em;
   }
@@ -108,7 +109,17 @@ const PlaylistContainer = styled(Link)`
   }
 `;
 
-function Playlist({ type, id, playing, playingId, name, description, trackCount, cover, play }) {
+function Playlist({
+  type,
+  id,
+  playing,
+  playingId,
+  name,
+  description,
+  trackCount,
+  cover,
+  play,
+}) {
   return (
     <PlaylistContainer to={`/${type}/${id}`} className={`${id === playingId ? 'active' : ''}`}>
       <div className="playlist-cover" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }}>

@@ -53,6 +53,7 @@ const CollectionContainer = styled(Link)`
     padding: 0;
     margin: 0;
     line-height: 125%;
+    font-size: 1.25em;
     font-weight: bold;
     margin-top: 0.5em;
   }

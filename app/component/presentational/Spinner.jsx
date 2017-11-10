@@ -46,7 +46,9 @@ const SpinnerContainer = styled.div`
   }
 `;
 
-function Spinner({ loading }) {
+function Spinner({
+  loading,
+}) {
   return (
     <SpinnerContainer className={loading ? 'active' : ''}>
       <div className="double-bounce1" />

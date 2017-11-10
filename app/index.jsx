@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'emotion-theming';
 
 import 'normalize.css';
-import '@app/scss/wolf-cola.scss';
+import '@app/component/styled/Global';
 
 import '@app/util/facebook';
 import store from '@app/redux/store';

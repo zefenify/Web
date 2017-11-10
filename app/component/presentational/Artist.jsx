@@ -161,11 +161,17 @@ const ArtistContainer = styled.div`
     }
 
     &__name {
-      margin: 0.5em 0;
+      font-size: 1.25em;
+      font-weight: bold;
+      margin: 0;
+      margin-top: 0.5em;
     }
 
     &__year {
+      padding: 0;
       margin: 0;
+      margin-top: 0.5em;
+      line-height: 1.25em;
       color: ${props => props.theme.controlMute};
     }
   }

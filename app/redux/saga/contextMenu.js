@@ -8,16 +8,6 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
 import { contextMenuOn, contextMenuOff } from '@app/redux/action/contextMenu';
 
-const options = {
-  iterations: 1,
-  iterationStart: 0,
-  delay: 0,
-  endDelay: 0,
-  duration: 225,
-  fill: 'forwards',
-  easing: 'ease',
-};
-
 function* _contextMenuOn(action) {
   const state = yield select();
 

@@ -23,6 +23,9 @@
       echo $meta;
     ?>
 
+    <meta name="keywords" content="Ethiopian Music">
+    <meta name="description" content="Ethiopian. Music.">
+    <meta name="author" content="Utopiaio">
     <meta name="google" content="notranslate">
     <meta name="application-name" content="Zefenify"/>
     <meta name="msapplication-TileColor" content="#FFFFFF" />

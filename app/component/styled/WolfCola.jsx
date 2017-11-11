@@ -14,13 +14,13 @@ const WolfColaContainer = styled.div`
   z-index: 99;
   opacity: 1;
   filter: blur(0px);
-  transform: scale(1);
+  transform: scale3d(1, 1, 1);
   transition: all 256ms;
 
   &.context-menu-active {
     opacity: 0.92;
     filter: blur(4px);
-    transform: scale(0.92);
+    transform: scale3d(0.96, 0.96, 1);
   }
 `;
 

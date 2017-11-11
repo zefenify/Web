@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'emotion-theming';
 
-import 'normalize.css';
 import '@app/component/styled/Global';
 
 import '@app/util/facebook';

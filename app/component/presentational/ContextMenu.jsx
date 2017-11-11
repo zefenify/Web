@@ -21,7 +21,7 @@ const ContextMenuContainer = styled.div`
   color: ${props => props.theme.navbarTextActive};
   box-shadow: -2px 0 2px 0 ${props => props.theme.navBarBoxShadow};
   transform: translate3d(264px, 0, 0);
-  transition: transform 250ms;
+  transition: transform 256ms;
 
   &.context-menu-active {
     transform: translate3d(0, 0, 0);

@@ -7,20 +7,7 @@ import track from '@app/util/track';
 
 // eslint-disable-next-line
 module.exports = createSelector([props => props.song, props => props.user, props => props.queueInitial, props => props.match.params.id], (song, user, queueInitial, id) => {
-  if (user === null || song === null) {
-    return {
-      albums: [],
-      albumsPlayingId: '',
-      albumPlaying: false,
-      duration: {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      },
-    };
-  }
-
-  if (Object.hasOwnProperty.call(song.included, 'album') === false) {
+  if (song === null || user === null || Object.hasOwnProperty.call(song.included, 'album') === false) {
     return {
       albums: [],
       albumsPlayingId: '',

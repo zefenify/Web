@@ -5,6 +5,7 @@ import flatten from 'lodash/flatten';
 import cloneDeep from 'lodash/cloneDeep';
 import sortBy from 'lodash/sortBy';
 import reverse from 'lodash/reverse';
+import uniqBy from 'lodash/uniqBy';
 
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -81,7 +82,7 @@ class ArtistContainer extends Component {
       return album;
     }), album => album.album_year));
 
-    const tracks = track(data.relationships.track.map(trackId => included.track[trackId]), included);
+    const tracks = uniqBy(track(data.relationships.track.map(trackId => included.track[trackId]), included), t => t.track_album.album_id);
     const tracksFlatten = flatten(albums.map(album => album.relationships.track));
 
     let albumPlayingId = '';

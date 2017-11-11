@@ -31,17 +31,7 @@ function* _contextMenuOn(action) {
 
   // brining it in...
   const ContextMenuContainer = document.querySelector('#context-menu-container');
-
-  if (ContextMenuContainer.animate === undefined) {
-    ContextMenuContainer.classList.add('context-menu-active');
-  } else {
-    const keyframes = [
-      { transform: 'translateX(264px)' },
-      { transform: 'translateX(0px)' },
-    ];
-
-    ContextMenuContainer.animate(keyframes, options);
-  }
+  ContextMenuContainer.classList.add('context-menu-active');
 
   // overly will be over wolf-cola-container i.e. click outside triggers close...
   const ContextOverlayContainer = document.querySelector('#context-overlay-container');
@@ -54,17 +44,7 @@ function* _contextMenuOn(action) {
 
 function* _contextMenuOff() {
   const ContextMenuContainer = document.querySelector('#context-menu-container');
-
-  if (ContextMenuContainer.animate === undefined) {
-    ContextMenuContainer.classList.remove('context-menu-active');
-  } else {
-    const keyframes = [
-      { transform: 'translateX(0px)' },
-      { transform: 'translateX(264px)' },
-    ];
-
-    ContextMenuContainer.animate(keyframes, options);
-  }
+  ContextMenuContainer.classList.remove('context-menu-active');
 
   const ContextOverlayContainer = document.querySelector('#context-overlay-container');
   ContextOverlayContainer.style.zIndex = 98;

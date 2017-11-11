@@ -20,11 +20,11 @@ const ContextMenuContainer = styled.div`
   background-color: ${props => props.theme.navbarBackground};
   color: ${props => props.theme.navbarTextActive};
   box-shadow: -2px 0 2px 0 ${props => props.theme.navBarBoxShadow};
-  transform: translateX(264px);
+  transform: translate3d(264px, 0, 0);
   transition: transform 250ms;
 
   &.context-menu-active {
-    transform: translateX(0px);
+    transform: translate3d(0, 0, 0);
   }
 
   display: flex;

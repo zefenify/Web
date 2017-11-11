@@ -7,7 +7,14 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const commonPlugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
   new HtmlWebpackPlugin({
+    // production
+    // template: 'app/index.php',
+    // filename: 'index.php',
+    // ./ production
+    // dev
     template: 'app/index.html',
+    filename: 'index.html',
+    // ./ dev
     minify: {
       collapseInlineTagWhitespace: true,
       collapseWhitespace: true,

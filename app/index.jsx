@@ -65,6 +65,7 @@ class WolfCola extends Component {
     return (
       <Provider store={store}>
         <ThemeProvider theme={this.state.theme === 'light' ? themeLight : themeDark}>
+          {/* production: <Router basename="/play"> */}
           <Router>
             <div>
               <WolfColaContainer id="wolf-cola-container">

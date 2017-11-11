@@ -67,7 +67,7 @@ const Songs = ({
     return (
       <SongsContainer className="center-content">
         <h2 className="mute">You need to be logged in to view saved songs</h2>
-        <Link to="/setting"><Button outline>Go to Settings</Button></Link>
+        <Link to="/settings"><Button outline>Go to Settings</Button></Link>
       </SongsContainer>
     );
   }

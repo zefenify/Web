@@ -136,7 +136,7 @@ const Artists = ({
     return (
       <ArtistsContainer className="center-content">
         <h2 className="mute">You need to be logged in to view saved artists</h2>
-        <Link to="/setting"><Button outline>Go to Settings</Button></Link>
+        <Link to="/settings"><Button outline>Go to Settings</Button></Link>
       </ArtistsContainer>
     );
   }

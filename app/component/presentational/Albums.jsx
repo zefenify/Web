@@ -146,7 +146,7 @@ const Albums = ({
     return (
       <AlbumsContainer className="center-content">
         <h2 className="mute">You need to be logged in to view saved albums</h2>
-        <Link to="/setting"><Button outline>Go to Settings</Button></Link>
+        <Link to="/settings"><Button outline>Go to Settings</Button></Link>
       </AlbumsContainer>
     );
   }

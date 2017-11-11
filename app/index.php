@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <base href="/play">
+    <base href="/play/">
 
     <title>Zefenify - Ethiopian. Music.</title>
 

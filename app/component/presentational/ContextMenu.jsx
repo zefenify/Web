@@ -187,9 +187,9 @@ const ContextMenu = ({
           }
 
           <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
-          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}`} className="link" target="_blank">Facebook</a>
-          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Twitter</a>
-          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Telegram</a>
+          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://zefenify.com/play/album/${payload.track_album.album_id}/${payload.track_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://zefenify.com/play/album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://zefenify.com/play/album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 
@@ -216,9 +216,9 @@ const ContextMenu = ({
           <ClearButton className="link" disabled={`/album/${payload.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.album_id}`); }}>Go to Album</ClearButton>
 
           <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
-          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/album/${payload.album_id}`} className="link" target="_blank">Facebook</a>
-          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Twitter</a>
-          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Telegram</a>
+          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://zefenify.com/play/album/${payload.album_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://zefenify.com/play/album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://zefenify.com/play/album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 
@@ -237,9 +237,9 @@ const ContextMenu = ({
           </div>
 
           <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
-          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/artist/${payload.artist_id}`} className="link" target="_blank">Facebook</a>
-          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Twitter</a>
-          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Telegram</a>
+          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://zefenify.com/play/artist/${payload.artist_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://zefenify.com/play/artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://zefenify.com/play/artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 
@@ -258,9 +258,9 @@ const ContextMenu = ({
           </div>
 
           <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
-          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://play.zefenify.com/playlist/${payload.playlist_id}`} className="link" target="_blank">Facebook</a>
-          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://play.zefenify.com/playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Twitter</a>
-          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://play.zefenify.com/playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Telegram</a>
+          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=https://zefenify.com/play/playlist/${payload.playlist_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=https://zefenify.com/play/playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=https://zefenify.com/play/playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 

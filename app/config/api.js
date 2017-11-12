@@ -2,7 +2,7 @@
 // const HEADER = 'Authorization';
 // const BASE = 'https://zefenify.com/api/';
 // const BASE_S3 = 'https://zefenify.com/api/@S3/';
-// const BASE_SHARE = 'https://zefenify.com/play/';
+// const BASE_SHARE = 'https://zefenify.com/';
 // const FAUTH = 'https://zefenify.com/api/fauth/';
 // const SEARCH = 'https://zefenify.com/api/search';
 

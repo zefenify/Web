@@ -57,7 +57,7 @@ const Range = styled.input`
 
     &:hover {
       background-color: ${props => props.theme.listText};
-      transform: scale(1.25);
+      transform: scale3d(1.25, 1.25, 1);
     }
   }
 
@@ -71,7 +71,7 @@ const Range = styled.input`
 
     &:hover {
       background-color: ${props => props.theme.listText};
-      transform: scale(1.25);
+      transform: scale3d(1.25, 1.25, 1);
     }
   }
 
@@ -85,7 +85,7 @@ const Range = styled.input`
 
     &:hover {
       background-color: ${props => props.theme.listText};
-      transform: scale(1.25);
+      transform: scale3d(1.25, 1.25, 1);
     }
   }
 `;

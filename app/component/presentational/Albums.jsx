@@ -123,7 +123,7 @@ const AlbumContainer = styled.div`
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: scale3d(0.95, 0.95, 1);
   }
 `;
 

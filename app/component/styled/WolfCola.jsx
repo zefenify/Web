@@ -4,7 +4,7 @@ import styled from 'react-emotion';
 // #context-menu-container = 999
 // #mobile = 1000
 const WolfColaContainer = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -14,13 +14,13 @@ const WolfColaContainer = styled.div`
   z-index: 99;
   opacity: 1;
   filter: blur(0px);
-  transform: scale(1);
-  transition: all 250ms;
+  transform: scale3d(1, 1, 1);
+  transition: all 256ms;
 
   &.context-menu-active {
     opacity: 0.92;
     filter: blur(4px);
-    transform: scale(0.92);
+    transform: scale3d(0.96, 0.96, 1);
   }
 `;
 

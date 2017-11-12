@@ -7,7 +7,20 @@
     <base href="/">
 
     <title>Zefenify - Ethiopian. Music.</title>
+<?php
+  // add this code to the generated HTML code in the <head />
+  $cardAPI = 'https://zefenify.com/api/card';
+  $opts = [
+    'http' => [
+      'method' => 'GET',
+      'header' => "User-Agent: Zefenify\r\n",
+    ],
+  ];
 
+  $context = stream_context_create($opts);
+  $meta = file_get_contents("{$cardAPI}?url={$_SERVER['REQUEST_URI']}", false, $context);
+  echo $meta;
+?>
     <meta name="keywords" content="Ethiopian Music">
     <meta name="description" content="Ethiopian. Music.">
     <meta name="author" content="Utopiaio">

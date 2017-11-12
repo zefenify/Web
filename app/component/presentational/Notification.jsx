@@ -15,7 +15,7 @@ const NotificationContainer = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 0.5em 1em;
-  transform: translateY(-128px);
+  transform: translate3d(0, -128px, 0);
   transition: transform 500ms;
 
   .message {
@@ -34,7 +34,7 @@ const NotificationContainer = styled.div`
   }
 
   &.notification-active {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
     transition: transform 500ms;
   }
 `;

@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'wolfcola';
+  src: url('fonts/wolfcola.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'wolfcola' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-android:before {
+  content: "\e900";
+  color: #a4c639;
+}
+.icon-ios:before {
+  content: "\e901";
+  color: #999;
+}
+.icon-facebook:before {
+  content: "\e905";
+  color: #3b5998;
+}
+.icon-github:before {
+  content: "\e902";
+}
+.icon-instagram:before {
+  content: "\e906";
+  color: #e4405f;
+}
+.icon-snapchat:before {
+  content: "\e908";
+  color: #fffc00;
+}
+.icon-telegram:before {
+  content: "\e909";
+  color: #2ca5e0;
+}
+.icon-twitter:before {
+  content: "\e904";
+  color: #1da1f2;
+}
+.icon-linux:before {
+  content: "\e90a";
+  color: #dd4814;
+}
+.icon-windows:before {
+  content: "\e90b";
+  color: #0078d6;
+}

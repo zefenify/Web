@@ -282,7 +282,7 @@ const MusicControls = styled.div`
     }
 
     &:hover {
-      transform: scale(1.075);
+      transform: scale3d(1.075, 1.075, 1);
     }
   }
 

@@ -8,11 +8,11 @@ const Button = styled.button`
   color: ${props => props.outline ? props.theme.listText : '#ffffff'};
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale3d(1.05, 1.05, 1);
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: scale3d(0.95, 0.95, 1);
   }
 `;
 

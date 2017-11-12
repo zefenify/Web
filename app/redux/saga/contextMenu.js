@@ -8,16 +8,6 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
 import { contextMenuOn, contextMenuOff } from '@app/redux/action/contextMenu';
 
-const options = {
-  iterations: 1,
-  iterationStart: 0,
-  delay: 0,
-  endDelay: 0,
-  duration: 225,
-  fill: 'forwards',
-  easing: 'ease',
-};
-
 function* _contextMenuOn(action) {
   const state = yield select();
 
@@ -31,48 +21,28 @@ function* _contextMenuOn(action) {
 
   // brining it in...
   const ContextMenuContainer = document.querySelector('#context-menu-container');
-
-  if (ContextMenuContainer.animate === undefined) {
-    ContextMenuContainer.classList.add('context-menu-active');
-  } else {
-    const keyframes = [
-      { transform: 'translateX(264px)' },
-      { transform: 'translateX(0px)' },
-    ];
-
-    ContextMenuContainer.animate(keyframes, options);
-  }
-
-  // overly will be over wolf-cola-container i.e. click outside triggers close...
-  const ContextOverlayContainer = document.querySelector('#context-overlay-container');
-  ContextOverlayContainer.style.zIndex = 100;
+  ContextMenuContainer.classList.add('context-menu-active');
 
   // wolf cola leaving the stage...
   const WolfColaContainer = document.querySelector('#wolf-cola-container');
   WolfColaContainer.classList.add('context-menu-active');
+
+  // overly will be over wolf-cola-container i.e. click outside triggers close...
+  const ContextOverlayContainer = document.querySelector('#context-overlay-container');
+  ContextOverlayContainer.style.zIndex = 100;
 }
 
 function* _contextMenuOff() {
+  const WolfColaContainer = document.querySelector('#wolf-cola-container');
+  WolfColaContainer.classList.remove('context-menu-active');
+
   const ContextMenuContainer = document.querySelector('#context-menu-container');
-
-  if (ContextMenuContainer.animate === undefined) {
-    ContextMenuContainer.classList.remove('context-menu-active');
-  } else {
-    const keyframes = [
-      { transform: 'translateX(0px)' },
-      { transform: 'translateX(264px)' },
-    ];
-
-    ContextMenuContainer.animate(keyframes, options);
-  }
+  ContextMenuContainer.classList.remove('context-menu-active');
 
   const ContextOverlayContainer = document.querySelector('#context-overlay-container');
   ContextOverlayContainer.style.zIndex = 98;
 
-  const WolfColaContainer = document.querySelector('#wolf-cola-container');
-  WolfColaContainer.classList.remove('context-menu-active');
-
-  yield call(delay, 250);
+  yield call(delay, 256);
   yield put(contextMenuOff(null));
 }
 

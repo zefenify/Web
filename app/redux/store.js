@@ -1,6 +1,8 @@
 /* global window */
+/* eslint max-len: off */
 
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+// import { createStore, combineReducers, applyMiddleware } from 'redux'; // production
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'; // development
 import createSagaMiddleware from 'redux-saga';
 
 import theme from '@app/redux/reducer/theme';
@@ -69,9 +71,8 @@ const store = createStore(
     user: null,
     notification: null,
   },
-  window.devToolsExtension
-    ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension())
-    : applyMiddleware(sagaMiddleware),
+  // applyMiddleware(sagaMiddleware), // production
+  window.devToolsExtension ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension()) : applyMiddleware(sagaMiddleware), // development
 );
 
 sagaMiddleware.run(rootSaga);

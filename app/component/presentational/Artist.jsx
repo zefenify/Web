@@ -252,6 +252,7 @@ const Arist = ({
                   <ImageContainer>
                     <img src={`${BASE_S3}${track.track_album.album_cover.s3_name}`} alt={track.track_album.album_name} />
                   </ImageContainer>
+
                   <p className="appears-album__name">{track.track_album.album_name}</p>
                   <p className="appears-album__year">{track.track_album.album_year}</p>
                 </Link>

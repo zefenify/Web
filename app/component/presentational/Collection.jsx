@@ -77,6 +77,7 @@ const Collection = ({
                   <ImageContainer>
                     <img alt={c.collection_name} src={`${BASE_S3}${c.collection_cover.s3_name}`} />
                   </ImageContainer>
+
                   <strong className="collection-name">{ c.collection_name }</strong>
                   <small className="collection-playlist-count">{`${c.collection_playlist.length} PLAYLIST${c.collection_playlist.length > 1 ? 'S' : ''}`}</small>
                 </CollectionContainer>

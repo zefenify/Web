@@ -16,6 +16,7 @@ const WolfColaContainer = styled.div`
   filter: blur(0px);
   transform: scale3d(1, 1, 1);
   transition: all 256ms;
+  will-change: transform, filter, opacity;
 
   &.context-menu-active {
     opacity: 0.92;

@@ -5,6 +5,7 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
+import ImageContainer from '@app/component/styled/ImageContainer';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 import ArtistList from '@app/component/presentational/ArtistList';
@@ -33,7 +34,6 @@ const AlbumContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 25%;
-  min-height: 25vh;
   padding: 0 1em;
   margin-bottom: 3em;
   text-decoration: none;
@@ -59,15 +59,6 @@ const AlbumContainer = styled.div`
 
   .album-cover {
     position: relative;
-    width: 100%;
-    height: auto;
-    min-height: 225px;
-    border-radius: 6px;
-    border: 1px solid ${props => props.theme.listDivider};
-
-    @media(min-width: 1284px) {
-      height: 300px;
-    }
 
     &__overlay {
       position: absolute;
@@ -188,7 +179,11 @@ const Albums = ({
         {
           albums.map(album => (
             <AlbumContainer className={album.album_id === albumsPlayingId ? 'active' : ''}>
-              <div className="album-cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }}>
+              <div className="album-cover">
+                <ImageContainer>
+                  <img src={`${BASE_S3}${album.album_cover.s3_name}`} alt={album.album_name} />
+                </ImageContainer>
+
                 <Link to={`/albums/${album.album_id}`} className="album-cover__overlay">
                   <PlayPauseSVG
                     onClick={(e) => { e.preventDefault(); albumPlayPause(album.album_id); }}

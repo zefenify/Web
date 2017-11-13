@@ -5,6 +5,7 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
+import ImageContainer from '@app/component/styled/ImageContainer';
 import Divider from '@app/component/styled/Divider';
 import Track from '@app/component/presentational/Track';
 import Button from '@app/component/styled/Button';
@@ -140,25 +141,13 @@ const ArtistContainer = styled.div`
   }
 
   .appears-album {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 0 1em;
     margin-bottom: 3em;
     text-decoration: none;
     color: inherit;
-
-    &__cover {
-      position: relative;
-      width: 100%;
-      height: auto;
-      min-height: 225px;
-      border-radius: 6px;
-      border: 1px solid ${props => props.theme.listDivider};
-
-      @media(min-width: 1284px) {
-        height: 300px;
-      }
-    }
 
     &__name {
       font-size: 1.25em;
@@ -260,7 +249,9 @@ const Arist = ({
             {
               artist.relationships.track.map(track => (
                 <Link to={`/album/${track.track_album.album_id}`} className="appears-list__album appears-album">
-                  <div className="appears-album__cover" style={{ background: `transparent url('${BASE_S3}${track.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                  <ImageContainer>
+                    <img src={`${BASE_S3}${track.track_album.album_cover.s3_name}`} alt={track.track_album.album_name} />
+                  </ImageContainer>
                   <p className="appears-album__name">{track.track_album.album_name}</p>
                   <p className="appears-album__year">{track.track_album.album_year}</p>
                 </Link>

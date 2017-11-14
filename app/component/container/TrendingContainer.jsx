@@ -35,20 +35,10 @@ class TrendingContainer extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.category === undefined) {
-      this.props.history.replace('/trending/yesterday');
-      return;
-    }
-
     this.loadTracks(this.props.match.params.category);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.category === undefined) {
-      this.props.history.replace('/trending/yesterday');
-      return;
-    }
-
     if (nextProps.match.params.category !== this.props.match.params.category) {
       this.loadTracks(nextProps.match.params.category);
     }
@@ -60,11 +50,6 @@ class TrendingContainer extends Component {
   }
 
   loadTracks(filter) {
-    if (['yesterday', 'today', 'week', 'popularity'].includes(filter) === false) {
-      this.props.history.replace('/trending/yesterday');
-      return;
-    }
-
     // this makes sure tab navigation clears previous render
     this.setState(() => ({
       trending: null,
@@ -201,9 +186,6 @@ class TrendingContainer extends Component {
 TrendingContainer.propTypes = {
   playing: bool,
   current: shape({}),
-  history: shape({
-    replace: func,
-  }).isRequired,
   match: shape({
     params: shape({
       category: string,

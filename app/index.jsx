@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'emotion-theming';
 
@@ -103,18 +103,22 @@ class WolfCola extends Component {
                   </NavContainer>
 
                   <RouteContainer>
-                    <Route exact path="/" component={HomeContainer} />
-                    <Route path="/:type(playlist|featured)/:id" component={PlaylistContainer} />
-                    <Route path="/artist/:id" component={ArtistContainer} />
-                    <Route path="/album/:id/:trackId?" component={AlbumContainer} />
-                    <Route path="/search" component={SearchContainer} />
-                    <Route path="/trending/:category?" component={TrendingContainer} />
-                    <Route path="/collection/:id?" component={CollectionContainer} />
-                    <Route path="/recent" component={RecentContainer} />
-                    <Route path="/songs" component={SongsContainer} />
-                    <Route path="/albums/:id?" component={AlbumsContainer} />
-                    <Route path="/artists/:id?" component={ArtistsContainer} />
-                    <Route path="/settings" component={SettingsContainer} />
+                    <Switch>
+                      <Route exact path="/" component={HomeContainer} />
+                      <Route path="/:type(playlist|featured)/:id" component={PlaylistContainer} />
+                      <Route path="/artist/:id" component={ArtistContainer} />
+                      <Route path="/album/:id/:trackId?" component={AlbumContainer} />
+                      <Route path="/search" component={SearchContainer} />
+                      <Route path="/trending/:category(yesterday|today|week|popularity)" component={TrendingContainer} />
+                      <Route path="/collection/:id?" component={CollectionContainer} />
+                      <Route path="/recent" component={RecentContainer} />
+                      <Route path="/songs" component={SongsContainer} />
+                      <Route path="/albums/:id?" component={AlbumsContainer} />
+                      <Route path="/artists/:id?" component={ArtistsContainer} />
+                      <Route path="/settings" component={SettingsContainer} />
+                      <Redirect exact push={false} from="/trending" to="/trending/yesterday" />
+                      <Redirect exact push={false} to="/" />
+                    </Switch>
 
                     <NotificationContainer />
                   </RouteContainer>

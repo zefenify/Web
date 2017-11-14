@@ -22,6 +22,7 @@ const WolfColaContainer = styled.div`
     opacity: 0.92;
     filter: blur(4px);
     transform: scale3d(0.96, 0.96, 1);
+    will-change: transform, filter, opacity;
   }
 `;
 

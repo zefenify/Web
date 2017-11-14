@@ -26,6 +26,7 @@ const ContextMenuContainer = styled.div`
 
   &.context-menu-active {
     transform: translate3d(0, 0, 0);
+    will-change: transform, filter, opacity;
   }
 
   display: flex;

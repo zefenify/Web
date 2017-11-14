@@ -21,6 +21,7 @@ module.exports = DJKhaled(connect(state => ({
   repeat: state.repeat,
   volume: state.volume,
   remaining: state.remaining,
+  urlCurrentPlaying: state.urlCurrentPlaying,
 }), dispatch => () => ({
   seek(e) {
     dispatch({ type: SEEK_REQUEST, payload: Number.parseInt(e.target.value, 10) });

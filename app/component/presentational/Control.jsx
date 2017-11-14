@@ -1,5 +1,6 @@
 import React from 'react';
-import { func, bool, string, number, oneOfType, object } from 'prop-types';
+import { func, bool, string, number, oneOfType, shape } from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
@@ -197,6 +198,7 @@ const NowPlayingContainer = styled.div`
       width: 60px;
       height: 60px;
       border-radius: 2px;
+      text-decoration: none;
     }
 
     &__name {
@@ -332,6 +334,7 @@ const Control = ({
   muteVolume,
   maxVolume,
   setRepeat,
+  urlCurrentPlaying,
 }) => (
   <ControlsContainer>
     <NowPlayingContainer>
@@ -339,7 +342,11 @@ const Control = ({
         current !== null
           ? (
             <div className="track">
-              <div className="track__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+              {
+                urlCurrentPlaying === null
+                ? <div className="track__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                : <Link to={urlCurrentPlaying} className="track__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+              }
               <div className="track__name track-name">
                 <p className="track-name__name">{ current.track_name }</p>
                 <div className="track-name__artist">
@@ -414,7 +421,7 @@ const Control = ({
 );
 
 Control.propTypes = {
-  current: oneOfType([object]),
+  current: oneOfType([shape({})]),
   togglePlayPause: func.isRequired,
   next: func.isRequired,
   previous: func.isRequired,
@@ -425,6 +432,7 @@ Control.propTypes = {
   remaining: bool,
   duration: number,
   playbackPosition: number,
+  urlCurrentPlaying: oneOfType([string, shape({})]),
   seek: func.isRequired,
   toggleShuffle: func.isRequired,
   toggleRemaining: func.isRequired,
@@ -443,6 +451,7 @@ Control.defaultProps = {
   remaining: false,
   duration: 0,
   playbackPosition: 0,
+  urlCurrentPlaying: null,
 };
 
 module.exports = Control;

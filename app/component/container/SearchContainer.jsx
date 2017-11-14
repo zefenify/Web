@@ -13,6 +13,7 @@ import track from '@app/util/track';
 import store from '@app/redux/store';
 import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Search from '@app/component/presentational/Search';
@@ -63,6 +64,9 @@ class SearchContainer extends Component {
         queueInitial: this.state.matches.track,
       },
     });
+
+    // search is not stored - navigation clears it
+    store.dispatch(urlCurrentPlaying(null));
   }
 
   handleChange(e) {

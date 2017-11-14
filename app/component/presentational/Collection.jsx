@@ -4,6 +4,7 @@ import { func, string, bool } from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
+import ImageContainer from '@app/component/styled/ImageContainer';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 import Playlist from '@app/component/presentational/Playlist';
 
@@ -12,7 +13,6 @@ const CollectionContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   flex: 0 0 25%;
-  min-height: 25vh;
   padding: 0 1em;
   margin-bottom: 3em;
   text-decoration: none;
@@ -34,19 +34,6 @@ const CollectionContainer = styled(Link)`
 
   @media(min-width: 1282px) {
     flex: 0 0 20%;
-  }
-
-  .collection-cover {
-    position: relative;
-    width: 100%;
-    height: auto;
-    min-height: 225px;
-    border-radius: 6px;
-    border: 1px solid ${props => props.theme.listDivider};
-
-    @media(min-width: 1284px) {
-      height: 300px;
-    }
   }
 
   .collection-name {
@@ -87,7 +74,10 @@ const Collection = ({
             {
               collection.map(c => (
                 <CollectionContainer to={`/collection/${c.collection_id}`}>
-                  <div className="collection-cover" style={{ background: `transparent url('${BASE_S3}${c.collection_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                  <ImageContainer>
+                    <img alt={c.collection_name} src={`${BASE_S3}${c.collection_cover.s3_name}`} />
+                  </ImageContainer>
+
                   <strong className="collection-name">{ c.collection_name }</strong>
                   <small className="collection-playlist-count">{`${c.collection_playlist.length} PLAYLIST${c.collection_playlist.length > 1 ? 'S' : ''}`}</small>
                 </CollectionContainer>

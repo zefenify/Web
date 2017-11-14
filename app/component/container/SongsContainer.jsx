@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool, shape, arrayOf } from 'prop-types';
+import { bool, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -9,6 +9,7 @@ import store from '@app/redux/store';
 import songDuration from '@app/redux/selector/songDuration';
 import songPlaying from '@app/redux/selector/songPlaying';
 import songTrack from '@app/redux/selector/songTrack';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Songs from '@app/component/presentational/Songs';
@@ -55,6 +56,8 @@ class SongsContainer extends Component {
         queueInitial: this.state.songs,
       },
     });
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   trackPlayPause(trackId) {
@@ -84,6 +87,8 @@ class SongsContainer extends Component {
     this.setState(() => ({
       songsPlaying: true,
     }));
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   contextMenuTrack(trackId) {
@@ -127,6 +132,9 @@ SongsContainer.propTypes = {
   playing: bool,
   current: shape({}),
   user: shape({}),
+  match: shape({
+    url: string,
+  }).isRequired,
 };
 
 SongsContainer.defaultProps = {

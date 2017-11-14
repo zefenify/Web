@@ -2,7 +2,7 @@
 // DJ K...
 
 import React, { Component } from 'react';
-import { bool, shape, arrayOf } from 'prop-types';
+import { bool, shape, arrayOf, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -11,6 +11,7 @@ import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/cont
 import store from '@app/redux/store';
 import historyDuration from '@app/redux/selector/historyDuration';
 import historyPlaying from '@app/redux/selector/historyPlaying';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Recent from '@app/component/presentational/Recent';
@@ -52,6 +53,8 @@ class RecentContainer extends Component {
         queueInitial: this.props.history,
       },
     });
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   trackPlayPause(trackId) {
@@ -71,6 +74,7 @@ class RecentContainer extends Component {
         },
       });
 
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
       return;
     }
 
@@ -115,14 +119,15 @@ RecentContainer.propTypes = {
   playing: bool,
   current: shape({}),
   history: arrayOf(shape({})),
-  queueInitial: arrayOf(shape({})),
+  match: shape({
+    url: string,
+  }).isRequired,
 };
 
 RecentContainer.defaultProps = {
   playing: false,
   current: null,
   history: [],
-  queueInitial: [],
 };
 
 module.exports = DJKhaled(connect(state => ({

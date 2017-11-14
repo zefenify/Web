@@ -9,6 +9,7 @@ import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Collection from '@app/component/presentational/Collection';
@@ -73,6 +74,8 @@ class CollectionContainer extends Component {
           queueInitial: tracks,
         },
       });
+
+      store.dispatch(urlCurrentPlaying(`/playlist/${playlistId}`));
     }, error(store));
   }
 
@@ -154,6 +157,7 @@ CollectionContainer.propTypes = {
   playing: bool,
   queueInitial: arrayOf(shape({})),
   match: shape({
+    url: string,
     params: shape({
       id: string,
     }),

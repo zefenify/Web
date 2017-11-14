@@ -11,7 +11,7 @@ const commonPlugins = [
     // template: 'app/index.php',
     // filename: 'index.php',
 
-    // dev
+    // development
     template: 'app/index.html',
     filename: 'index.html',
 

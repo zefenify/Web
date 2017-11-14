@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, bool, func, shape } from 'prop-types';
+import { string, bool, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
@@ -12,6 +12,7 @@ import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Trending from '@app/component/presentational/Trending';
@@ -35,20 +36,10 @@ class TrendingContainer extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.category === undefined) {
-      this.props.history.replace('/trending/yesterday');
-      return;
-    }
-
     this.loadTracks(this.props.match.params.category);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.category === undefined) {
-      this.props.history.replace('/trending/yesterday');
-      return;
-    }
-
     if (nextProps.match.params.category !== this.props.match.params.category) {
       this.loadTracks(nextProps.match.params.category);
     }
@@ -60,11 +51,6 @@ class TrendingContainer extends Component {
   }
 
   loadTracks(filter) {
-    if (['yesterday', 'today', 'week', 'popularity'].includes(filter) === false) {
-      this.props.history.replace('/trending/yesterday');
-      return;
-    }
-
     // this makes sure tab navigation clears previous render
     this.setState(() => ({
       trending: null,
@@ -124,6 +110,8 @@ class TrendingContainer extends Component {
         trendingPlaying: true,
       }));
 
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
+
       return;
     }
 
@@ -159,6 +147,8 @@ class TrendingContainer extends Component {
     this.setState(() => ({
       trendingPlaying: true,
     }));
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   contextMenuTrack(trackId) {
@@ -201,10 +191,8 @@ class TrendingContainer extends Component {
 TrendingContainer.propTypes = {
   playing: bool,
   current: shape({}),
-  history: shape({
-    replace: func,
-  }).isRequired,
   match: shape({
+    url: string,
     params: shape({
       category: string,
     }),

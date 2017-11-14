@@ -22,9 +22,11 @@ const ContextMenuContainer = styled.div`
   box-shadow: -2px 0 2px 0 ${props => props.theme.navBarBoxShadow};
   transform: translate3d(264px, 0, 0);
   transition: transform 256ms;
+  will-change: transform;
 
   &.context-menu-active {
     transform: translate3d(0, 0, 0);
+    will-change: transform, filter, opacity;
   }
 
   display: flex;

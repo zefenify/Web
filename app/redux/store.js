@@ -1,6 +1,8 @@
 /* global window */
+/* eslint max-len: off */
 
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+// import { createStore, combineReducers, applyMiddleware } from 'redux'; // production
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'; // development
 import createSagaMiddleware from 'redux-saga';
 
 import theme from '@app/redux/reducer/theme';
@@ -21,6 +23,7 @@ import user from '@app/redux/reducer/user';
 import contextMenu from '@app/redux/reducer/contextMenu';
 import song from '@app/redux/reducer/song';
 import notification from '@app/redux/reducer/notification';
+import urlCurrentPlaying from '@app/redux/reducer/urlCurrentPlaying';
 
 import rootSaga from '@app/redux/saga/sagas';
 
@@ -45,6 +48,7 @@ const store = createStore(
     contextMenu,
     song,
     notification,
+    urlCurrentPlaying,
   }),
   {
     theme: 'dark',
@@ -68,10 +72,10 @@ const store = createStore(
     loading: false,
     user: null,
     notification: null,
+    urlCurrentPlaying: null,
   },
-  window.devToolsExtension
-    ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension())
-    : applyMiddleware(sagaMiddleware),
+  // applyMiddleware(sagaMiddleware), // production
+  window.devToolsExtension ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension()) : applyMiddleware(sagaMiddleware), // development
 );
 
 sagaMiddleware.run(rootSaga);

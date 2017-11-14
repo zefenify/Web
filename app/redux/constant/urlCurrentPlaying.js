@@ -1,0 +1,5 @@
+const URL_CURRENT_PLAYING = 'URL_CURRENT_PLAYING';
+
+module.exports = {
+  URL_CURRENT_PLAYING,
+};

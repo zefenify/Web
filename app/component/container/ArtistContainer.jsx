@@ -15,6 +15,7 @@ import trackListSame from '@app/util/trackListSame';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 import { loading } from '@app/redux/action/loading';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import store from '@app/redux/store';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -127,6 +128,8 @@ class ArtistContainer extends Component {
         albumPlayingId: '',
         aristPlaying: true,
       }));
+
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
       store.dispatch({
@@ -156,6 +159,8 @@ class ArtistContainer extends Component {
         albumPlayingId: albumId,
         aristPlaying: trackListSame(this.state.artist.relationships.album[albumIndex].relationships.track, this.state.tracksFlatten),
       }));
+
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
 
       return;
     }
@@ -191,6 +196,8 @@ class ArtistContainer extends Component {
       albumPlayingId: '',
       aristPlaying: true,
     }));
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   contextMenuArtist() {
@@ -263,6 +270,7 @@ ArtistContainer.propTypes = {
   current: shape({}),
   playing: bool,
   match: shape({
+    url: string,
     params: shape({
       id: string,
     }),

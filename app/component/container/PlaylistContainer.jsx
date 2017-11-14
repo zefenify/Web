@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import trackListSame from '@app/util/trackListSame';
 import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
@@ -100,6 +101,8 @@ class PlaylistContainer extends Component {
       this.setState(() => ({
         playingFeatured: true,
       }));
+
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
       store.dispatch({
@@ -135,6 +138,8 @@ class PlaylistContainer extends Component {
     this.setState(() => ({
       playingFeatured: true,
     }));
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   contextMenuPlaylist() {
@@ -193,6 +198,7 @@ PlaylistContainer.propTypes = {
   playing: bool,
   user: shape({}),
   match: shape({
+    url: string,
     params: shape({
       id: string,
     }),
@@ -209,4 +215,5 @@ module.exports = DJKhaled(connect(state => ({
   current: state.current,
   playing: state.playing,
   user: state.user,
+  urlCurrentPlaying: state.urlCurrentPlaying,
 }))(PlaylistContainer));

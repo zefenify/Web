@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { loading } from '@app/redux/action/loading';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import store from '@app/redux/store';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
@@ -92,6 +93,8 @@ class HomeContainer extends Component {
           queueInitial: tracks,
         },
       });
+
+      store.dispatch(urlCurrentPlaying(`/playlist/${fid}`));
     }, error(store));
   }
 
@@ -120,4 +123,5 @@ HomeContainer.defaultProps = {
 module.exports = DJKhaled(connect(state => ({
   user: state.user,
   playing: state.playing,
+  urlCurrentPlaying: state.urlCurrentPlaying,
 }))(HomeContainer));

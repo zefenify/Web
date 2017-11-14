@@ -8,6 +8,7 @@ import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST }
 
 import store from '@app/redux/store';
 import artistsBuild from '@app/redux/selector/artistsBuild';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Artists from '@app/component/presentational/Artists';
@@ -54,6 +55,8 @@ class ArtistsContainer extends Component {
         },
       });
 
+      store.dispatch(urlCurrentPlaying(this.props.match.params.id === undefined ? `${this.props.match.url}/${artistId}` : this.props.match.url));
+
       return;
     }
 
@@ -97,6 +100,8 @@ class ArtistsContainer extends Component {
           queueInitial: this.state.artists[artistIndex].relationships.album[albumIndex].relationships.track,
         },
       });
+
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
 
       return;
     }
@@ -144,6 +149,8 @@ class ArtistsContainer extends Component {
         queueInitial: tracksFlatten,
       },
     });
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   contextMenuArtist() {
@@ -242,6 +249,7 @@ ArtistsContainer.propTypes = {
   current: shape({}),
   playing: bool,
   match: shape({
+    url: string,
     params: shape({
       id: string,
     }),

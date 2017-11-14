@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, bool, func, shape } from 'prop-types';
+import { string, bool, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
@@ -12,6 +12,7 @@ import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Trending from '@app/component/presentational/Trending';
@@ -109,6 +110,8 @@ class TrendingContainer extends Component {
         trendingPlaying: true,
       }));
 
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
+
       return;
     }
 
@@ -144,6 +147,8 @@ class TrendingContainer extends Component {
     this.setState(() => ({
       trendingPlaying: true,
     }));
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   contextMenuTrack(trackId) {
@@ -187,6 +192,7 @@ TrendingContainer.propTypes = {
   playing: bool,
   current: shape({}),
   match: shape({
+    url: string,
     params: shape({
       category: string,
     }),

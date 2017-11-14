@@ -6,6 +6,7 @@ import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redu
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 
 import store from '@app/redux/store';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import albumsBuild from '@app/redux/selector/albumsBuild';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
@@ -51,7 +52,11 @@ class AlbumsContainer extends Component {
       },
     });
 
-    this.setState(() => ({ albumsPlayingId: albumId }));
+    this.setState(() => ({
+      albumsPlayingId: albumId,
+    }));
+
+    store.dispatch(urlCurrentPlaying(`${this.props.match.url}/${albumId}`));
   }
 
   albumsPlayPause() {
@@ -73,6 +78,8 @@ class AlbumsContainer extends Component {
       this.setState(() => ({
         albumPlaying: true,
       }));
+
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
     } else if (this.props.current !== null) {
       // -> resuming / pausing album
       store.dispatch({
@@ -108,6 +115,8 @@ class AlbumsContainer extends Component {
     this.setState(() => ({
       playingAlbum: true,
     }));
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   contextMenuAlbum() {
@@ -161,6 +170,7 @@ AlbumsContainer.propTypes = {
   playing: bool,
   current: shape({}),
   match: shape({
+    url: string,
     params: shape({
       id: oneOfType([shape({}), string]),
     }),

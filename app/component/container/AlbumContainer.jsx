@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import trackListSame from '@app/util/trackListSame';
 import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
@@ -34,8 +35,6 @@ class AlbumContainer extends Component {
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
     this.buildArtist = this.buildArtist.bind(this);
   }
-
-
 
   componentDidMount() {
     this.buildArtist();
@@ -118,6 +117,8 @@ class AlbumContainer extends Component {
       this.setState(() => ({
         albumPlaying: true,
       }));
+
+      store.dispatch(urlCurrentPlaying(this.props.match.url));
       // resuming / pausing playlist
     } else if (this.props.current !== null) {
       store.dispatch({
@@ -153,6 +154,8 @@ class AlbumContainer extends Component {
     this.setState(() => ({
       albumPlaying: true,
     }));
+
+    store.dispatch(urlCurrentPlaying(this.props.match.url));
   }
 
   contextMenuAlbum() {
@@ -209,6 +212,7 @@ AlbumContainer.propTypes = {
   current: shape({}),
   playing: bool,
   match: shape({
+    url: string,
     params: shape({
       id: string,
     }),

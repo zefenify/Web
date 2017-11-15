@@ -17,6 +17,8 @@ const PlaylistContainer = styled(Link)`
   margin-bottom: 3em;
   text-decoration: none;
   color: inherit;
+  transition: transform 256ms;
+  will-change: transform;
 
   &.active {
     color: ${props => props.theme.primary};

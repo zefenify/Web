@@ -38,6 +38,8 @@ const AlbumContainer = styled.div`
   margin-bottom: 3em;
   text-decoration: none;
   color: #fff;
+  transition: transform 256ms;
+  will-change: transform;
 
   &.active {
     color: ${props => props.theme.primary};

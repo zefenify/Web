@@ -37,6 +37,8 @@ const ArtistContainer = styled.div`
   text-decoration: none;
   margin-bottom: 2em;
   color: #fff;
+  transition: transform 256ms;
+  will-change: transform;
 
   &.active {
     color: ${props => props.theme.primary};

@@ -6,6 +6,8 @@ const Button = styled.button`
   border: ${props => props.outline ? `1px solid ${props.theme.listText}` : 'none'};
   padding: ${props => props.noPadding ? '0' : '0.75em 2em'};
   color: ${props => props.outline ? props.theme.listText : '#ffffff'};
+  transition: all 125ms;
+  will-change: transform;
 
   &:hover {
     transform: scale3d(1.05, 1.05, 1);

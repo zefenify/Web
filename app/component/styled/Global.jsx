@@ -20,7 +20,6 @@ injectGlobal`
 
   * {
     box-sizing: border-box;
-    transition: all 125ms linear;
     outline: none;
   }
 

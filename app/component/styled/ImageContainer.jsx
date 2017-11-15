@@ -9,7 +9,7 @@ import styled from 'react-emotion';
 const ImageContainer = styled.div`
   position: relative;
   border: 1px solid ${props => props.border ? props.border : props.theme.listDivider};
-  border-radius: 6px;
+  border-radius: ${props => props.borderRadius ? props.borderRadius : '6px'};
 
   .container {
     position: relative;
@@ -25,15 +25,15 @@ const ImageContainer = styled.div`
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 6px;
+      border-radius: ${props => props.borderRadius ? props.borderRadius : '6px'};
     }
   }
 `;
 
-const Container = ({ children }) => (
-  <ImageContainer>
+const Container = props => (
+  <ImageContainer {...props}>
     <div className="container">
-      { children }
+      { props.children }
     </div>
   </ImageContainer>
 );

@@ -17,7 +17,7 @@ const WHITE_1 = '#ffffff';
 const WHITE_2 = '#f7f7f7';
 const WHITE_3 = '#d8d8d8';
 
-const PRIMARY_1 = '#1ed660';
+const PRIMARY_1 = '#2196f3';
 const PRIMARY_2 = '#31a8e6';
 
 module.exports = {

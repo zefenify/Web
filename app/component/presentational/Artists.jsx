@@ -8,6 +8,7 @@ import { BASE_S3 } from '@app/config/api';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
 import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
 import Button from '@app/component/styled/Button';
+import ImageContainer from '@app/component/styled/ImageContainer';
 
 import Artist from '@app/component/presentational/Artist';
 
@@ -33,7 +34,6 @@ const ArtistContainer = styled.div`
   flex-direction: column;
   flex: 0 0 25%;
   padding: 0 1em;
-  align-items: center;
   text-decoration: none;
   margin-bottom: 2em;
   color: #fff;
@@ -58,30 +58,21 @@ const ArtistContainer = styled.div`
     flex: 0 0 20%;
   }
 
-  .artist {
+  .artist-cover {
     position: relative;
-    width: 92%;
-
-    &__image {
-      width: 100%;
-      height: auto;
-      border-radius: 50%;
-      border: 1px solid ${props => props.theme.listDivider};
-    }
 
     &__overlay {
       position: absolute;
       top: 0;
       right: 0;
-      bottom: 3px;
+      bottom: 0;
       left: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: rgba(51, 51, 51, 0.75);
-      border-radius: 50%;
       color: inherit;
-      border: 1px solid ${props => props.theme.listDivider};
+      border-radius: 50%;
 
       svg {
         display: flex;
@@ -94,11 +85,11 @@ const ArtistContainer = styled.div`
       }
     }
 
-    .artist__overlay {
+    .artist-cover__overlay {
       opacity: 0;
     }
 
-    &:hover .artist__overlay {
+    &:hover .artist-cover__overlay {
       opacity: 1;
     }
   }
@@ -110,6 +101,7 @@ const ArtistContainer = styled.div`
     margin-top: 0.5em;
     font-size: 1.25em;
     color: ${props => props.theme.listText};
+    text-align: center;
   }
 
   &:active {
@@ -181,9 +173,12 @@ const Artists = ({
         {
           artists.map(artist => (
             <ArtistContainer className={artist.artist_id === artistPlayingId ? 'active' : ''}>
-              <div className="artist">
-                <img alt={`${artist.artist_name}`} className="artist__image" src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
-                <Link to={`/artists/${artist.artist_id}`} className="artist__overlay">
+              <div className="artist-cover">
+                <ImageContainer borderRadius="50%">
+                  <img src={`${BASE_S3}${artist.artist_cover.s3_name}`} alt={artist.artist_name} />
+                </ImageContainer>
+
+                <Link to={`/artists/${artist.artist_id}`} className="artist-cover__overlay">
                   <PlayPauseSVG
                     onClick={(e) => { e.preventDefault(); artistsPlayPause(artist.artist_id); }}
                     playing={playing && artist.artist_id === artistPlayingId}

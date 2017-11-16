@@ -93,7 +93,7 @@ const ContextMenuContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 1em;
-    padding: 0 1em;
+    padding: 0 1rem;
     flex: 0 0 auto;
 
     & > * {
@@ -118,11 +118,13 @@ const ContextMenuContainer = styled.div`
     }
 
     &__name {
+      text-align: center;
       font-size: 1.25em;
       margin-bottom: 0.25em;
     }
 
     &__album {
+      text-align: center;
       color: ${props => props.theme.navbarText};
     }
   }

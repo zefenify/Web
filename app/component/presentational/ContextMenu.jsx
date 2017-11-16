@@ -209,15 +209,15 @@ const ContextMenu = ({
             <p className="album__name">{ payload.album_name }</p>
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Artist&nbsp;</Divider>
           <div>
             { payload.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Album&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Album&nbsp;</Divider>
           <ClearButton className="link" disabled={`/album/${payload.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.album_id}`); }}>Go to Album</ClearButton>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.album_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Telegram</a>
@@ -238,7 +238,7 @@ const ContextMenu = ({
             <p className="artist__name">{ payload.artist_name }</p>
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}artist/${payload.artist_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Telegram</a>
@@ -259,7 +259,7 @@ const ContextMenu = ({
             <p className="playlist__name">{ payload.playlist_name }</p>
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}playlist/${payload.playlist_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Telegram</a>

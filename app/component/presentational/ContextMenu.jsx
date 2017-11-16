@@ -71,7 +71,7 @@ const ContextMenuContainer = styled.div`
   .link {
     flex: 0 0 auto;
     text-decoration: none;
-    padding: 1em;
+    padding: 1rem;
     color: ${props => props.theme.navbarText};
 
     &:not([disabled]):hover {
@@ -172,23 +172,23 @@ const ContextMenu = ({
             <p className="track__album">{ payload.track_album.album_name }</p>
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Artist&nbsp;</Divider>
           <div>
             { payload.track_album.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
             { payload.track_featuring.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Album&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Album&nbsp;</Divider>
           <ClearButton className="link" disabled={`/album/${payload.track_album.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.track_album.album_id}`); }}>Go to Album</ClearButton>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Your Library&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Your Library&nbsp;</Divider>
           {
             trackSaved
               ? <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songRemove(payload); }}>Remove from Your Library</ClearButton>
               : <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songSave(payload); }}>Save to Your Library</ClearButton>
           }
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Telegram</a>

@@ -8,6 +8,7 @@ import { BASE_S3 } from '@app/config/api';
 
 import Track from '@app/component/presentational/Track';
 import Divider from '@app/component/styled/Divider';
+import ImageContainer from '@app/component/styled/ImageContainer';
 
 const SearchContainer = styled.div`
   display: flex;
@@ -92,13 +93,6 @@ const SearchContainer = styled.div`
     text-decoration: none;
     color: inherit;
 
-    &__cover {
-      width: 100%;
-      height: auto;
-      border-radius: 50%;
-      border: 1px solid ${props => props.theme.listDivider};
-    }
-
     &__name {
       text-align: center;
     }
@@ -109,13 +103,6 @@ const SearchContainer = styled.div`
     flex-direction: column;
     text-decoration: none;
     color: inherit;
-
-    &__cover {
-      width: 100%;
-      height: auto;
-      border-radius: 6px;
-      border: 1px solid ${props => props.theme.listDivider};
-    }
 
     &__name {
       margin: 0.5em 0;
@@ -203,7 +190,9 @@ const Search = ({
               <div className="result-match-list">
                 { matches.artist.map(artist => (
                   <Link to={`artist/${artist.artist_id}`} className="result-match-list__match artist">
-                    <img className="artist__cover" alt={`${artist.artist_name}`} src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
+                    <ImageContainer borderRadius="50%">
+                      <img alt={`${artist.artist_name}`} src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
+                    </ImageContainer>
                     <h3 className="artist__name">{ artist.artist_name }</h3>
                   </Link>))
                 }
@@ -218,7 +207,9 @@ const Search = ({
               <div className="result-match-list">
                 { matches.album.map(album => (
                   <Link to={`album/${album.album_id}`} className="result-match-list__match apu">
-                    <img className="apu__cover" alt={`${album.album_name}`} src={`${BASE_S3}${album.album_cover.s3_name}`} />
+                    <ImageContainer>
+                      <img alt={`${album.album_name}`} src={`${BASE_S3}${album.album_cover.s3_name}`} />
+                    </ImageContainer>
                     <h3 className="apu__name">{ album.album_name }</h3>
                     <p className="apu__year">{ album.album_year }</p>
                   </Link>))
@@ -233,7 +224,9 @@ const Search = ({
               <div className="result-match-list">
                 { matches.playlist.map(playlist => (
                   <Link to={`playlist/${playlist.playlist_id}`} className="result-match-list__match apu">
-                    <img className="apu__cover" alt={`${playlist.playlist_name}`} src={`${BASE_S3}${playlist.playlist_cover.s3_name}`} />
+                    <ImageContainer>
+                      <img alt={`${playlist.playlist_name}`} src={`${BASE_S3}${playlist.playlist_cover.s3_name}`} />
+                    </ImageContainer>
                     <h3 className="apu__name">{ playlist.playlist_name }</h3>
                   </Link>))
                 }

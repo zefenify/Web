@@ -71,7 +71,7 @@ const ContextMenuContainer = styled.div`
   .link {
     flex: 0 0 auto;
     text-decoration: none;
-    padding: 1em;
+    padding: 1rem;
     color: ${props => props.theme.navbarText};
 
     &:not([disabled]):hover {
@@ -93,7 +93,7 @@ const ContextMenuContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 1em;
-    padding: 0 1em;
+    padding: 0 1rem;
     flex: 0 0 auto;
 
     & > * {
@@ -118,11 +118,13 @@ const ContextMenuContainer = styled.div`
     }
 
     &__name {
+      text-align: center;
       font-size: 1.25em;
       margin-bottom: 0.25em;
     }
 
     &__album {
+      text-align: center;
       color: ${props => props.theme.navbarText};
     }
   }
@@ -172,23 +174,23 @@ const ContextMenu = ({
             <p className="track__album">{ payload.track_album.album_name }</p>
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Artist&nbsp;</Divider>
           <div>
             { payload.track_album.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
             { payload.track_featuring.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Album&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Album&nbsp;</Divider>
           <ClearButton className="link" disabled={`/album/${payload.track_album.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.track_album.album_id}`); }}>Go to Album</ClearButton>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Your Library&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Your Library&nbsp;</Divider>
           {
             trackSaved
               ? <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songRemove(payload); }}>Remove from Your Library</ClearButton>
               : <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songSave(payload); }}>Save to Your Library</ClearButton>
           }
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Telegram</a>
@@ -209,15 +211,15 @@ const ContextMenu = ({
             <p className="album__name">{ payload.album_name }</p>
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Artist&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Artist&nbsp;</Divider>
           <div>
             { payload.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Album&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Album&nbsp;</Divider>
           <ClearButton className="link" disabled={`/album/${payload.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.album_id}`); }}>Go to Album</ClearButton>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.album_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Telegram</a>
@@ -238,7 +240,7 @@ const ContextMenu = ({
             <p className="artist__name">{ payload.artist_name }</p>
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}artist/${payload.artist_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Telegram</a>
@@ -259,7 +261,7 @@ const ContextMenu = ({
             <p className="playlist__name">{ payload.playlist_name }</p>
           </div>
 
-          <Divider padding="0 0 0 1em" fontSize="0.8em">Share&nbsp;</Divider>
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
           <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}playlist/${payload.playlist_id}`} className="link" target="_blank">Facebook</a>
           <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Twitter</a>
           <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Telegram</a>

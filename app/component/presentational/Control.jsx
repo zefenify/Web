@@ -251,6 +251,8 @@ const MusicControls = styled.div`
   .control {
     position: relative;
     display: flex;
+    transition: transform 256ms;
+    will-change: transform;
 
     &_active {
       color: ${props => props.theme.primary};

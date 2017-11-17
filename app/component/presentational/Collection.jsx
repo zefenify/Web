@@ -17,6 +17,8 @@ const CollectionContainer = styled(Link)`
   margin-bottom: 3em;
   text-decoration: none;
   color: inherit;
+  transition: transform 128ms;
+  will-change: transform;
 
   &.active {
     color: ${props => props.theme.primary};
@@ -50,6 +52,10 @@ const CollectionContainer = styled(Link)`
     margin: 0;
     margin-top: 0.5em;
     color: ${props => props.theme.controlMute};
+  }
+
+  &:active {
+    transform: scale3d(0.95, 0.95, 1);
   }
 `;
 

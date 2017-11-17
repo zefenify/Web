@@ -29,15 +29,30 @@ class PlaylistContainer extends Component {
       },
       playingFeatured: false,
     };
+
     this.tracksPlayPause = this.tracksPlayPause.bind(this);
     this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuPlaylist = this.contextMenuPlaylist.bind(this);
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
+    this.playlistBuild = this.playlistBuild.bind(this);
   }
 
   componentDidMount() {
+    this.playlistBuild(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.playlistBuild(nextProps);
+  }
+
+  componentWillUnmount() {
+    store.dispatch(loading(false));
+    this.cancelRequest();
+  }
+
+  playlistBuild(props) {
     store.dispatch(loading(true));
-    api(`${BASE}playlist/${this.props.match.params.id}`, this.props.user, (cancel) => {
+    api(`${BASE}playlist/${props.match.params.id}`, props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -75,11 +90,6 @@ class PlaylistContainer extends Component {
         }
       });
     }, error(store));
-  }
-
-  componentWillUnmount() {
-    store.dispatch(loading(false));
-    this.cancelRequest();
   }
 
   tracksPlayPause() {

@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <base href="/">
 
-    <title>Zefenify - Ethiopian. Music.</title>
+    <title>Zefenify • Ethiopian. Music.</title>
 <?php
   // add this code to the generated HTML code in the <head />
   $cardAPI = 'https://zefenify.com/api/card';

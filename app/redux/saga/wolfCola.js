@@ -26,6 +26,7 @@ import { loading } from '@app/redux/action/loading';
 
 const wolfCola = {
   playingKey: 'current',
+  loadingKey: null,
   current: null,
   next: null,
   crossfadeInProgress: false,
@@ -139,6 +140,13 @@ const tracker = (isTrackerInProgress = false) => {
 const trackerSaga = tracker(false);
 
 function* _play(action) {
+  // double check on `Howl` as it might be killed with `howlerLoadError`
+  if (wolfCola.loadingKey !== null && wolfCola[wolfCola.loadingKey] !== null) {
+    wolfCola[wolfCola.loadingKey].off();
+    wolfCola[wolfCola.loadingKey].unload();
+    wolfCola.loadingKey = null;
+  }
+
   const state = yield select();
   const { payload } = action;
 
@@ -232,10 +240,15 @@ function* _play(action) {
     format: ['mp3'],
   });
 
+  // when a second `Howl` key is requested, this key [i.e. `loadingKey`] will be used
+  // to `.unload` the previous `Howl` that hasn't finished initializing...mtsm
+  wolfCola.loadingKey = wolfCola.playingKey;
   // ethio-telecom
   yield fork(howlerLoadError, wolfCola.playingKey);
   // if load doesn't resolve Wolf-Cola won't start
   yield promiseifyHowlEvent(wolfCola[wolfCola.playingKey], 'load');
+  // God bless EthioTele
+  wolfCola.loadingKey = null;
   // music loaded
   yield put(loading(false));
   // music loaded, setting duration

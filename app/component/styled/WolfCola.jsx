@@ -23,6 +23,12 @@ const WolfColaContainer = styled.div`
     filter: blur(4px);
     transform: scale3d(0.96, 0.96, 1);
   }
+
+  &.booting {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale3d(0.96, 0.96, 1);
+  }
 `;
 
 const ControlsContainer = styled.div`

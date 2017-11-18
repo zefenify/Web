@@ -67,7 +67,7 @@ class WolfCola extends Component {
         <ThemeProvider theme={this.state.theme === 'light' ? themeLight : themeDark}>
           <Router>
             <div>
-              <WolfColaContainer id="wolf-cola-container">
+              <WolfColaContainer className="booting" id="wolf-cola-container">
                 <NavListContainer>
                   <NavContainer>
                     <Link className="brand" to="/">

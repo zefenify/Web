@@ -28,6 +28,7 @@ import CollectionContainer from '@app/component/container/CollectionContainer';
 import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
 import NotificationContainer from '@app/component/container/NotificationContainer';
+import SpaceContainer from '@app/component/container/SpaceContainer.jsx';
 
 import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
@@ -130,6 +131,7 @@ class WolfCola extends Component {
               <Mobile />
               <ContextOverlayContainer />
               <ContextMenuContainer />
+              <SpaceContainer />
             </div>
           </Router>
         </ThemeProvider>

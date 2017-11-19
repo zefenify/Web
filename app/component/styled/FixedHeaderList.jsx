@@ -11,7 +11,7 @@ const FixedHeaderList = styled.div`
     top: 0;
     right: 0;
     left: 0;
-    box-shadow: 0 0 4px ${props => props.theme.listBoxShadow};
+    box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
     height: 60px;
     padding: 0 2em;
     display: flex;

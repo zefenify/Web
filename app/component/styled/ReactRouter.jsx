@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 
 const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.navbarText};
-  padding: 0.5em 1em;
+  padding: 0.5em 0.64rem;
   margin: 0.25em 0;
   font-weight: bold;
   text-decoration: none;

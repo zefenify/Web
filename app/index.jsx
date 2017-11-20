@@ -72,7 +72,7 @@ class WolfCola extends Component {
                 <NavListContainer>
                   <NavContainer>
                     <Link className="brand" to="/">
-                      <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.png" />
+                      <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.c19e209e3511e84a923a.png" />
                       <span>Zefenify</span>
                       <Spinner loading={this.state.loading} />
                     </Link>

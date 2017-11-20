@@ -8,18 +8,17 @@
 
     <title>Zefenify • Ethiopian. Music.</title>
 <?php
-  // add this code to the generated HTML code in the <head />
-  $cardAPI = 'https://zefenify.com/api/card';
-  $opts = [
-    'http' => [
-      'method' => 'GET',
-      'header' => "User-Agent: Zefenify\r\n",
-    ],
-  ];
+$cardAPI = 'https://zefenify.com/api/card';
+$opts = [
+  'http' => [
+    'method' => 'GET',
+    'header' => "User-Agent: Zefenify\r\n",
+  ],
+];
 
-  $context = stream_context_create($opts);
-  $meta = file_get_contents("{$cardAPI}?url={$_SERVER['REQUEST_URI']}", false, $context);
-  echo $meta;
+$context = stream_context_create($opts);
+$meta = file_get_contents("{$cardAPI}?url={$_SERVER['REQUEST_URI']}", false, $context);
+echo $meta;
 ?>
     <meta name="keywords" content="Ethiopian Music">
     <meta name="description" content="Ethiopian. Music.">
@@ -53,5 +52,13 @@
 
   <body>
     <div id="wolf-cola"></div>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109514993-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109514993-1');
+</script>
   </body>
 </html>

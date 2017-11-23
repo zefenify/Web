@@ -28,6 +28,7 @@ import CollectionContainer from '@app/component/container/CollectionContainer';
 import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
 import NotificationContainer from '@app/component/container/NotificationContainer';
+import SpaceContainer from '@app/component/container/SpaceContainer.jsx';
 
 import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
@@ -67,11 +68,11 @@ class WolfCola extends Component {
         <ThemeProvider theme={this.state.theme === 'light' ? themeLight : themeDark}>
           <Router>
             <div>
-              <WolfColaContainer id="wolf-cola-container">
+              <WolfColaContainer className="booting" id="wolf-cola-container">
                 <NavListContainer>
                   <NavContainer>
                     <Link className="brand" to="/">
-                      <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.png?e88e2eec0ae92125c988" />
+                      <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.c19e209e3511e84a923a.png" />
                       <span>Zefenify</span>
                       <Spinner loading={this.state.loading} />
                     </Link>
@@ -87,13 +88,13 @@ class WolfCola extends Component {
                       </NavLinkStyled>
                       <NavLinkStyled to="/collection">Genres &amp; Moods</NavLinkStyled>
 
-                      <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
+                      <Divider padding="1em 0.5em 1em 1rem" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
                       <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
                       <NavLinkStyled to="/songs">Songs</NavLinkStyled>
                       <NavLinkStyled to="/albums">Albums</NavLinkStyled>
                       <NavLinkStyled to="/artists">Artists</NavLinkStyled>
 
-                      <Divider padding="1em 0.5em 1em 2em" fontSize="0.75em">SETTINGS&nbsp;</Divider>
+                      <Divider padding="1em 0.5em 1em 1rem" fontSize="0.75em">SETTINGS&nbsp;</Divider>
                       <NavLinkStyled to="/settings">
                         <span>Settings</span>
                         <Settings style={{ float: 'right' }} />
@@ -130,6 +131,7 @@ class WolfCola extends Component {
               <Mobile />
               <ContextOverlayContainer />
               <ContextMenuContainer />
+              <SpaceContainer />
             </div>
           </Router>
         </ThemeProvider>

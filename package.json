@@ -3,7 +3,7 @@
     "s": "webpack-dev-server --progress",
     "d": "rm -rf build && webpack --progress --colors && cp -R app/static build/static",
     "p": "rm -rf build && webpack --env production --progress --colors && cp -R app/static build/static",
-    "postinstall": "rm -rf build && webpack -p --env production --progress --colors && cp -R app/static build/static"
+    "postinstall": "rm -rf build && webpack --env production --progress --colors && cp -R app/static build/static"
   },
   "dependencies": {
     "axios": "^0.16.2",

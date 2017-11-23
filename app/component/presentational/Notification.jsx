@@ -36,7 +36,6 @@ const NotificationContainer = styled.div`
 
   &.notification-active {
     transform: translate3d(0, 0, 0);
-    transition: transform 500ms;
   }
 `;
 

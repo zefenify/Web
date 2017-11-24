@@ -51,11 +51,6 @@ const SettingsContainer = styled.div`
     flex-direction: column;
     align-items: center;
   }
-
-  .dmca {
-    padding: 0 1em;
-    border: 1px solid red;
-  }
 `;
 
 const DMCA = styled.a`

@@ -66,7 +66,7 @@ const NavContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     height: 60px;
-    padding-left: 1.25em;
+    padding-left: 1rem;
     font-weight: bold;
     font-size: 1.2em;
     text-decoration: none;

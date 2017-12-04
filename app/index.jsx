@@ -99,8 +99,8 @@ class WolfCola extends Component {
                         <span>Settings</span>
                         <Settings style={{ float: 'right' }} />
                       </NavLinkStyled>
-                      <NavLinkStyled to="https://github.com/zefenify/Wolf-Cola/releases" target="_blank">
-                        <span>Get Desktop App</span>
+                      <NavLinkStyled to="https://github.com/Zefenify/Wolf-Cola/releases" target="_blank">
+                        <span>Install Desktop App</span>
                         <Download style={{ float: 'right' }} />
                       </NavLinkStyled>
                       <div style={{ paddingBottom: '2em' }} />

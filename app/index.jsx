@@ -33,7 +33,7 @@ import SpaceContainer from '@app/component/container/SpaceContainer.jsx';
 import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
-import { Search, Trending, Settings } from '@app/component/presentational/SVG';
+import { Search, Trending, Settings, Download } from '@app/component/presentational/SVG';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
@@ -98,6 +98,10 @@ class WolfCola extends Component {
                       <NavLinkStyled to="/settings">
                         <span>Settings</span>
                         <Settings style={{ float: 'right' }} />
+                      </NavLinkStyled>
+                      <NavLinkStyled to="https://github.com/Zefenify/Wolf-Cola/releases" target="_blank">
+                        <span>Install Desktop App</span>
+                        <Download style={{ float: 'right' }} />
                       </NavLinkStyled>
                       <div style={{ paddingBottom: '2em' }} />
                     </div>

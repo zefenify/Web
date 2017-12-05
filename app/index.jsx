@@ -12,6 +12,7 @@ import '@app/util/facebook';
 import store from '@app/redux/store';
 import { themeLight, themeDark } from '@app/config/theme';
 
+import ErrorBoundaryContainer from '@app/component/container/ErrorBoundaryContainer';
 import HomeContainer from '@app/component/container/HomeContainer';
 import SettingsContainer from '@app/component/container/SettingsContainer';
 import ControlContainer from '@app/component/container/ControlContainer';
@@ -67,7 +68,7 @@ class WolfCola extends Component {
       <Provider store={store}>
         <ThemeProvider theme={this.state.theme === 'light' ? themeLight : themeDark}>
           <Router>
-            <div>
+            <ErrorBoundaryContainer>
               <WolfColaContainer className="booting" id="wolf-cola-container">
                 <NavListContainer>
                   <NavContainer>
@@ -136,7 +137,7 @@ class WolfCola extends Component {
               <ContextOverlayContainer />
               <ContextMenuContainer />
               <SpaceContainer />
-            </div>
+            </ErrorBoundaryContainer>
           </Router>
         </ThemeProvider>
       </Provider>

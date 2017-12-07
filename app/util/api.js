@@ -112,7 +112,7 @@ api.error = store => (error) => {
   store.dispatch({
     type: NOTIFICATION_ON_REQUEST,
     payload: {
-      message: 'ይቅርታ, unable to fetch Featured Playlist',
+      message: 'ይቅርታ, Unable to fetch data. Please try again later',
     },
   });
 };

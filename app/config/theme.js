@@ -18,7 +18,7 @@ const WHITE_2 = '#f7f7f7';
 const WHITE_3 = '#d8d8d8';
 
 const PRIMARY_1 = '#2196f3';
-const PRIMARY_2 = '#31a8e6';
+const PRIMARY_2 = '#e30047';
 
 module.exports = {
   themeDark: {

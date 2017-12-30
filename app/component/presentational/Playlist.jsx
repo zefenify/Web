@@ -5,7 +5,7 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
-import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
+import PlayPause from '@app/component/svg/PlayPause';
 import ImageContainer from '@app/component/styled/ImageContainer';
 
 const PlaylistContainer = styled(Link)`
@@ -58,9 +58,8 @@ const PlaylistContainer = styled(Link)`
         justify-content: center;
         align-items: center;
         color: inherit;
-        font-size: 80px;
-        width: 80px;
-        height: 80px;
+        width: 96px;
+        height: 96px;
       }
     }
 
@@ -121,7 +120,7 @@ function Playlist({
         </ImageContainer>
 
         <div className="playlist-cover__overlay">
-          <PlayPauseSVG
+          <PlayPause
             onClick={(e) => { e.preventDefault(); play(id); }}
             playing={id === playingId && playing}
           />

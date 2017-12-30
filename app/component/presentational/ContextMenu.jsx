@@ -5,7 +5,7 @@ import styled from 'react-emotion';
 import { CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
 import { BASE_S3, BASE_SHARE } from '@app/config/api';
 
-import { CloseSVG } from '@app/component/presentational/SVG';
+import Close from '@app/component/svg/Close';
 import { ClearButton } from '@app/component/styled/Button';
 import Divider from '@app/component/styled/Divider';
 
@@ -143,7 +143,7 @@ const ContextMenu = ({
     return (
       <ContextMenuContainer id="context-menu-container">
         <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
-          <CloseSVG />
+          <Close />
         </ClearButton>
       </ContextMenuContainer>
     );
@@ -163,7 +163,7 @@ const ContextMenu = ({
       return (
         <ContextMenuContainer id="context-menu-container">
           <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
-            <CloseSVG />
+            <Close />
           </ClearButton>
 
           <div className="title">TRACK&nbsp;</div>
@@ -201,7 +201,7 @@ const ContextMenu = ({
       return (
         <ContextMenuContainer id="context-menu-container">
           <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
-            <CloseSVG />
+            <Close />
           </ClearButton>
 
           <div className="title">ALBUM&nbsp;</div>
@@ -230,7 +230,7 @@ const ContextMenu = ({
       return (
         <ContextMenuContainer id="context-menu-container">
           <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
-            <CloseSVG />
+            <Close />
           </ClearButton>
 
           <div className="title">ARTIST&nbsp;</div>
@@ -251,7 +251,7 @@ const ContextMenu = ({
       return (
         <ContextMenuContainer id="context-menu-container">
           <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
-            <CloseSVG />
+            <Close />
           </ClearButton>
 
           <div className="title">PLAYLIST&nbsp;</div>

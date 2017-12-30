@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
 
-import { Download } from '@app/component/presentational/SVG';
+import Download from '@app/component/svg/Download';
 
 const MobileContainer = styled.div`
   display: flex;

@@ -2,7 +2,7 @@ import React from 'react';
 import { func, shape } from 'prop-types';
 import styled from 'react-emotion';
 
-import { CloseSVG } from '@app/component/presentational/SVG';
+import Close from '@app/component/svg/Close';
 import { ClearButton } from '@app/component/styled/Button';
 
 const NotificationContainer = styled.div`
@@ -45,7 +45,7 @@ const Notification = ({
 }) => (
   <NotificationContainer id="notification-container">
     <div className="message">{ notification === null ? null : notification.message }</div>
-    <ClearButton className="close-button" onClick={close}><CloseSVG /></ClearButton>
+    <ClearButton className="close-button" onClick={close}><Close /></ClearButton>
   </NotificationContainer>
 );
 

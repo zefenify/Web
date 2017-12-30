@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { human } from '@app/util/time';
 
 import ArtistList from '@app/component/presentational/ArtistList';
-import { Share } from '@app/component/presentational/SVG';
+import Share from '@app/component/svg/Share';
 
 const PlayPause = ({ onClick, playing, className }) => (
   <svg

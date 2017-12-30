@@ -5,7 +5,7 @@ import styled from 'react-emotion';
 import { BASE_S3 } from '@app/config/api';
 
 import Button from '@app/component/styled/Button';
-import { Share } from '@app/component/presentational/SVG';
+import Share from '@app/component/svg/Share';
 import Divider from '@app/component/styled/Divider';
 import Track from '@app/component/presentational/Track';
 

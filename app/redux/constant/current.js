@@ -1,7 +1,5 @@
 const CURRENT = 'CURRENT';
-const CURRENT_REQUEST = 'CURRENT_REQUEST';
 
 module.exports = {
   CURRENT,
-  CURRENT_REQUEST,
 };

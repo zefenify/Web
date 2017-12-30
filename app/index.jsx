@@ -34,7 +34,10 @@ import SpaceContainer from '@app/component/container/SpaceContainer.jsx';
 import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
-import { Search, Trending, Settings, Download } from '@app/component/presentational/SVG';
+import Search from '@app/component/svg/Search';
+import Trending from '@app/component/svg/Trending';
+import Settings from '@app/component/svg/Settings';
+import Download from '@app/component/svg/Download';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
@@ -79,6 +82,7 @@ class WolfCola extends Component {
                     </Link>
 
                     <div className="nav-list">
+                      <NavLinkStyled to="/" exact>Featured</NavLinkStyled>
                       <NavLinkStyled to="/search">
                         <span>Search</span>
                         <Search style={{ float: 'right' }} />

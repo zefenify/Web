@@ -1,7 +1,5 @@
 const DURATION = 'DURATION';
-const DURATION_REQUEST = 'DURATION_REQUEST';
 
 module.exports = {
   DURATION,
-  DURATION_REQUEST,
 };

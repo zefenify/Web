@@ -7,7 +7,7 @@ import { BASE_S3 } from '@app/config/api';
 
 import ImageContainer from '@app/component/styled/ImageContainer';
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
-import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
+import PlayPause from '@app/component/svg/PlayPause';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
 
@@ -80,9 +80,8 @@ const AlbumContainer = styled.div`
         justify-content: center;
         align-items: center;
         color: inherit;
-        font-size: 80px;
-        width: 80px;
-        height: 80px;
+        width: 96px;
+        height: 96px;
       }
     }
 
@@ -187,7 +186,7 @@ const Albums = ({
                 </ImageContainer>
 
                 <Link to={`/albums/${album.album_id}`} className="album-cover__overlay">
-                  <PlayPauseSVG
+                  <PlayPause
                     onClick={(e) => { e.preventDefault(); albumPlayPause(album.album_id); }}
                     playing={playing && album.album_id === albumsPlayingId}
                   />

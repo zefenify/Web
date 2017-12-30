@@ -1,7 +1,5 @@
 const PLAYING = 'PLAYING';
-const PLAYING_REQUEST = 'PLAYING_REQUEST';
 
 module.exports = {
   PLAYING,
-  PLAYING_REQUEST,
 };

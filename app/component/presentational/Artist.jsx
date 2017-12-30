@@ -9,7 +9,7 @@ import ImageContainer from '@app/component/styled/ImageContainer';
 import Divider from '@app/component/styled/Divider';
 import Track from '@app/component/presentational/Track';
 import Button from '@app/component/styled/Button';
-import { Share } from '@app/component/presentational/SVG';
+import Share from '@app/component/svg/Share';
 
 const ArtistContainer = styled.div`
   display: flex;

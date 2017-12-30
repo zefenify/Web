@@ -6,7 +6,7 @@ import styled from 'react-emotion';
 import { BASE_S3 } from '@app/config/api';
 
 import FixedHeaderList from '@app/component/styled/FixedHeaderList';
-import PlayPauseSVG from '@app/component/presentational/PlayPauseSVG';
+import PlayPause from '@app/component/svg/PlayPause';
 import Button from '@app/component/styled/Button';
 import ImageContainer from '@app/component/styled/ImageContainer';
 
@@ -79,9 +79,8 @@ const ArtistContainer = styled.div`
         justify-content: center;
         align-items: center;
         color: inherit;
-        font-size: 80px;
-        width: 80px;
-        height: 80px;
+        width: 96px;
+        height: 96px;
       }
     }
 
@@ -179,7 +178,7 @@ const Artists = ({
                 </ImageContainer>
 
                 <Link to={`/artists/${artist.artist_id}`} className="artist-cover__overlay">
-                  <PlayPauseSVG
+                  <PlayPause
                     onClick={(e) => { e.preventDefault(); artistsPlayPause(artist.artist_id); }}
                     playing={playing && artist.artist_id === artistPlayingId}
                   />

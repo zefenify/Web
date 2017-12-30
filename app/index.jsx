@@ -79,6 +79,7 @@ class WolfCola extends Component {
                     </Link>
 
                     <div className="nav-list">
+                      <NavLinkStyled to="/" exact>Featured</NavLinkStyled>
                       <NavLinkStyled to="/search">
                         <span>Search</span>
                         <Search style={{ float: 'right' }} />

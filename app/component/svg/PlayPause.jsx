@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, func } from 'prop-types';
+import { bool, func } from 'prop-types';
 
 const PlayPause = ({
   onClick,
@@ -34,13 +34,11 @@ const PlayPause = ({
 
 PlayPause.propTypes = {
   playing: bool,
-  className: string,
   onClick: func,
 };
 
 PlayPause.defaultProps = {
   playing: true,
-  className: '',
   onClick: () => {},
 };
 

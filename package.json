@@ -9,7 +9,7 @@
     "axios": "^0.16.2",
     "emotion": "^8.0.5",
     "emotion-theming": "^8.0.4",
-    "howler": "^2.0.4",
+    "howler": "2.0.4",
     "localforage": "^1.5.0",
     "lodash": "^4.17.4",
     "normalize.css": "^7.0.0",
@@ -40,8 +40,5 @@
     "uglifyjs-webpack-plugin": "^1.0.1",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
-  },
-  "engines": {
-    "node": "8.x.x"
   }
 }

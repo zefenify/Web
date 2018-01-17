@@ -38,7 +38,7 @@ injectGlobal`
     background-color: #5E5A59;
   }
 
-  *:not(a) {
+  *:not(a, input) {
     cursor: default !important;
   }
 

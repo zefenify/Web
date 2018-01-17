@@ -38,17 +38,6 @@ function* songBoot() {
       yield put({
         type: NOTIFICATION_ON_REQUEST,
         payload: {
-          message: 'ይቅርታ, unable to fetch Your Library',
-        },
-      });
-
-      return;
-    }
-
-    if (err.message === 'Network Error') {
-      yield put({
-        type: NOTIFICATION_ON_REQUEST,
-        payload: {
           message: 'No Internet connection. Please try again later',
         },
       });

@@ -8,6 +8,7 @@ import statusChangeCallback from '@app/util/facebook';
 import { THEME_REQUEST } from '@app/redux/constant/theme';
 import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
 import { USER_REQUEST } from '@app/redux/constant/user';
+import { SONG } from '@app/redux/constant/song';
 
 import DJKhaled from '@app/component/hoc/DJKhaled';
 import Settings from '@app/component/presentational/Settings';
@@ -47,6 +48,11 @@ module.exports = DJKhaled(connect(state => ({
   logout() {
     dispatch({
       type: USER_REQUEST,
+      payload: null,
+    });
+
+    dispatch({
+      type: SONG,
       payload: null,
     });
 

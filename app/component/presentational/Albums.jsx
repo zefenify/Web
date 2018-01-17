@@ -80,8 +80,8 @@ const AlbumContainer = styled.div`
         justify-content: center;
         align-items: center;
         color: inherit;
-        width: 96px;
-        height: 96px;
+        width: 64px;
+        height: 64px;
       }
     }
 

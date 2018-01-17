@@ -28,7 +28,7 @@ const FixedHeaderList = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: auto;
-    padding: 1em 1em;
+    padding: 1em;
   }
 `;
 

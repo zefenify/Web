@@ -47,6 +47,8 @@ module.exports = (env) => {
         'emotion',
         'emotion-theming',
         'howler',
+        'date-fns/add_seconds',
+        'date-fns/is_past',
       ],
       app: [
         './app/index.jsx',

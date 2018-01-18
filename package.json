@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "date-fns": "^1.29.0",
     "emotion": "^8.0.5",
     "emotion-theming": "^8.0.4",
     "howler": "2.0.4",

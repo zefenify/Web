@@ -1,13 +1,16 @@
 import axios from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
+import addSeconds from 'date-fns/add_seconds';
+import isPast from 'date-fns/is_past';
 
-import { BASE, HEADER } from '@app/config/api';
+import { BASE, CACHE_AGE, HEADER } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { loading } from '@app/redux/action/loading';
 
 axios.defaults.baseURL = BASE;
 
 const API_CACHE = {}; // caches GET requests { [URL]: response }
+const API_CACHE_TIMESTAMP = {}; // { [URL]: addSeconds(new Date(), CACHE_AGE) }
 
 /**
  * sends a GET request
@@ -24,8 +27,11 @@ const api = (URL, user = null, cancel, force = false) => new Promise((resolve, r
       cancel(() => {});
     }
 
-    resolve(cloneDeep(API_CACHE[URL]));
-    return;
+    // validating cache...
+    if (isPast(API_CACHE_TIMESTAMP[URL]) === false) {
+      resolve(cloneDeep(API_CACHE[URL]));
+      return;
+    }
   }
 
   const { CancelToken } = axios;
@@ -40,6 +46,7 @@ const api = (URL, user = null, cancel, force = false) => new Promise((resolve, r
     })
     .then((data) => {
       API_CACHE[URL] = data.data;
+      API_CACHE_TIMESTAMP[URL] = addSeconds(new Date(), CACHE_AGE);
       resolve(cloneDeep(API_CACHE[URL]));
     }, (err) => {
       // request cancellation will not reject
@@ -47,7 +54,12 @@ const api = (URL, user = null, cancel, force = false) => new Promise((resolve, r
         return;
       }
 
-      reject(err);
+      // request failed, returning from expired cache...
+      if (Object.prototype.hasOwnProperty.call(API_CACHE, URL) === true) {
+        resolve(cloneDeep(API_CACHE[URL]));
+      } else {
+        reject(err);
+      }
     });
 
   if (cancel !== undefined) {

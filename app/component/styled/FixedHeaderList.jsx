@@ -1,21 +1,25 @@
 import styled from 'react-emotion';
 
 const FixedHeaderList = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
-  flex: 0 0 auto;
-  ovefflow-y: auto;
+  height: calc(100vh - 70px);
 
   .title {
     position: absolute;
     top: 0;
     right: 0;
     left: 0;
-    box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
-    height: 60px;
-    padding: 0 2em;
     display: flex;
     align-items: center;
+    height: 60px;
+    padding: 0 2em;
+    box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
   }
 
   .list {
@@ -28,7 +32,8 @@ const FixedHeaderList = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: auto;
-    padding: 1em;
+    padding: 1em 1em 0 1em;
+    height: calc(100vh - 130px);
   }
 `;
 

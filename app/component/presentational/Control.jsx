@@ -9,6 +9,7 @@ import { human } from '@app/util/time';
 import { ControlsContainer } from '@app/component/styled/WolfCola';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Range from '@app/component/styled/Range';
+import { ClearButton } from '@app/component/styled/Button';
 
 import SkipBack from '@app/component/svg/SkipBack';
 import SkipForward from '@app/component/svg/SkipForward';
@@ -18,20 +19,18 @@ import PlayPause from '@app/component/svg/PlayPause';
 import Volume from '@app/component/svg/Volume';
 
 const NowPlayingContainer = styled.div`
-  flex: 0 1 250px;
-  max-width: 250px;
-  padding-left: 6px;
   display: flex;
   align-items: center;
+  width: 250px;
+  padding-left: 6px;
 
   .track {
     display: flex;
     flex-direction: row;
     align-items: center;
-    max-width: 250px;
+    width: 250px;
 
     &__artwork {
-      flex: 0 0 60px;
       width: 60px;
       height: 60px;
       border-radius: 2px;
@@ -40,7 +39,7 @@ const NowPlayingContainer = styled.div`
 
     &__name {
       padding-left: 6px;
-      flex: 0 0 184px;
+      width: 184px;
     }
   }
 
@@ -77,11 +76,11 @@ const MusicControlsContainer = styled.div`
 `;
 
 const MusicControls = styled.div`
-  flex: 0 0 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  height: 40px;
   font-size: 1.75em;
   padding-top: 0.5em;
 
@@ -133,12 +132,24 @@ const MusicControls = styled.div`
 `;
 
 const MusicProgress = styled.div`
-  flex: 0 0 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  height: 30px;
+  width: calc(100vw - 425px);
+  padding: 0 1em;
   cursor: default;
+
+  .time {
+    flex: 1 1 25px;
+    padding: 0 0.75em;
+    font-size: 0.8em;
+  }
+
+  .progress {
+    flex: 1 1 auto;
+  }
 `;
 
 const VolumeContainer = styled.div`
@@ -222,9 +233,9 @@ const Control = ({
       </MusicControls>
 
       <MusicProgress>
-        <small style={{ padding: '0 0.5em 0 8%' }}>
-          {`${playbackPosition === null ? '0:00' : human(playbackPosition)} `}
-        </small>
+        <div className="time">
+          {`${playbackPosition === null ? '0:00' : human(playbackPosition)}`}
+        </div>
 
         <Range
           type="range"
@@ -232,13 +243,14 @@ const Control = ({
           max={duration}
           step="1"
           value={playbackPosition}
+          className="progress"
           onChange={e => seek(e)}
         />
 
-        <small style={{ padding: '0 8% 0 0.5em' }} onClick={toggleRemaining}>
+        <ClearButton className="time" onClick={toggleRemaining}>
           <span style={{ opacity: remaining ? 1 : 0 }}>-&nbsp;</span>
           <span>{`${remaining ? human(duration - playbackPosition) : human(duration)}`}</span>
-        </small>
+        </ClearButton>
       </MusicProgress>
     </MusicControlsContainer>
 

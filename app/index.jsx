@@ -25,6 +25,7 @@ import AlbumsContainer from '@app/component/container/AlbumsContainer';
 import ArtistsContainer from '@app/component/container/ArtistsContainer';
 import TrendingContainer from '@app/component/container/TrendingContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
+import QueueContainer from '@app/component/container/QueueContainer';
 import CollectionContainer from '@app/component/container/CollectionContainer';
 import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
@@ -130,6 +131,7 @@ class WolfCola extends Component {
                       <Route exact path="/albums/:id?" component={AlbumsContainer} />
                       <Route exact path="/artists/:id?" component={ArtistsContainer} />
                       <Route exact path="/settings" component={SettingsContainer} />
+                      <Route exact path="/queue" component={QueueContainer} />
                       <Redirect exact push={false} from="/trending" to="/trending/yesterday" />
                       <Redirect push={false} to="/" />
                     </Switch>

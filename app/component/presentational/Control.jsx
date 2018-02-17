@@ -17,6 +17,7 @@ import Repeat from '@app/component/svg/Repeat';
 import Shuffle from '@app/component/svg/Shuffle';
 import PlayPause from '@app/component/svg/PlayPause';
 import Volume from '@app/component/svg/Volume';
+import List from '@app/component/svg/List';
 
 const NowPlayingContainer = styled.div`
   display: flex;
@@ -131,13 +132,16 @@ const MusicControls = styled.div`
   }
 `;
 
+// Now Playing: 250px
+// Volume: 175px
+// Queue: 50px
 const MusicProgress = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   height: 30px;
-  width: calc(100vw - 425px);
+  width: calc(100vw - 475px);
   padding: 0 1em;
   cursor: default;
 
@@ -150,6 +154,18 @@ const MusicProgress = styled.div`
   .progress {
     flex: 1 1 auto;
   }
+`;
+
+const QueueContainer = styled(Link)`
+  flex: 0 1 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${props => props.theme.listText};
 `;
 
 const VolumeContainer = styled.div`
@@ -253,6 +269,10 @@ const Control = ({
         </ClearButton>
       </MusicProgress>
     </MusicControlsContainer>
+
+    <QueueContainer to="/queue" id="queue-container">
+      <List />
+    </QueueContainer>
 
     <VolumeContainer>
       <Volume volume={volume} onClick={() => volume === 0 ? maxVolume() : muteVolume()} />

@@ -32,29 +32,29 @@ const WolfColaContainer = styled.div`
 `;
 
 const ControlsContainer = styled.div`
-  flex: 0 0 70px;
-  background-color: ${props => props.theme.controlBackground};
-  color: ${props => props.theme.controlText};
   display: flex;
   flex-direction: row;
+  height: 70px;
+  background-color: ${props => props.theme.controlBackground};
+  color: ${props => props.theme.controlText};
 `;
 
 const NavListContainer = styled.div`
-  flex: 1 0 auto;
   display: flex;
   flex-direction: row;
+  flex: 1 1 auto;
+  height: 100vh - 70px;
 `;
 
 const NavContainer = styled.div`
   position: relative;
-  flex: 0 0 200px;
-  height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
+  flex: 0 0 200px;
+  width: 200px;
   background-color: ${props => props.theme.navbarBackground};
   color: ${props => props.theme.navbarText};
   overflow-y: auto;
-  overflow-x: hidden;
 
   .brand {
     position: absolute;
@@ -102,13 +102,12 @@ const NavContainer = styled.div`
 
 const RouteContainer = styled.div`
   position: relative;
-  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+  flex: 1 0 calc(100vw - 200px);
+  height: calc(100vh - 70px);
   background-color: ${props => props.theme.listBackground};
   color: ${props => props.theme.listText};
-  max-height: calc(100vh - 70px);
-  max-width: calc(100vw - 200px);
   overflow-y: auto;
   padding: 1em 2em;
   padding-bottom: 0;

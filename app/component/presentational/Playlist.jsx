@@ -12,9 +12,9 @@ const PlaylistContainer = styled(Link)`
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 0 0 25%;
-  padding: 0 1em;
-  margin-bottom: 3em;
+  width: 25%;
+  padding: 0 1rem;
+  padding-bottom: 2rem;
   text-decoration: none;
   color: inherit;
   transition: transform 128ms;
@@ -35,7 +35,7 @@ const PlaylistContainer = styled(Link)`
   }
 
   @media(min-width: 1282px) {
-    flex: 0 0 20%;
+    width: 20%;
   }
 
   .playlist-cover {

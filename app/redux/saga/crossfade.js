@@ -13,8 +13,8 @@ function* crossfadeBootFromLF() {
   try {
     const lfCrossfade = yield localforage.getItem(LF_STORE.CROSSFADE);
     yield put(crossfade(lfCrossfade || 3));
-  } catch (err) {
-    console.warn('Unable to boot crossfade from LF', err);
+  } catch (crossfadeGetError) {
+    console.warn('Unable to boot crossfade from LF', crossfadeGetError);
   }
 }
 
@@ -23,8 +23,8 @@ function* _crossfade(action) {
 
   try {
     yield localforage.setItem(LF_STORE.CROSSFADE, action.payload);
-  } catch (err) {
-    console.warn('Unable to save crossfade from LF', err);
+  } catch (crossfadeSetError) {
+    console.warn('Unable to save crossfade from LF', crossfadeSetError);
   }
 }
 

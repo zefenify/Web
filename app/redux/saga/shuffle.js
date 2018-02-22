@@ -13,8 +13,8 @@ function* shuffleBootFromLF() {
   try {
     const lfShuffle = yield localforage.getItem(LF_STORE.SHUFFLE);
     yield put(shuffle(lfShuffle === null ? false : lfShuffle));
-  } catch (err) {
-    console.warn('Unable to boot shuffle from LF', err);
+  } catch (shuffleGetError) {
+    console.warn('Unable to boot shuffle from LF', shuffleGetError);
   }
 }
 
@@ -24,8 +24,8 @@ function* _shuffle() {
 
   try {
     yield localforage.setItem(LF_STORE.SHUFFLE, !state.shuffle);
-  } catch (err) {
-    console.warn('Unable to save shuffle state to LF', err);
+  } catch (shuffleSetError) {
+    console.warn('Unable to save shuffle state to LF', shuffleSetError);
   }
 }
 

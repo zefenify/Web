@@ -44,13 +44,13 @@ const api = (URL, user = null, cancel, force = false) => new Promise((resolve, r
         [HEADER]: user === null ? undefined : user.jwt,
       },
     })
-    .then((data) => {
-      API_CACHE[URL] = data.data;
+    .then((axiosResponse) => {
+      API_CACHE[URL] = axiosResponse.data;
       API_CACHE_TIMESTAMP[URL] = addSeconds(new Date(), CACHE_AGE);
       resolve(cloneDeep(API_CACHE[URL]));
-    }, (err) => {
+    }, (axiosError) => {
       // request cancellation will not reject
-      if (axios.isCancel(err)) {
+      if (axios.isCancel(axiosError)) {
         return;
       }
 
@@ -58,7 +58,7 @@ const api = (URL, user = null, cancel, force = false) => new Promise((resolve, r
       if (Object.prototype.hasOwnProperty.call(API_CACHE, URL) === true) {
         resolve(cloneDeep(API_CACHE[URL]));
       } else {
-        reject(err);
+        reject(axiosError);
       }
     });
 
@@ -85,15 +85,15 @@ const postPatch = method => (URL, user = null, data, cancel) => new Promise((res
       [HEADER]: user === null ? undefined : user.jwt,
     },
   })
-    .then((response) => {
-      resolve(cloneDeep(response));
-    }, (err) => {
+    .then((axiosResponse) => {
+      resolve(cloneDeep(axiosResponse));
+    }, (axiosError) => {
       // request cancellation will not reject
-      if (axios.isCancel(err)) {
+      if (axios.isCancel(axiosError)) {
         return;
       }
 
-      reject(err);
+      reject(axiosError);
     });
 
   if (cancel !== undefined) {
@@ -107,10 +107,10 @@ api.save = postPatch('post');
 api.patch = postPatch('patch');
 
 // this is a helper function, still doesn't break "pure-ity"
-api.error = store => (error) => {
+api.error = store => (axiosError) => {
   store.dispatch(loading(false));
 
-  if (error.message === 'Network Error') {
+  if (axiosError.message === 'Network Error') {
     store.dispatch({
       type: NOTIFICATION_ON_REQUEST,
       payload: {

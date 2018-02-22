@@ -16,8 +16,8 @@ function* themeBootFromLF() {
     yield put(theme(lfTheme === null ? 'dark' : lfTheme));
     const WolfColaContainer = document.querySelector('#wolf-cola-container');
     WolfColaContainer.classList.remove('booting');
-  } catch (err) {
-    console.warn('Unable to boot theme from LF', err);
+  } catch (themeGetError) {
+    console.warn('Unable to boot theme from LF', themeGetError);
   }
 }
 
@@ -30,8 +30,8 @@ function* _theme() {
 
   try {
     yield localforage.setItem(LF_STORE.THEME, nextThemeState);
-  } catch (err) {
-    console.warn('Unable to save theme state to LF', err);
+  } catch (themeSetError) {
+    console.warn('Unable to save theme state to LF', themeSetError);
   }
 }
 

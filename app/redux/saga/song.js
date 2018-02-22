@@ -22,19 +22,19 @@ function* songBoot() {
   try {
     yield put(loading(true));
 
-    const response = yield axios.get(`${BASE}songs`, {
+    const { data } = yield axios.get(`${BASE}songs`, {
       headers: {
         [HEADER]: user === null ? undefined : user.jwt,
       },
     });
 
     yield put(loading(false));
-    yield put(song(response.data));
-  } catch (err) {
+    yield put(song(data));
+  } catch (songsError) {
     yield put(loading(false));
     yield put(song(null));
 
-    if (err.message === 'Network Error') {
+    if (songsError.message === 'Network Error') {
       yield put({
         type: NOTIFICATION_ON_REQUEST,
         payload: {
@@ -72,7 +72,7 @@ function* _songSave(action) {
   try {
     yield put(loading(true));
 
-    const response = yield axios.patch(`${BASE}songs`, {
+    const { data } = yield axios.patch(`${BASE}songs`, {
       song_track: [trackId, ...savedTrackIds],
     }, {
       headers: {
@@ -81,11 +81,11 @@ function* _songSave(action) {
     });
 
     yield put(loading(false));
-    yield put(song(response.data));
-  } catch (err) {
+    yield put(song(data));
+  } catch (songsSaveError) {
     yield put(loading(false));
 
-    if (err.message === 'Network Error') {
+    if (songsSaveError.message === 'Network Error') {
       yield put({
         type: NOTIFICATION_ON_REQUEST,
         payload: {
@@ -124,7 +124,7 @@ function* _songRemove(action) {
   try {
     yield put(loading(true));
 
-    const response = yield axios.patch(`${BASE}songs`, {
+    const { data } = yield axios.patch(`${BASE}songs`, {
       song_track: [
         ...savedTrackIds.slice(0, savedTrackIds.indexOf(trackId)),
         ...savedTrackIds.slice(savedTrackIds.indexOf(trackId) + 1),
@@ -136,11 +136,11 @@ function* _songRemove(action) {
     });
 
     yield put(loading(false));
-    yield put(song(response.data));
-  } catch (err) {
+    yield put(song(data));
+  } catch (songRemoveError) {
     yield put(loading(false));
 
-    if (err.message === 'Network Error') {
+    if (songRemoveError.message === 'Network Error') {
       yield put({
         type: NOTIFICATION_ON_REQUEST,
         payload: {

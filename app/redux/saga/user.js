@@ -26,8 +26,8 @@ function* userBootFromLF() {
     }
 
     yield put(user(lfUser));
-  } catch (err) {
-    console.warn('Unable to boot user from LF', err);
+  } catch (userGetError) {
+    console.warn('Unable to boot user from LF', userGetError);
   }
 }
 
@@ -36,8 +36,8 @@ function* _user(action) {
 
   try {
     yield localforage.setItem(LF_STORE.USER, action.payload);
-  } catch (err) {
-    console.warn('Unable to save user state to LF', err);
+  } catch (userSetError) {
+    console.warn('Unable to save user state to LF', userSetError);
   }
 }
 

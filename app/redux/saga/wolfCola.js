@@ -66,6 +66,7 @@ const howlerLoadErrorChannel = key => eventChannel((emitter) => {
 
 // checks if there's only one item in the history and the current play matches
 // this behavior is taken from Apple Music
+// eslint-disable-next-line
 const playingLastHistory = s => s.history.length === 1 && s.current.track_id === s.history[0].track_id;
 
 // Channel - listens to `end` and clears `end`ed song

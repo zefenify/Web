@@ -15,8 +15,8 @@ function* volumeBootFromLF() {
     const lfVolume = yield localforage.getItem(LF_STORE.VOLUME);
     yield put(volume(lfVolume === null ? 1 : lfVolume));
     Howler.volume(lfVolume === null ? 1 : lfVolume);
-  } catch (err) {
-    console.warn('Unable to boot volume from LF', err);
+  } catch (volumeGetError) {
+    console.warn('Unable to boot volume from LF', volumeGetError);
   }
 }
 
@@ -26,8 +26,8 @@ function* _volume(action) {
 
   try {
     yield localforage.setItem(LF_STORE.VOLUME, action.payload);
-  } catch (err) {
-    console.warn('Unable to save volume state to LF', err);
+  } catch (volumeSetError) {
+    console.warn('Unable to save volume state to LF', volumeSetError);
   }
 }
 

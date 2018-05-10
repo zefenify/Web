@@ -1,9 +1,8 @@
 import React from 'react';
-import isEqual from 'lodash/fp/isEqual';
+import isEqual from 'react-fast-compare';
 
 /**
- * Given store 🔑🔑🔑 it'll control when the `WrappedComponent` should be [re]rendered
- * by computing `shouldComponentUpdate` using the props
+ * `PureComponent` with isEqual
  *
  * @return {HOC}
  */

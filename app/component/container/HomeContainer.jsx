@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'react-fast-compare';
 import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';

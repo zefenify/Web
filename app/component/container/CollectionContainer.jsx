@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bool, string, shape, arrayOf } from 'prop-types';
 import { connect } from 'react-redux';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'react-fast-compare';
 
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';

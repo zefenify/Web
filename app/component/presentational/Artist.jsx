@@ -248,7 +248,7 @@ const Arist = ({
           <div className="appears-container__list appears-list">
             {
               artist.relationships.track.map(track => (
-                <Link to={`/album/${track.track_album.album_id}`} className="appears-list__album appears-album">
+                <Link key={track.track_id} to={`/album/${track.track_album.album_id}`} className="appears-list__album appears-album">
                   <ImageContainer>
                     <img src={`${BASE_S3}${track.track_album.album_cover.s3_name}`} alt={track.track_album.album_name} />
                   </ImageContainer>

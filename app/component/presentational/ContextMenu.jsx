@@ -176,8 +176,8 @@ const ContextMenu = ({
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Artist&nbsp;</Divider>
           <div>
-            { payload.track_album.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
-            { payload.track_featuring.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
+            { payload.track_album.album_artist.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
+            { payload.track_featuring.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Album&nbsp;</Divider>
@@ -213,7 +213,7 @@ const ContextMenu = ({
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Artist&nbsp;</Divider>
           <div>
-            { payload.album_artist.map(artist => (<ClearButton className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
+            { payload.album_artist.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Album&nbsp;</Divider>

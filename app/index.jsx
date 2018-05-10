@@ -1,6 +1,6 @@
 /* global document */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -40,11 +40,10 @@ import Trending from '@app/component/svg/Trending';
 import Settings from '@app/component/svg/Settings';
 import Download from '@app/component/svg/Download';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 
-class WolfCola extends Component {
+class WolfCola extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -155,6 +154,4 @@ class WolfCola extends Component {
   }
 }
 
-const WolfColaDJKhaled = DJKhaled(WolfCola);
-
-render(<WolfColaDJKhaled />, document.querySelector('#wolf-cola'));
+render(<WolfCola />, document.querySelector('#wolf-cola'));

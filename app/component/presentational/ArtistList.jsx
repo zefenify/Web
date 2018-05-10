@@ -14,7 +14,7 @@ const ArtistList = ({
   <span className={className}>
     {
       artists.map((artist, index) => (
-        <Link to={`/artist/${artist.artist_id}`}>
+        <Link to={`/artist/${artist.artist_id}`} key={artist.artist_id}>
           <span>{artist.artist_name}</span>{ (artists.length > 1 && (index < artists.length - 1)) ? <span>{ (index < artists.length - 2) ? <Muted>,</Muted> : <Muted>&nbsp;&amp;</Muted> } </span> : null }
         </Link>
       ))

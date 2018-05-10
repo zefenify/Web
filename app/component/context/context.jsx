@@ -2,12 +2,30 @@ import React, { createContext } from 'react';
 
 const { Provider, Consumer } = createContext();
 
-const withContext = WrappedComponent => props => (
+/**
+ * context Consumer HOC
+ *
+ * @param  {Component} WrappedComponent
+ * @param  {...[String]} contextKeys property keys to selectively pass as props
+ * @return {Component}
+ */
+const withContext = (WrappedComponent, ...contextKeys) => props => (
   <Consumer>
     {
-      context => (
-        <WrappedComponent {...props} context={context} />
-      )
+      (context) => {
+        // passes the entire `context` keys as props
+        if (contextKeys.length === 0) {
+          return (<WrappedComponent {...props} context={context} />);
+        }
+
+        // building context keys...
+        const propsKeys = {};
+        contextKeys.forEach((key) => {
+          propsKeys[key] = context[key];
+        });
+
+        return (<WrappedComponent {...props} {...propsKeys} />);
+      }
     }
   </Consumer>
 );

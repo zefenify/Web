@@ -50,7 +50,7 @@ class Store extends Component {
   }
 
   render() {
-    return (<this.props.wrappedComponent {...this.state} {...this.props.wrappedProps} />);
+    return (<this.props.wrappedComponent {...this.props.wrappedProps} {...this.state} />);
   }
 }
 

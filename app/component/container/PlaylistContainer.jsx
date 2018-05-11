@@ -27,15 +27,32 @@ class PlaylistContainer extends Component {
         seconds: 0,
       },
       playingFeatured: false,
+      playlistId: props.match.params.id,
     };
 
     this.tracksPlayPause = this.tracksPlayPause.bind(this);
     this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuPlaylist = this.contextMenuPlaylist.bind(this);
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
+    this.build = this.build.bind(this);
   }
 
   componentDidMount() {
+    this.build();
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.playlistId !== this.state.playlistId) {
+      this.build();
+    }
+  }
+
+  componentWillUnmount() {
+    store.dispatch(loading(false));
+    this.cancelRequest();
+  }
+
+  build() {
     store.dispatch(loading(true));
     api(`${BASE}playlist/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
@@ -75,11 +92,6 @@ class PlaylistContainer extends Component {
         }
       });
     }, error(store));
-  }
-
-  componentWillUnmount() {
-    store.dispatch(loading(false));
-    this.cancelRequest();
   }
 
   tracksPlayPause() {
@@ -192,6 +204,16 @@ class PlaylistContainer extends Component {
     );
   }
 }
+
+PlaylistContainer.getDerivedStateFromProps = (nextProps, prevState) => {
+  if (nextProps.match.params.id === prevState.playlistId) {
+    return null;
+  }
+
+  return {
+    playlistId: nextProps.match.params.id,
+  };
+};
 
 PlaylistContainer.propTypes = {
   current: shape({}),

@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
-import { connect } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -15,8 +14,8 @@ import api, { error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Search from '@app/component/presentational/Search';
+import { withContext } from '@app/component/context/context';
 
 const THROTTLE_TIMEOUT = 500; // in milliseconds
 let cancelRequest = () => {};
@@ -153,8 +152,4 @@ SearchContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  user: state.user,
-  current: state.current,
-  playing: state.playing,
-}))(SearchContainer));
+module.exports = withContext('user', 'current', 'playing')(SearchContainer);

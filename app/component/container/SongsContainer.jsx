@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { bool, shape, string } from 'prop-types';
-import { connect } from 'react-redux';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
@@ -11,8 +10,8 @@ import songPlaying from '@app/redux/selector/songPlaying';
 import songTrack from '@app/redux/selector/songTrack';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Songs from '@app/component/presentational/Songs';
+import { withContext } from '@app/component/context/context';
 
 class SongsContainer extends Component {
   constructor(props) {
@@ -143,11 +142,4 @@ SongsContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  current: state.current,
-  playing: state.playing,
-  user: state.user,
-  song: state.song,
-  queueInitial: state.queueInitial,
-  history: state.history,
-}))(SongsContainer));
+module.exports = withContext('current', 'playing', 'user', 'song', 'queueInitial', 'history')(SongsContainer);

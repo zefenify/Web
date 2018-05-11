@@ -1,7 +1,6 @@
 /* global document, window */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import statusChangeCallback from '@app/util/facebook';
@@ -10,30 +9,27 @@ import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
 import { USER_REQUEST } from '@app/redux/constant/user';
 import { SONG } from '@app/redux/constant/song';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Settings from '@app/component/presentational/Settings';
+import store from '@app/redux/store';
+import { withContext } from '@app/component/context/context';
 
-const SettingsContainer = props => (<Settings {...props} />);
-
-module.exports = DJKhaled(connect(state => ({
-  currentTheme: state.theme,
-  currentCrossfade: state.crossfade,
-  user: state.user,
-}), dispatch => ({
-  toggleTheme() {
-    dispatch({
+const dispatches = {
+  themeToggle() {
+    store.dispatch({
       type: THEME_REQUEST,
     });
   },
-  crossfade(e) {
-    dispatch({
+
+  crossfadeSet(e) {
+    store.dispatch({
       type: CROSSFADE_REQUEST,
       payload: Number.parseInt(e.target.value, 10),
     });
   },
+
   login() {
     if (window.FB === undefined) {
-      dispatch({
+      store.dispatch({
         type: NOTIFICATION_ON_REQUEST,
         payload: {
           message: 'Unable to reach Facebook server',
@@ -45,13 +41,14 @@ module.exports = DJKhaled(connect(state => ({
 
     window.FB.login(statusChangeCallback);
   },
+
   logout() {
-    dispatch({
+    store.dispatch({
       type: USER_REQUEST,
       payload: null,
     });
 
-    dispatch({
+    store.dispatch({
       type: SONG,
       payload: null,
     });
@@ -67,4 +64,8 @@ module.exports = DJKhaled(connect(state => ({
       }(document, 'script', 'facebook-jssdk'));
     }
   },
-}))(SettingsContainer));
+};
+
+const SettingsContainer = props => (<Settings {...props} {...dispatches} />);
+
+module.exports = withContext('theme', 'crossfade')(SettingsContainer);

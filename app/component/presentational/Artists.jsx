@@ -171,7 +171,7 @@ const Artists = ({
       <div className="list">
         {
           artists.map(artist => (
-            <ArtistContainer className={artist.artist_id === artistPlayingId ? 'active' : ''}>
+            <ArtistContainer key={artist.artist_id} className={artist.artist_id === artistPlayingId ? 'active' : ''}>
               <div className="artist-cover">
                 <ImageContainer borderRadius="50%">
                   <img src={`${BASE_S3}${artist.artist_cover.s3_name}`} alt={artist.artist_name} />

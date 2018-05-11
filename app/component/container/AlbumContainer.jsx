@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { bool, string, shape } from 'prop-types';
-import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -11,11 +10,11 @@ import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Album from '@app/component/presentational/Album';
 
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
+import { withContext } from '@app/component/context/context';
 
 class AlbumContainer extends Component {
   constructor(props) {
@@ -226,8 +225,4 @@ AlbumContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  current: state.current,
-  playing: state.playing,
-  user: state.user,
-}))(AlbumContainer));
+module.exports = withContext('current', 'playing', 'user')(AlbumContainer);

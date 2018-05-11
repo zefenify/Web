@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { func, string, bool } from 'prop-types';
+import { func, string, bool, oneOfType, arrayOf, shape } from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
@@ -67,34 +67,12 @@ const Collection = ({
   collectionName,
   playlistPlayingId,
 }) => {
-  if (collection !== null) {
-    // collection list...
-    if (collectionId === '') {
-      return (
-        <FixedHeaderList>
-          <div className="title">
-            <h2>{ collectionName }</h2>
-          </div>
+  if (collection === null) {
+    return null;
+  }
 
-          <div className="list">
-            {
-              collection.map(c => (
-                <CollectionContainer to={`/collection/${c.collection_id}`}>
-                  <ImageContainer>
-                    <img alt={c.collection_name} src={`${BASE_S3}${c.collection_cover.s3_name}`} />
-                  </ImageContainer>
-
-                  <strong className="collection-name">{ c.collection_name }</strong>
-                  <small className="collection-playlist-count">{`${c.collection_playlist.length} PLAYLIST${c.collection_playlist.length > 1 ? 'S' : ''}`}</small>
-                </CollectionContainer>
-              ))
-            }
-
-          </div>
-        </FixedHeaderList>
-      );
-    }
-
+  // collection list...
+  if (collectionId === '') {
     return (
       <FixedHeaderList>
         <div className="title">
@@ -103,33 +81,55 @@ const Collection = ({
 
         <div className="list">
           {
-            collection.collection_playlist.map(p => (
-              <Playlist
-                key={p.playlist_id}
-                playing={playing}
-                play={playlistPlay}
-                playingId={playlistPlayingId}
-                type="playlist"
-                id={p.playlist_id}
-                name={p.playlist_name}
-                description={p.playlist_description}
-                cover={p.playlist_cover}
-                trackCount={p.playlist_track.length}
-              />
+            collection.map(c => (
+              <CollectionContainer key={c.collection_id} to={`/collection/${c.collection_id}`}>
+                <ImageContainer>
+                  <img alt={c.collection_name} src={`${BASE_S3}${c.collection_cover.s3_name}`} />
+                </ImageContainer>
+
+                <strong className="collection-name">{ c.collection_name }</strong>
+                <small className="collection-playlist-count">{`${c.collection_playlist.length} PLAYLIST${c.collection_playlist.length > 1 ? 'S' : ''}`}</small>
+              </CollectionContainer>
             ))
           }
+
         </div>
       </FixedHeaderList>
     );
   }
 
-  return null;
+  return (
+    <FixedHeaderList>
+      <div className="title">
+        <h2>{ collectionName }</h2>
+      </div>
+
+      <div className="list">
+        {
+          collection.collection_playlist.map(p => (
+            <Playlist
+              key={p.playlist_id}
+              playing={playing}
+              play={playlistPlay}
+              playingId={playlistPlayingId}
+              type="playlist"
+              id={p.playlist_id}
+              name={p.playlist_name}
+              description={p.playlist_description}
+              cover={p.playlist_cover}
+              trackCount={p.playlist_track.length}
+            />
+          ))
+        }
+      </div>
+    </FixedHeaderList>
+  );
 };
 
 Collection.propTypes = {
   playing: bool,
   collectionId: string,
-  collection: null,
+  collection: oneOfType([shape({}), arrayOf(shape({}))]),
   playlistPlay: func.isRequired,
   collectionName: string,
   playlistPlayingId: string,

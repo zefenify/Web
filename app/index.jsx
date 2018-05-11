@@ -3,13 +3,13 @@
 import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import { ThemeProvider } from 'emotion-theming';
 
 import '@app/component/styled/Global';
 
 import '@app/util/facebook';
 import store from '@app/redux/store';
+import { Provider } from '@app/component/context/context';
 import { themeLight, themeDark } from '@app/config/theme';
 
 import ErrorBoundaryContainer from '@app/component/container/ErrorBoundaryContainer';
@@ -54,13 +54,13 @@ class WolfCola extends PureComponent {
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      const state = store.getState();
+      const { theme, loading } = store.getState();
 
       // avoiding `shouldComponentUpdate` hook...
-      if (state.theme !== this.state.theme || state.loading !== this.state.loading) {
+      if (theme !== this.state.theme || loading !== this.state.loading) {
         this.setState(() => ({
-          loading: state.loading,
-          theme: state.theme,
+          loading,
+          theme,
         }));
       }
     });
@@ -72,7 +72,7 @@ class WolfCola extends PureComponent {
 
   render() {
     return (
-      <Provider store={store}>
+      <Provider value={store}>
         <ThemeProvider theme={this.state.theme === 'light' ? themeLight : themeDark}>
           <Router>
             <ErrorBoundaryContainer>

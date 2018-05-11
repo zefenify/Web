@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { bool, string, shape } from 'prop-types';
-import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -11,11 +10,11 @@ import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import HeaderTracks from '@app/component/presentational/HeaderTracks';
 
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
+import { withContext } from '@app/component/context/context';
 
 class PlaylistContainer extends Component {
   constructor(props) {
@@ -34,25 +33,11 @@ class PlaylistContainer extends Component {
     this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuPlaylist = this.contextMenuPlaylist.bind(this);
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
-    this.playlistBuild = this.playlistBuild.bind(this);
   }
 
   componentDidMount() {
-    this.playlistBuild(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.playlistBuild(nextProps);
-  }
-
-  componentWillUnmount() {
-    store.dispatch(loading(false));
-    this.cancelRequest();
-  }
-
-  playlistBuild(props) {
     store.dispatch(loading(true));
-    api(`${BASE}playlist/${props.match.params.id}`, props.user, (cancel) => {
+    api(`${BASE}playlist/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -90,6 +75,11 @@ class PlaylistContainer extends Component {
         }
       });
     }, error(store));
+  }
+
+  componentWillUnmount() {
+    store.dispatch(loading(false));
+    this.cancelRequest();
   }
 
   tracksPlayPause() {
@@ -221,9 +211,4 @@ PlaylistContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  current: state.current,
-  playing: state.playing,
-  user: state.user,
-  urlCurrentPlaying: state.urlCurrentPlaying,
-}))(PlaylistContainer));
+module.exports = withContext('current', 'playing', 'user', 'urlCurrentPlaying')(PlaylistContainer);

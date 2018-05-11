@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { bool, shape, oneOfType, string } from 'prop-types';
 
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
@@ -9,8 +8,8 @@ import store from '@app/redux/store';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import albumsBuild from '@app/redux/selector/albumsBuild';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Albums from '@app/component/presentational/Albums';
+import { withContext } from '@app/component/context/context';
 
 class AlbumsContainer extends Component {
   constructor(props) {
@@ -185,10 +184,4 @@ AlbumsContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  user: state.user,
-  song: state.song,
-  playing: state.playing,
-  current: state.current,
-  queueInitial: state.queueInitial,
-}))(AlbumsContainer));
+module.exports = withContext('user', 'song', 'playing', 'current', 'queueInitial')(AlbumsContainer);

@@ -179,7 +179,7 @@ const Albums = ({
       <div className="list">
         {
           albums.map(album => (
-            <AlbumContainer className={album.album_id === albumsPlayingId ? 'active' : ''}>
+            <AlbumContainer key={album.album_id} className={album.album_id === albumsPlayingId ? 'active' : ''}>
               <div className="album-cover">
                 <ImageContainer>
                   <img src={`${BASE_S3}${album.album_cover.s3_name}`} alt={album.album_name} />

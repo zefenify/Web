@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { bool, string, shape, arrayOf } from 'prop-types';
-import { connect } from 'react-redux';
 import isEqual from 'react-fast-compare';
 
 import { BASE } from '@app/config/api';
@@ -11,8 +10,8 @@ import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Collection from '@app/component/presentational/Collection';
+import { withContext } from '@app/component/context/context';
 
 class CollectionContainer extends Component {
   constructor(props) {
@@ -20,6 +19,7 @@ class CollectionContainer extends Component {
     this.state = {
       collectionName: 'Genre & Moods',
       collection: null,
+      collectionId: props.match.params.id, // used for comparison in `getDerivedStateFromProps`
       playlistPlayingId: '',
     };
 
@@ -28,12 +28,12 @@ class CollectionContainer extends Component {
   }
 
   componentDidMount() {
-    this.build(this.props);
+    this.build();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.id !== nextProps.match.params.id) {
-      this.build(nextProps);
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.collectionId !== this.state.collectionId) {
+      this.build();
     }
   }
 
@@ -79,7 +79,7 @@ class CollectionContainer extends Component {
     }, error(store));
   }
 
-  build(props) {
+  build() {
     store.dispatch(loading(true));
 
     // resetting view...
@@ -87,7 +87,7 @@ class CollectionContainer extends Component {
       collection: null,
     }));
 
-    if (props.match.params.id === undefined) {
+    if (this.props.match.params.id === undefined) {
       api(`${BASE}collection`, this.props.user, (cancel) => {
         this.cancelRequest = cancel;
       }).then((data) => {
@@ -109,7 +109,7 @@ class CollectionContainer extends Component {
       return;
     }
 
-    api(`${BASE}collection/${props.match.params.id}`, this.props.user, (cancel) => {
+    api(`${BASE}collection/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -144,7 +144,7 @@ class CollectionContainer extends Component {
       <Collection
         playing={this.props.playing}
         collectionName={this.state.collectionName}
-        collectionId={this.props.match.params.id === undefined ? '' : this.props.match.params.id}
+        collectionId={this.state.collectionId}
         collection={this.state.collection}
         playlistPlayingId={this.state.playlistPlayingId}
         playlistPlay={this.playlistPlay}
@@ -152,6 +152,17 @@ class CollectionContainer extends Component {
     );
   }
 }
+
+CollectionContainer.getDerivedStateFromProps = (nextProps, prevState) => {
+  if (nextProps.match.params.id === prevState.collectionId) {
+    return null;
+  }
+
+  return {
+    collection: null,
+    collectionId: nextProps.match.params.id,
+  };
+};
 
 CollectionContainer.propTypes = {
   playing: bool,
@@ -176,8 +187,4 @@ CollectionContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  playing: state.playing,
-  queueInitial: state.queueInitial,
-  user: state.user,
-}))(CollectionContainer));
+module.exports = withContext('playing', 'queueInitial', 'user')(CollectionContainer);

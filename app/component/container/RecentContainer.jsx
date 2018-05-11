@@ -3,7 +3,6 @@
 
 import React, { Component } from 'react';
 import { bool, shape, arrayOf, string } from 'prop-types';
-import { connect } from 'react-redux';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
@@ -13,8 +12,8 @@ import historyDuration from '@app/redux/selector/historyDuration';
 import historyPlaying from '@app/redux/selector/historyPlaying';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Recent from '@app/component/presentational/Recent';
+import { withContext } from '@app/component/context/context';
 
 class RecentContainer extends Component {
   constructor(props) {
@@ -130,11 +129,13 @@ RecentContainer.defaultProps = {
   history: [],
 };
 
-module.exports = DJKhaled(connect(state => ({
-  playing: state.playing,
-  current: state.current,
-  history: state.history,
-  queueInitial: state.queueInitial,
-  totalDuration: historyDuration(state),
-  historyPlaying: historyPlaying(state),
-}))(RecentContainer));
+// module.exports = DJKhaled(connect(state => ({
+//   playing: state.playing,
+//   current: state.current,
+//   history: state.history,
+//   queueInitial: state.queueInitial,
+//   totalDuration: historyDuration(state),
+//   historyPlaying: historyPlaying(state),
+// }))(RecentContainer));
+
+module.exports = withContext('playing', 'current', 'history', 'queueInitial', 'totalDuration')(RecentContainer);

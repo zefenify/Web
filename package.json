@@ -17,7 +17,6 @@
     "react-dom": "^16.3.2",
     "react-emotion": "^9.1.2",
     "react-fast-compare": "^1.0.0",
-    "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",

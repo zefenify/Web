@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
-import { connect } from 'react-redux';
 import flatten from 'lodash/flatten';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -10,8 +9,8 @@ import store from '@app/redux/store';
 import artistsBuild from '@app/redux/selector/artistsBuild';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Artists from '@app/component/presentational/Artists';
+import { withContext } from '@app/component/context/context';
 
 class ArtistsContainer extends Component {
   constructor(props) {
@@ -262,10 +261,4 @@ ArtistsContainer.defaultProps = {
   playing: false,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  song: state.song,
-  user: state.user,
-  current: state.current,
-  playing: state.playing,
-  queueInitial: state.queueInitial,
-}))(ArtistsContainer));
+module.exports = withContext('song', 'user', 'current', 'playing', 'queueInitial')(ArtistsContainer);

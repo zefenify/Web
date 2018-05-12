@@ -23,10 +23,6 @@ class AlbumsContainer extends Component {
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState(() => albumsBuild(nextProps));
-  }
-
   albumPlayPause(albumId) {
     if (albumId === this.state.albumsPlayingId) {
       store.dispatch({
@@ -164,6 +160,8 @@ class AlbumsContainer extends Component {
     );
   }
 }
+
+AlbumsContainer.getDerivedStateFromProps = nextProps => albumsBuild(nextProps);
 
 AlbumsContainer.propTypes = {
   playing: bool,

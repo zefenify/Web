@@ -27,10 +27,6 @@ class ArtistsContainer extends Component {
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState(() => artistsBuild(nextProps));
-  }
-
   artistPlayPauseBuild(artistId) {
     if (this.state.artists.length === 0) {
       return;
@@ -242,6 +238,8 @@ class ArtistsContainer extends Component {
     );
   }
 }
+
+ArtistsContainer.getDerivedStateFromProps = nextProps => artistsBuild(nextProps);
 
 ArtistsContainer.propTypes = {
   user: shape({}),

@@ -27,20 +27,23 @@ class AlbumContainer extends Component {
         seconds: 0,
       },
       albumPlaying: false,
+      albumId: props.match.params.id,
     };
     this.albumPlayPause = this.albumPlayPause.bind(this);
     this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
-    this.buildArtist = this.buildArtist.bind(this);
+    this.buildAlbum = this.buildAlbum.bind(this);
   }
 
   componentDidMount() {
-    this.buildArtist();
+    this.buildAlbum();
   }
 
-  componentWillReceiveProps() {
-    this.buildArtist();
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.albumId !== this.state.albumId) {
+      this.buildAlbum();
+    }
   }
 
   componentWillUnmount() {
@@ -48,7 +51,7 @@ class AlbumContainer extends Component {
     this.cancelRequest();
   }
 
-  buildArtist() {
+  buildAlbum() {
     store.dispatch(loading(true));
     api(`${BASE}album/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
@@ -206,6 +209,16 @@ class AlbumContainer extends Component {
     );
   }
 }
+
+AlbumContainer.getDerivedStateFromProps = (nextProps, previousState) => {
+  if (nextProps.match.params.id === previousState.albumId) {
+    return null;
+  }
+
+  return {
+    albumId: nextProps.match.params.id,
+  };
+};
 
 AlbumContainer.propTypes = {
   current: shape({}),

@@ -153,8 +153,8 @@ class CollectionContainer extends Component {
   }
 }
 
-CollectionContainer.getDerivedStateFromProps = (nextProps, prevState) => {
-  if (nextProps.match.params.id === prevState.collectionId) {
+CollectionContainer.getDerivedStateFromProps = (nextProps, previousState) => {
+  if (nextProps.match.params.id === previousState.collectionId) {
     return null;
   }
 

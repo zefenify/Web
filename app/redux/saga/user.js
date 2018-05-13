@@ -1,6 +1,5 @@
 /* global window, document */
 /* eslint no-console: off */
-/* eslint no-underscore-dangle: off */
 
 import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';

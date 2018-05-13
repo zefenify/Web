@@ -1,5 +1,4 @@
-/* eslint no-console: 0 */
-/* eslint no-underscore-dangle: off */
+/* eslint no-console: off */
 
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';

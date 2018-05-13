@@ -1,5 +1,3 @@
-/* eslint no-underscore-dangle: off */
-
 import { put, select, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 

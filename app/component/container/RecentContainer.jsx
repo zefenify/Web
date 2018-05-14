@@ -5,19 +5,19 @@ import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
 
 import store from '@app/redux/store';
-import historyDuration from '@app/redux/selector/historyDuration';
-import historyPlaying from '@app/redux/selector/historyPlaying';
+import tracksDuration from '@app/redux/selector/tracksDuration';
+import tracksPlaying from '@app/redux/selector/tracksPlaying';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
-import Recent from '@app/component/presentational/Recent';
+import Tracks from '@app/component/presentational/Tracks';
 import { withContext } from '@app/component/context/context';
 
 class RecentContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalDuration: historyDuration(props),
-      historyPlaying: historyPlaying(props),
+      durationTotal: tracksDuration({ tracks: props.history }),
+      historyPlaying: tracksPlaying({ queueInitial: props.queueInitial, tracks: props.history }),
     };
 
     this.historyPlayPause = this.historyPlayPause.bind(this);
@@ -90,13 +90,15 @@ class RecentContainer extends Component {
 
   render() {
     return (
-      <Recent
+      <Tracks
+        titleMain="Recently Played"
+        titleEmpty="You have no recently played songs...yet"
         playing={this.props.playing}
         current={this.props.current}
-        history={this.props.history}
-        totalDuration={this.state.totalDuration}
-        historyPlaying={this.state.historyPlaying}
-        historyPlayPause={this.historyPlayPause}
+        tracks={this.props.history}
+        durationTotal={this.state.durationTotal}
+        tracksPlaying={this.state.historyPlaying}
+        tracksPlayPause={this.historyPlayPause}
         trackPlayPause={this.trackPlayPause}
         contextMenuTrack={this.contextMenuTrack}
       />
@@ -105,14 +107,15 @@ class RecentContainer extends Component {
 }
 
 RecentContainer.getDerivedStateFromProps = nextProps => ({
-  totalDuration: historyDuration(nextProps),
-  historyPlaying: historyPlaying(nextProps),
+  durationTotal: tracksDuration({ tracks: nextProps.history }),
+  historyPlaying: tracksPlaying({ queueInitial: nextProps.queueInitial, tracks: nextProps.history }),
 });
 
 RecentContainer.propTypes = {
   playing: bool,
   current: shape({}),
   history: arrayOf(shape({})),
+  queueInitial: arrayOf(shape({})),
   match: shape({
     url: string,
   }).isRequired,
@@ -122,6 +125,7 @@ RecentContainer.defaultProps = {
   playing: false,
   current: null,
   history: [],
+  queueInitial: [],
 };
 
 module.exports = withContext('playing', 'current', 'history', 'queueInitial', 'totalDuration')(RecentContainer);

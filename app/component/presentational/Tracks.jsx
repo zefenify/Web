@@ -1,12 +1,20 @@
+/**
+ * a component that renders
+ * > Title
+ * > Duration
+ * > Play / Pause
+ * > [<Track />]
+ */
+
 import React from 'react';
-import { func, shape, bool, number, arrayOf } from 'prop-types';
+import { func, shape, bool, number, string, arrayOf } from 'prop-types';
 import styled from 'react-emotion';
 
 import Track from '@app/component/presentational/Track';
 import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
 
-const RecentContainer = styled.div`
+const Tracks = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -21,7 +29,7 @@ const RecentContainer = styled.div`
     color: ${props => props.theme.controlMute};
   }
 
-  .recently-played {
+  .tracks {
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
@@ -52,38 +60,40 @@ const RecentContainer = styled.div`
 `;
 
 const Recent = ({
+  titleMain,
+  titleEmpty,
   playing,
   current,
-  history,
-  totalDuration,
-  historyPlaying,
-  historyPlayPause,
+  tracks,
+  durationTotal,
+  tracksPlaying,
+  tracksPlayPause,
   trackPlayPause,
   contextMenuTrack,
 }) => {
-  if (history.length === 0) {
+  if (tracks.length === 0) {
     return (
-      <RecentContainer className="center-content">
-        <h2 className="mute">You have no recently played songs...yet</h2>
-      </RecentContainer>
+      <Tracks className="center-content">
+        <h2 className="mute">{ titleEmpty }</h2>
+      </Tracks>
     );
   }
 
-  const { hours, minutes, seconds } = totalDuration;
+  const { hours, minutes, seconds } = durationTotal;
 
   return (
-    <RecentContainer>
-      <div className="recently-played">
-        <h1 className="recently-played__title">Recently Played</h1>
-        <p className="recently-played__info">{`${history.length} song${history.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-        <Button className="recently-played__button" onClick={historyPlayPause}>{`${(playing && historyPlaying) ? 'PAUSE' : 'PLAY'}`}</Button>
+    <Tracks>
+      <div className="tracks">
+        <h1 className="tracks__title">{ titleMain }</h1>
+        <p className="tracks__info">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
+        <Button className="tracks__button" onClick={tracksPlayPause}>{`${(playing && tracksPlaying) ? 'PAUSE' : 'PLAY'}`}</Button>
       </div>
 
       <Divider />
 
       <div className="track">
         {
-          history.map((track, index) => (
+          tracks.map((track, index) => (
             <Track
               key={track.track_id}
               currentTrackId={current === null ? '' : current.track_id}
@@ -100,35 +110,39 @@ const Recent = ({
           ))
         }
       </div>
-    </RecentContainer>
+    </Tracks>
   );
 };
 
 Recent.propTypes = {
+  titleMain: string,
+  titleEmpty: string,
   playing: bool,
   current: shape({}),
-  history: arrayOf(shape({})),
-  totalDuration: shape({
+  tracks: arrayOf(shape({})),
+  durationTotal: shape({
     hours: number,
     minutes: number,
     seconds: number,
   }),
-  historyPlaying: bool,
-  historyPlayPause: func.isRequired,
+  tracksPlaying: bool,
+  tracksPlayPause: func.isRequired,
   trackPlayPause: func.isRequired,
   contextMenuTrack: func.isRequired,
 };
 
 Recent.defaultProps = {
+  titleMain: '',
+  titleEmpty: '',
   playing: false,
   current: null,
-  history: [],
-  totalDuration: {
+  tracks: [],
+  durationTotal: {
     hours: 0,
     minutes: 0,
     seconds: 0,
   },
-  historyPlaying: false,
+  tracksPlaying: false,
 };
 
 module.exports = Recent;

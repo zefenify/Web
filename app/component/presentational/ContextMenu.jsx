@@ -193,8 +193,11 @@ const ContextMenu = ({
           <ClearButton className="link" disabled={`/album/${payload.track_album.album_id}` === history.location.pathname} onClick={() => { contextMenuClose(); history.push(`/album/${payload.track_album.album_id}`); }}>Go to Album</ClearButton>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Queue&nbsp;</Divider>
-          <ClearButton className="link" disabled={trackIndexInQueueNext !== -1} onClick={() => { contextMenuClose(); queueNextAdd(payload); }}>Add to Queue</ClearButton>
-          <ClearButton className="link" disabled={queueNext.length === 0 || trackIndexInQueueNext === -1} onClick={() => { contextMenuClose(); queueNextRemove(trackIndexInQueueNext); }}>Remove from Queue</ClearButton>
+          {
+            trackIndexInQueueNext === -1
+              ? <ClearButton className="link" onClick={() => { contextMenuClose(); queueNextAdd(payload); }}>Add to Queue</ClearButton>
+              : <ClearButton className="link" onClick={() => { contextMenuClose(); queueNextRemove(trackIndexInQueueNext); }}>Remove from Queue</ClearButton>
+          }
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Your Library&nbsp;</Divider>
           {

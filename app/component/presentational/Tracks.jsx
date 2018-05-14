@@ -67,6 +67,7 @@ const Recent = ({
   tracks,
   durationTotal,
   tracksPlaying,
+  tracksPlayPauseButtonShow,
   tracksPlayPause,
   trackPlayPause,
   contextMenuTrack,
@@ -86,7 +87,11 @@ const Recent = ({
       <div className="tracks">
         <h1 className="tracks__title">{ titleMain }</h1>
         <p className="tracks__info">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-        <Button className="tracks__button" onClick={tracksPlayPause}>{`${(playing && tracksPlaying) ? 'PAUSE' : 'PLAY'}`}</Button>
+        {
+          tracksPlayPauseButtonShow
+            ? <Button className="tracks__button" onClick={tracksPlayPause}>{`${(playing && tracksPlaying) ? 'PAUSE' : 'PLAY'}`}</Button>
+            : null
+        }
       </div>
 
       <Divider />
@@ -126,6 +131,7 @@ Recent.propTypes = {
     seconds: number,
   }),
   tracksPlaying: bool,
+  tracksPlayPauseButtonShow: bool,
   tracksPlayPause: func.isRequired,
   trackPlayPause: func.isRequired,
   contextMenuTrack: func.isRequired,
@@ -143,6 +149,7 @@ Recent.defaultProps = {
     seconds: 0,
   },
   tracksPlaying: false,
+  tracksPlayPauseButtonShow: true,
 };
 
 module.exports = Recent;

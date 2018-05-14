@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, shape } from 'prop-types';
+import { func, arrayOf, shape } from 'prop-types';
 import styled from 'react-emotion';
 
 import { CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
@@ -134,15 +134,18 @@ const ContextMenu = ({
   contextMenu,
   user,
   song,
-  closeContextMenu,
+  queueNext,
+  contextMenuClose,
   history,
   songSave,
   songRemove,
+  queueNextAdd,
+  queueNextRemove,
 }) => {
   if (contextMenu === null) {
     return (
       <ContextMenuContainer id="context-menu-container">
-        <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
+        <ClearButton className="close-SVG-container" onClick={contextMenuClose}>
           <Close />
         </ClearButton>
       </ContextMenuContainer>
@@ -151,6 +154,7 @@ const ContextMenu = ({
 
   const { type, payload } = contextMenu;
   let trackSaved = false;
+  let trackIndexInQueueNext = -1;
 
   if (song !== null && type === CONTEXT_TRACK) {
     const savedTracks = song.data.song_track;
@@ -158,11 +162,16 @@ const ContextMenu = ({
     trackSaved = savedTracks.includes(trackId);
   }
 
+  if (queueNext.length > 0 && type === CONTEXT_TRACK) {
+    const queueNextTrackIds = queueNext.map(track => track.track_id);
+    trackIndexInQueueNext = queueNextTrackIds.findIndex(trackId => trackId === payload.track_id);
+  }
+
   switch (type) {
     case CONTEXT_TRACK:
       return (
         <ContextMenuContainer id="context-menu-container">
-          <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
+          <ClearButton className="close-SVG-container" onClick={contextMenuClose}>
             <Close />
           </ClearButton>
 
@@ -176,31 +185,35 @@ const ContextMenu = ({
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Artist&nbsp;</Divider>
           <div>
-            { payload.track_album.album_artist.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
-            { payload.track_featuring.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
+            { payload.track_album.album_artist.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { contextMenuClose(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
+            { payload.track_featuring.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { contextMenuClose(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Album&nbsp;</Divider>
-          <ClearButton className="link" disabled={`/album/${payload.track_album.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.track_album.album_id}`); }}>Go to Album</ClearButton>
+          <ClearButton className="link" disabled={`/album/${payload.track_album.album_id}` === history.location.pathname} onClick={() => { contextMenuClose(); history.push(`/album/${payload.track_album.album_id}`); }}>Go to Album</ClearButton>
+
+          <Divider padding="0 0 0 1rem" fontSize="0.8em">Queue&nbsp;</Divider>
+          <ClearButton className="link" disabled={trackIndexInQueueNext !== -1} onClick={() => { contextMenuClose(); queueNextAdd(payload); }}>Add to Queue</ClearButton>
+          <ClearButton className="link" disabled={queueNext.length === 0 || trackIndexInQueueNext === -1} onClick={() => { contextMenuClose(); queueNextRemove(trackIndexInQueueNext); }}>Remove from Queue</ClearButton>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Your Library&nbsp;</Divider>
           {
             trackSaved
-              ? <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songRemove(payload); }}>Remove from Your Library</ClearButton>
-              : <ClearButton className="link" disabled={user === null} onClick={() => { closeContextMenu(); songSave(payload); }}>Save to Your Library</ClearButton>
+              ? <ClearButton className="link" disabled={user === null} onClick={() => { contextMenuClose(); songRemove(payload); }}>Remove from Your Library</ClearButton>
+              : <ClearButton className="link" disabled={user === null} onClick={() => { contextMenuClose(); songSave(payload); }}>Save to Your Library</ClearButton>
           }
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
-          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}`} className="link" target="_blank">Facebook</a>
-          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Twitter</a>
-          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Telegram</a>
+          <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 
     case CONTEXT_ALBUM:
       return (
         <ContextMenuContainer id="context-menu-container">
-          <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
+          <ClearButton className="close-SVG-container" onClick={contextMenuClose}>
             <Close />
           </ClearButton>
 
@@ -213,23 +226,23 @@ const ContextMenu = ({
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Artist&nbsp;</Divider>
           <div>
-            { payload.album_artist.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
+            { payload.album_artist.map(artist => (<ClearButton key={artist.artist_id} className="link" disabled={`/artist/${artist.artist_id}` === history.location.pathname} onClick={() => { contextMenuClose(); history.push(`/artist/${artist.artist_id}`); }}>{ artist.artist_name }</ClearButton>)) }
           </div>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Album&nbsp;</Divider>
-          <ClearButton className="link" disabled={`/album/${payload.album_id}` === history.location.pathname} onClick={() => { closeContextMenu(); history.push(`/album/${payload.album_id}`); }}>Go to Album</ClearButton>
+          <ClearButton className="link" disabled={`/album/${payload.album_id}` === history.location.pathname} onClick={() => { contextMenuClose(); history.push(`/album/${payload.album_id}`); }}>Go to Album</ClearButton>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
-          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.album_id}`} className="link" target="_blank">Facebook</a>
-          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Twitter</a>
-          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Telegram</a>
+          <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.album_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 
     case CONTEXT_ARTIST:
       return (
         <ContextMenuContainer id="context-menu-container">
-          <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
+          <ClearButton className="close-SVG-container" onClick={contextMenuClose}>
             <Close />
           </ClearButton>
 
@@ -241,16 +254,16 @@ const ContextMenu = ({
           </div>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
-          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}artist/${payload.artist_id}`} className="link" target="_blank">Facebook</a>
-          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Twitter</a>
-          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Telegram</a>
+          <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}artist/${payload.artist_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 
     case CONTEXT_PLAYLIST:
       return (
         <ContextMenuContainer id="context-menu-container">
-          <ClearButton className="close-SVG-container" onClick={closeContextMenu}>
+          <ClearButton className="close-SVG-container" onClick={contextMenuClose}>
             <Close />
           </ClearButton>
 
@@ -262,9 +275,9 @@ const ContextMenu = ({
           </div>
 
           <Divider padding="0 0 0 1rem" fontSize="0.8em">Share&nbsp;</Divider>
-          <a onClick={closeContextMenu} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}playlist/${payload.playlist_id}`} className="link" target="_blank">Facebook</a>
-          <a onClick={closeContextMenu} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Twitter</a>
-          <a onClick={closeContextMenu} href={`https://telegram.me/share/url?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Telegram</a>
+          <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}playlist/${payload.playlist_id}`} className="link" target="_blank">Facebook</a>
+          <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Twitter</a>
+          <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="link" target="_blank">Telegram</a>
         </ContextMenuContainer>
       );
 
@@ -277,16 +290,20 @@ ContextMenu.propTypes = {
   contextMenu: shape({}),
   user: shape({}),
   song: shape({}),
+  queueNext: arrayOf(shape({})),
   history: shape({}),
-  closeContextMenu: func.isRequired,
+  contextMenuClose: func.isRequired,
   songSave: func.isRequired,
   songRemove: func.isRequired,
+  queueNextAdd: func.isRequired,
+  queueNextRemove: func.isRequired,
 };
 
 ContextMenu.defaultProps = {
   contextMenu: null,
   user: null,
   song: null,
+  queueNext: [],
   history: null,
 };
 

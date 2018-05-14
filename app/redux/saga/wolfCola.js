@@ -19,6 +19,7 @@ import { duration } from '@app/redux/action/duration';
 import { playbackPosition } from '@app/redux/action/playbackPosition';
 import { playing } from '@app/redux/action/playing';
 import { queueInitial } from '@app/redux/action/queueInitial';
+import { queueNextRemove } from '@app/redux/action/queueNext';
 import { historyPush, historyPop, historyFront } from '@app/redux/action/history';
 import { loading } from '@app/redux/action/loading';
 
@@ -405,12 +406,41 @@ function* _seek(action) {
 
 /**
  * will request `PLAY_REQUEST` according to the rules
+ * +
+ * updates `history` accordingly by pushing an entry (or rearranging the history)
+ * +
+ * checks for `queueNext` contents
+ * NOTE:
+ * direct play requests does not affect `queueNext` list
  */
 function* _next() {
   const state = yield select();
 
   // nothing playing - halting...
   if (state.playing === false) {
+    return;
+  }
+
+  if (state.queueNext.length > 0) {
+    const play = Object.assign({}, state.queueNext[0]);
+
+    // POP-ing entry from `queueNext`...
+    yield put(queueNextRemove(0));
+
+    /**
+     * `payload.queue` is checked as `_play` operates on `store.queue`
+     * if `shuffle` is turned on. If gone unchecked, `-1` can be triggered on
+     * findIndex of `_play` where it removes entry from `queue` when shuffle is turned on
+     */
+    yield put({
+      type: PLAY_REQUEST,
+      payload: {
+        play,
+        queue: state.shuffle === true ? [play, ...state.queue] : state.queue,
+        queueInitial: state.queueInitial,
+      },
+    });
+
     return;
   }
 
@@ -534,6 +564,8 @@ function* _next() {
 
 /**
  * will request `PLAY_REQUEST` according to the rules
+ * +
+ * it'll POP an entry from `history`
  */
 function* _previous() {
   const state = yield select();

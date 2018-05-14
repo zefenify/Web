@@ -3,7 +3,7 @@ import localforage from 'localforage';
 const config = {
   NAME: 'Zefenify',
   STORE_NAME: 'Zefenify',
-  DESCRIPTION: 'Zefenify. Ethiopian. Music.',
+  DESCRIPTION: 'Zefenify • Ethiopian. Music.',
   LF_STORE: {
     THEME: 'THEME',
     VOLUME: 'VOLUME',

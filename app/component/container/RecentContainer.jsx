@@ -1,6 +1,3 @@
-// Congratulations!? you played yourself
-// DJ K...
-
 import React, { Component } from 'react';
 import { bool, shape, arrayOf, string } from 'prop-types';
 
@@ -26,13 +23,6 @@ class RecentContainer extends Component {
     this.historyPlayPause = this.historyPlayPause.bind(this);
     this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(() => ({
-      totalDuration: historyDuration(nextProps),
-      historyPlaying: historyPlaying(nextProps),
-    }));
   }
 
   historyPlayPause() {
@@ -114,6 +104,11 @@ class RecentContainer extends Component {
   }
 }
 
+RecentContainer.getDerivedStateFromProps = nextProps => ({
+  totalDuration: historyDuration(nextProps),
+  historyPlaying: historyPlaying(nextProps),
+});
+
 RecentContainer.propTypes = {
   playing: bool,
   current: shape({}),
@@ -128,14 +123,5 @@ RecentContainer.defaultProps = {
   current: null,
   history: [],
 };
-
-// module.exports = DJKhaled(connect(state => ({
-//   playing: state.playing,
-//   current: state.current,
-//   history: state.history,
-//   queueInitial: state.queueInitial,
-//   totalDuration: historyDuration(state),
-//   historyPlaying: historyPlaying(state),
-// }))(RecentContainer));
 
 module.exports = withContext('playing', 'current', 'history', 'queueInitial', 'totalDuration')(RecentContainer);

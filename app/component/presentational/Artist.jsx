@@ -186,10 +186,16 @@ const Arist = ({
       <div className="artist__info">
         <p>ARTIST</p>
         <h1>{ artist.artist_name }</h1>
-        <p style={{ marginTop: '0.25em' }}>{`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${trackCount} song${trackCount > 1 ? 's' : ''}`}</p>
+        <p style={{ marginTop: '0.25em' }}>
+          {`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${trackCount} song${trackCount > 1 ? 's' : ''}`}
+        </p>
         <div className="play-share">
-          <Button className="play-share__play-big" onClick={artistPlayPause}>{`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}</Button>
-          <Button className="play-share__share" outline noPadding onClick={contextMenuArtist}><Share /></Button>
+          <Button className="play-share__play-big" onClick={artistPlayPause}>
+            {`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}
+          </Button>
+          <Button className="play-share__share" outline noPadding onClick={contextMenuArtist}>
+            <Share />
+          </Button>
         </div>
       </div>
     </div>

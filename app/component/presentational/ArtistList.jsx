@@ -1,5 +1,5 @@
-import React from 'react';
-import { string, arrayOf, shape } from 'prop-types';
+import React, { Fragment } from 'react';
+import { arrayOf, shape } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
@@ -8,10 +8,9 @@ const Muted = styled.span`
 `;
 
 const ArtistList = ({
-  className,
   artists,
 }) => (
-  <span className={className}>
+  <Fragment>
     {
       artists.map((artist, index) => (
         <Link to={`/artist/${artist.artist_id}`} key={artist.artist_id}>
@@ -19,16 +18,14 @@ const ArtistList = ({
         </Link>
       ))
     }
-  </span>
+  </Fragment>
 );
 
 ArtistList.propTypes = {
-  className: string,
   artists: arrayOf(shape({})),
 };
 
 ArtistList.defaultProps = {
-  className: '',
   artists: [],
 };
 

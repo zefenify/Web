@@ -2,7 +2,7 @@ import React from 'react';
 import { string, func, bool, shape } from 'prop-types';
 import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
-import isEqual from 'lodash/fp/isEqual';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 
@@ -143,7 +143,7 @@ const Search = ({
   }
 
   // no matches found
-  if (isEqual(matches)({
+  if (isEqual(matches, {
     album: [],
     artist: [],
     playlist: [],
@@ -189,7 +189,7 @@ const Search = ({
             matches.artist.length > 0 ?
               <div className="result-match-list">
                 { matches.artist.map(artist => (
-                  <Link to={`artist/${artist.artist_id}`} className="result-match-list__match artist">
+                  <Link key={artist.artist_id} to={`artist/${artist.artist_id}`} className="result-match-list__match artist">
                     <ImageContainer borderRadius="50%">
                       <img alt={`${artist.artist_name}`} src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
                     </ImageContainer>
@@ -206,7 +206,7 @@ const Search = ({
             matches.album.length > 0 ?
               <div className="result-match-list">
                 { matches.album.map(album => (
-                  <Link to={`album/${album.album_id}`} className="result-match-list__match apu">
+                  <Link key={album.album_id} to={`album/${album.album_id}`} className="result-match-list__match apu">
                     <ImageContainer>
                       <img alt={`${album.album_name}`} src={`${BASE_S3}${album.album_cover.s3_name}`} />
                     </ImageContainer>
@@ -223,7 +223,7 @@ const Search = ({
             matches.playlist.length > 0 ?
               <div className="result-match-list">
                 { matches.playlist.map(playlist => (
-                  <Link to={`playlist/${playlist.playlist_id}`} className="result-match-list__match apu">
+                  <Link key={playlist.playlist_id} to={`playlist/${playlist.playlist_id}`} className="result-match-list__match apu">
                     <ImageContainer>
                       <img alt={`${playlist.playlist_name}`} src={`${BASE_S3}${playlist.playlist_cover.s3_name}`} />
                     </ImageContainer>

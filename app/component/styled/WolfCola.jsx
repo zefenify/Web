@@ -34,6 +34,7 @@ const WolfColaContainer = styled.div`
 const ControlsContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   height: 70px;
   background-color: ${props => props.theme.controlBackground};
   color: ${props => props.theme.controlText};

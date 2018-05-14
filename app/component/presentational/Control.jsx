@@ -110,18 +110,6 @@ const MusicControls = styled.div`
       text-align: center;
     }
 
-    &__accessibility {
-      position: absolute;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      font-size: 6px;
-      left: 0;
-      right: 0;
-      bottom: -8px;
-      margin: 0 auto;
-    }
-
     &:hover {
       transform: scale3d(1.075, 1.075, 1);
     }
@@ -158,6 +146,7 @@ const MusicProgress = styled.div`
 
 const QueueContainer = styled(Link)`
   flex: 0 1 50px;
+  height: 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -166,6 +155,12 @@ const QueueContainer = styled(Link)`
   cursor: pointer;
   text-decoration: none;
   color: ${props => props.theme.listText};
+  transition: transform 256ms;
+  will-change: transform;
+
+  &:active {
+    transform: scale3d(0.95, 0.95, 1);
+  }
 `;
 
 const VolumeContainer = styled.div`
@@ -250,7 +245,7 @@ const Control = ({
 
       <MusicProgress>
         <div className="time">
-          {`${playbackPosition === null ? '0:00' : human(playbackPosition)}`}
+          {`${playbackPosition === 0 ? '0:00' : human(playbackPosition)}`}
         </div>
 
         <Range

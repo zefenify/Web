@@ -12,11 +12,11 @@ const ContextOverlayContainer = styled.div`
 `;
 
 const ContextOverlay = ({
-  closeContextMenu,
-}) => <ContextOverlayContainer id="context-overlay-container" onClick={closeContextMenu} />;
+  contextMenuClose,
+}) => <ContextOverlayContainer id="context-overlay-container" onClick={contextMenuClose} />;
 
 ContextOverlay.propTypes = {
-  closeContextMenu: func.isRequired,
+  contextMenuClose: func.isRequired,
 };
 
 module.exports = ContextOverlay;

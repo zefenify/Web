@@ -1,9 +1,9 @@
 import localforage from 'localforage';
 
 const config = {
-  NAME: 'Wolf-Cola',
-  STORE_NAME: 'WOLF_COLA',
-  DESCRIPTION: 'Wolf Cola: The right music player for closure',
+  NAME: 'Zefenify',
+  STORE_NAME: 'Zefenify',
+  DESCRIPTION: 'Zefenify. Ethiopian. Music.',
   LF_STORE: {
     THEME: 'THEME',
     VOLUME: 'VOLUME',

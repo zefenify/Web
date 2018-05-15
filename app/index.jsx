@@ -91,7 +91,7 @@ class WolfCola extends PureComponent {
                         <span>Search</span>
                         <Search style={{ float: 'right' }} />
                       </NavLinkStyled>
-                      <NavLinkStyled to="/trending/yesterday">
+                      <NavLinkStyled to="/trending">
                         <span>Trending</span>
                         <Trending style={{ float: 'right' }} />
                       </NavLinkStyled>

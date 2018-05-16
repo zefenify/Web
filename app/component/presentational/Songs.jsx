@@ -19,7 +19,7 @@ const SongsContainer = styled.div`
   }
 
   .mute {
-    color: ${props => props.theme.controlMute};
+    color: ${props => props.theme.mute};
   }
 
   .songs {
@@ -34,7 +34,7 @@ const SongsContainer = styled.div`
     }
 
     &__info {
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
 
     &__button {
@@ -67,7 +67,7 @@ const Songs = ({
     return (
       <SongsContainer className="center-content">
         <h2 className="mute">You need to be logged in to view saved songs</h2>
-        <Link to="/settings"><Button outline>Go to Settings</Button></Link>
+        <Link to="/settings"><Button border themeColor backgroundColor="transparent">Go to Settings</Button></Link>
       </SongsContainer>
     );
   }

@@ -1,67 +1,61 @@
-const DARK_1 = '#121212';
-const DARK_2 = '#181818';
-const DARK_3 = '#282828';
-const DARK_4 = '#ededed';
-const DARK_5 = '#657786';
-const DARK_6 = '#000000';
-
-const MUTE_1 = '#a0a0a0';
-const MUTE_2 = '#282828';
-const MUTE_3 = '#404040';
-const MUTE_4 = '#ececec';
-const MUTE_5 = '#a1a1a1';
-const MUTE_6 = '#4e4e4e';
-const MUTE_7 = '#333333';
-
-const WHITE_1 = '#ffffff';
-const WHITE_2 = '#f7f7f7';
-const WHITE_3 = '#d8d8d8';
-
-const PRIMARY_1 = '#2196f3';
-const PRIMARY_2 = '#e30047';
-
 module.exports = {
   themeDark: {
-    primary: PRIMARY_1,
+    primary: 'hsl(210, 100%, 50%)',
 
-    navbarBackground: DARK_1,
-    navbarText: MUTE_1,
-    navbarTextActive: WHITE_1,
-    navBarBoxShadow: DARK_6,
+    navBackground__backgroundColor: 'hsl(0, 0%, 5%)',
+    navBoxShadow__color: 'hsl(0, 0%, 0%)',
+    navBrand__color: 'hsl(0, 0%, 95%)',
+    navDivider__color: 'hsl(0, 0%, 15%)',
+    navDivider__borderTop: 'hsl(0, 0%, 10%)',
+    navLink__color: 'hsl(0, 0%, 60%)',
+    navLinkMute__color: 'hsl(0, 0%, 30%)',
+    navLink__color_hover: 'hsl(0, 0%, 95%)',
+    navLinkActive__color: 'hsl(0, 0%, 95%)',
+    navLinkActive__backgroundColor: 'hsl(0, 0%, 15%)',
 
-    listBackground: DARK_2,
-    listBackgroundHover: MUTE_2,
-    listDivider: MUTE_2,
-    listDividerText: MUTE_7,
-    listText: WHITE_1,
-    listTextMute: MUTE_1,
-    listTextActive: PRIMARY_1,
-    listBoxShadow: DARK_6,
+    search__backgroundColor: 'hsl(0, 0%, 15%)',
+    searchLabel__color: 'hsl(0, 0%, 95%)',
+    searchInput__color: 'hsl(0, 0%, 95%)',
+    search__shadow: 'hsl(0, 0%, 0%)',
 
-    controlBackground: DARK_3,
-    controlText: WHITE_1,
-    controlMute: MUTE_1,
+    background: 'hsl(0, 0%, 10%)',
+    hover: 'hsl(0, 0%, 15%)',
+    text: 'hsl(0, 0%, 95%)',
+    mute: 'hsl(0, 0%, 60%)',
+    divider: 'hsl(0, 0%, 15%)',
+
+    control__backgroundColor: 'hsl(0, 0%, 20%)',
+    control__color: 'hsl(0, 0%, 95%)',
+    control__color_mute: 'hsl(0, 0%, 60%)',
   },
 
   themeLight: {
-    primary: PRIMARY_2,
+    primary: 'hsl(0, 80%, 50%)',
 
-    navbarBackground: WHITE_2,
-    navbarText: MUTE_3,
-    navbarTextActive: MUTE_2,
-    navBarBoxShadow: WHITE_3,
+    navBackground__backgroundColor: 'hsl(0, 0%, 95%)',
+    navBoxShadow__color: 'hsl(0, 0%, 85%)',
+    navBrand__color: 'hsl(0, 0%, 20%)',
+    navDivider__color: 'hsl(0, 0%, 70%)',
+    navDivider__borderTop: 'hsl(0, 0%, 85%)',
+    navLink__color: 'hsl(0, 0%, 30%)',
+    navLinkMute__color: 'hsl(0, 0%, 50%)',
+    navLink__color_hover: 'hsl(0, 0%, 20%)',
+    navLinkActive__color: 'hsl(0, 0%, 20%)',
+    navLinkActive__backgroundColor: 'hsl(0, 0%, 90%)',
 
-    listBackground: WHITE_1,
-    listBackgroundHover: DARK_4,
-    listDivider: DARK_4,
-    listDividerText: MUTE_5,
-    listText: MUTE_6,
-    listTextMute: MUTE_4,
-    listTextActive: PRIMARY_2,
-    listBoxShadow: DARK_5,
+    search__backgroundColor: 'hsl(0, 0%, 90%)',
+    searchLabel__color: 'hsl(0, 0%, 40%)',
+    searchInput__color: 'hsl(0, 0%, 25%)',
+    search__shadow: 'hsl(0, 0%, 85%)',
 
-    controlBackground: DARK_4,
-    controlText: MUTE_6,
-    controlMute: MUTE_5,
+    background: 'hsl(0, 0%, 100%)',
+    hover: 'hsl(0, 0%, 95%)',
+    text: 'hsl(0, 0%, 30%)',
+    mute: 'hsl(0, 0%, 45%)',
+    divider: 'hsl(0, 0%, 95%)',
+
+    control__backgroundColor: 'hsl(0, 0%, 90%)',
+    control__color: 'hsl(0, 0%, 25%)',
+    control__color_mute: 'hsl(0, 0%, 45%)',
   },
 };

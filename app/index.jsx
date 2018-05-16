@@ -2,7 +2,8 @@
 
 import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, NavLink, Redirect, Switch } from 'react-router-dom';
+import styled from 'react-emotion';
 import { ThemeProvider } from 'emotion-theming';
 
 import '@app/component/styled/Global';
@@ -32,7 +33,6 @@ import ContextOverlayContainer from '@app/component/container/ContextOverlayCont
 import NotificationContainer from '@app/component/container/NotificationContainer';
 import SpaceContainer from '@app/component/container/SpaceContainer.jsx';
 
-import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
 import Search from '@app/component/svg/Search';
@@ -40,8 +40,151 @@ import Trending from '@app/component/svg/Trending';
 import Settings from '@app/component/svg/Settings';
 import Download from '@app/component/svg/Download';
 
-import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
-import { NavLinkStyled } from '@app/component/styled/ReactRouter';
+// #context-overlay-container = [98, 100]
+// #context-menu-container = 999
+// #mobile = 1000
+const WolfColaContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  opacity: 1;
+  filter: blur(0px);
+  transform: scale3d(1, 1, 1);
+  transition: transform 256ms, filter 0ms, opacity 256ms;
+  will-change: transform, filter, opacity;
+
+  &.context-menu-active {
+    opacity: 0.92;
+    filter: blur(4px);
+    transform: scale3d(0.96, 0.96, 1);
+  }
+
+  &.booting {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale3d(0.96, 0.96, 1);
+  }
+`;
+
+const NavListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  height: 100vh - 70px;
+`;
+
+const NavContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 200px;
+  width: 200px;
+  background-color: ${props => props.theme.navBackground__backgroundColor};
+  overflow-y: auto;
+
+  .brand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    flex: 0 0 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60px;
+    padding-left: 1rem;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 0 4px 2px ${props => props.theme.navBoxShadow__color};
+
+    &__image {
+      width: 40px;
+      height: 40px;
+      margin-right: 0.75em;
+    }
+
+    &__text {
+      color: ${props => props.theme.navBrand__color};
+    }
+  }
+
+  .nav-list {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+  }
+
+  .small-text {
+    padding: 1em 0.5em;
+    border-left: 1.25em solid transparent;
+    font-size: 0.75em;
+    margin-top: 2em;
+    cursor: default;
+  }
+`;
+
+const NavLinkStyled = styled(NavLink)`
+  color: ${props => props.theme.navLink__color};
+  padding: 0.5em 0.64rem;
+  margin: 0.25em 0;
+  font-weight: bold;
+  text-decoration: none;
+  border-left: 6px solid transparent;
+  cursor: default;
+
+  &:hover {
+    color: ${props => props.theme.navLink__color_hover};
+  }
+
+  &.active {
+    color: ${props => props.theme.navLinkActive__color};
+    border-left: 6px solid ${props => props.theme.primary};
+    background-color: ${props => props.theme.navLinkActive__backgroundColor};
+  }
+`;
+
+const RouteContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 calc(100vw - 200px);
+  height: calc(100vh - 70px);
+  background-color: ${props => props.theme.background};
+  color: ${props => props.theme.text};
+  overflow-y: auto;
+  padding: 1em 2em;
+  padding-bottom: 0;
+  padding-top: 2em;
+`;
+
+const Divider = styled.div`
+  flex: 0 0 auto;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  color: ${props => props.theme.navDivider__color};
+  padding: 1em 0.5em 1em 1rem;
+  font-size: 0.75em;
+
+  &:after {
+    height: 0;
+    content: '';
+    flex: 1 1 auto;
+    border-top: 1px solid ${props => props.theme.navDivider__borderTop};
+  }
+`;
 
 class WolfCola extends PureComponent {
   constructor(props) {
@@ -80,8 +223,8 @@ class WolfCola extends PureComponent {
                 <NavListContainer>
                   <NavContainer>
                     <Link className="brand" to="/">
-                      <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.png" />
-                      <span>Zefenify</span>
+                      <img className="brand__image" alt="zefenify logo" src="static/image/zefenify.png" />
+                      <span className="brand__text">Zefenify</span>
                       <Spinner loading={this.state.loading} />
                     </Link>
 
@@ -97,13 +240,13 @@ class WolfCola extends PureComponent {
                       </NavLinkStyled>
                       <NavLinkStyled to="/collection">Genres &amp; Moods</NavLinkStyled>
 
-                      <Divider padding="1em 0.5em 1em 1rem" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
+                      <Divider>YOUR MUSIC&nbsp;</Divider>
                       <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
                       <NavLinkStyled to="/songs">Songs</NavLinkStyled>
                       <NavLinkStyled to="/albums">Albums</NavLinkStyled>
                       <NavLinkStyled to="/artists">Artists</NavLinkStyled>
 
-                      <Divider padding="1em 0.5em 1em 1rem" fontSize="0.75em">SETTINGS&nbsp;</Divider>
+                      <Divider>SETTINGS&nbsp;</Divider>
                       <NavLinkStyled to="/settings">
                         <span>Settings</span>
                         <Settings style={{ float: 'right' }} />

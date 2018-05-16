@@ -10,7 +10,7 @@ const FixedHeaderList = styled.div`
   flex-direction: column;
   height: calc(100vh - 70px);
 
-  .title {
+  .header {
     position: absolute;
     top: 0;
     right: 0;
@@ -19,7 +19,7 @@ const FixedHeaderList = styled.div`
     align-items: center;
     height: 60px;
     padding: 0 2em;
-    box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
+    box-shadow: 0 0 4px 2px ${props => props.theme.navBoxShadow__color};
   }
 
   .list {

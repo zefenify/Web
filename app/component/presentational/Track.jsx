@@ -64,14 +64,11 @@ const TrackContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  border-bottom: 1px solid ${props => props.theme.divider};
 
   & > * {
     flex: 1 1 auto;
     padding: 0.8em 0;
-    border-bottom: 1px solid ${props => props.theme.controlBackground};
-  }
-
-  & > * {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -113,16 +110,12 @@ const TrackContainer = styled.div`
     flex: 1 0 auto;
 
     &__featuring {
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
   }
 
   & .artist-name {
     flex: 0 0 25%;
-
-    &__artist {
-      margin-right: 1em;
-    }
   }
 
   & .album-name {
@@ -159,7 +152,7 @@ const TrackContainer = styled.div`
   }
 
   &:hover {
-    background-color: ${props => props.theme.controlBackground};
+    background-color: ${props => props.theme.hover};
 
     & .track-number-icon {
       &__number {

@@ -4,14 +4,14 @@ import { func } from 'prop-types';
 
 import Button from '@app/component/styled/Button';
 
-const ErrorDiv = styled.div`
+const Error = styled.div`
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 9999;
-  background-color: ${props => props.theme.listBackground};
+  background-color: ${props => props.theme.background};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,16 +37,16 @@ const ErrorDiv = styled.div`
     margin-bottom: 2rem;
     padding: 0 1rem;
     text-align: center;
-    color: ${props => props.theme.controlMute};
+    color: ${props => props.theme.mute};
   }
 `;
 
 const ErrorBoundary = ({ hardRefresh }) => (
-  <ErrorDiv>
-    <div className="broken-zefenify" style={{ background: "transparent url('static/image/zefenify.c19e209e3511e84a923a.png') 50% 50% / cover no-repeat" }} />
+  <Error>
+    <div className="broken-zefenify" style={{ background: "transparent url('static/image/zefenify.png') 50% 50% / cover no-repeat" }} />
     <div className="broken-record">ጉድ ፈላ!<br />Zefenify has stopped working.</div>
     <Button onClick={hardRefresh}>Refresh</Button>
-  </ErrorDiv>
+  </Error>
 );
 
 ErrorBoundary.propTypes = {

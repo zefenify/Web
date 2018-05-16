@@ -14,8 +14,8 @@ const MobileContainer = styled.div`
   bottom: 0;
   left: 0;
   z-index: 1000;
-  background-color: ${props => props.theme.listBackground};
-  color: ${props => props.theme.listText};
+  background-color: ${props => props.theme.background};
+  color: ${props => props.theme.text};
 
   @media(min-width: 1024px) {
     display: none;
@@ -40,7 +40,7 @@ const MobileContainer = styled.div`
     font-weight: bold;
     font-size: 1.25em;
     text-decoration: none;
-    color: #5b86e5;
+    color: ${props => props.theme.primary};
   }
 `;
 
@@ -53,9 +53,5 @@ const Mobile = () => (
     </a>
   </MobileContainer>
 );
-
-Mobile.propTypes = {};
-
-Mobile.defaultProps = {};
 
 module.exports = Mobile;

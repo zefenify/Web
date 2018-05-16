@@ -60,7 +60,7 @@ const DMCA = styled.a`
   padding: 0.75em 2.75em;
   font-size: 1em;
   margin-bottom: 1em;
-  border: 1px solid ${props => props.theme.listText};
+  border: 1px solid ${props => props.theme.text};
 `;
 
 const Settings = ({

@@ -1,11 +1,11 @@
 import styled from 'react-emotion';
 
 const Button = styled.button`
-  background-color: ${props => props.outline ? 'transparent' : props.theme.primary};
+  background-color: ${props => props.backgroundColor || props.theme.primary};
   border-radius: 2em;
-  border: ${props => props.outline ? `1px solid ${props.theme.listText}` : 'none'};
-  padding: ${props => props.noPadding ? '0' : '0.75em 2em'};
-  color: ${props => props.outline ? props.theme.listText : '#ffffff'};
+  border: ${props => props.border ? `1px solid ${props.theme.text}` : 'none'};
+  padding: ${props => props.padding || '0.75em 2em'};
+  color: ${props => props.themeColor ? props.theme.text : 'hsl(0, 0%, 100%)'};
   transition: transform 250ms;
   will-change: transform;
 

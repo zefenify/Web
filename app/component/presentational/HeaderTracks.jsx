@@ -27,7 +27,7 @@ const Header = styled.div`
     height: 200px;
     width: 200px;
     border-radius: 6px;
-    border: 1px solid ${props => props.theme.listDivider};
+    border: 1px solid ${props => props.theme.divider};
   }
 
   .info {
@@ -58,13 +58,13 @@ const Header = styled.div`
       margin: 0;
       font-size: 1.2em;
       line-height: 1.25em;
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
 
     &__duration {
       margin: 0;
       margin-top: 0.25em;
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
 
     .play-share {
@@ -109,7 +109,7 @@ const HeaderTracks = ({
           <p className="info-container__duration">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
           <div className="play-share">
             <Button className="play-share__play-big" onClick={tracksPlayPause}>{`${tracksPlaying ? 'PAUSE' : 'PLAY'}`}</Button>
-            <Button className="play-share__share" outline noPadding onClick={contextMenuPlaylist}><Share /></Button>
+            <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={contextMenuPlaylist}><Share /></Button>
           </div>
         </div>
       </Header>

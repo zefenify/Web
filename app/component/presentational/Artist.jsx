@@ -27,7 +27,7 @@ const ArtistContainer = styled.div`
       height: 200px;
       width: 200px;
       border-radius: 50%;
-      border: 1px solid ${props => props.theme.listDivider};
+      border: 1px solid ${props => props.theme.divider};
     }
 
     &__info {
@@ -42,7 +42,7 @@ const ArtistContainer = styled.div`
       }
 
       & > p:not(:first-child) {
-        color: ${props => props.theme.controlMute};
+        color: ${props => props.theme.mute};
       }
 
       .play-share {
@@ -74,7 +74,7 @@ const ArtistContainer = styled.div`
       height: 150px;
       flex: 0 0 150px;
       border-radius: 6px;
-      border: 1px solid ${props => props.theme.listDivider};
+      border: 1px solid ${props => props.theme.divider};
     }
 
     &__info {
@@ -91,7 +91,7 @@ const ArtistContainer = styled.div`
 
     &__year {
       font-size: 1.25em;
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
       margin: 0;
     }
 
@@ -161,7 +161,7 @@ const ArtistContainer = styled.div`
       margin: 0;
       margin-top: 0.5em;
       line-height: 1.25em;
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
   }
 `;
@@ -193,7 +193,7 @@ const Arist = ({
           <Button className="play-share__play-big" onClick={artistPlayPause}>
             {`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}
           </Button>
-          <Button className="play-share__share" outline noPadding onClick={contextMenuArtist}>
+          <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={contextMenuArtist}>
             <Share />
           </Button>
         </div>
@@ -201,54 +201,56 @@ const Arist = ({
     </div>
 
     {
-      artist.relationships.album.length === 0 ? null : <div className="album-list">
-        <h2><Divider textTheme>Albums&nbsp;</Divider></h2>
+      artist.relationships.album.length === 0 ? null : (
+        <div className="album-list">
+          <h2><Divider text>Albums&nbsp;</Divider></h2>
 
-        {
-          artist.relationships.album.map(album => (
-            <div className="album-list__album album" key={`${artist.artist_id}-${album.album_id}`}>
-              <div className="album-cover">
-                <Link to={`/album/${album.album_id}`} className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-                <div className="album-cover__info album-info">
-                  <p className="album-info__year">{ album.album_year }</p>
-                  <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
-                  <div className="play-share">
-                    <Button outline className="play-share__play-small" onClick={() => albumPlayPause(album.album_id)}>{`${playing && albumPlayingId === album.album_id ? 'PAUSE' : 'PLAY'}`}</Button>
-                    <Button className="play-share__share" outline noPadding onClick={() => contextMenuAlbum(album.album_id)}><Share /></Button>
+          {
+            artist.relationships.album.map(album => (
+              <div className="album-list__album album" key={`${artist.artist_id}-${album.album_id}`}>
+                <div className="album-cover">
+                  <Link to={`/album/${album.album_id}`} className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                  <div className="album-cover__info album-info">
+                    <p className="album-info__year">{ album.album_year }</p>
+                    <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
+                    <div className="play-share">
+                      <Button outline border themeColor backgroundColor="transparent" className="play-share__play-small" onClick={() => albumPlayPause(album.album_id)}>{`${playing && albumPlayingId === album.album_id ? 'PAUSE' : 'PLAY'}`}</Button>
+                      <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={() => contextMenuAlbum(album.album_id)}><Share /></Button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="album__track-list track-list">
-                <Divider />
-                {
-                  album.relationships.track.map((track, index) => (
-                    <Track
-                      fullDetail={false}
-                      key={track.track_id}
-                      currentTrackId={current === null ? '' : current.track_id}
-                      trackNumber={index + 1}
-                      trackPlayPause={trackPlayPause}
-                      playing={playing}
-                      trackId={track.track_id}
-                      trackName={track.track_name}
-                      trackFeaturing={track.track_featuring}
-                      trackAlbum={album}
-                      trackDuration={track.track_track.s3_meta.duration}
-                      contextMenuTrack={contextMenuTrack}
-                    />
-                  ))
-                }
+                <div className="album__track-list track-list">
+                  <Divider />
+                  {
+                    album.relationships.track.map((track, index) => (
+                      <Track
+                        fullDetail={false}
+                        key={track.track_id}
+                        currentTrackId={current === null ? '' : current.track_id}
+                        trackNumber={index + 1}
+                        trackPlayPause={trackPlayPause}
+                        playing={playing}
+                        trackId={track.track_id}
+                        trackName={track.track_name}
+                        trackFeaturing={track.track_featuring}
+                        trackAlbum={album}
+                        trackDuration={track.track_track.s3_meta.duration}
+                        contextMenuTrack={contextMenuTrack}
+                      />
+                    ))
+                  }
+                </div>
               </div>
-            </div>
-          ))
-        }
-      </div>
+            ))
+          }
+        </div>
+      )
     }
 
     {
       artist.relationships.track.length === 0 ? null : <div style={{ marginTop: '2em' }}>
-        <h2><Divider textTheme>Appears On&nbsp;</Divider></h2>
+        <h2><Divider text>Appears On&nbsp;</Divider></h2>
 
         <div className="appears-container">
           <div className="appears-container__list appears-list">

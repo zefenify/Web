@@ -1,5 +1,4 @@
 /* global window */
-/* eslint no-console: off */
 
 import React, { Component } from 'react';
 import { element, oneOfType, arrayOf } from 'prop-types';

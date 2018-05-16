@@ -6,7 +6,6 @@ import styled from 'react-emotion';
 import { BASE_S3 } from '@app/config/api';
 import { human } from '@app/util/time';
 
-import { ControlsContainer } from '@app/component/styled/WolfCola';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Range from '@app/component/styled/Range';
 import { ClearButton } from '@app/component/styled/Button';
@@ -18,6 +17,15 @@ import Shuffle from '@app/component/svg/Shuffle';
 import PlayPause from '@app/component/svg/PlayPause';
 import Volume from '@app/component/svg/Volume';
 import List from '@app/component/svg/List';
+
+const ControlsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 70px;
+  background-color: ${props => props.theme.control__backgroundColor};
+  color: ${props => props.theme.control__color};
+`;
 
 const NowPlayingContainer = styled.div`
   display: flex;
@@ -60,11 +68,11 @@ const NowPlayingContainer = styled.div`
 
     &__name {
       margin-bottom: 0.5em;
-      color: ${props => props.theme.controlText};
+      color: ${props => props.theme.control__color};
     }
 
     &__artist a {
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.control__color_mute};
       text-decoration: none;
     }
   }
@@ -154,7 +162,7 @@ const QueueContainer = styled(Link)`
   padding: 0 1em;
   cursor: pointer;
   text-decoration: none;
-  color: ${props => props.theme.listText};
+  color: ${props => props.theme.control__color};
   transition: transform 256ms;
   will-change: transform;
 

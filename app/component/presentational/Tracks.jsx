@@ -26,7 +26,7 @@ const Tracks = styled.div`
   }
 
   .mute {
-    color: ${props => props.theme.controlMute};
+    color: ${props => props.theme.mute};
   }
 
   .tracks {
@@ -41,7 +41,7 @@ const Tracks = styled.div`
     }
 
     &__info {
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
 
     &__button {

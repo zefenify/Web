@@ -51,7 +51,7 @@ const CollectionContainer = styled(Link)`
     padding: 0;
     margin: 0;
     margin-top: 0.5em;
-    color: ${props => props.theme.controlMute};
+    color: ${props => props.theme.mute};
   }
 
   &:active {

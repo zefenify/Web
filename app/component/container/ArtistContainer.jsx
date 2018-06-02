@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
-import { connect } from 'react-redux';
 import flatten from 'lodash/flatten';
 import cloneDeep from 'lodash/cloneDeep';
 import sortBy from 'lodash/sortBy';
@@ -18,8 +17,8 @@ import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import store from '@app/redux/store';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Artist from '@app/component/presentational/Artist';
+import { withContext } from '@app/component/context/context';
 
 class ArtistContainer extends Component {
   constructor(props) {
@@ -284,7 +283,4 @@ ArtistContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  current: state.current,
-  playing: state.playing,
-}))(ArtistContainer));
+module.exports = withContext('current', 'playing', 'user')(ArtistContainer);

@@ -1,15 +1,16 @@
 /* global document */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Link, NavLink, Redirect, Switch } from 'react-router-dom';
+import styled from 'react-emotion';
 import { ThemeProvider } from 'emotion-theming';
 
 import '@app/component/styled/Global';
 
 import '@app/util/facebook';
 import store from '@app/redux/store';
+import { Provider } from '@app/component/context/context';
 import { themeLight, themeDark } from '@app/config/theme';
 
 import ErrorBoundaryContainer from '@app/component/container/ErrorBoundaryContainer';
@@ -25,13 +26,13 @@ import AlbumsContainer from '@app/component/container/AlbumsContainer';
 import ArtistsContainer from '@app/component/container/ArtistsContainer';
 import TrendingContainer from '@app/component/container/TrendingContainer';
 import SearchContainer from '@app/component/container/SearchContainer';
+import QueueContainer from '@app/component/container/QueueContainer';
 import CollectionContainer from '@app/component/container/CollectionContainer';
 import ContextMenuContainer from '@app/component/container/ContextMenuContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
 import NotificationContainer from '@app/component/container/NotificationContainer';
 import SpaceContainer from '@app/component/container/SpaceContainer.jsx';
 
-import Divider from '@app/component/styled/Divider';
 import Spinner from '@app/component/presentational/Spinner';
 import Mobile from '@app/component/presentational/Mobile';
 import Search from '@app/component/svg/Search';
@@ -39,11 +40,153 @@ import Trending from '@app/component/svg/Trending';
 import Settings from '@app/component/svg/Settings';
 import Download from '@app/component/svg/Download';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
-import { WolfColaContainer, NavListContainer, NavContainer, RouteContainer } from '@app/component/styled/WolfCola';
-import { NavLinkStyled } from '@app/component/styled/ReactRouter';
+// #context-overlay-container = [98, 100]
+// #context-menu-container = 999
+// #mobile = 1000
+const WolfColaContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  opacity: 1;
+  filter: blur(0px);
+  transform: scale3d(1, 1, 1);
+  transition: transform 256ms, filter 0ms, opacity 256ms;
+  will-change: transform, filter, opacity;
 
-class WolfCola extends Component {
+  &.context-menu-active {
+    opacity: 0.92;
+    filter: blur(4px);
+    transform: scale3d(0.96, 0.96, 1);
+  }
+
+  &.booting {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale3d(0.96, 0.96, 1);
+  }
+`;
+
+const NavListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  height: 100vh - 70px;
+`;
+
+const NavContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 200px;
+  width: 200px;
+  background-color: ${props => props.theme.navBackground__backgroundColor};
+  overflow-y: auto;
+
+  .brand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    flex: 0 0 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60px;
+    padding-left: 1rem;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 0 4px 2px ${props => props.theme.navBoxShadow__color};
+
+    &__image {
+      width: 40px;
+      height: 40px;
+      margin-right: 0.75em;
+    }
+
+    &__text {
+      color: ${props => props.theme.navBrand__color};
+    }
+  }
+
+  .nav-list {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+  }
+
+  .small-text {
+    padding: 1em 0.5em;
+    border-left: 1.25em solid transparent;
+    font-size: 0.75em;
+    margin-top: 2em;
+    cursor: default;
+  }
+`;
+
+const NavLinkStyled = styled(NavLink)`
+  color: ${props => props.theme.navLink__color};
+  padding: 0.5em 0.64rem;
+  margin: 0.25em 0;
+  font-weight: bold;
+  text-decoration: none;
+  border-left: 6px solid transparent;
+  cursor: default;
+
+  &:hover {
+    color: ${props => props.theme.navLink__color_hover};
+  }
+
+  &.active {
+    color: ${props => props.theme.navLinkActive__color};
+    border-left: 6px solid ${props => props.theme.primary};
+    background-color: ${props => props.theme.navLinkActive__backgroundColor};
+  }
+`;
+
+const RouteContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 calc(100vw - 200px);
+  height: calc(100vh - 70px);
+  background-color: ${props => props.theme.background};
+  color: ${props => props.theme.text};
+  overflow-y: auto;
+  padding: 1em 2em;
+  padding-bottom: 0;
+  padding-top: 2em;
+`;
+
+const Divider = styled.div`
+  flex: 0 0 auto;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  color: ${props => props.theme.navDivider__color};
+  padding: 1em 0.5em 1em 1rem;
+  font-size: 0.75em;
+
+  &:after {
+    height: 0;
+    content: '';
+    flex: 1 1 auto;
+    border-top: 1px solid ${props => props.theme.navDivider__borderTop};
+  }
+`;
+
+class WolfCola extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,13 +197,13 @@ class WolfCola extends Component {
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      const state = store.getState();
+      const { theme, loading } = store.getState();
 
       // avoiding `shouldComponentUpdate` hook...
-      if (state.theme !== this.state.theme || state.loading !== this.state.loading) {
+      if (theme !== this.state.theme || loading !== this.state.loading) {
         this.setState(() => ({
-          loading: state.loading,
-          theme: state.theme,
+          loading,
+          theme,
         }));
       }
     });
@@ -72,7 +215,7 @@ class WolfCola extends Component {
 
   render() {
     return (
-      <Provider store={store}>
+      <Provider value={store}>
         <ThemeProvider theme={this.state.theme === 'light' ? themeLight : themeDark}>
           <Router>
             <ErrorBoundaryContainer>
@@ -80,8 +223,8 @@ class WolfCola extends Component {
                 <NavListContainer>
                   <NavContainer>
                     <Link className="brand" to="/">
-                      <img className="brand-img" alt="zefenify logo" src="static/image/zefenify.c19e209e3511e84a923a.png" />
-                      <span>Zefenify</span>
+                      <img className="brand__image" alt="zefenify logo" src="static/image/zefenify.png" />
+                      <span className="brand__text">Zefenify</span>
                       <Spinner loading={this.state.loading} />
                     </Link>
 
@@ -91,19 +234,19 @@ class WolfCola extends Component {
                         <span>Search</span>
                         <Search style={{ float: 'right' }} />
                       </NavLinkStyled>
-                      <NavLinkStyled to="/trending/yesterday">
+                      <NavLinkStyled to="/trending">
                         <span>Trending</span>
                         <Trending style={{ float: 'right' }} />
                       </NavLinkStyled>
                       <NavLinkStyled to="/collection">Genres &amp; Moods</NavLinkStyled>
 
-                      <Divider padding="1em 0.5em 1em 1rem" fontSize="0.75em">YOUR MUSIC&nbsp;</Divider>
+                      <Divider>YOUR MUSIC&nbsp;</Divider>
                       <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
                       <NavLinkStyled to="/songs">Songs</NavLinkStyled>
                       <NavLinkStyled to="/albums">Albums</NavLinkStyled>
                       <NavLinkStyled to="/artists">Artists</NavLinkStyled>
 
-                      <Divider padding="1em 0.5em 1em 1rem" fontSize="0.75em">SETTINGS&nbsp;</Divider>
+                      <Divider>SETTINGS&nbsp;</Divider>
                       <NavLinkStyled to="/settings">
                         <span>Settings</span>
                         <Settings style={{ float: 'right' }} />
@@ -130,6 +273,7 @@ class WolfCola extends Component {
                       <Route exact path="/albums/:id?" component={AlbumsContainer} />
                       <Route exact path="/artists/:id?" component={ArtistsContainer} />
                       <Route exact path="/settings" component={SettingsContainer} />
+                      <Route exact path="/queue" component={QueueContainer} />
                       <Redirect exact push={false} from="/trending" to="/trending/yesterday" />
                       <Redirect push={false} to="/" />
                     </Switch>
@@ -153,6 +297,4 @@ class WolfCola extends Component {
   }
 }
 
-const WolfColaDJKhaled = DJKhaled(WolfCola);
-
-render(<WolfColaDJKhaled />, document.querySelector('#wolf-cola'));
+render(<WolfCola />, document.querySelector('#wolf-cola'));

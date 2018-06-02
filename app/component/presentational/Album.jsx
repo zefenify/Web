@@ -28,7 +28,7 @@ const Header = styled.div`
     height: 200px;
     width: 200px;
     border-radius: 6px;
-    border: 1px solid ${props => props.theme.listDivider};
+    border: 1px solid ${props => props.theme.divider};
   }
 
   .info {
@@ -70,7 +70,7 @@ const Header = styled.div`
     &__duration {
       margin: 0;
       margin-top: 0.5em;
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
 
     .play-share {
@@ -79,7 +79,7 @@ const Header = styled.div`
   }
 
   .text-muted {
-    color: ${props => props.theme.controlMute};
+    color: ${props => props.theme.mute};
   }
 `;
 
@@ -122,7 +122,7 @@ const HeaderTracks = ({
 
           <div className="play-share">
             <Button className="play-share__play-big" onClick={albumPlayPause}>{`${albumPlaying && playing ? 'PAUSE' : 'PLAY'}`}</Button>
-            <Button className="play-share__share" outline noPadding onClick={contextMenuAlbum}><Share /></Button>
+            <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={contextMenuAlbum}><Share /></Button>
           </div>
         </div>
       </Header>

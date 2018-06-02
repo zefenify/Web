@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bool, shape } from 'prop-types';
-import isEqual from 'lodash/isEqual';
-import { connect } from 'react-redux';
+import isEqual from 'react-fast-compare';
 
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -11,8 +10,8 @@ import store from '@app/redux/store';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Home from '@app/component/presentational/Home';
+import { withContext } from '@app/component/context/context';
 
 class HomeContainer extends Component {
   constructor(props) {
@@ -120,8 +119,4 @@ HomeContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  user: state.user,
-  playing: state.playing,
-  urlCurrentPlaying: state.urlCurrentPlaying,
-}))(HomeContainer));
+module.exports = withContext('user', 'playing', 'urlCurrentPlaying')(HomeContainer);

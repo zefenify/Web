@@ -1,8 +1,7 @@
 /* global window */
-/* eslint no-console: off */
 
 import React, { Component } from 'react';
-import { element } from 'prop-types';
+import { element, oneOfType, arrayOf } from 'prop-types';
 
 import ErrorBoundary from '@app/component/presentational/ErrorBoundary';
 
@@ -35,7 +34,10 @@ class ErrorBoundaryContainer extends Component {
 }
 
 ErrorBoundaryContainer.propTypes = {
-  children: element,
+  children: oneOfType([
+    element,
+    arrayOf(element),
+  ]),
 };
 
 ErrorBoundaryContainer.defaultProps = {

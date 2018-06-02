@@ -1,5 +1,4 @@
 /* eslint no-console: off */
-/* eslint no-underscore-dangle: off */
 
 import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
@@ -13,8 +12,8 @@ function* remainingBootFromLF() {
   try {
     const lfRemaining = yield localforage.getItem(LF_STORE.REMAINING);
     yield put(remaining(lfRemaining || false));
-  } catch (err) {
-    console.warn('Unable to boot remaining from LF', err);
+  } catch (remainingGetError) {
+    console.warn('Unable to boot remaining from LF', remainingGetError);
   }
 }
 
@@ -24,8 +23,8 @@ function* _remaining() {
 
   try {
     yield localforage.setItem(LF_STORE.REMAINING, !state.remaining);
-  } catch (err) {
-    console.warn('Unable to save remaining state to LF', err);
+  } catch (remainingSetError) {
+    console.warn('Unable to save remaining state to LF', remainingSetError);
   }
 }
 

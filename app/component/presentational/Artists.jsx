@@ -24,7 +24,7 @@ const ArtistsContainer = styled.div`
   }
 
   .mute {
-    color: ${props => props.theme.controlMute};
+    color: ${props => props.theme.mute};
   }
 `;
 
@@ -99,7 +99,7 @@ const ArtistContainer = styled.div`
     line-height: 125%;
     margin-top: 0.5em;
     font-size: 1.25em;
-    color: ${props => props.theme.listText};
+    color: ${props => props.theme.text};
     text-align: center;
   }
 
@@ -129,7 +129,7 @@ const Artists = ({
     return (
       <ArtistsContainer className="center-content">
         <h2 className="mute">You need to be logged in to view saved artists</h2>
-        <Link to="/settings"><Button outline>Go to Settings</Button></Link>
+        <Link to="/settings"><Button border themeColor backgroundColor="transparent">Go to Settings</Button></Link>
       </ArtistsContainer>
     );
   }
@@ -171,7 +171,7 @@ const Artists = ({
       <div className="list">
         {
           artists.map(artist => (
-            <ArtistContainer className={artist.artist_id === artistPlayingId ? 'active' : ''}>
+            <ArtistContainer key={artist.artist_id} className={artist.artist_id === artistPlayingId ? 'active' : ''}>
               <div className="artist-cover">
                 <ImageContainer borderRadius="50%">
                   <img src={`${BASE_S3}${artist.artist_cover.s3_name}`} alt={artist.artist_name} />

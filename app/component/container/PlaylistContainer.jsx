@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { bool, string, shape } from 'prop-types';
-import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -11,11 +10,11 @@ import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import HeaderTracks from '@app/component/presentational/HeaderTracks';
 
 import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
+import { withContext } from '@app/component/context/context';
 
 class PlaylistContainer extends Component {
   constructor(props) {
@@ -28,21 +27,24 @@ class PlaylistContainer extends Component {
         seconds: 0,
       },
       playingFeatured: false,
+      playlistId: props.match.params.id,
     };
 
     this.tracksPlayPause = this.tracksPlayPause.bind(this);
     this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuPlaylist = this.contextMenuPlaylist.bind(this);
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
-    this.playlistBuild = this.playlistBuild.bind(this);
+    this.build = this.build.bind(this);
   }
 
   componentDidMount() {
-    this.playlistBuild(this.props);
+    this.build();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.playlistBuild(nextProps);
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.playlistId !== this.state.playlistId) {
+      this.build();
+    }
   }
 
   componentWillUnmount() {
@@ -50,9 +52,9 @@ class PlaylistContainer extends Component {
     this.cancelRequest();
   }
 
-  playlistBuild(props) {
+  build() {
     store.dispatch(loading(true));
-    api(`${BASE}playlist/${props.match.params.id}`, props.user, (cancel) => {
+    api(`${BASE}playlist/${this.props.match.params.id}`, this.props.user, (cancel) => {
       this.cancelRequest = cancel;
     }).then((data) => {
       store.dispatch(loading(false));
@@ -203,6 +205,16 @@ class PlaylistContainer extends Component {
   }
 }
 
+PlaylistContainer.getDerivedStateFromProps = (nextProps, prevState) => {
+  if (nextProps.match.params.id === prevState.playlistId) {
+    return null;
+  }
+
+  return {
+    playlistId: nextProps.match.params.id,
+  };
+};
+
 PlaylistContainer.propTypes = {
   current: shape({}),
   playing: bool,
@@ -221,9 +233,4 @@ PlaylistContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  current: state.current,
-  playing: state.playing,
-  user: state.user,
-  urlCurrentPlaying: state.urlCurrentPlaying,
-}))(PlaylistContainer));
+module.exports = withContext('current', 'playing', 'user', 'urlCurrentPlaying')(PlaylistContainer);

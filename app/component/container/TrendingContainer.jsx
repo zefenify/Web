@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { string, bool, shape } from 'prop-types';
-import { connect } from 'react-redux';
 
 import { BASE } from '@app/config/api';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
@@ -14,8 +13,8 @@ import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
-import DJKhaled from '@app/component/hoc/DJKhaled';
 import Trending from '@app/component/presentational/Trending';
+import { withContext } from '@app/component/context/context';
 
 class TrendingContainer extends Component {
   constructor(props) {
@@ -27,6 +26,7 @@ class TrendingContainer extends Component {
         minutes: 0,
         seconds: 0,
       },
+      category: props.match.params.category,
       trendingPlaying: false,
     };
 
@@ -39,9 +39,9 @@ class TrendingContainer extends Component {
     this.loadTracks(this.props.match.params.category);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.category !== this.props.match.params.category) {
-      this.loadTracks(nextProps.match.params.category);
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.category !== this.state.category) {
+      this.loadTracks(this.state.category);
     }
   }
 
@@ -188,6 +188,16 @@ class TrendingContainer extends Component {
   }
 }
 
+TrendingContainer.getDerivedStateFromProps = (nextProps, prevState) => {
+  if (nextProps.match.params.category === prevState.category) {
+    return null;
+  }
+
+  return {
+    category: nextProps.match.params.category,
+  };
+};
+
 TrendingContainer.propTypes = {
   playing: bool,
   current: shape({}),
@@ -206,8 +216,4 @@ TrendingContainer.defaultProps = {
   user: null,
 };
 
-module.exports = DJKhaled(connect(state => ({
-  user: state.user,
-  current: state.current,
-  playing: state.playing,
-}))(TrendingContainer));
+module.exports = withContext('user', 'current', 'playing')(TrendingContainer);

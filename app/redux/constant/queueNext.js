@@ -1,0 +1,7 @@
+const QUEUE_NEXT_ADD = 'QUEUE_NEXT_ADD';
+const QUEUE_NEXT_REMOVE = 'QUEUE_NEXT_REMOVE';
+
+module.exports = {
+  QUEUE_NEXT_ADD,
+  QUEUE_NEXT_REMOVE,
+};

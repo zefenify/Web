@@ -1,6 +1,5 @@
 /* global document */
 /* eslint no-console: off */
-/* eslint no-underscore-dangle: off */
 
 import { delay } from 'redux-saga';
 import { call, put, select, takeEvery } from 'redux-saga/effects';

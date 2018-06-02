@@ -6,27 +6,25 @@ import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/cont
 
 import store from '@app/redux/store';
 import tracksDuration from '@app/redux/selector/tracksDuration';
-import tracksPlaying from '@app/redux/selector/tracksPlaying';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 
 import Tracks from '@app/component/presentational/Tracks';
 import { withContext } from '@app/component/context/context';
 
-class RecentContainer extends Component {
+class QueueContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      durationTotal: tracksDuration({ tracks: props.history }),
-      historyPlaying: tracksPlaying({ queueInitial: props.queueInitial, tracks: props.history }),
+      durationTotal: tracksDuration({ tracks: props.queueNext }),
     };
 
-    this.historyPlayPause = this.historyPlayPause.bind(this);
+    this.queueNextPlayPause = this.queueNextPlayPause.bind(this);
     this.trackPlayPause = this.trackPlayPause.bind(this);
     this.contextMenuTrack = this.contextMenuTrack.bind(this);
   }
 
-  historyPlayPause() {
-    if (this.state.historyPlaying === true) {
+  queueNextPlayPause() {
+    if (this.state.queueNextPlaying === true) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -37,9 +35,9 @@ class RecentContainer extends Component {
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.props.history[0],
-        queue: this.props.history,
-        queueInitial: this.props.history,
+        play: this.props.queueNext[0],
+        queue: this.props.queueNext,
+        queueInitial: this.props.queueInitial,
       },
     });
 
@@ -48,7 +46,7 @@ class RecentContainer extends Component {
 
   trackPlayPause(trackId) {
     if (this.props.current === null || this.props.current.track_id !== trackId) {
-      const trackIndex = this.props.history.findIndex(track => track.track_id === trackId);
+      const trackIndex = this.props.queueNext.findIndex(track => track.track_id === trackId);
 
       if (trackIndex === -1) {
         return;
@@ -57,9 +55,9 @@ class RecentContainer extends Component {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: this.props.history[trackIndex],
-          queue: this.props.history,
-          queueInitial: this.props.history,
+          play: this.props.queueNext[trackIndex],
+          queue: this.props.queueNext,
+          queueInitial: this.props.queueInitial,
         },
       });
 
@@ -73,7 +71,7 @@ class RecentContainer extends Component {
   }
 
   contextMenuTrack(trackId) {
-    const trackIndex = this.props.history.findIndex(track => track.track_id === trackId);
+    const trackIndex = this.props.queueNext.findIndex(track => track.track_id === trackId);
 
     if (trackIndex === -1) {
       return;
@@ -83,7 +81,7 @@ class RecentContainer extends Component {
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_TRACK,
-        payload: this.props.history[trackIndex],
+        payload: this.props.queueNext[trackIndex],
       },
     });
   }
@@ -91,14 +89,15 @@ class RecentContainer extends Component {
   render() {
     return (
       <Tracks
-        titleMain="Recently Played"
-        titleEmpty="You have no recently played songs...yet"
+        titleMain="Queue"
+        titleEmpty="Queue is empty...spice it up እንጂ"
         playing={this.props.playing}
         current={this.props.current}
-        tracks={this.props.history}
+        tracks={this.props.queueNext}
         durationTotal={this.state.durationTotal}
-        tracksPlaying={this.state.historyPlaying}
-        tracksPlayPause={this.historyPlayPause}
+        tracksPlaying={false}
+        tracksPlayPauseButtonShow={false}
+        tracksPlayPause={this.queueNextPlayPause}
         trackPlayPause={this.trackPlayPause}
         contextMenuTrack={this.contextMenuTrack}
       />
@@ -106,26 +105,25 @@ class RecentContainer extends Component {
   }
 }
 
-RecentContainer.getDerivedStateFromProps = nextProps => ({
-  durationTotal: tracksDuration({ tracks: nextProps.history }),
-  historyPlaying: tracksPlaying({ queueInitial: nextProps.queueInitial, tracks: nextProps.history }),
+QueueContainer.getDerivedStateFromProps = nextProps => ({
+  durationTotal: tracksDuration({ tracks: nextProps.queueNext }),
 });
 
-RecentContainer.propTypes = {
+QueueContainer.propTypes = {
   playing: bool,
   current: shape({}),
-  history: arrayOf(shape({})),
+  queueNext: arrayOf(shape({})),
   queueInitial: arrayOf(shape({})),
   match: shape({
     url: string,
   }).isRequired,
 };
 
-RecentContainer.defaultProps = {
+QueueContainer.defaultProps = {
   playing: false,
   current: null,
-  history: [],
+  queueNext: [],
   queueInitial: [],
 };
 
-module.exports = withContext('playing', 'current', 'history', 'queueInitial', 'totalDuration')(RecentContainer);
+module.exports = withContext('playing', 'current', 'queueNext', 'queueInitial', 'totalDuration')(QueueContainer);

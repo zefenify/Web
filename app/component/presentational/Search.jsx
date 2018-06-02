@@ -2,7 +2,7 @@ import React from 'react';
 import { string, func, bool, shape } from 'prop-types';
 import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
-import isEqual from 'lodash/fp/isEqual';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 
@@ -25,20 +25,20 @@ const SearchContainer = styled.div`
     height: 94px;
     padding: 1em 2em 0.25em 2em;
     flex-direction: column;
-    background-color: ${props => props.theme.controlBackground};
-    box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
+    background-color: ${props => props.theme.search__backgroundColor};
+    box-shadow: 0 0 4px 2px ${props => props.theme.search__shadow};
 
     &__label {
       font-size: 1em;
       margin-bottom: 0.5em;
-      color: ${props => props.theme.controlText};
+      color: ${props => props.theme.searchLabel__color};
     }
 
     &__input {
       font-size: 42px;
       font-weight: bold;
       border: none;
-      color: ${props => props.theme.controlText};
+      color: ${props => props.theme.searchInput__color};
       background-color: transparent;
     }
   }
@@ -111,7 +111,7 @@ const SearchContainer = styled.div`
     &__year {
       margin: 0;
       margin-bottom: 1em;
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
   }
 `;
@@ -143,7 +143,7 @@ const Search = ({
   }
 
   // no matches found
-  if (isEqual(matches)({
+  if (isEqual(matches, {
     album: [],
     artist: [],
     playlist: [],
@@ -184,12 +184,12 @@ const Search = ({
       <div className="result">
         <div className="result__list">
           { /* artist */ }
-          { matches.artist.length > 0 ? <h2><Divider textTheme>Artists&nbsp;</Divider></h2> : null }
+          { matches.artist.length > 0 ? <h2><Divider text>Artists&nbsp;</Divider></h2> : null }
           {
             matches.artist.length > 0 ?
               <div className="result-match-list">
                 { matches.artist.map(artist => (
-                  <Link to={`artist/${artist.artist_id}`} className="result-match-list__match artist">
+                  <Link key={artist.artist_id} to={`artist/${artist.artist_id}`} className="result-match-list__match artist">
                     <ImageContainer borderRadius="50%">
                       <img alt={`${artist.artist_name}`} src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
                     </ImageContainer>
@@ -201,12 +201,12 @@ const Search = ({
 
           { /* album */ }
           { /* apu: album-playlist[-uplaylist] */ }
-          { matches.album.length > 0 ? <h2><Divider textTheme>Albums&nbsp;</Divider></h2> : null }
+          { matches.album.length > 0 ? <h2><Divider text>Albums&nbsp;</Divider></h2> : null }
           {
             matches.album.length > 0 ?
               <div className="result-match-list">
                 { matches.album.map(album => (
-                  <Link to={`album/${album.album_id}`} className="result-match-list__match apu">
+                  <Link key={album.album_id} to={`album/${album.album_id}`} className="result-match-list__match apu">
                     <ImageContainer>
                       <img alt={`${album.album_name}`} src={`${BASE_S3}${album.album_cover.s3_name}`} />
                     </ImageContainer>
@@ -218,12 +218,12 @@ const Search = ({
           }
 
           { /* playlist */ }
-          { matches.playlist.length > 0 ? <h2><Divider textTheme>Playlists&nbsp;</Divider></h2> : null }
+          { matches.playlist.length > 0 ? <h2><Divider text>Playlists&nbsp;</Divider></h2> : null }
           {
             matches.playlist.length > 0 ?
               <div className="result-match-list">
                 { matches.playlist.map(playlist => (
-                  <Link to={`playlist/${playlist.playlist_id}`} className="result-match-list__match apu">
+                  <Link key={playlist.playlist_id} to={`playlist/${playlist.playlist_id}`} className="result-match-list__match apu">
                     <ImageContainer>
                       <img alt={`${playlist.playlist_name}`} src={`${BASE_S3}${playlist.playlist_cover.s3_name}`} />
                     </ImageContainer>
@@ -234,7 +234,7 @@ const Search = ({
           }
 
           { /* track */ }
-          { matches.track.length > 0 ? <h2><Divider textTheme>Tracks&nbsp;</Divider></h2> : null }
+          { matches.track.length > 0 ? <h2><Divider text>Tracks&nbsp;</Divider></h2> : null }
           {
             matches.track.length > 0 ?
               <div>

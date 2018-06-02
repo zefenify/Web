@@ -1,5 +1,4 @@
 /* global window, document */
-/* eslint no-console: off */
 
 import { Component } from 'react';
 import debounce from 'lodash/debounce';

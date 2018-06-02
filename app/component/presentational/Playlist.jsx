@@ -86,14 +86,14 @@ const PlaylistContainer = styled(Link)`
     margin: 0;
     margin-top: 0.5em;
     line-height: 1.25em;
-    color: ${props => props.theme.controlMute};
+    color: ${props => props.theme.mute};
   }
 
   .playlist-count {
     padding: 0;
     margin: 0;
     margin-top: 0.5em;
-    color: ${props => props.theme.controlMute};
+    color: ${props => props.theme.mute};
   }
 
   &:active {

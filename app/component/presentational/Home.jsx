@@ -11,7 +11,7 @@ const Home = ({
   featuredPlay,
 }) => (
   <FixedHeaderList>
-    <div className="title">
+    <div className="header">
       <h2>Featured</h2>
     </div>
 

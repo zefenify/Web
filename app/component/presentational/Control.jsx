@@ -6,7 +6,6 @@ import styled from 'react-emotion';
 import { BASE_S3 } from '@app/config/api';
 import { human } from '@app/util/time';
 
-import { ControlsContainer } from '@app/component/styled/WolfCola';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Range from '@app/component/styled/Range';
 import { ClearButton } from '@app/component/styled/Button';
@@ -17,6 +16,16 @@ import Repeat from '@app/component/svg/Repeat';
 import Shuffle from '@app/component/svg/Shuffle';
 import PlayPause from '@app/component/svg/PlayPause';
 import Volume from '@app/component/svg/Volume';
+import List from '@app/component/svg/List';
+
+const ControlsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 70px;
+  background-color: ${props => props.theme.control__backgroundColor};
+  color: ${props => props.theme.control__color};
+`;
 
 const NowPlayingContainer = styled.div`
   display: flex;
@@ -59,11 +68,11 @@ const NowPlayingContainer = styled.div`
 
     &__name {
       margin-bottom: 0.5em;
-      color: ${props => props.theme.controlText};
+      color: ${props => props.theme.control__color};
     }
 
     &__artist a {
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.control__color_mute};
       text-decoration: none;
     }
   }
@@ -109,18 +118,6 @@ const MusicControls = styled.div`
       text-align: center;
     }
 
-    &__accessibility {
-      position: absolute;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      font-size: 6px;
-      left: 0;
-      right: 0;
-      bottom: -8px;
-      margin: 0 auto;
-    }
-
     &:hover {
       transform: scale3d(1.075, 1.075, 1);
     }
@@ -131,13 +128,16 @@ const MusicControls = styled.div`
   }
 `;
 
+// Now Playing: 250px
+// Volume: 175px
+// Queue: 50px
 const MusicProgress = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   height: 30px;
-  width: calc(100vw - 425px);
+  width: calc(100vw - 475px);
   padding: 0 1em;
   cursor: default;
 
@@ -149,6 +149,25 @@ const MusicProgress = styled.div`
 
   .progress {
     flex: 1 1 auto;
+  }
+`;
+
+const QueueContainer = styled(Link)`
+  flex: 0 1 50px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${props => props.theme.control__color};
+  transition: transform 256ms;
+  will-change: transform;
+
+  &:active {
+    transform: scale3d(0.95, 0.95, 1);
   }
 `;
 
@@ -234,7 +253,7 @@ const Control = ({
 
       <MusicProgress>
         <div className="time">
-          {`${playbackPosition === null ? '0:00' : human(playbackPosition)}`}
+          {`${playbackPosition === 0 ? '0:00' : human(playbackPosition)}`}
         </div>
 
         <Range
@@ -253,6 +272,10 @@ const Control = ({
         </ClearButton>
       </MusicProgress>
     </MusicControlsContainer>
+
+    <QueueContainer to="/queue" id="queue-container">
+      <List />
+    </QueueContainer>
 
     <VolumeContainer>
       <Volume volume={volume} onClick={() => volume === 0 ? maxVolume() : muteVolume()} />

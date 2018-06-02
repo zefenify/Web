@@ -11,7 +11,7 @@ const Range = styled.input`
     border: none;
     padding: 1px 2px;
     border-radius: 4px;
-    background: ${props => props.theme.controlText};
+    background: ${props => props.theme.control__color};
     box-shadow: none;
     outline: none;
 
@@ -52,11 +52,11 @@ const Range = styled.input`
     height: 12px;
     border: none;
     border-radius: 12px;
-    background-color: ${props => props.theme.listText};
+    background-color: ${props => props.theme.control__color};
     transition: all 125ms linear;
 
     &:hover {
-      background-color: ${props => props.theme.listText};
+      background-color: ${props => props.theme.control__color};
       transform: scale3d(1.25, 1.25, 1);
     }
   }
@@ -66,11 +66,11 @@ const Range = styled.input`
     height: 16px;
     border: none;
     border-radius: 16px;
-    background-color: ${props => props.theme.listText};
+    background-color: ${props => props.theme.control__color};
     transition: all 125ms linear;
 
     &:hover {
-      background-color: ${props => props.theme.listText};
+      background-color: ${props => props.theme.control__color};
       transform: scale3d(1.25, 1.25, 1);
     }
   }
@@ -80,11 +80,11 @@ const Range = styled.input`
     height: 16px;
     border-radius: 16px;
     border: 0;
-    background-color: ${props => props.theme.listText};
+    background-color: ${props => props.theme.control__color};
     transition: all 125ms linear;
 
     &:hover {
-      background-color: ${props => props.theme.listText};
+      background-color: ${props => props.theme.control__color};
       transform: scale3d(1.25, 1.25, 1);
     }
   }

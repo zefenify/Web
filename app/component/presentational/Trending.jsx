@@ -8,7 +8,7 @@ import Divider from '@app/component/styled/Divider';
 import Button from '@app/component/styled/Button';
 
 const TrendingContainer = styled.div`
-  .title {
+  .header {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -18,7 +18,7 @@ const TrendingContainer = styled.div`
     left: 0;
     height: 60px;
     padding: 0 1em;
-    box-shadow: 0 0 4px 2px ${props => props.theme.navBarBoxShadow};
+    box-shadow: 0 0 4px 2px ${props => props.theme.navBoxShadow__color};
   }
 
   .list {
@@ -44,10 +44,6 @@ const TrendingListContainer = styled.div`
     align-items: center;
   }
 
-  .mute {
-    color: ${props => props.theme.controlMute};
-  }
-
   .trending {
     display: flex;
     flex-direction: column;
@@ -60,7 +56,7 @@ const TrendingListContainer = styled.div`
     }
 
     &__info {
-      color: ${props => props.theme.controlMute};
+      color: ${props => props.theme.mute};
     }
 
     &__button {
@@ -79,7 +75,7 @@ const TrendingListContainer = styled.div`
 `;
 
 const NavLinkStyled = styled(NavLink)`
-  color: ${props => props.theme.navbarText};
+  color: ${props => props.theme.navLink__color};
   padding: 0 1em;
   font-size: 1.2em;
   font-weight: bold;
@@ -91,13 +87,13 @@ const NavLinkStyled = styled(NavLink)`
   justify-content: center;
 
   &:hover {
-    color: ${props => props.theme.navbarTextActive};
+    color: ${props => props.theme.navLink__color_hover};
   }
 
   &.active {
-    color: ${props => props.theme.navbarTextActive};
+    color: ${props => props.theme.navLinkActive__color};
     border-bottom: 2px solid ${props => props.theme.primary};
-    background-color: ${props => props.theme.listBackgroundHover};
+    background-color: ${props => props.theme.navLinkActive__backgroundColor};
   }
 `;
 
@@ -116,7 +112,7 @@ const Trending = ({
     // repeating block to avoid the ? : in the _actual_ render
     return (
       <TrendingContainer>
-        <div className="title">
+        <div className="header">
           <NavLinkStyled to="/trending/today">Today</NavLinkStyled>
           <NavLinkStyled to="/trending/yesterday">Yesterday</NavLinkStyled>
           <NavLinkStyled to="/trending/week">Week</NavLinkStyled>
@@ -132,7 +128,7 @@ const Trending = ({
 
   return (
     <TrendingContainer>
-      <div className="title">
+      <div className="header">
         <NavLinkStyled to="/trending/today">Today</NavLinkStyled>
         <NavLinkStyled to="/trending/yesterday">Yesterday</NavLinkStyled>
         <NavLinkStyled to="/trending/week">Week</NavLinkStyled>

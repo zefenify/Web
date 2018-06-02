@@ -14,8 +14,9 @@ import playing from '@app/redux/reducer/playing';
 import duration from '@app/redux/reducer/duration';
 import playbackPosition from '@app/redux/reducer/playbackPosition';
 import remaining from '@app/redux/reducer/remaining';
-import queue from '@app/redux/reducer/queue';
 import current from '@app/redux/reducer/current';
+import queue from '@app/redux/reducer/queue';
+import queueNext from '@app/redux/reducer/queueNext';
 import queueInitial from '@app/redux/reducer/queueInitial';
 import history from '@app/redux/reducer/history';
 import loading from '@app/redux/reducer/loading';
@@ -39,8 +40,9 @@ const store = createStore(
     duration,
     playbackPosition,
     remaining,
-    queue,
     current,
+    queue,
+    queueNext,
     queueInitial,
     history,
     loading,
@@ -54,6 +56,7 @@ const store = createStore(
     theme: 'dark',
     volume: 1,
     queue: [],
+    queueNext: [], // queue of tracks that have been requested to be played next
     queueInitial: [], // queue of tracks to be played [used on repeat `ALL` and queue is empty]
     history: [], // where played tracks will are pushed [repeat `ONE` will only push once]
     song: null, // saved tracks

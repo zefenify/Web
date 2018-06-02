@@ -8,8 +8,8 @@ import styled from 'react-emotion';
 // all images on Zefenify are square
 const ImageContainer = styled.div`
   position: relative;
-  border: 1px solid ${props => props.border ? props.border : props.theme.listDivider};
-  border-radius: ${props => props.borderRadius ? props.borderRadius : '6px'};
+  border: 1px solid ${props => props.border || props.theme.divider};
+  border-radius: ${props => props.borderRadius || '6px'};
 
   .container {
     position: relative;
@@ -25,7 +25,7 @@ const ImageContainer = styled.div`
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: ${props => props.borderRadius ? props.borderRadius : '6px'};
+      border-radius: ${props => props.borderRadius || '6px'};
     }
   }
 `;

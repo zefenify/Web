@@ -60,19 +60,19 @@ const DMCA = styled.a`
   padding: 0.75em 2.75em;
   font-size: 1em;
   margin-bottom: 1em;
-  border: 1px solid ${props => props.theme.listText};
+  border: 1px solid ${props => props.theme.text};
 `;
 
 const Settings = ({
-  currentTheme,
-  currentCrossfade,
   crossfade,
-  toggleTheme,
+  crossfadeSet,
+  themeToggle,
+  theme,
   login,
   logout,
   user,
 }) => {
-  const crossfadeMessage = `Crossfade: ${currentCrossfade === 0 ? 'Off' : `${currentCrossfade} Second${currentCrossfade > 1 ? 's' : ''}`}`;
+  const crossfadeMessage = `Crossfade: ${crossfade === 0 ? 'Off' : `${crossfade} Second${crossfade > 1 ? 's' : ''}`}`;
 
   if (user === null) {
     return (
@@ -85,10 +85,10 @@ const Settings = ({
           <b>Login with Facebook</b>
         </Button>
 
-        <Button style={{ marginBottom: '0.5em' }} onClick={toggleTheme}>Change Theme</Button>
+        <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Change Theme</Button>
 
         <small>
-          <span>Current theme is </span><b>{ currentTheme === 'light' ? 'Dayman' : 'Nightman' }</b>
+          <span>Current theme is </span><b>{ theme === 'light' ? 'Dayman' : 'Nightman' }</b>
         </small>
 
         <div className="crossfade">
@@ -96,8 +96,8 @@ const Settings = ({
 
           <Range
             type="range"
-            onChange={e => crossfade(e)}
-            value={currentCrossfade}
+            onChange={e => crossfadeSet(e)}
+            value={crossfade}
             min="0"
             max="12"
             step="1"
@@ -121,10 +121,10 @@ const Settings = ({
         <Button className="user-info__logout" onClick={logout}>Logout</Button>
       </div>
 
-      <Button style={{ marginBottom: '0.5em' }} onClick={toggleTheme}>Change Theme</Button>
+      <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Change Theme</Button>
 
       <small>
-        <span>Current theme is </span><b>{ currentTheme === 'light' ? 'Dayman' : 'Nightman' }</b>
+        <span>Current theme is </span><b>{ theme === 'light' ? 'Dayman' : 'Nightman' }</b>
       </small>
 
       <div className="crossfade">
@@ -132,8 +132,8 @@ const Settings = ({
 
         <Range
           type="range"
-          onChange={e => crossfade(e)}
-          value={currentCrossfade}
+          onChange={e => crossfadeSet(e)}
+          value={crossfade}
           min="0"
           max="12"
           step="1"
@@ -146,18 +146,18 @@ const Settings = ({
 };
 
 Settings.propTypes = {
-  currentTheme: string,
+  theme: string,
   user: shape({}),
-  currentCrossfade: number,
-  toggleTheme: func.isRequired,
-  crossfade: func.isRequired,
+  crossfade: number,
+  themeToggle: func.isRequired,
+  crossfadeSet: func.isRequired,
   login: func.isRequired,
   logout: func.isRequired,
 };
 
 Settings.defaultProps = {
-  currentTheme: 'light',
-  currentCrossfade: 0,
+  theme: 'light',
+  crossfade: 0,
   user: null,
 };
 

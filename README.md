@@ -2,7 +2,7 @@
 
 ![Zefenify](https://raw.githubusercontent.com/Zefenify/Web/master/Zefenify.jpg "Zefenify")
 
-## Why Another Amharic Music Player Bruh?
+## Why Another Ethiopian Music Player Bruh?
 Well, _all_ Ethiopian music platforms I've seen don't come close to the _industry standard_ of a music player, are riddled with ads and **unbearable** UI/UX
 
 ## Stack

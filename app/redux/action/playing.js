@@ -7,6 +7,6 @@ function playing(payload) {
   };
 }
 
-module.exports = {
+export default {
   playing,
 };

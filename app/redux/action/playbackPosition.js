@@ -7,6 +7,6 @@ function playbackPosition(payload) {
   };
 }
 
-module.exports = {
+export default {
   playbackPosition,
 };

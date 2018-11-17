@@ -7,6 +7,6 @@ function current(payload) {
   };
 }
 
-module.exports = {
+export default {
   current,
 };

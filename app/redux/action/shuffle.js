@@ -7,6 +7,6 @@ function shuffle(payload) {
   };
 }
 
-module.exports = {
+export default {
   shuffle,
 };

@@ -21,7 +21,7 @@ function historyFront(payload) {
   };
 }
 
-module.exports = {
+export default {
   historyPush,
   historyPop,
   historyFront,

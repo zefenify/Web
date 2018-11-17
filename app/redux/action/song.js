@@ -7,6 +7,6 @@ function song(payload) {
   };
 }
 
-module.exports = {
+export default {
   song,
 };

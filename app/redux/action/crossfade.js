@@ -7,6 +7,6 @@ function crossfade(payload) {
   };
 }
 
-module.exports = {
+export default {
   crossfade,
 };

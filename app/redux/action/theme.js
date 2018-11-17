@@ -7,6 +7,6 @@ function theme(payload) {
   };
 }
 
-module.exports = {
+export default {
   theme,
 };

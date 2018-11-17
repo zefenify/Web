@@ -7,6 +7,6 @@ function repeat(payload) {
   };
 }
 
-module.exports = {
+export default {
   repeat,
 };

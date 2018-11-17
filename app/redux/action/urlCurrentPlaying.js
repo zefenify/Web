@@ -7,6 +7,6 @@ function urlCurrentPlaying(payload) {
   };
 }
 
-module.exports = {
+export default {
   urlCurrentPlaying,
 };

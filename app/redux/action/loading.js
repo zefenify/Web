@@ -7,6 +7,6 @@ function loading(payload) {
   };
 }
 
-module.exports = {
+export default {
   loading,
 };

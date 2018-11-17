@@ -7,6 +7,6 @@ function notification(payload) {
   };
 }
 
-module.exports = {
+export default {
   notification,
 };

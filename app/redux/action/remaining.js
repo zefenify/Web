@@ -7,6 +7,6 @@ function remaining(payload) {
   };
 }
 
-module.exports = {
+export default {
   remaining,
 };

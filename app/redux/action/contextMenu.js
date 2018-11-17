@@ -14,7 +14,7 @@ function contextMenuOff(payload = null) {
   };
 }
 
-module.exports = {
+export default {
   contextMenuOn,
   contextMenuOff,
 };

@@ -7,6 +7,6 @@ function queueInitial(payload) {
   };
 }
 
-module.exports = {
+export default {
   queueInitial,
 };

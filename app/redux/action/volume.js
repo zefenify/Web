@@ -7,6 +7,6 @@ function volume(payload) {
   };
 }
 
-module.exports = {
+export default {
   volume,
 };

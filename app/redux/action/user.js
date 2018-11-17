@@ -7,6 +7,6 @@ function user(payload) {
   };
 }
 
-module.exports = {
+export default {
   user,
 };

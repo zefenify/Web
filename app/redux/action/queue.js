@@ -27,7 +27,7 @@ function queueClear() {
   };
 }
 
-module.exports = {
+export default {
   queueSet,
   queueAdd,
   queueRemove,

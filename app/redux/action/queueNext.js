@@ -17,7 +17,7 @@ function queueNextRemove(payload) {
 }
 
 
-module.exports = {
+export default {
   queueNextAdd,
   queueNextRemove,
 };

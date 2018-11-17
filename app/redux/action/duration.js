@@ -7,6 +7,6 @@ function duration(payload) {
   };
 }
 
-module.exports = {
+export default {
   duration,
 };

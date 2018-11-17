@@ -17,8 +17,7 @@ $opts = [
 ];
 
 $context = stream_context_create($opts);
-$meta = file_get_contents("{$cardAPI}?url={$_SERVER['REQUEST_URI']}", false, $context);
-echo $meta;
+echo file_get_contents("{$cardAPI}?url={$_SERVER['REQUEST_URI']}", false, $context);
 ?>
     <meta name="keywords" content="Ethiopian Music">
     <meta name="description" content="Ethiopian. Music.">

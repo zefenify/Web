@@ -4,7 +4,7 @@ const config = {
   NAME: 'Zefenify',
   STORE_NAME: 'Zefenify',
   DESCRIPTION: 'Zefenify • Ethiopian. Music.',
-  LF_STORE: {
+  LOCALFORAGE_STORE: {
     THEME: 'THEME',
     VOLUME: 'VOLUME',
     REPEAT: 'REPEAT',

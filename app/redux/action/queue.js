@@ -1,4 +1,10 @@
-import { QUEUE_SET, QUEUE_ADD, QUEUE_REMOVE, QUEUE_CLEAR } from '@app/redux/constant/queue';
+import {
+  QUEUE_SET,
+  QUEUE_ADD,
+  QUEUE_REMOVE,
+  QUEUE_CLEAR,
+} from '@app/redux/constant/queue';
+
 
 function queueSet(payload) {
   return {
@@ -7,12 +13,14 @@ function queueSet(payload) {
   };
 }
 
+
 function queueAdd(payload) {
   return {
     type: QUEUE_ADD,
     payload,
   };
 }
+
 
 function queueRemove(payload) {
   return {
@@ -21,11 +29,13 @@ function queueRemove(payload) {
   };
 }
 
+
 function queueClear() {
   return {
     type: QUEUE_CLEAR,
   };
 }
+
 
 export default {
   queueSet,

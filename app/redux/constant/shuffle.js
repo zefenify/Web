@@ -1,6 +1,7 @@
 const SHUFFLE = 'SHUFFLE';
 const SHUFFLE_REQUEST = 'SHUFFLE_REQUEST';
 
+
 export default {
   SHUFFLE,
   SHUFFLE_REQUEST,

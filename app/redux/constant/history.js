@@ -2,6 +2,7 @@ const HISTORY_PUSH = 'HISTORY_PUSH';
 const HISTORY_FRONT = 'HISTORY_FRONT';
 const HISTORY_POP = 'HISTORY_POP';
 
+
 export default {
   HISTORY_PUSH,
   HISTORY_FRONT,

@@ -1,5 +1,5 @@
 const PLAYBACK_POSITION = 'PLAYBACK_POSITION';
 
-module.exports = {
+export default {
   PLAYBACK_POSITION,
 };

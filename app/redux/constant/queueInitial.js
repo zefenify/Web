@@ -1,5 +1,5 @@
 const QUEUE_INITIAL = 'QUEUE_INITIAL';
 
-module.exports = {
+export default {
   QUEUE_INITIAL,
 };

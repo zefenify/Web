@@ -1,7 +1,7 @@
 const SHUFFLE = 'SHUFFLE';
 const SHUFFLE_REQUEST = 'SHUFFLE_REQUEST';
 
-module.exports = {
+export default {
   SHUFFLE,
   SHUFFLE_REQUEST,
 };

@@ -1,5 +1,5 @@
 const CURRENT = 'CURRENT';
 
-module.exports = {
+export default {
   CURRENT,
 };

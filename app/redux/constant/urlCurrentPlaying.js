@@ -1,5 +1,5 @@
 const URL_CURRENT_PLAYING = 'URL_CURRENT_PLAYING';
 
-module.exports = {
+export default {
   URL_CURRENT_PLAYING,
 };

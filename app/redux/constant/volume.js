@@ -1,7 +1,7 @@
 const VOLUME = 'VOLUME';
 const VOLUME_REQUEST = 'VOLUME_REQUEST';
 
-module.exports = {
+export default {
   VOLUME,
   VOLUME_REQUEST,
 };

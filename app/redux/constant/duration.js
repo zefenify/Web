@@ -1,5 +1,5 @@
 const DURATION = 'DURATION';
 
-module.exports = {
+export default {
   DURATION,
 };

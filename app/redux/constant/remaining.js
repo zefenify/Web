@@ -1,7 +1,7 @@
 const REMAINING = 'REMAINING';
 const REMAINING_REQUEST = 'REMAINING_REQUEST';
 
-module.exports = {
+export default {
   REMAINING,
   REMAINING_REQUEST,
 };

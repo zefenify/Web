@@ -1,7 +1,7 @@
 const CROSSFADE = 'CROSSFADE';
 const CROSSFADE_REQUEST = 'CROSSFADE_REQUEST';
 
-module.exports = {
+export default {
   CROSSFADE,
   CROSSFADE_REQUEST,
 };

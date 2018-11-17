@@ -1,5 +1,5 @@
 const PLAYING = 'PLAYING';
 
-module.exports = {
+export default {
   PLAYING,
 };

@@ -1,5 +1,5 @@
 const LOADING = 'LOADING';
 
-module.exports = {
+export default {
   LOADING,
 };

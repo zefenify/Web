@@ -5,7 +5,7 @@
  * @param  {Array} queue2
  * @return {Boolean}
  */
-module.exports = (queue1 = [], queue2 = []) => {
+export default (queue1 = [], queue2 = []) => {
   if (queue1.length === 0 || queue2.length === 0) {
     return false;
   }

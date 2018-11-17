@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   /**
    * given duration in seconds returns hour:minute:second
    *

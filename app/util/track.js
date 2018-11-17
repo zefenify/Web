@@ -5,7 +5,7 @@
  * @param  {Object} included { table: { id: entry } }
  * @return {Array}
  */
-module.exports = (tracks = [], included = []) => tracks.map(track => ({
+export default (tracks = [], included = {}) => tracks.map(track => ({
   track_id: track.track_id,
   track_name: track.track_name,
   track_explicit: track.track_explicit,

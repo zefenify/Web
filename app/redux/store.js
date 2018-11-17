@@ -1,8 +1,20 @@
 /* global window */
 /* eslint max-len: off */
 
-// import { createStore, combineReducers, applyMiddleware } from 'redux'; // production
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'; // development
+// production
+// import {
+//   createStore,
+//   combineReducers,
+//   applyMiddleware,
+// } from 'redux';
+
+// development
+import {
+  createStore,
+  combineReducers,
+  applyMiddleware,
+  compose,
+} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import theme from '@app/redux/reducer/theme';
@@ -83,4 +95,4 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-module.exports = store;
+export default store;

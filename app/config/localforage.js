@@ -21,4 +21,4 @@ localforage.config({
   description: config.DESCRIPTION,
 });
 
-module.exports = config;
+export default config;

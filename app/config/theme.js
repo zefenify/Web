@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   themeDark: {
     primary: 'hsl(210, 100%, 50%)',
 

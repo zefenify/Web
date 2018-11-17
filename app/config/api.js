@@ -16,7 +16,7 @@ const FAUTH = 'http://api.zefenify.io/fauth/';
 const SEARCH = 'http://api.zefenify.io/search';
 const CACHE_AGE = 0; // in seconds
 
-module.exports = {
+export default {
   HEADER,
   BASE,
   BASE_S3,

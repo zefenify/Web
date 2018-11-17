@@ -1,5 +1,6 @@
 import { VOLUME } from '@app/redux/constant/volume';
 
+
 function reducer(state = 1, action) {
   switch (action.type) {
     case VOLUME:
@@ -9,5 +10,6 @@ function reducer(state = 1, action) {
       return state;
   }
 }
+
 
 export default reducer;

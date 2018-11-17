@@ -1,5 +1,6 @@
 import { LOADING } from '@app/redux/constant/loading';
 
+
 function reducer(state = false, action) {
   switch (action.type) {
     case LOADING:
@@ -9,5 +10,6 @@ function reducer(state = false, action) {
       return state;
   }
 }
+
 
 export default reducer;

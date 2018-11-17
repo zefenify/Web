@@ -1,5 +1,6 @@
 import { USER } from '@app/redux/constant/user';
 
+
 function reducer(state = null, action) {
   switch (action.type) {
     case USER:
@@ -9,5 +10,6 @@ function reducer(state = null, action) {
       return state;
   }
 }
+
 
 export default reducer;

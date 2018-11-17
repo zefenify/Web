@@ -1,5 +1,6 @@
 import { CONTEXT_MENU_ON, CONTEXT_MENU_OFF } from '@app/redux/constant/contextMenu';
 
+
 function contextMenu(state = null, action) {
   switch (action.type) {
     case CONTEXT_MENU_ON:
@@ -10,5 +11,6 @@ function contextMenu(state = null, action) {
       return state;
   }
 }
+
 
 export default contextMenu;

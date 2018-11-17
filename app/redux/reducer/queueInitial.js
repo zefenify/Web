@@ -1,5 +1,6 @@
 import { QUEUE_INITIAL } from '@app/redux/constant/queueInitial';
 
+
 function initialQueue(state = [], action) {
   switch (action.type) {
     case QUEUE_INITIAL:
@@ -9,5 +10,6 @@ function initialQueue(state = [], action) {
       return state;
   }
 }
+
 
 export default initialQueue;

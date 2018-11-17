@@ -1,5 +1,6 @@
 import { SHUFFLE } from '@app/redux/constant/shuffle';
 
+
 function reducer(state = true, action) {
   switch (action.type) {
     case SHUFFLE:
@@ -9,5 +10,6 @@ function reducer(state = true, action) {
       return state;
   }
 }
+
 
 export default reducer;

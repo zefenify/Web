@@ -1,5 +1,6 @@
 import { CURRENT } from '@app/redux/constant/current';
 
+
 function current(state = null, action) {
   switch (action.type) {
     case CURRENT:
@@ -9,5 +10,6 @@ function current(state = null, action) {
       return state;
   }
 }
+
 
 export default current;

@@ -1,6 +1,7 @@
 import { PLAYBACK_POSITION } from '@app/redux/constant/playbackPosition';
 
-function playbackPosition(state = null, action) {
+
+function playbackPosition(state = 0, action) {
   switch (action.type) {
     case PLAYBACK_POSITION:
       return action.payload;
@@ -9,5 +10,6 @@ function playbackPosition(state = null, action) {
       return state;
   }
 }
+
 
 export default playbackPosition;

@@ -1,4 +1,10 @@
-import { QUEUE_SET, QUEUE_ADD, QUEUE_REMOVE, QUEUE_CLEAR } from '@app/redux/constant/queue';
+import {
+  QUEUE_SET,
+  QUEUE_ADD,
+  QUEUE_REMOVE,
+  QUEUE_CLEAR,
+} from '@app/redux/constant/queue';
+
 
 function queue(state = [], action) {
   switch (action.type) {
@@ -6,10 +12,16 @@ function queue(state = [], action) {
       return action.payload;
 
     case QUEUE_ADD:
-      return [action.payload, ...state];
+      return [
+        action.payload,
+        ...state,
+      ];
 
     case QUEUE_REMOVE:
-      return [...state.slice(0, action.payload), ...state.slice(action.payload + 1)];
+      return [
+        ...state.slice(0, action.payload),
+        ...state.slice(action.payload + 1),
+      ];
 
     case QUEUE_CLEAR:
       return [];
@@ -18,5 +30,6 @@ function queue(state = [], action) {
       return state;
   }
 }
+
 
 export default queue;

@@ -1,5 +1,6 @@
 import { PLAYING } from '@app/redux/constant/playing';
 
+
 function playing(state = false, action) {
   switch (action.type) {
     case PLAYING:
@@ -9,5 +10,6 @@ function playing(state = false, action) {
       return state;
   }
 }
+
 
 export default playing;

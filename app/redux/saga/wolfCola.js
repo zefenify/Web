@@ -121,7 +121,7 @@ const playingLastHistory = state => state.history.length === 1 && state.current.
  *
  * will be forked by `_play`
  *
- * @param {String} key           [description]
+ * @param {String} key
  */
 function* howlerEnd(key) {
   const channel = yield call(howlerEndChannel, key);
@@ -143,7 +143,9 @@ function* howlerEnd(key) {
   wolfCola[wolfCola.playingKey].unload();
   wolfCola[wolfCola.playingKey] = null;
   wolfCola.crossfadeInProgress = false;
-  yield put({ type: NEXT_REQUEST });
+  yield put({
+    type: NEXT_REQUEST,
+  });
 }
 
 
@@ -163,7 +165,7 @@ function* howlerLoadError(key) {
   yield put({
     type: NOTIFICATION_ON_REQUEST,
     payload: {
-      message: 'Unable to load song. Please try again later',
+      message: 'Unable to Load Song. Please Try Again Later',
     },
   });
 }
@@ -173,13 +175,13 @@ function* howlerLoadError(key) {
  * returns a generator function that'll use its closure to control whether
  * or not fork request should be accepted or ignored. Easier to test and reason this way?
  *
- * @return {Function} trackerG
+ * @return {Function} trackerGenerator
  */
 const tracker = () => {
   // closure variable used to control `while` should be invoked or not
   let trackerInProgress = false;
 
-  return function* trackerG() {
+  return function* trackerGenerator() {
     // no need to use `cancel` effect, we'll piggy pack on the current fork
     if (trackerInProgress === true) {
       return;
@@ -199,7 +201,9 @@ const tracker = () => {
         if ((state.duration - state.playbackPosition) <= state.crossfade) {
           // sending played, [`track_popularity` and `trend`] will be set
           api(`${BASE}played/${state.current.track_id}`, state.user).then(() => {}, () => {});
-          yield put({ type: NEXT_REQUEST });
+          yield put({
+            type: NEXT_REQUEST,
+          });
         }
       }
 
@@ -213,7 +217,8 @@ const tracker = () => {
 
 /**
  * instantiating `tracker` with false. Now `trackerSaga` has an enclosed flag variable
- * to control when to update the playback position
+ * to control when to update the playback position. which the yield will run
+ * every 1 second while there's a Howl object playing
  *
  * will be forked by `_play`
  *
@@ -266,8 +271,6 @@ function* _play(action) {
    * two Howler objects playing at the same time i.e. fading
    *
    * destroying any Howler object before instantiating `payload.play`...
-   *
-   * @param  {Number} state.crossfade
    */
   if (state.crossfade === 0) {
     if (wolfCola.current !== null) {

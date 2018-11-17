@@ -1,32 +1,44 @@
 import { all } from 'redux-saga/effects';
 
-import { themeBootFromLF, themeRequest } from '@app/redux/saga/theme';
-import { volumeBootFromLF, volumeRequest } from '@app/redux/saga/volume';
-import { repeatBootFromLF, repeatRequest } from '@app/redux/saga/repeat';
-import { shuffleBootFromLF, shuffleRequest } from '@app/redux/saga/shuffle';
-import { crossfadeBootFromLF, crossfadeRequest } from '@app/redux/saga/crossfade';
-import { remainingBootFromLF, remainingRequest } from '@app/redux/saga/remaining';
-import { userBootFromLF, userRequest } from '@app/redux/saga/user';
-import { playRequest, previousRequest, nextRequest, seekRequest, playPauseRequest } from '@app/redux/saga/wolfCola';
+import { themeBootFromLocalforage, themeRequest } from '@app/redux/saga/theme';
+import { volumeBootFromLocalforage, volumeRequest } from '@app/redux/saga/volume';
+import { repeatBootFromLocalforage, repeatRequest } from '@app/redux/saga/repeat';
+import { shuffleBootFromLocalforage, shuffleRequest } from '@app/redux/saga/shuffle';
+import { crossfadeBootFromLocalforage, crossfadeRequest } from '@app/redux/saga/crossfade';
+import { remainingBootFromLocalforage, remainingRequest } from '@app/redux/saga/remaining';
+import { userBootFromLocalforage, userRequest } from '@app/redux/saga/user';
+import {
+  playRequest,
+  previousRequest,
+  nextRequest,
+  seekRequest,
+  playPauseRequest,
+} from '@app/redux/saga/wolfCola';
 import { contextMenuOnRequest, contextMenuOffRequest } from '@app/redux/saga/contextMenu';
-import { songBoot, songBootRequest, songSaveRequest, songRemoveRequest } from '@app/redux/saga/song';
+import {
+  songBoot,
+  songBootRequest,
+  songSaveRequest,
+  songRemoveRequest,
+} from '@app/redux/saga/song';
 import { notificationOnRequest, notificationOffRequest } from '@app/redux/saga/notification';
 
+
 function* rootSaga() {
-  yield userBootFromLF();
+  yield userBootFromLocalforage();
 
   yield all([
-    themeBootFromLF(),
+    themeBootFromLocalforage(),
     themeRequest(),
-    volumeBootFromLF(),
+    volumeBootFromLocalforage(),
     volumeRequest(),
-    repeatBootFromLF(),
+    repeatBootFromLocalforage(),
     repeatRequest(),
-    shuffleBootFromLF(),
+    shuffleBootFromLocalforage(),
     shuffleRequest(),
-    crossfadeBootFromLF(),
+    crossfadeBootFromLocalforage(),
     crossfadeRequest(),
-    remainingBootFromLF(),
+    remainingBootFromLocalforage(),
     remainingRequest(),
     playRequest(),
     previousRequest(),
@@ -44,5 +56,6 @@ function* rootSaga() {
     notificationOffRequest(),
   ]);
 }
+
 
 export default rootSaga;

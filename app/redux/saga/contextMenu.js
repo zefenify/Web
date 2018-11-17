@@ -12,6 +12,7 @@ import {
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
 import { contextMenuOn, contextMenuOff } from '@app/redux/action/contextMenu';
 
+
 function* _contextMenuOn(action) {
   const state = yield select();
 
@@ -36,6 +37,7 @@ function* _contextMenuOn(action) {
   ContextOverlayContainer.style.zIndex = 100;
 }
 
+
 function* _contextMenuOff() {
   const WolfColaContainer = document.querySelector('#wolf-cola-container');
   WolfColaContainer.classList.remove('context-menu-active');
@@ -50,13 +52,16 @@ function* _contextMenuOff() {
   yield put(contextMenuOff(null));
 }
 
+
 function* contextMenuOnRequest() {
   yield takeEvery(CONTEXT_MENU_ON_REQUEST, _contextMenuOn);
 }
 
+
 function* contextMenuOffRequest() {
   yield takeEvery(CONTEXT_MENU_OFF_REQUEST, _contextMenuOff);
 }
+
 
 export default {
   contextMenuOnRequest,

@@ -73,9 +73,9 @@ const store = createStore(
     history: [], // where played tracks will are pushed [repeat `ONE` will only push once]
     song: null, // saved tracks
     // playlist: [],
-    crossfade: 0,
-    duration: 0,
-    playbackPosition: 0,
+    crossfade: 0, // in seconds
+    duration: 0, // current playing track duration in seconds
+    playbackPosition: 0, // current playing track playback position in seconds
     remaining: false,
     // artworkFull: false,
     playing: false,

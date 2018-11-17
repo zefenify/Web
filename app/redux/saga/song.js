@@ -7,6 +7,7 @@ import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST, SONG_BOOT_REQUEST } from '@app/
 import { song } from '@app/redux/action/song';
 import { loading } from '@app/redux/action/loading';
 
+
 function* songBoot() {
   const { user } = yield select();
 
@@ -35,7 +36,7 @@ function* songBoot() {
       yield put({
         type: NOTIFICATION_ON_REQUEST,
         payload: {
-          message: 'No Internet connection. Please try again later',
+          message: 'No Internet Connection. Please Try Again Later',
         },
       });
 
@@ -45,11 +46,12 @@ function* songBoot() {
     yield put({
       type: NOTIFICATION_ON_REQUEST,
       payload: {
-        message: 'ይቅርታ, unable to fetch Your Library',
+        message: 'ይቅርታ, Unable to Fetch Your Library',
       },
     });
   }
 }
+
 
 function* _songSave(action) {
   const state = yield select();
@@ -86,22 +88,22 @@ function* _songSave(action) {
       yield put({
         type: NOTIFICATION_ON_REQUEST,
         payload: {
-          message: 'No Internet connection. Please try again later',
+          message: 'No Internet Connection. Please Try Again Later',
         },
       });
 
       return;
     }
 
-
     yield put({
       type: NOTIFICATION_ON_REQUEST,
       payload: {
-        message: 'ይቅርታ, Unable to save song to Your Library',
+        message: 'ይቅርታ, Unable to save Song to Your Library',
       },
     });
   }
 }
+
 
 function* _songRemove(action) {
   const state = yield select();
@@ -141,7 +143,7 @@ function* _songRemove(action) {
       yield put({
         type: NOTIFICATION_ON_REQUEST,
         payload: {
-          message: 'No Internet connection. Please try again later',
+          message: 'No Internet Connection. Please Try Again Later',
         },
       });
 
@@ -151,23 +153,27 @@ function* _songRemove(action) {
     yield put({
       type: NOTIFICATION_ON_REQUEST,
       payload: {
-        message: 'ይቅርታ, Unable to remove song from Your Library',
+        message: 'ይቅርታ, Unable to Remove Song from Your Library',
       },
     });
   }
 }
 
+
 function* songBootRequest() {
   yield takeEvery(SONG_BOOT_REQUEST, songBoot);
 }
+
 
 function* songSaveRequest() {
   yield takeEvery(SONG_SAVE_REQUEST, _songSave);
 }
 
+
 function* songRemoveRequest() {
   yield takeEvery(SONG_REMOVE_REQUEST, _songRemove);
 }
+
 
 export default {
   songBoot,

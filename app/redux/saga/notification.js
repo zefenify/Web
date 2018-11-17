@@ -7,6 +7,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { NOTIFICATION_DURATION, NOTIFICATION_ON_REQUEST, NOTIFICATION_OFF_REQUEST } from '@app/redux/constant/notification';
 import { notification } from '@app/redux/action/notification';
 
+
 function* _notificationOn(action) {
   yield put(notification(action.payload));
   yield call(delay, 500); // that's for the DOM animation to complete (if there was a previous one)
@@ -20,6 +21,7 @@ function* _notificationOn(action) {
   });
 }
 
+
 function* _notificationOff() {
   const NotificationContainer = document.querySelector('#notification-container');
   NotificationContainer.classList.remove('notification-active');
@@ -28,13 +30,16 @@ function* _notificationOff() {
   yield put(notification(null));
 }
 
+
 function* notificationOnRequest() {
   yield takeLatest(NOTIFICATION_ON_REQUEST, _notificationOn);
 }
 
+
 function* notificationOffRequest() {
   yield takeLatest(NOTIFICATION_OFF_REQUEST, _notificationOff);
 }
+
 
 export default {
   notificationOnRequest,

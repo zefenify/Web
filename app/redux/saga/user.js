@@ -1,49 +1,41 @@
-/* global window, document */
 /* eslint no-console: off */
 
 import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';
 
-import { LF_STORE } from '@app/config/localforage';
+import { LOCALFORAGE_STORE } from '@app/config/localforage';
 import { USER_REQUEST } from '@app/redux/constant/user';
 import { user } from '@app/redux/action/user';
 
-function* userBootFromLF() {
+
+function* userBootFromLocalforage() {
   try {
-    const lfUser = yield localforage.getItem(LF_STORE.USER);
+    const localforageUser = yield localforage.getItem(LOCALFORAGE_STORE.USER);
 
-    // booting Facebook SDK...
-    if (lfUser === null && window.FB === undefined) {
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = '//connect.facebook.net/en_US/sdk.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    }
-
-    yield put(user(lfUser));
+    yield put(user(localforageUser));
   } catch (userGetError) {
-    console.warn('Unable to boot user from LF', userGetError);
+    console.warn('Unable to Boot User from Localforage', userGetError);
   }
 }
+
 
 function* _user(action) {
   yield put(user(action.payload));
 
   try {
-    yield localforage.setItem(LF_STORE.USER, action.payload);
+    yield localforage.setItem(LOCALFORAGE_STORE.USER, action.payload);
   } catch (userSetError) {
-    console.warn('Unable to save user state to LF', userSetError);
+    console.warn('Unable to save User State to Localforage', userSetError);
   }
 }
+
 
 function* userRequest() {
   yield takeEvery(USER_REQUEST, _user);
 }
 
+
 export default {
-  userBootFromLF,
+  userBootFromLocalforage,
   userRequest,
 };

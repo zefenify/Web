@@ -6,7 +6,6 @@ import { put, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
 import { USER_REQUEST } from '@app/redux/constant/user';
-
 import { user } from '@app/redux/action/user';
 
 function* userBootFromLF() {
@@ -44,7 +43,7 @@ function* userRequest() {
   yield takeEvery(USER_REQUEST, _user);
 }
 
-module.exports = {
+export default {
   userBootFromLF,
   userRequest,
 };

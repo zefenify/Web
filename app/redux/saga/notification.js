@@ -9,13 +9,15 @@ import { notification } from '@app/redux/action/notification';
 
 function* _notificationOn(action) {
   yield put(notification(action.payload));
-  yield call(delay, 500); // that's for the DOM rendering to complete
+  yield call(delay, 500); // that's for the DOM animation to complete (if there was a previous one)
 
   const NotificationContainer = document.querySelector('#notification-container');
   NotificationContainer.classList.add('notification-active');
 
   yield call(delay, NOTIFICATION_DURATION);
-  yield put({ type: NOTIFICATION_OFF_REQUEST });
+  yield put({
+    type: NOTIFICATION_OFF_REQUEST,
+  });
 }
 
 function* _notificationOff() {
@@ -34,7 +36,7 @@ function* notificationOffRequest() {
   yield takeLatest(NOTIFICATION_OFF_REQUEST, _notificationOff);
 }
 
-module.exports = {
+export default {
   notificationOnRequest,
   notificationOffRequest,
 };

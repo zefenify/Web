@@ -5,7 +5,6 @@ import { put, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
 import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
-
 import { crossfade } from '@app/redux/action/crossfade';
 
 function* crossfadeBootFromLF() {
@@ -31,7 +30,7 @@ function* crossfadeRequest() {
   yield takeEvery(CROSSFADE_REQUEST, _crossfade);
 }
 
-module.exports = {
+export default {
   crossfadeBootFromLF,
   crossfadeRequest,
 };

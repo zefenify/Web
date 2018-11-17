@@ -4,7 +4,6 @@ import axios from 'axios';
 import { BASE, HEADER } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST, SONG_BOOT_REQUEST } from '@app/redux/constant/song';
-
 import { song } from '@app/redux/action/song';
 import { loading } from '@app/redux/action/loading';
 
@@ -170,7 +169,7 @@ function* songRemoveRequest() {
   yield takeEvery(SONG_REMOVE_REQUEST, _songRemove);
 }
 
-module.exports = {
+export default {
   songBoot,
   songBootRequest,
   songSaveRequest,

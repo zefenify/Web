@@ -45,4 +45,4 @@ function* rootSaga() {
   ]);
 }
 
-module.exports = rootSaga;
+export default rootSaga;

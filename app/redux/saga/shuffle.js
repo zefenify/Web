@@ -5,7 +5,6 @@ import { put, select, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
 import { SHUFFLE_REQUEST } from '@app/redux/constant/shuffle';
-
 import { shuffle } from '@app/redux/action/shuffle';
 
 function* shuffleBootFromLF() {
@@ -32,7 +31,7 @@ function* shuffleRequest() {
   yield takeEvery(SHUFFLE_REQUEST, _shuffle);
 }
 
-module.exports = {
+export default {
   shuffleBootFromLF,
   shuffleRequest,
 };

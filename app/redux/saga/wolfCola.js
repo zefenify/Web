@@ -4,15 +4,30 @@
  */
 
 import { eventChannel, END, delay } from 'redux-saga';
-import { select, put, call, fork, take, throttle, takeEvery, takeLatest } from 'redux-saga/effects';
+import {
+  select,
+  put,
+  call,
+  fork,
+  take,
+  throttle,
+  takeEvery,
+  takeLatest,
+} from 'redux-saga/effects';
 import { Howl } from 'howler';
 import random from 'lodash/fp/random';
 
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
-import { PLAY_REQUEST, NEXT_REQUEST, PREVIOUS_REQUEST, SEEK_REQUEST, PLAY_PAUSE_REQUEST, PREVIOUS_THRESHOLD } from '@app/redux/constant/wolfCola';
+import {
+  PLAY_REQUEST,
+  NEXT_REQUEST,
+  PREVIOUS_REQUEST,
+  SEEK_REQUEST,
+  PLAY_PAUSE_REQUEST,
+  PREVIOUS_THRESHOLD,
+} from '@app/redux/constant/wolfCola';
 import { BASE, BASE_S3 } from '@app/config/api';
 import api from '@app/util/api';
-
 import { current } from '@app/redux/action/current';
 import { queueSet, queueRemove } from '@app/redux/action/queue';
 import { duration } from '@app/redux/action/duration';
@@ -705,7 +720,7 @@ function* playPauseRequest() {
 }
 
 
-module.exports = {
+export default {
   playRequest,
   previousRequest,
   nextRequest,

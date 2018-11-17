@@ -2,7 +2,12 @@
 /* eslint no-console: off */
 
 import { delay } from 'redux-saga';
-import { call, put, select, takeEvery } from 'redux-saga/effects';
+import {
+  call,
+  put,
+  select,
+  takeEvery,
+} from 'redux-saga/effects';
 
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
 import { contextMenuOn, contextMenuOff } from '@app/redux/action/contextMenu';
@@ -53,7 +58,7 @@ function* contextMenuOffRequest() {
   yield takeEvery(CONTEXT_MENU_OFF_REQUEST, _contextMenuOff);
 }
 
-module.exports = {
+export default {
   contextMenuOnRequest,
   contextMenuOffRequest,
 };

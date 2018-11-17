@@ -6,7 +6,6 @@ import { Howler } from 'howler';
 
 import { LF_STORE } from '@app/config/localforage';
 import { VOLUME_REQUEST } from '@app/redux/constant/volume';
-
 import { volume } from '@app/redux/action/volume';
 
 function* volumeBootFromLF() {
@@ -34,7 +33,7 @@ function* volumeRequest() {
   yield takeEvery(VOLUME_REQUEST, _volume);
 }
 
-module.exports = {
+export default {
   volumeBootFromLF,
   volumeRequest,
 };

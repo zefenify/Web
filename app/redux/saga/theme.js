@@ -6,7 +6,6 @@ import { put, select, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
 import { THEME_REQUEST } from '@app/redux/constant/theme';
-
 import { theme } from '@app/redux/action/theme';
 
 function* themeBootFromLF() {
@@ -39,7 +38,7 @@ function* themeRequest() {
   yield takeEvery(THEME_REQUEST, _theme);
 }
 
-module.exports = {
+export default {
   themeBootFromLF,
   themeRequest,
 };

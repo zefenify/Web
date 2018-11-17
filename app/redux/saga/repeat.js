@@ -5,7 +5,6 @@ import { put, select, takeEvery } from 'redux-saga/effects';
 
 import { LF_STORE } from '@app/config/localforage';
 import { REPEAT_REQUEST } from '@app/redux/constant/repeat';
-
 import { repeat } from '@app/redux/action/repeat';
 
 function* repeatBootFromLF() {
@@ -33,7 +32,7 @@ function* repeatRequest() {
   yield takeEvery(REPEAT_REQUEST, _repeat);
 }
 
-module.exports = {
+export default {
   repeatBootFromLF,
   repeatRequest,
 };

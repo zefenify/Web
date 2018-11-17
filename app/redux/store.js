@@ -40,6 +40,7 @@ import urlCurrentPlaying from '@app/redux/reducer/urlCurrentPlaying';
 
 import rootSaga from '@app/redux/saga/sagas';
 
+
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   combineReducers({
@@ -65,13 +66,13 @@ const store = createStore(
     urlCurrentPlaying,
   }),
   {
-    theme: 'dark',
+    theme: 'DARK',
     volume: 1,
     queue: [],
     queueNext: [], // queue of tracks that have been requested to be played next
     queueInitial: [], // queue of tracks to be played [used on repeat `ALL` and queue is empty]
     history: [], // where played tracks will are pushed [repeat `ONE` will only push once]
-    song: null, // saved tracks
+    song: [], // saved tracks
     // playlist: [],
     crossfade: 0, // in seconds
     duration: 0, // current playing track duration in seconds
@@ -93,6 +94,8 @@ const store = createStore(
   window.devToolsExtension ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension()) : applyMiddleware(sagaMiddleware), // development
 );
 
+
 sagaMiddleware.run(rootSaga);
+
 
 export default store;

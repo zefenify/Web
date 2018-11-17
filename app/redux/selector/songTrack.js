@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import track from '@app/util/track';
 
 // eslint-disable-next-line
-module.exports = createSelector([state => state.song], (song) => {
+export default createSelector([state => state.song], (song) => {
   if (song === null) {
     return [];
   }
@@ -12,8 +12,8 @@ module.exports = createSelector([state => state.song], (song) => {
 
   // re-building { [trackId]: track } for sorting, recent top...
   const trackIdMapTrack = {};
-  tracks.forEach((t) => {
-    trackIdMapTrack[t.track_id] = t;
+  tracks.forEach((_track) => {
+    trackIdMapTrack[_track.track_id] = _track;
   });
 
   return song.data.song_track.map(trackId => trackIdMapTrack[trackId]);

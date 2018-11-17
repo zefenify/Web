@@ -6,7 +6,7 @@ import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
 
 // eslint-disable-next-line
-module.exports = createSelector([props => props.song, props => props.user, props => props.queueInitial, props => props.match.params.id], (song, user, queueInitial, id) => {
+export default createSelector([props => props.song, props => props.user, props => props.queueInitial, props => props.match.params.id], (song, user, queueInitial, albumId) => {
   if (song === null || user === null || Object.hasOwnProperty.call(song.included, 'album') === false) {
     return {
       albums: [],
@@ -21,7 +21,7 @@ module.exports = createSelector([props => props.song, props => props.user, props
   }
 
   const included = cloneDeep(song.included);
-  const albums = id === undefined ? Object.values(included.album) : Object.values(included.album).filter(album => album.album_id === id);
+  const albums = albumId === undefined ? Object.values(included.album) : Object.values(included.album).filter(album => album.album_id === albumId);
   const savedTrackIds = song.data.song_track;
   let albumsPlayingId = '';
 
@@ -38,7 +38,7 @@ module.exports = createSelector([props => props.song, props => props.user, props
     album.album_cover = included.s3[album.album_cover];
   });
 
-  if (id === undefined && queueInitial.length > 0) {
+  if (albumId === undefined && queueInitial.length > 0) {
     // finding `albumsPlayingIndex`...
     albums.forEach((album) => {
       if (trackListSame(album.relationships.track, queueInitial) === true) {
@@ -47,7 +47,7 @@ module.exports = createSelector([props => props.song, props => props.user, props
     });
   }
 
-  if (albums.length === 1 && id !== undefined) {
+  if (albums.length === 1 && albumId !== undefined) {
     // building `duration` and `albumPlaying` for album view...
     return {
       albums,

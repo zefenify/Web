@@ -9,7 +9,7 @@ import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
 
 // eslint-disable-next-line
-module.exports = createSelector([props => props.song, props => props.user, props => props.queueInitial, props => props.match.params.id], (song, user, queueInitial, id) => {
+export default createSelector([props => props.song, props => props.user, props => props.queueInitial, props => props.match.params.id], (song, user, queueInitial, artistId) => {
   if (song === null || user === null || Object.hasOwnProperty.call(song.included, 'album') === false) {
     return {
       artists: [],
@@ -71,10 +71,10 @@ module.exports = createSelector([props => props.song, props => props.user, props
     });
   });
 
-  if (id !== undefined) {
-    if (artistsWithFeaturingRemoved[id] === undefined) {
+  if (artistId !== undefined) {
+    if (artistsWithFeaturingRemoved[artistId] === undefined) {
       return {
-        artists: artistsWithFeaturingRemoved[id] === undefined ? [] : [artistsWithFeaturingRemoved[id]],
+        artists: artistsWithFeaturingRemoved[artistId] === undefined ? [] : [artistsWithFeaturingRemoved[artistId]],
         albumPlayingId,
         artistPlayingId,
         trackCount: 0,
@@ -82,12 +82,12 @@ module.exports = createSelector([props => props.song, props => props.user, props
     }
 
     const artistTracksFlat = [];
-    artistsWithFeaturingRemoved[id].relationships.album.forEach((album) => {
+    artistsWithFeaturingRemoved[artistId].relationships.album.forEach((album) => {
       artistTracksFlat.push(...album.relationships.track);
     });
 
     return {
-      artists: artistsWithFeaturingRemoved[id] === undefined ? [] : [artistsWithFeaturingRemoved[id]],
+      artists: artistsWithFeaturingRemoved[artistId] === undefined ? [] : [artistsWithFeaturingRemoved[artistId]],
       albumPlayingId,
       artistPlayingId,
       trackCount: artistTracksFlat.length,

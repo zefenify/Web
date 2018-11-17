@@ -19,4 +19,4 @@ function queue(state = [], action) {
   }
 }
 
-module.exports = queue;
+export default queue;

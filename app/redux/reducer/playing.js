@@ -10,4 +10,4 @@ function playing(state = false, action) {
   }
 }
 
-module.exports = playing;
+export default playing;

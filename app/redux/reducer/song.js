@@ -10,4 +10,4 @@ function song(state = null, action) {
   }
 }
 
-module.exports = song;
+export default song;

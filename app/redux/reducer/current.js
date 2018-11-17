@@ -10,4 +10,4 @@ function current(state = null, action) {
   }
 }
 
-module.exports = current;
+export default current;

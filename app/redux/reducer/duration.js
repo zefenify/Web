@@ -10,4 +10,4 @@ function duration(state = null, action) {
   }
 }
 
-module.exports = duration;
+export default duration;

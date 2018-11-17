@@ -10,4 +10,4 @@ function reducer(state = 'ALL', action) {
   }
 }
 
-module.exports = reducer;
+export default reducer;

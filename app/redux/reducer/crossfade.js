@@ -10,4 +10,4 @@ function crossfade(state = 0, action) {
   }
 }
 
-module.exports = crossfade;
+export default crossfade;

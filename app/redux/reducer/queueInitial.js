@@ -10,4 +10,4 @@ function initialQueue(state = [], action) {
   }
 }
 
-module.exports = initialQueue;
+export default initialQueue;

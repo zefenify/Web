@@ -11,4 +11,4 @@ function contextMenu(state = null, action) {
   }
 }
 
-module.exports = contextMenu;
+export default contextMenu;

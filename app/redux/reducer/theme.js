@@ -10,4 +10,4 @@ function reducer(state = 'light', action) {
   }
 }
 
-module.exports = reducer;
+export default reducer;

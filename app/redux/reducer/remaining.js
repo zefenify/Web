@@ -10,4 +10,4 @@ function remaining(state = false, action) {
   }
 }
 
-module.exports = remaining;
+export default remaining;

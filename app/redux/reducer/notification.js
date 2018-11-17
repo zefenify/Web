@@ -10,4 +10,4 @@ function notification(state = null, action) {
   }
 }
 
-module.exports = notification;
+export default notification;

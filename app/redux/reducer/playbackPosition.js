@@ -10,4 +10,4 @@ function playbackPosition(state = null, action) {
   }
 }
 
-module.exports = playbackPosition;
+export default playbackPosition;

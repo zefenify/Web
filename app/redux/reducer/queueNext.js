@@ -13,4 +13,4 @@ function queueNext(state = [], action) {
   }
 }
 
-module.exports = queueNext;
+export default queueNext;

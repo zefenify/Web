@@ -10,4 +10,4 @@ function urlCurrentPlaying(state = null, action) {
   }
 }
 
-module.exports = urlCurrentPlaying;
+export default urlCurrentPlaying;

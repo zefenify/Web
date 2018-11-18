@@ -13,6 +13,7 @@ export function* themeBootFromLocalforage() {
   try {
     const localforageTheme = yield localforage.getItem(LOCALFORAGE_STORE.THEME);
     yield put(theme(localforageTheme === null ? 'DARK' : localforageTheme)); // default boot is `DARK`
+
     const WolfColaContainer = document.querySelector('#wolf-cola-container');
     if (WolfColaContainer !== null) {
       WolfColaContainer.classList.remove('booting');
@@ -26,7 +27,7 @@ export function* themeBootFromLocalforage() {
 // worker Saga: will perform the async theme task
 function* _theme() {
   const state = yield select();
-  const nextThemeState = state.theme === 'LIGHT' ? 'DARK' : 'LIGHT';
+  const nextThemeState = state.theme === 'LIGHT' ? 'LIGHT' : 'DARK';
 
   yield put(theme(nextThemeState));
 

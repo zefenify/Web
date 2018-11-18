@@ -130,7 +130,8 @@ const Settings = ({
       <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Toggle Theme</Button>
 
       <small>
-        <span>Current theme is </span><b>{ theme === 'LIGHT' ? 'Dayman' : 'Nightman' }</b>
+        <span>Current theme is </span>
+        <b>{ theme === 'LIGHT' ? 'Dayman' : 'Nightman' }</b>
       </small>
 
       <div className="crossfade">

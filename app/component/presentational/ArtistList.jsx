@@ -32,4 +32,4 @@ ArtistList.defaultProps = {
   className: '',
 };
 
-module.exports = ArtistList;
+export default ArtistList;

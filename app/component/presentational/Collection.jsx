@@ -143,4 +143,4 @@ Collection.defaultProps = {
   playlistPlayingId: '',
 };
 
-module.exports = Collection;
+export default Collection;

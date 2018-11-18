@@ -65,4 +65,4 @@ Spinner.defaultProps = {
   loading: false,
 };
 
-module.exports = Spinner;
+export default Spinner;

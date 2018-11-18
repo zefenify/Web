@@ -126,4 +126,4 @@ QueueContainer.defaultProps = {
   queueInitial: [],
 };
 
-module.exports = withContext('playing', 'current', 'queueNext', 'queueInitial', 'totalDuration')(QueueContainer);
+export default withContext('playing', 'current', 'queueNext', 'queueInitial', 'totalDuration')(QueueContainer);

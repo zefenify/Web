@@ -144,4 +144,4 @@ Songs.defaultProps = {
   songsPlaying: false,
 };
 
-module.exports = Songs;
+export default Songs;

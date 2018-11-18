@@ -175,4 +175,4 @@ HeaderTracks.defaultProps = {
   tracksPlaying: false,
 };
 
-module.exports = HeaderTracks;
+export default HeaderTracks;

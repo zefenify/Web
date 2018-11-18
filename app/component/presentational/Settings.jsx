@@ -161,4 +161,4 @@ Settings.defaultProps = {
   user: null,
 };
 
-module.exports = Settings;
+export default Settings;

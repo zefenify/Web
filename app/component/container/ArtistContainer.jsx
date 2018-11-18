@@ -283,4 +283,4 @@ ArtistContainer.defaultProps = {
   user: null,
 };
 
-module.exports = withContext('current', 'playing', 'user')(ArtistContainer);
+export default withContext('current', 'playing', 'user')(ArtistContainer);

@@ -182,4 +182,4 @@ AlbumsContainer.defaultProps = {
   user: null,
 };
 
-module.exports = withContext('user', 'song', 'playing', 'current', 'queueInitial')(AlbumsContainer);
+export default withContext('user', 'song', 'playing', 'current', 'queueInitial')(AlbumsContainer);

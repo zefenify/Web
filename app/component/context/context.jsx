@@ -4,6 +4,7 @@ import isEqual from 'react-fast-compare';
 
 const { Provider, Consumer } = createContext();
 
+
 class Store extends Component {
   constructor(props) {
     super(props);
@@ -67,6 +68,7 @@ Store.defaultProps = {
   wrappedProps: null,
 };
 
+
 const withContext = (...contextKeys) => WrappedComponent => props => (
   <Consumer>
     {
@@ -82,8 +84,7 @@ const withContext = (...contextKeys) => WrappedComponent => props => (
   </Consumer>
 );
 
-module.exports = {
-  Provider,
-  Consumer,
-  withContext,
-};
+
+export Provider;
+export Consumer;
+export withContext;

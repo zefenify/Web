@@ -250,4 +250,4 @@ Track.defaultProps = {
   fullDetail: true,
 };
 
-module.exports = Track;
+export default Track;

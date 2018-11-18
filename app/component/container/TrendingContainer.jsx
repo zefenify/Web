@@ -216,4 +216,4 @@ TrendingContainer.defaultProps = {
   user: null,
 };
 
-module.exports = withContext('user', 'current', 'playing')(TrendingContainer);
+export default withContext('user', 'current', 'playing')(TrendingContainer);

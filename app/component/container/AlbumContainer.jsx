@@ -238,4 +238,4 @@ AlbumContainer.defaultProps = {
   user: null,
 };
 
-module.exports = withContext('current', 'playing', 'user')(AlbumContainer);
+export default withContext('current', 'playing', 'user')(AlbumContainer);

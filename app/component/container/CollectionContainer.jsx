@@ -187,4 +187,4 @@ CollectionContainer.defaultProps = {
   user: null,
 };
 
-module.exports = withContext('playing', 'queueInitial', 'user')(CollectionContainer);
+export default withContext('playing', 'queueInitial', 'user')(CollectionContainer);

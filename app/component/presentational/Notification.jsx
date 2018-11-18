@@ -58,4 +58,4 @@ Notification.defaultProps = {
   notification: null,
 };
 
-module.exports = Notification;
+export default Notification;

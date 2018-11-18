@@ -281,4 +281,4 @@ Search.defaultProps = {
   playing: false,
 };
 
-module.exports = Search;
+export default Search;

@@ -2,9 +2,13 @@ import React from 'react';
 import { func, arrayOf, shape } from 'prop-types';
 import styled from 'react-emotion';
 
-import { CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
+import {
+  CONTEXT_TRACK,
+  CONTEXT_ALBUM,
+  CONTEXT_ARTIST,
+  CONTEXT_PLAYLIST,
+} from '@app/redux/constant/contextMenu';
 import { BASE_S3, BASE_SHARE } from '@app/config/api';
-
 import Close from '@app/component/svg/Close';
 import { ClearButton } from '@app/component/styled/Button';
 
@@ -326,4 +330,4 @@ ContextMenu.defaultProps = {
   history: null,
 };
 
-module.exports = ContextMenu;
+export default ContextMenu;

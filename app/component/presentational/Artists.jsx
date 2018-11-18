@@ -223,4 +223,4 @@ Artists.defaultProps = {
   trackCount: 0,
 };
 
-module.exports = Artists;
+export default Artists;

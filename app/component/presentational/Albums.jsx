@@ -238,4 +238,4 @@ Albums.defaultProps = {
   },
 };
 
-module.exports = Albums;
+export default Albums;

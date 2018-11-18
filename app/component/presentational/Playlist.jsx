@@ -157,4 +157,4 @@ Playlist.defaultProps = {
   cover: {},
 };
 
-module.exports = Playlist;
+export default Playlist;

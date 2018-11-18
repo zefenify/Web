@@ -199,4 +199,4 @@ Trending.defaultProps = {
   trendingPlaying: false,
 };
 
-module.exports = Trending;
+export default Trending;

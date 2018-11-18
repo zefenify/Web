@@ -152,4 +152,4 @@ Recent.defaultProps = {
   tracksPlayPauseButtonShow: true,
 };
 
-module.exports = Recent;
+export default Recent;

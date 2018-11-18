@@ -187,4 +187,4 @@ HeaderTracks.defaultProps = {
   albumPlaying: false,
 };
 
-module.exports = HeaderTracks;
+export default HeaderTracks;

@@ -297,4 +297,4 @@ Arist.defaultProps = {
   aristPlaying: false,
 };
 
-module.exports = Arist;
+export default Arist;

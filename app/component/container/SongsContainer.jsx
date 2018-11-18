@@ -142,4 +142,4 @@ SongsContainer.defaultProps = {
   user: null,
 };
 
-module.exports = withContext('current', 'playing', 'user', 'song', 'queueInitial', 'history')(SongsContainer);
+export default withContext('current', 'playing', 'user', 'song', 'queueInitial', 'history')(SongsContainer);

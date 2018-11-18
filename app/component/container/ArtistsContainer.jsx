@@ -259,4 +259,4 @@ ArtistsContainer.defaultProps = {
   playing: false,
 };
 
-module.exports = withContext('song', 'user', 'current', 'playing', 'queueInitial')(ArtistsContainer);
+export default withContext('song', 'user', 'current', 'playing', 'queueInitial')(ArtistsContainer);

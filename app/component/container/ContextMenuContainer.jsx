@@ -52,4 +52,4 @@ const ContextMenuContainer = props => (<ContextMenu
   queueNextRemove={_queueNextRemove}
 />);
 
-module.exports = withRouter(withContext('contextMenu', 'user', 'song', 'queueNext')(ContextMenuContainer));
+export default withRouter(withContext('contextMenu', 'user', 'song', 'queueNext')(ContextMenuContainer));

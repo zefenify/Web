@@ -49,4 +49,4 @@ Home.defaultProps = {
   featuredPlayingId: '',
 };
 
-module.exports = Home;
+export default Home;

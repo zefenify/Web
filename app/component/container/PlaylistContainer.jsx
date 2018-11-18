@@ -233,4 +233,4 @@ PlaylistContainer.defaultProps = {
   user: null,
 };
 
-module.exports = withContext('current', 'playing', 'user', 'urlCurrentPlaying')(PlaylistContainer);
+export default withContext('current', 'playing', 'user', 'urlCurrentPlaying')(PlaylistContainer);

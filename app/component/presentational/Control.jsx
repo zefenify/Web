@@ -326,4 +326,4 @@ Control.defaultProps = {
   urlCurrentPlaying: null,
 };
 
-module.exports = Control;
+export default Control;

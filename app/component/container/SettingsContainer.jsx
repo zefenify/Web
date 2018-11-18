@@ -68,4 +68,4 @@ const dispatches = {
 
 const SettingsContainer = props => (<Settings {...props} {...dispatches} />);
 
-module.exports = withContext('theme', 'crossfade', 'user')(SettingsContainer);
+export default withContext('theme', 'crossfade', 'user')(SettingsContainer);

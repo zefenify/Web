@@ -127,7 +127,7 @@ const Settings = ({
         <Button className="user-info__logout" onClick={logout}>Logout</Button>
       </div>
 
-      <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Change Theme</Button>
+      <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Toggle Theme</Button>
 
       <small>
         <span>Current theme is </span><b>{ theme === 'LIGHT' ? 'Dayman' : 'Nightman' }</b>

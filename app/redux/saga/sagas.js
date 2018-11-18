@@ -25,20 +25,20 @@ import { notificationOnRequest, notificationOffRequest } from '@app/redux/saga/n
 
 
 function* rootSaga() {
+  yield crossfadeBootFromLocalforage();
+  yield volumeBootFromLocalforage();
+  yield shuffleBootFromLocalforage();
+  yield repeatBootFromLocalforage();
+  yield remainingBootFromLocalforage();
   yield userBootFromLocalforage();
 
   yield all([
     themeBootFromLocalforage(),
     themeRequest(),
-    volumeBootFromLocalforage(),
     volumeRequest(),
-    repeatBootFromLocalforage(),
     repeatRequest(),
-    shuffleBootFromLocalforage(),
     shuffleRequest(),
-    crossfadeBootFromLocalforage(),
     crossfadeRequest(),
-    remainingBootFromLocalforage(),
     remainingRequest(),
     playRequest(),
     previousRequest(),

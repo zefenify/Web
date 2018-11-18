@@ -18,7 +18,7 @@ const Button = styled.button`
   }
 `;
 
-Button.ClearButton = styled.button`
+export const ClearButton = styled.button`
   display: block;
   width: 100%;
   padding: 0;
@@ -30,4 +30,4 @@ Button.ClearButton = styled.button`
   border-radius: 0;
 `;
 
-module.exports = Button;
+export default Button;

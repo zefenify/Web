@@ -1,9 +1,9 @@
 import React from 'react';
 
-import store from '@app/redux/store';
 import { CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
-
+import store from '@app/redux/store';
 import ContextOverlay from '@app/component/presentational/ContextOverlay';
+
 
 const contextMenuClose = () => {
   const { contextMenu } = store.getState();
@@ -19,4 +19,4 @@ const contextMenuClose = () => {
 
 const ContextOverlayContainer = () => <ContextOverlay contextMenuClose={contextMenuClose} />;
 
-module.exports = ContextOverlayContainer;
+export default ContextOverlayContainer;

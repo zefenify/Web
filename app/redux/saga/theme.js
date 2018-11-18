@@ -27,7 +27,7 @@ export function* themeBootFromLocalforage() {
 // worker Saga: will perform the async theme task
 function* _theme() {
   const state = yield select();
-  const nextThemeState = state.theme === 'LIGHT' ? 'LIGHT' : 'DARK';
+  const nextThemeState = state.theme === 'LIGHT' ? 'DARK' : 'LIGHT';
 
   yield put(theme(nextThemeState));
 

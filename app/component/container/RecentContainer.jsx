@@ -128,4 +128,5 @@ RecentContainer.defaultProps = {
   queueInitial: [],
 };
 
-export default withContext('playing', 'current', 'history', 'queueInitial', 'totalDuration')(RecentContainer);
+// export default withContext('playing', 'current', 'history', 'queueInitial', 'totalDuration')(RecentContainer);
+export default RecentContainer;

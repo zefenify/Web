@@ -233,4 +233,5 @@ PlaylistContainer.defaultProps = {
   user: null,
 };
 
-export default withContext('current', 'playing', 'user', 'urlCurrentPlaying')(PlaylistContainer);
+// export default withContext('current', 'playing', 'user', 'urlCurrentPlaying')(PlaylistContainer);
+export default PlaylistContainer;

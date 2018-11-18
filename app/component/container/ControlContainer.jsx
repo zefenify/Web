@@ -45,4 +45,5 @@ const dispatches = {
 
 const ControlContainer = props => (<Control {...props} {...dispatches} />);
 
-export default withContext('current', 'duration', 'playbackPosition', 'playing', 'shuffle', 'repeat', 'volume', 'remaining', 'urlCurrentPlaying')(ControlContainer);
+// export default withContext('current', 'duration', 'playbackPosition', 'playing', 'shuffle', 'repeat', 'volume', 'remaining', 'urlCurrentPlaying')(ControlContainer);
+export default ControlContainer;

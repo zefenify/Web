@@ -37,4 +37,4 @@ const FixedHeaderList = styled.div`
   }
 `;
 
-module.exports = FixedHeaderList;
+export default FixedHeaderList;

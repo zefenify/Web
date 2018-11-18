@@ -69,7 +69,7 @@ Store.defaultProps = {
 };
 
 
-const withContext = (...contextKeys) => WrappedComponent => props => (
+export const withContext = (...contextKeys) => WrappedComponent => props => (
   <Consumer>
     {
       context => (
@@ -85,6 +85,6 @@ const withContext = (...contextKeys) => WrappedComponent => props => (
 );
 
 
-export Provider;
-export Consumer;
-export withContext;
+// export Provider;
+// export Consumer;
+// export withContext;

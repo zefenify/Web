@@ -182,4 +182,5 @@ AlbumsContainer.defaultProps = {
   user: null,
 };
 
-export default withContext('user', 'song', 'playing', 'current', 'queueInitial')(AlbumsContainer);
+// export default withContext('user', 'song', 'playing', 'current', 'queueInitial')(AlbumsContainer);
+export default AlbumsContainer;

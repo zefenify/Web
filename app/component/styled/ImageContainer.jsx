@@ -46,4 +46,4 @@ Container.defaultProps = {
   children: null,
 };
 
-module.exports = Container;
+export default Container;

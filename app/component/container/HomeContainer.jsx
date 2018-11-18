@@ -119,4 +119,5 @@ HomeContainer.defaultProps = {
   user: null,
 };
 
-export default withContext('user', 'playing', 'urlCurrentPlaying')(HomeContainer);
+// export default withContext('user', 'playing', 'urlCurrentPlaying')(HomeContainer);
+export default HomeContainer;

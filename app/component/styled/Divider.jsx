@@ -17,4 +17,4 @@ const Divider = styled.div`
   }
 `;
 
-module.exports = Divider;
+export default Divider;

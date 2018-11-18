@@ -26,4 +26,5 @@ NotificationContainer.defaultProps = {
   notification: null,
 };
 
-export default withContext('notification')(NotificationContainer);
+// export default withContext('notification')(NotificationContainer);
+export default NotificationContainer;

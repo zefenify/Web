@@ -1,9 +1,8 @@
-/* global document, window */
+/* eslint no-console: off */
 
 import React from 'react';
 
-import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
-import statusChangeCallback from '@app/util/facebook';
+// import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { THEME_REQUEST } from '@app/redux/constant/theme';
 import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
 import { USER_REQUEST } from '@app/redux/constant/user';
@@ -28,18 +27,7 @@ const dispatches = {
   },
 
   login() {
-    if (window.FB === undefined) {
-      store.dispatch({
-        type: NOTIFICATION_ON_REQUEST,
-        payload: {
-          message: 'Unable to reach Facebook server',
-        },
-      });
-
-      return;
-    }
-
-    window.FB.login(statusChangeCallback);
+    console.log('RADA!');
   },
 
   logout() {
@@ -52,20 +40,10 @@ const dispatches = {
       type: SONG,
       payload: null,
     });
-
-    // [re]booting Facebook SDK...
-    if (window.FB === undefined) {
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = '//connect.facebook.net/en_US/sdk.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    }
   },
 };
 
 const SettingsContainer = props => (<Settings {...props} {...dispatches} />);
 
-export default withContext('theme', 'crossfade', 'user')(SettingsContainer);
+// export default withContext('theme', 'crossfade', 'user')(SettingsContainer);
+export default SettingsContainer;

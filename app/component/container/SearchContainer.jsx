@@ -152,4 +152,5 @@ SearchContainer.defaultProps = {
   user: null,
 };
 
-export default withContext('user', 'current', 'playing')(SearchContainer);
+// export default withContext('user', 'current', 'playing')(SearchContainer);
+export default SearchContainer;

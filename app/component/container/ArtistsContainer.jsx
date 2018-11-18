@@ -259,4 +259,5 @@ ArtistsContainer.defaultProps = {
   playing: false,
 };
 
-export default withContext('song', 'user', 'current', 'playing', 'queueInitial')(ArtistsContainer);
+// export default withContext('song', 'user', 'current', 'playing', 'queueInitial')(ArtistsContainer);
+export default ArtistsContainer;

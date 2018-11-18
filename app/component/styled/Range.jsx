@@ -90,4 +90,4 @@ const Range = styled.input`
   }
 `;
 
-module.exports = Range;
+export default Range;

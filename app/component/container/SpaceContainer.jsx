@@ -1,6 +1,6 @@
 /* global window, document */
 
-import { Component } from 'react';
+import { useEffect } from 'react';
 import debounce from 'lodash/debounce';
 
 import { PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -11,8 +11,8 @@ import store from '@app/redux/store';
 const KEY = 'keydown';
 const WAIT = 64;
 
-class SpaceContainer extends Component {
-  componentDidMount() {
+const SpaceContainer = () => {
+  useEffect(() => {
     document.querySelector('body').addEventListener(KEY, debounce((e) => {
       if (e.key !== ' ' || window.location.pathname.includes('/search') === true) {
         return;
@@ -26,15 +26,9 @@ class SpaceContainer extends Component {
       leading: true,
       trailing: false,
     }), { passive: false });
-  }
+  }, []);
 
-  shouldComponentUpdate() {
-    return false;
-  }
+  return null;
+};
 
-  render() {
-    return null;
-  }
-}
-
-module.exports = SpaceContainer;
+export default SpaceContainer;

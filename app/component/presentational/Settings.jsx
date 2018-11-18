@@ -1,5 +1,10 @@
 import React from 'react';
-import { func, string, number, shape } from 'prop-types';
+import {
+  func,
+  string,
+  number,
+  shape,
+} from 'prop-types';
 import styled from 'react-emotion';
 
 import Button from '@app/component/styled/Button';
@@ -82,13 +87,14 @@ const Settings = ({
         <Divider />
 
         <Button style={{ marginTop: '2em', marginBottom: '5em' }} onClick={login}>
-          <b>Login with Facebook</b>
+          Login with Email
         </Button>
 
         <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Change Theme</Button>
 
         <small>
-          <span>Current theme is </span><b>{ theme === 'light' ? 'Dayman' : 'Nightman' }</b>
+          <span>Current theme is </span>
+          <b>{ theme === 'LIGHT' ? 'Dayman' : 'Nightman' }</b>
         </small>
 
         <div className="crossfade">
@@ -117,14 +123,14 @@ const Settings = ({
 
       <div className="user-info">
         <small>Logged in as</small>
-        <div className="user-info__name">{ user.user.user_full_name }</div>
+        <div className="user-info__name">{ user.user.user_email }</div>
         <Button className="user-info__logout" onClick={logout}>Logout</Button>
       </div>
 
       <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Change Theme</Button>
 
       <small>
-        <span>Current theme is </span><b>{ theme === 'light' ? 'Dayman' : 'Nightman' }</b>
+        <span>Current theme is </span><b>{ theme === 'LIGHT' ? 'Dayman' : 'Nightman' }</b>
       </small>
 
       <div className="crossfade">

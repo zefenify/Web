@@ -1,5 +1,6 @@
 import styled from 'react-emotion';
 
+
 // https://codepen.io/aronwoost/pen/nlyrf + some styling tweaks, theme and Firefox fix
 const Range = styled.input`
   &[type="range"] {
@@ -11,12 +12,12 @@ const Range = styled.input`
     border: none;
     padding: 1px 2px;
     border-radius: 4px;
-    background: ${props => props.theme.control__color};
+    background: ${props => props.theme.PRIMARY_4};
     box-shadow: none;
     outline: none;
 
     &:hover {
-      background: ${props => props.theme.primary};
+      background: ${props => props.theme.PRIMARY_4};
     }
   }
 
@@ -52,11 +53,11 @@ const Range = styled.input`
     height: 12px;
     border: none;
     border-radius: 12px;
-    background-color: ${props => props.theme.control__color};
+    background-color: ${props => props.theme.PRIMARY_4};
     transition: all 125ms linear;
 
     &:hover {
-      background-color: ${props => props.theme.control__color};
+      background-color: ${props => props.theme.PRIMARY_4};
       transform: scale3d(1.25, 1.25, 1);
     }
   }
@@ -66,11 +67,11 @@ const Range = styled.input`
     height: 16px;
     border: none;
     border-radius: 16px;
-    background-color: ${props => props.theme.control__color};
+    background-color: ${props => props.theme.PRIMARY_4};
     transition: all 125ms linear;
 
     &:hover {
-      background-color: ${props => props.theme.control__color};
+      background-color: ${props => props.theme.PRIMARY_4};
       transform: scale3d(1.25, 1.25, 1);
     }
   }
@@ -80,14 +81,15 @@ const Range = styled.input`
     height: 16px;
     border-radius: 16px;
     border: 0;
-    background-color: ${props => props.theme.control__color};
+    background-color: ${props => props.theme.PRIMARY_4};
     transition: all 125ms linear;
 
     &:hover {
-      background-color: ${props => props.theme.control__color};
+      background-color: ${props => props.theme.PRIMARY_4};
       transform: scale3d(1.25, 1.25, 1);
     }
   }
 `;
+
 
 export default Range;

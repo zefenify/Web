@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import styled from 'react-emotion';
 
+
 export const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.navLink__color};
   padding: 0.5em 0.64rem;

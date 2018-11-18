@@ -12,7 +12,9 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
-    alias: { '@app': path.resolve(__dirname, 'app/') },
+    alias: {
+      '@app': path.resolve(__dirname, 'app/'),
+    },
     extensions: ['.js', '.jsx'],
   },
   plugins: [

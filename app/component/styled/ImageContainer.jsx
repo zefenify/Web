@@ -2,6 +2,7 @@ import React from 'react';
 import { element } from 'prop-types';
 import styled from 'react-emotion';
 
+
 // this component prevents empty box while image is loading
 //
 // PS:
@@ -45,5 +46,6 @@ Container.propTypes = {
 Container.defaultProps = {
   children: null,
 };
+
 
 export default Container;

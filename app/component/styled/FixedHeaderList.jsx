@@ -1,5 +1,6 @@
 import styled from 'react-emotion';
 
+
 const FixedHeaderList = styled.div`
   position: absolute;
   top: 0;
@@ -36,5 +37,6 @@ const FixedHeaderList = styled.div`
     height: calc(100vh - 130px);
   }
 `;
+
 
 export default FixedHeaderList;

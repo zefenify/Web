@@ -1,7 +1,8 @@
 import styled from 'react-emotion';
 
+
 const Button = styled.button`
-  background-color: ${props => props.backgroundColor || props.theme.primary};
+  background-color: ${props => props.theme.PRIMARY_4};
   border-radius: 2em;
   border: ${props => props.border ? `1px solid ${props.theme.text}` : 'none'};
   padding: ${props => props.padding || '0.75em 2em'};
@@ -18,6 +19,7 @@ const Button = styled.button`
   }
 `;
 
+
 export const ClearButton = styled.button`
   display: block;
   width: 100%;
@@ -29,5 +31,6 @@ export const ClearButton = styled.button`
   border: none;
   border-radius: 0;
 `;
+
 
 export default Button;

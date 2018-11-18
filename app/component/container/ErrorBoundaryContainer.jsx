@@ -5,9 +5,11 @@ import { element, oneOfType, arrayOf } from 'prop-types';
 
 import ErrorBoundary from '@app/component/presentational/ErrorBoundary';
 
+
 const hardRefresh = () => {
   window.location.reload(true);
 };
+
 
 class ErrorBoundaryContainer extends Component {
   constructor(props) {
@@ -25,11 +27,14 @@ class ErrorBoundaryContainer extends Component {
   }
 
   render() {
-    if (this.state.hasError === true) {
+    const { hasError } = this.state;
+    const { children } = this.props;
+
+    if (hasError === true) {
       return <ErrorBoundary hardRefresh={hardRefresh} />;
     }
 
-    return this.props.children;
+    return children;
   }
 }
 
@@ -44,4 +49,5 @@ ErrorBoundaryContainer.defaultProps = {
   children: null,
 };
 
-module.exports = ErrorBoundaryContainer;
+
+export default ErrorBoundaryContainer;

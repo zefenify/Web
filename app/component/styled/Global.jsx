@@ -3,7 +3,7 @@ import { injectGlobal } from 'emotion';
 // eslint-disable-next-line
 injectGlobal`
   html {
-    background-color: #808080;
+    background-color: hsl(0, 0%, 50%);
   }
 
   body {
@@ -44,40 +44,5 @@ injectGlobal`
 
   a, a * {
     cursor: pointer !important;
-  }
-
-  h1 {
-    font-size: 4em;
-  }
-
-  h2 {
-    font-size: 2em;
-  }
-
-  .play-share {
-    display: flex;
-    flex: 0 1 auto;
-    flex-direction: row;
-
-    button {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 38px;
-    }
-
-    &__play-big {
-      width: 164px;
-    }
-
-    &__play-small {
-      width: 124px;
-    }
-
-    &__share {
-      display: flex;
-      margin-left: 1.25em;
-      width: 38px;
-    }
   }
 `;

@@ -90,7 +90,7 @@ const Settings = ({
           Login with Email
         </Button>
 
-        <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Change Theme</Button>
+        <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Toggle Theme</Button>
 
         <small>
           <span>Current theme is </span>

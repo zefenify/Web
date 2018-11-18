@@ -1,7 +1,7 @@
 /* global document */
 /* eslint no-console: off */
 
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import {
   BrowserRouter as Router,
@@ -18,6 +18,7 @@ import '@app/component/styled/Global';
 import ErrorBoundaryContainer from '@app/component/container/ErrorBoundaryContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
 import SpaceContainer from '@app/component/container/SpaceContainer';
+import { Context } from '@app/component/context/context';
 import Mobile from '@app/component/presentational/Mobile';
 import HomeContainer from '@app/component/container/HomeContainer';
 import SettingsContainer from '@app/component/container/SettingsContainer';
@@ -48,9 +49,6 @@ import {
   ControlsContainer,
 } from '@app/component/styled/lego';
 
-// this will be used by `useContext` - no mo' wrapper hell
-// eslint-disable-next-line
-export const Context = createContext(null);
 
 const WolfCola = () => {
   const [state, setState] = useState(store.getState());

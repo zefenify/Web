@@ -1,8 +1,14 @@
 import React, { Component, createContext } from 'react';
-import { arrayOf, string, shape, func } from 'prop-types';
+import {
+  arrayOf,
+  string,
+  shape,
+  func,
+} from 'prop-types';
 import isEqual from 'react-fast-compare';
 
-const { Provider, Consumer } = createContext();
+
+export const Context = createContext();
 
 
 class Store extends Component {
@@ -70,7 +76,7 @@ Store.defaultProps = {
 
 
 export const withContext = (...contextKeys) => WrappedComponent => props => (
-  <Consumer>
+  <Context.Consumer>
     {
       context => (
         <Store
@@ -81,7 +87,7 @@ export const withContext = (...contextKeys) => WrappedComponent => props => (
         />
       )
     }
-  </Consumer>
+  </Context.Consumer>
 );
 
 

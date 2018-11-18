@@ -102,12 +102,15 @@ const postPatch = method => (URL, user = null, data, cancel) => new Promise((res
   }
 });
 
-api.save = postPatch('post');
 
-api.patch = postPatch('patch');
+export const save = postPatch('post');
+
+
+export const patch = postPatch('patch');
+
 
 // this is a helper function, still doesn't break "pure-ity"
-api.error = store => (axiosError) => {
+export const error = store => (axiosError) => {
   store.dispatch(loading(false));
 
   if (axiosError.message === 'Network Error') {
@@ -128,5 +131,6 @@ api.error = store => (axiosError) => {
     },
   });
 };
+
 
 export default api;

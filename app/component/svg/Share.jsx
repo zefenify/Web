@@ -17,4 +17,4 @@ const Share = () => (
   </svg>
 );
 
-module.exports = Share;
+export default Share;

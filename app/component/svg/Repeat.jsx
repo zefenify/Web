@@ -2,8 +2,8 @@ import React from 'react';
 
 const Repeat = () => (
   <svg
-    width="18"
-    height="18"
+    width="24"
+    height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -18,4 +18,4 @@ const Repeat = () => (
   </svg>
 );
 
-module.exports = Repeat;
+export default Repeat;

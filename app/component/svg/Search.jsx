@@ -2,8 +2,8 @@ import React from 'react';
 
 const Search = props => (
   <svg
-    width="16"
-    height="16"
+    width="24"
+    height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -17,4 +17,4 @@ const Search = props => (
   </svg>
 );
 
-module.exports = Search;
+export default Search;

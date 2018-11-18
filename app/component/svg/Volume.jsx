@@ -51,4 +51,4 @@ Volume.defaultProps = {
   volume: 0,
 };
 
-module.exports = Volume;
+export default Volume;

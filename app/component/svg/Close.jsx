@@ -2,6 +2,8 @@ import React from 'react';
 
 const Close = () => (
   <svg
+    width="24"
+    height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="#ff6d5e"
@@ -15,4 +17,4 @@ const Close = () => (
   </svg>
 );
 
-module.exports = Close;
+export default Close;

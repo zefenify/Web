@@ -6,8 +6,8 @@ const PlayPause = ({
   playing,
 }) => (
   <svg
-    width="34"
-    height="34"
+    width="24"
+    height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -42,4 +42,4 @@ PlayPause.defaultProps = {
   onClick: () => {},
 };
 
-module.exports = PlayPause;
+export default PlayPause;

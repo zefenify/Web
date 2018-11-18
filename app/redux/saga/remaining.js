@@ -8,7 +8,7 @@ import { REMAINING_REQUEST } from '@app/redux/constant/remaining';
 import { remaining } from '@app/redux/action/remaining';
 
 
-function* remainingBootFromLocalforage() {
+export function* remainingBootFromLocalforage() {
   try {
     const localforageRemaining = yield localforage.getItem(LOCALFORAGE_STORE.REMAINING);
     // default behavior or remaining is false i.e. end timer is always displayed
@@ -31,11 +31,6 @@ function* _remaining() {
 }
 
 
-function* remainingRequest() {
+export function* remainingRequest() {
   yield takeEvery(REMAINING_REQUEST, _remaining);
 }
-
-export default {
-  remainingBootFromLocalforage,
-  remainingRequest,
-};

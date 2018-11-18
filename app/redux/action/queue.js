@@ -6,7 +6,7 @@ import {
 } from '@app/redux/constant/queue';
 
 
-function queueSet(payload) {
+export function queueSet(payload) {
   return {
     type: QUEUE_SET,
     payload,
@@ -14,7 +14,7 @@ function queueSet(payload) {
 }
 
 
-function queueAdd(payload) {
+export function queueAdd(payload) {
   return {
     type: QUEUE_ADD,
     payload,
@@ -22,7 +22,7 @@ function queueAdd(payload) {
 }
 
 
-function queueRemove(payload) {
+export function queueRemove(payload) {
   return {
     type: QUEUE_REMOVE,
     payload,
@@ -30,16 +30,8 @@ function queueRemove(payload) {
 }
 
 
-function queueClear() {
+export function queueClear() {
   return {
     type: QUEUE_CLEAR,
   };
 }
-
-
-export default {
-  queueSet,
-  queueAdd,
-  queueRemove,
-  queueClear,
-};

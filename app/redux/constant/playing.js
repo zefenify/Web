@@ -1,6 +1,1 @@
-const PLAYING = 'PLAYING';
-
-
-export default {
-  PLAYING,
-};
+export const PLAYING = 'PLAYING';

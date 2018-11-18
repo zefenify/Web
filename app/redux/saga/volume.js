@@ -9,7 +9,7 @@ import { VOLUME_REQUEST } from '@app/redux/constant/volume';
 import { volume } from '@app/redux/action/volume';
 
 
-function* volumeBootFromLF() {
+export function* volumeBootFromLocalforage() {
   try {
     const localforageVolume = yield localforage.getItem(LOCALFORAGE_STORE.VOLUME);
     yield put(volume(localforageVolume === null ? 1 : localforageVolume));
@@ -32,12 +32,6 @@ function* _volume(action) {
 }
 
 
-function* volumeRequest() {
+export function* volumeRequest() {
   yield takeEvery(VOLUME_REQUEST, _volume);
 }
-
-
-export default {
-  volumeBootFromLF,
-  volumeRequest,
-};

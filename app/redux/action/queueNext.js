@@ -1,7 +1,7 @@
 import { QUEUE_NEXT_ADD, QUEUE_NEXT_REMOVE } from '@app/redux/constant/queueNext';
 
 
-function queueNextAdd(payload) {
+export function queueNextAdd(payload) {
   return {
     type: QUEUE_NEXT_ADD,
     payload,
@@ -9,15 +9,9 @@ function queueNextAdd(payload) {
 }
 
 
-function queueNextRemove(payload) {
+export function queueNextRemove(payload) {
   return {
     type: QUEUE_NEXT_REMOVE,
     payload,
   };
 }
-
-
-export default {
-  queueNextAdd,
-  queueNextRemove,
-};

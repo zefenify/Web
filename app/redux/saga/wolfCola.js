@@ -698,35 +698,26 @@ function* _playPause() {
 }
 
 
-function* playRequest() {
+export function* playRequest() {
   yield throttle(1000, PLAY_REQUEST, _play);
 }
 
 
-function* seekRequest() {
+export function* seekRequest() {
   yield takeLatest(SEEK_REQUEST, _seek);
 }
 
 
-function* nextRequest() {
+export function* nextRequest() {
   yield throttle(1000, NEXT_REQUEST, _next);
 }
 
 
-function* previousRequest() {
+export function* previousRequest() {
   yield throttle(1000, PREVIOUS_REQUEST, _previous);
 }
 
 
-function* playPauseRequest() {
+export function* playPauseRequest() {
   yield takeEvery(PLAY_PAUSE_REQUEST, _playPause);
 }
-
-
-export default {
-  playRequest,
-  previousRequest,
-  nextRequest,
-  seekRequest,
-  playPauseRequest,
-};

@@ -1,8 +1,2 @@
-const SHUFFLE = 'SHUFFLE';
-const SHUFFLE_REQUEST = 'SHUFFLE_REQUEST';
-
-
-export default {
-  SHUFFLE,
-  SHUFFLE_REQUEST,
-};
+export const SHUFFLE = 'SHUFFLE';
+export const SHUFFLE_REQUEST = 'SHUFFLE_REQUEST';

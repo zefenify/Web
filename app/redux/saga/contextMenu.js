@@ -53,17 +53,11 @@ function* _contextMenuOff() {
 }
 
 
-function* contextMenuOnRequest() {
+export function* contextMenuOnRequest() {
   yield takeEvery(CONTEXT_MENU_ON_REQUEST, _contextMenuOn);
 }
 
 
-function* contextMenuOffRequest() {
+export function* contextMenuOffRequest() {
   yield takeEvery(CONTEXT_MENU_OFF_REQUEST, _contextMenuOff);
 }
-
-
-export default {
-  contextMenuOnRequest,
-  contextMenuOffRequest,
-};

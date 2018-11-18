@@ -8,10 +8,9 @@ import { USER_REQUEST } from '@app/redux/constant/user';
 import { user } from '@app/redux/action/user';
 
 
-function* userBootFromLocalforage() {
+export function* userBootFromLocalforage() {
   try {
     const localforageUser = yield localforage.getItem(LOCALFORAGE_STORE.USER);
-
     yield put(user(localforageUser));
   } catch (userGetError) {
     console.warn('Unable to Boot User from Localforage', userGetError);
@@ -30,12 +29,6 @@ function* _user(action) {
 }
 
 
-function* userRequest() {
+export function* userRequest() {
   yield takeEvery(USER_REQUEST, _user);
 }
-
-
-export default {
-  userBootFromLocalforage,
-  userRequest,
-};

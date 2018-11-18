@@ -8,7 +8,7 @@ import { REPEAT_REQUEST } from '@app/redux/constant/repeat';
 import { repeat } from '@app/redux/action/repeat';
 
 
-function* repeatBootFromLocalforage() {
+export function* repeatBootFromLocalforage() {
   try {
     const localforageRepeat = yield localforage.getItem(LOCALFORAGE_STORE.REPEAT);
     yield put(repeat(localforageRepeat === null ? 'OFF' : localforageRepeat));
@@ -31,12 +31,6 @@ function* _repeat() {
 }
 
 
-function* repeatRequest() {
+export function* repeatRequest() {
   yield takeEvery(REPEAT_REQUEST, _repeat);
 }
-
-
-export default {
-  repeatBootFromLocalforage,
-  repeatRequest,
-};

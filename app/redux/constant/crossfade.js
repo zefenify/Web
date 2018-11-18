@@ -1,10 +1,3 @@
-const CROSSFADE = 'CROSSFADE';
-const CROSSFADE_REQUEST = 'CROSSFADE_REQUEST';
-const CROSSFADE_DEFAULT = 3; // in seconds
-
-
-export default {
-  CROSSFADE,
-  CROSSFADE_REQUEST,
-  CROSSFADE_DEFAULT,
-};
+export const CROSSFADE = 'CROSSFADE';
+export const CROSSFADE_REQUEST = 'CROSSFADE_REQUEST';
+export const CROSSFADE_DEFAULT = 3; // in seconds

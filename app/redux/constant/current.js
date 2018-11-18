@@ -1,6 +1,1 @@
-const CURRENT = 'CURRENT';
-
-
-export default {
-  CURRENT,
-};
+export const CURRENT = 'CURRENT';

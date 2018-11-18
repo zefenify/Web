@@ -8,7 +8,7 @@ import { CROSSFADE_REQUEST, CROSSFADE_DEFAULT } from '@app/redux/constant/crossf
 import { crossfade } from '@app/redux/action/crossfade';
 
 
-function* crossfadeBootFromLocalforage() {
+export function* crossfadeBootFromLocalforage() {
   try {
     const localforageCrossfade = yield localforage.getItem(LOCALFORAGE_STORE.CROSSFADE);
     yield put(crossfade(localforageCrossfade || CROSSFADE_DEFAULT));
@@ -29,12 +29,6 @@ function* _crossfade(action) {
 }
 
 
-function* crossfadeRequest() {
+export function* crossfadeRequest() {
   yield takeEvery(CROSSFADE_REQUEST, _crossfade);
 }
-
-
-export default {
-  crossfadeBootFromLocalforage,
-  crossfadeRequest,
-};

@@ -31,17 +31,11 @@ function* _notificationOff() {
 }
 
 
-function* notificationOnRequest() {
+export function* notificationOnRequest() {
   yield takeLatest(NOTIFICATION_ON_REQUEST, _notificationOn);
 }
 
 
-function* notificationOffRequest() {
+export function* notificationOffRequest() {
   yield takeLatest(NOTIFICATION_OFF_REQUEST, _notificationOff);
 }
-
-
-export default {
-  notificationOnRequest,
-  notificationOffRequest,
-};

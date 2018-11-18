@@ -1,8 +1,2 @@
-const REPEAT = 'REPEAT';
-const REPEAT_REQUEST = 'REPEAT_REQUEST';
-
-
-export default {
-  REPEAT,
-  REPEAT_REQUEST,
-};
+export const REPEAT = 'REPEAT';
+export const REPEAT_REQUEST = 'REPEAT_REQUEST';

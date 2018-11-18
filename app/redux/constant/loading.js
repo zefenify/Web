@@ -1,6 +1,1 @@
-const LOADING = 'LOADING';
-
-
-export default {
-  LOADING,
-};
+export const LOADING = 'LOADING';

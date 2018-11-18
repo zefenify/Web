@@ -1,6 +1,1 @@
-const DURATION = 'DURATION';
-
-
-export default {
-  DURATION,
-};
+export const DURATION = 'DURATION';

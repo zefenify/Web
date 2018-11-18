@@ -8,7 +8,7 @@ import { SHUFFLE_REQUEST } from '@app/redux/constant/shuffle';
 import { shuffle } from '@app/redux/action/shuffle';
 
 
-function* shuffleBootFromLocalforage() {
+export function* shuffleBootFromLocalforage() {
   try {
     const localforageShuffle = yield localforage.getItem(LOCALFORAGE_STORE.SHUFFLE);
     yield put(shuffle(localforageShuffle === null ? false : localforageShuffle));
@@ -30,12 +30,6 @@ function* _shuffle() {
 }
 
 
-function* shuffleRequest() {
+export function* shuffleRequest() {
   yield takeEvery(SHUFFLE_REQUEST, _shuffle);
 }
-
-
-export default {
-  shuffleBootFromLocalforage,
-  shuffleRequest,
-};

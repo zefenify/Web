@@ -8,7 +8,7 @@ import { song } from '@app/redux/action/song';
 import { loading } from '@app/redux/action/loading';
 
 
-function* songBoot() {
+export function* songBoot() {
   const { user } = yield select();
 
   // no user, clearing song state...
@@ -160,24 +160,16 @@ function* _songRemove(action) {
 }
 
 
-function* songBootRequest() {
+export function* songBootRequest() {
   yield takeEvery(SONG_BOOT_REQUEST, songBoot);
 }
 
 
-function* songSaveRequest() {
+export function* songSaveRequest() {
   yield takeEvery(SONG_SAVE_REQUEST, _songSave);
 }
 
 
-function* songRemoveRequest() {
+export function* songRemoveRequest() {
   yield takeEvery(SONG_REMOVE_REQUEST, _songRemove);
 }
-
-
-export default {
-  songBoot,
-  songBootRequest,
-  songSaveRequest,
-  songRemoveRequest,
-};

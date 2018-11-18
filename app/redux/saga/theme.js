@@ -9,7 +9,7 @@ import { THEME_REQUEST } from '@app/redux/constant/theme';
 import { theme } from '@app/redux/action/theme';
 
 
-function* themeBootFromLocalforage() {
+export function* themeBootFromLocalforage() {
   try {
     const localforageTheme = yield localforage.getItem(LOCALFORAGE_STORE.THEME);
     yield put(theme(localforageTheme === null ? 'DARK' : localforageTheme)); // default boot is `DARK`
@@ -37,12 +37,6 @@ function* _theme() {
 
 
 // watcher Saga: spawn a new themeAsync task on each `THEME_ASYNC`
-function* themeRequest() {
+export function* themeRequest() {
   yield takeEvery(THEME_REQUEST, _theme);
 }
-
-
-export default {
-  themeBootFromLocalforage,
-  themeRequest,
-};

@@ -14,7 +14,9 @@ export function* themeBootFromLocalforage() {
     const localforageTheme = yield localforage.getItem(LOCALFORAGE_STORE.THEME);
     yield put(theme(localforageTheme === null ? 'DARK' : localforageTheme)); // default boot is `DARK`
     const WolfColaContainer = document.querySelector('#wolf-cola-container');
-    WolfColaContainer.classList.remove('booting');
+    if (WolfColaContainer !== null) {
+      WolfColaContainer.classList.remove('booting');
+    }
   } catch (themeGetError) {
     console.warn('Unable to Boot Theme from Localforage', themeGetError);
   }

@@ -96,7 +96,7 @@ const Settings = ({
               }
 
               <div>
-                <Button disabled={loading}>Sign In</Button>
+                <Button disabled={loading}>Login In or Register</Button>
               </div>
             </Form>
           ) : (

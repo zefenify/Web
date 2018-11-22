@@ -8,6 +8,7 @@ import { Context } from '@app/component/context/context';
 import Settings from '@app/component/presentational/Settings';
 import { BASE } from '@app/config/api';
 import { loading } from '@app/redux/action/loading';
+import { SONG_BOOT_REQUEST } from '@app/redux/constant/song';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';
 import { THEME_REQUEST } from '@app/redux/constant/theme';
 import { CROSSFADE_REQUEST } from '@app/redux/constant/crossfade';
@@ -116,6 +117,13 @@ const SettingsContainer = (props) => {
         store.dispatch({
           type: USER_REQUEST,
           payload: data.data,
+        });
+
+        // TODO: booters
+        // - [X] song
+        // - [ ] playlist
+        store.dispatch({
+          type: SONG_BOOT_REQUEST,
         });
       }, ({ response }) => {
         const { data } = response;

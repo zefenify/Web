@@ -2,6 +2,7 @@ export const DARK = {
   BACKGROUND_MAIN: 'hsl(0, 0%, 11%)',
   BACKGROUND_NAVIGATION: 'hsl(0, 0%, 16%)',
   BACKGROUND_CONTROL: 'hsl(0, 0%, 15%)',
+  SHADOW: 'hsla(0, 0%, 0%, 0.18)',
 
   PRIMARY_1: '#12283A',
   PRIMARY_2: '#1C3D5A',
@@ -24,6 +25,7 @@ export const LIGHT = {
   BACKGROUND_MAIN: 'hsl(0, 0%, 100%)',
   BACKGROUND_NAVIGATION: 'hsl(0, 0%, 77%)',
   BACKGROUND_CONTROL: 'hsl(0, 0%, 93%)',
+  SHADOW: 'hsla(100, 0%, 0%, 0.2)',
 
   PRIMARY_1: '#3B0D0C',
   PRIMARY_2: '#621B18',

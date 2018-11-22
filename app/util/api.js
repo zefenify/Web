@@ -103,7 +103,7 @@ const postPatch = method => (URL, user = null, data, cancel) => new Promise((res
 });
 
 
-export const save = postPatch('post');
+export const post = postPatch('post');
 
 
 export const patch = postPatch('patch');
@@ -117,7 +117,7 @@ export const error = store => (axiosError) => {
     store.dispatch({
       type: NOTIFICATION_ON_REQUEST,
       payload: {
-        message: 'No Internet connection. Please try again later',
+        message: 'No Internet Connection. Please Try Again Later',
       },
     });
 
@@ -127,7 +127,7 @@ export const error = store => (axiosError) => {
   store.dispatch({
     type: NOTIFICATION_ON_REQUEST,
     payload: {
-      message: 'ይቅርታ, Unable to fetch data. Please try again later',
+      message: 'ይቅርታ, Unable to Process Request. Please Try Again Later',
     },
   });
 };

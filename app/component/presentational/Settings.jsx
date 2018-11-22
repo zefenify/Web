@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  bool,
   func,
   string,
   number,
@@ -8,55 +9,8 @@ import {
 import styled from 'react-emotion';
 
 import Button from '@app/component/styled/Button';
-import Divider from '@app/component/styled/Divider';
 import Range from '@app/component/styled/Range';
-
-const SettingsContainer = styled.div`
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 1em;
-    margin-bottom: 6em;
-
-    &__name {
-      padding: 0.1em 0;
-      font-size: 1.5em;
-    }
-
-    &__logout {
-      width: 100px;
-      margin-top: 0.75em;
-    }
-  }
-
-  .crossfade {
-    padding: 0;
-    width: 75%;
-    max-width: 250px;
-    margin-top: 1em;
-    margin-bottom: 4em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .crossfade {
-    padding: 0;
-    width: 75%;
-    max-width: 250px;
-    margin-top: 1em;
-    margin-bottom: 4em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
+import HeaderView from '@app/component/styled/FixedHeaderList';
 
 const DMCA = styled.a`
   text-decoration: none;
@@ -65,81 +19,110 @@ const DMCA = styled.a`
   padding: 0.75em 2.75em;
   font-size: 1em;
   margin-bottom: 1em;
-  border: 1px solid ${props => props.theme.text};
+  border: 1px solid #ff6d5e;
+`;
+
+const Form = styled.form`
+  input {
+    border: 1px solid red;
+    font-size: 1.25rem;
+    background-color: ${props => props.theme.NATURAL_6};
+    border-radius: 0.25rem;
+    border: 0 solid ${props => props.theme.NATURAL_4};
+    color: ${props => props.theme.NATURAL_1};
+    width: 25vw;
+    border-radius: 0.25rem;
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px ${props => props.theme.NATURAL_6} inset;
+      -webkit-text-fill-color: ${props => props.theme.NATURAL_1};
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    &[name="verificationCode"] {
+      text-align: center;
+    }
+  }
 `;
 
 const Settings = ({
   crossfade,
-  crossfadeSet,
   themeToggle,
   theme,
-  login,
   logout,
   user,
-}) => {
-  const crossfadeMessage = `Crossfade: ${crossfade === 0 ? 'Off' : `${crossfade} Second${crossfade > 1 ? 's' : ''}`}`;
+  loading,
+  state,
+  onChange,
+  onSubmit,
+}) => (
+  <HeaderView>
+    <div className="__header"><h1 className="m-0">Settings</h1></div>
 
-  if (user === null) {
-    return (
-      <SettingsContainer>
-        <h1>Settings</h1>
+    <div className="__view d-flex flex-column align-items-center flex-shrink-0 flex-nowrap">
+      <div className="mb-5">
+        {
+          user === null ? (
+            <Form className="d-flex flex-column align-items-center mt-5" noValidate method="post" onSubmit={onSubmit}>
+              <input
+                type="email"
+                name="email"
+                placeholder="email"
+                className="p-3 mb-3"
+                value={state.email}
+                onChange={onChange}
+                required
+                disabled={state.verificationCodeSent === true}
+              />
 
-        <Divider />
+              {
+                state.verificationCodeSent === false ? null : (
+                  <input
+                    type="tel"
+                    minLength="6"
+                    maxLength="6"
+                    name="verificationCode"
+                    placeholder="Verification Code"
+                    className="p-3 mb-3"
+                    value={state.verificationCode}
+                    onChange={onChange}
+                    required
+                  />
+                )
+              }
 
-        <Button style={{ marginTop: '2em', marginBottom: '5em' }} onClick={login}>
-          Login with Email
-        </Button>
+              <div>
+                <Button disabled={loading}>Sign In</Button>
+              </div>
+            </Form>
+          ) : (
+            <div className="d-flex flex-column align-items-center mt-5">
+              <h2 className="m-0 mb-2">{ user.user.user_email }</h2>
+              <Button disabled={loading} onClick={logout}>Log Out</Button>
+            </div>
+          )
+        }
+      </div>
 
-        <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Toggle Theme</Button>
-
+      <div className="mb-5 d-flex flex-column align-items-center flex-shrink-0">
+        <Button className="mb-2" onClick={themeToggle}>Toggle Theme</Button>
         <small>
           <span>Current theme is </span>
           <b>{ theme === 'LIGHT' ? 'Dayman' : 'Nightman' }</b>
         </small>
-
-        <div className="crossfade">
-          <h3>{ crossfadeMessage }</h3>
-
-          <Range
-            type="range"
-            onChange={e => crossfadeSet(e)}
-            value={crossfade}
-            min="0"
-            max="12"
-            step="1"
-          />
-        </div>
-
-        <DMCA href="/dmca.html" target="_blank">DMCA</DMCA>
-      </SettingsContainer>
-    );
-  }
-
-  return (
-    <SettingsContainer>
-      <h1>Settings</h1>
-
-      <Divider />
-
-      <div className="user-info">
-        <small>Logged in as</small>
-        <div className="user-info__name">{ user.user.user_email }</div>
-        <Button className="user-info__logout" onClick={logout}>Logout</Button>
       </div>
 
-      <Button style={{ marginBottom: '0.5em' }} onClick={themeToggle}>Toggle Theme</Button>
-
-      <small>
-        <span>Current theme is </span>
-        <b>{ theme === 'LIGHT' ? 'Dayman' : 'Nightman' }</b>
-      </small>
-
-      <div className="crossfade">
-        <h3>{ crossfadeMessage }</h3>
+      <div className="mb-5 d-flex flex-column align-items-center" style={{ width: '250px' }}>
+        <h3 className="mt-0 mb-2">{ `Crossfade: ${crossfade === 0 ? 'Off' : `${crossfade} Second${crossfade > 1 ? 's' : ''}`}` }</h3>
 
         <Range
+          name="corssfade"
           type="range"
-          onChange={e => crossfadeSet(e)}
+          onChange={onChange}
           value={crossfade}
           min="0"
           max="12"
@@ -148,17 +131,19 @@ const Settings = ({
       </div>
 
       <DMCA href="/dmca.html" target="_blank">DMCA</DMCA>
-    </SettingsContainer>
-  );
-};
+    </div>
+  </HeaderView>
+);
 
 Settings.propTypes = {
   theme: string,
   user: shape({}),
   crossfade: number,
+  state: shape({}),
+  loading: bool,
+  onChange: func.isRequired,
+  onSubmit: func.isRequired,
   themeToggle: func.isRequired,
-  crossfadeSet: func.isRequired,
-  login: func.isRequired,
   logout: func.isRequired,
 };
 
@@ -166,6 +151,8 @@ Settings.defaultProps = {
   theme: 'light',
   crossfade: 0,
   user: null,
+  state: {},
+  loading: false,
 };
 
 export default Settings;

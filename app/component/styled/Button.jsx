@@ -3,14 +3,21 @@ import styled from 'react-emotion';
 
 const Button = styled.button`
   background-color: ${props => props.theme.PRIMARY_4};
-  border-radius: 2em;
-  border: ${props => props.border ? `1px solid ${props.theme.text}` : 'none'};
-  padding: ${props => props.padding || '0.75em 2em'};
-  color: ${props => props.themeColor ? props.theme.text : 'hsl(0, 0%, 100%)'};
+  border-radius: 2rem;
+  border: ${props => props.border ? `1px solid ${props.theme.NATURAL_2}` : 'none'};
+  padding: 0.75rem 2rem;
+  min-height: 38px;
+  color: hsl(0, 0%, 100%);
   transition: transform 250ms;
   will-change: transform;
+  box-shadow: 0 2px 6px ${props => props.theme.SHADOW};
 
-  &:hover {
+  &:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
     transform: scale3d(1.05, 1.05, 1);
   }
 

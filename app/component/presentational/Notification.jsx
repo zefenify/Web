@@ -9,7 +9,7 @@ const NotificationContainer = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  left: 200px;
+  left: 220px;
   background-color: #4a89d3;
   display: flex;
   flex-direction: row;

@@ -1,12 +1,9 @@
-import React from 'react';
-import { shape } from 'prop-types';
-// import { connect } from 'react-redux';
-
-import store from '@app/redux/store';
-import Notification from '@app/component/presentational/Notification';
+import React, { useContext } from 'react';
 
 import { NOTIFICATION_OFF_REQUEST } from '@app/redux/constant/notification';
-import { withContext } from '@app/component/context/context';
+import store from '@app/redux/store';
+import Notification from '@app/component/presentational/Notification';
+import { Context } from '@app/component/context/context';
 
 const close = () => {
   store.dispatch({
@@ -14,17 +11,12 @@ const close = () => {
   });
 };
 
-const NotificationContainer = ({ notification }) => (
-  <Notification notification={notification} close={close} />
-);
+const NotificationContainer = () => {
+  const { notification } = useContext(Context);
 
-NotificationContainer.propTypes = {
-  notification: shape({}),
+  return (
+    <Notification notification={notification} close={close} />
+  );
 };
 
-NotificationContainer.defaultProps = {
-  notification: null,
-};
-
-// export default withContext('notification')(NotificationContainer);
 export default NotificationContainer;

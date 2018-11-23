@@ -2,7 +2,7 @@ import React from 'react';
 import { bool, func, string, arrayOf, shape } from 'prop-types';
 
 import Playlist from '@app/component/presentational/Playlist';
-import FixedHeaderList from '@app/component/styled/FixedHeaderList';
+import HeaderView from '@app/component/styled/HeaderView';
 
 const Home = ({
   playing,
@@ -10,7 +10,7 @@ const Home = ({
   featuredPlayingId,
   featuredPlay,
 }) => (
-  <FixedHeaderList>
+  <HeaderView>
     <div className="header">
       <h2>Featured</h2>
     </div>
@@ -33,7 +33,7 @@ const Home = ({
         ))
       }
     </div>
-  </FixedHeaderList>
+  </HeaderView>
 );
 
 Home.propTypes = {

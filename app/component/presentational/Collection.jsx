@@ -5,7 +5,7 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 import ImageContainer from '@app/component/styled/ImageContainer';
-import FixedHeaderList from '@app/component/styled/FixedHeaderList';
+import HeaderView from '@app/component/styled/HeaderView';
 import Playlist from '@app/component/presentational/Playlist';
 
 const CollectionContainer = styled(Link)`
@@ -74,7 +74,7 @@ const Collection = ({
   // collection list...
   if (collectionId === '') {
     return (
-      <FixedHeaderList>
+      <HeaderView>
         <div className="title">
           <h2>{ collectionName }</h2>
         </div>
@@ -94,12 +94,12 @@ const Collection = ({
           }
 
         </div>
-      </FixedHeaderList>
+      </HeaderView>
     );
   }
 
   return (
-    <FixedHeaderList>
+    <HeaderView>
       <div className="title">
         <h2>{ collectionName }</h2>
       </div>
@@ -122,7 +122,7 @@ const Collection = ({
           ))
         }
       </div>
-    </FixedHeaderList>
+    </HeaderView>
   );
 };
 

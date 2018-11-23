@@ -5,7 +5,7 @@ import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
-import FixedHeaderList from '@app/component/styled/FixedHeaderList';
+import HeaderView from '@app/component/styled/HeaderView';
 import PlayPause from '@app/component/svg/PlayPause';
 import Button from '@app/component/styled/Button';
 import ImageContainer from '@app/component/styled/ImageContainer';
@@ -163,7 +163,7 @@ const Artists = ({
   }
 
   return (
-    <FixedHeaderList>
+    <HeaderView>
       <div className="title">
         <h2>Artists</h2>
       </div>
@@ -190,7 +190,7 @@ const Artists = ({
           ))
         }
       </div>
-    </FixedHeaderList>
+    </HeaderView>
   );
 };
 

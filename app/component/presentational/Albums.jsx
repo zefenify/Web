@@ -6,7 +6,7 @@ import styled from 'react-emotion';
 import { BASE_S3 } from '@app/config/api';
 
 import ImageContainer from '@app/component/styled/ImageContainer';
-import FixedHeaderList from '@app/component/styled/FixedHeaderList';
+import HeaderView from '@app/component/styled/HeaderView';
 import PlayPause from '@app/component/svg/PlayPause';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
@@ -171,7 +171,7 @@ const Albums = ({
   }
 
   return (
-    <FixedHeaderList>
+    <HeaderView>
       <div className="title">
         <h2>Albums</h2>
       </div>
@@ -199,7 +199,7 @@ const Albums = ({
           ))
         }
       </div>
-    </FixedHeaderList>
+    </HeaderView>
   );
 };
 

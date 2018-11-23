@@ -1,7 +1,7 @@
 import styled from 'react-emotion';
 
 
-const FixedHeaderList = styled.div`
+const HeaderView = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -9,9 +9,9 @@ const FixedHeaderList = styled.div`
   left: 0;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 90px); /* 90px control */
 
-  .header {
+  .__header {
     position: absolute;
     top: 0;
     right: 0;
@@ -20,10 +20,10 @@ const FixedHeaderList = styled.div`
     align-items: center;
     height: 60px;
     padding: 0 2em;
-    box-shadow: 0 0 4px 2px ${props => props.theme.navBoxShadow__color};
+    box-shadow: 0 0 4px 2px ${props => props.theme.SHADOW};
   }
 
-  .list {
+  .__view {
     position: absolute;
     top: 60px;
     right: 0;
@@ -34,9 +34,9 @@ const FixedHeaderList = styled.div`
     flex-wrap: wrap;
     overflow-y: auto;
     padding: 1em 1em 0 1em;
-    height: calc(100vh - 130px);
+    height: calc(100vh - 150px); /* 60px top + 90px control */
   }
 `;
 
 
-export default FixedHeaderList;
+export default HeaderView;

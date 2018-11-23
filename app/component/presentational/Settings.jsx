@@ -10,7 +10,7 @@ import styled from 'react-emotion';
 
 import Button from '@app/component/styled/Button';
 import Range from '@app/component/styled/Range';
-import HeaderView from '@app/component/styled/FixedHeaderList';
+import HeaderView from '@app/component/styled/HeaderView';
 
 const DMCA = styled.a`
   text-decoration: none;

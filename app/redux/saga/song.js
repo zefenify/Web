@@ -20,7 +20,7 @@ export function* songBoot() {
   try {
     yield put(loading(true));
 
-    const { data } = yield axios.get(`${BASE}songs`, {
+    const { data } = yield axios.get(`${BASE}song/like`, {
       headers: {
         [HEADER]: user === null ? undefined : user.jwt,
       },
@@ -71,7 +71,7 @@ function* _songSave(action) {
   try {
     yield put(loading(true));
 
-    const { data } = yield axios.patch(`${BASE}songs`, {
+    const { data } = yield axios.patch(`${BASE}song/like`, {
       song_track: [trackId, ...savedTrackIds],
     }, {
       headers: {
@@ -123,7 +123,7 @@ function* _songRemove(action) {
   try {
     yield put(loading(true));
 
-    const { data } = yield axios.patch(`${BASE}songs`, {
+    const { data } = yield axios.patch(`${BASE}song/like`, {
       song_track: [
         ...savedTrackIds.slice(0, savedTrackIds.indexOf(trackId)),
         ...savedTrackIds.slice(savedTrackIds.indexOf(trackId) + 1),

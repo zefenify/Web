@@ -9,7 +9,6 @@ const Button = styled.button`
   height: 38px;
   color: hsl(0, 0%, 100%);
   transition: transform 250ms;
-  will-change: transform;
   box-shadow: 0 2px 6px ${props => props.theme.SHADOW};
 
   &:disabled {

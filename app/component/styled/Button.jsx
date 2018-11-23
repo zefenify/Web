@@ -6,7 +6,7 @@ const Button = styled.button`
   border-radius: 2rem;
   border: ${props => props.border ? `1px solid ${props.theme.NATURAL_2}` : 'none'};
   padding: 0.75rem 2rem;
-  min-height: 38px;
+  height: 38px;
   color: hsl(0, 0%, 100%);
   transition: transform 250ms;
   will-change: transform;
@@ -21,7 +21,7 @@ const Button = styled.button`
     transform: scale3d(1.05, 1.05, 1);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: scale3d(0.95, 0.95, 1);
   }
 `;

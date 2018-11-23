@@ -1,36 +1,44 @@
 import React from 'react';
-import { string, bool, func, number, shape, oneOf } from 'prop-types';
+import {
+  string,
+  bool,
+  func,
+  number,
+  shape,
+  oneOf,
+} from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
-
 import PlayPause from '@app/component/svg/PlayPause';
 import ImageContainer from '@app/component/styled/ImageContainer';
 
+
 const PlaylistContainer = styled(Link)`
   position: relative;
-  display: flex;
-  flex-direction: column;
   width: 25%;
-  padding: 0 1rem;
-  padding-bottom: 2rem;
   text-decoration: none;
-  color: inherit;
+  color: ${props => props.theme.PRIMARY_4};
   transition: transform 128ms;
-  will-change: transform;
 
   &.active {
-    color: ${props => props.theme.primary};
+    .__playlist-title {
+      color: ${props => props.theme.PRIMARY_4};
+    }
 
-    .playlist-title {
-      color: ${props => props.theme.primary};
+    .__playlist-description {
+      color: ${props => props.theme.PRIMARY_4};
+    }
+
+    .__playlist-count {
+      color: ${props => props.theme.PRIMARY_5};
     }
   }
 
   &:not(.active) {
     svg {
-      color: #fff !important;
+      color: hsl(0, 0%, 100%) !important;
     }
   }
 
@@ -38,7 +46,7 @@ const PlaylistContainer = styled(Link)`
     width: 20%;
   }
 
-  .playlist-cover {
+  .__playlist-cover {
     position: relative;
 
     &__overlay {
@@ -47,53 +55,38 @@ const PlaylistContainer = styled(Link)`
       right: 0;
       bottom: 0;
       left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
 
       svg {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         color: inherit;
         width: 64px;
         height: 64px;
       }
     }
 
-    .playlist-cover__overlay {
+    .__playlist-cover__overlay {
       opacity: 0;
     }
 
-    &:hover .playlist-cover__overlay {
+    &:hover .__playlist-cover__overlay {
       opacity: 1;
     }
   }
 
-  .playlist-title {
-    padding: 0;
-    margin: 0;
+  .__playlist-title {
     line-height: 125%;
     font-size: 1.25em;
     font-weight: bold;
-    margin-top: 0.5em;
+    color: ${props => props.theme.NATURAL_2};
   }
 
-  .playlist-description {
-    padding: 0;
-    margin: 0;
-    margin-top: 0.5em;
-    line-height: 1.25em;
-    color: ${props => props.theme.mute};
+  .__playlist-description {
+    color: ${props => props.theme.NATURAL_2};
   }
 
-  .playlist-count {
-    padding: 0;
-    margin: 0;
-    margin-top: 0.5em;
-    color: ${props => props.theme.mute};
+  .__playlist-count {
+    color: ${props => props.theme.NATURAL_5};
   }
 
   &:active {
@@ -113,23 +106,24 @@ function Playlist({
   play,
 }) {
   return (
-    <PlaylistContainer to={`/${type}/${id}`} className={`${id === playingId ? 'active' : ''}`}>
-      <div className="playlist-cover">
+    <PlaylistContainer to={`/${type}/${id}`} className={`d-flex flex-column flex-shrink-0 py-0 px-3 mb-4 ${id === playingId ? 'active' : ''}`}>
+      <div className="__playlist-cover">
         <ImageContainer>
           <img src={`${BASE_S3}${cover.s3_name}`} alt={name} />
         </ImageContainer>
 
-        <div className="playlist-cover__overlay">
+        <div className="d-flex align-items-center justify-content-center __playlist-cover__overlay">
           <PlayPause
-            onClick={(e) => { e.preventDefault(); play(id); }}
+            strokeWidth="1px"
             playing={id === playingId && playing}
+            onClick={(event) => { event.preventDefault(); play(id); }}
           />
         </div>
       </div>
 
-      <strong className="playlist-title">{ name }</strong>
-      <p className="playlist-description">{ description }</p>
-      <small className="playlist-count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
+      <strong className="m-0 p-0 mt-1 __playlist-title">{ name }</strong>
+      <p className="m-0 p-0 mt-1 __playlist-description">{ description }</p>
+      <small className="m-0 p-0 mt-1 __playlist-count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
     </PlaylistContainer>
   );
 }

@@ -2,23 +2,8 @@ import React from 'react';
 import styled from 'react-emotion';
 import { func } from 'prop-types';
 
-const Button = styled.button`
-  background-color: hsl(0, 0%, 10%);
-  border-radius: 2em;
-  border: none;
-  padding: 0.75em 2em;
-  color: hsl(0, 0%, 100%);
-  transition: transform 250ms;
-  will-change: transform;
+import Button from '@app/component/styled/Button';
 
-  &:hover {
-    transform: scale3d(1.05, 1.05, 1);
-  }
-
-  &:active {
-    transform: scale3d(0.95, 0.95, 1);
-  }
-`;
 
 const Error = styled.div`
   position: fixed;

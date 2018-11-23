@@ -1,5 +1,11 @@
 import React from 'react';
-import { bool, func, string, arrayOf, shape } from 'prop-types';
+import {
+  bool,
+  func,
+  string,
+  arrayOf,
+  shape,
+} from 'prop-types';
 
 import Playlist from '@app/component/presentational/Playlist';
 import HeaderView from '@app/component/styled/HeaderView';
@@ -11,24 +17,24 @@ const Home = ({
   featuredPlay,
 }) => (
   <HeaderView>
-    <div className="header">
-      <h2>Featured</h2>
+    <div className="__header">
+      <h1 className="m-0">Featured</h1>
     </div>
 
-    <div className="list">
+    <div className="__view">
       {
-        featured.map(f => (
+        featured.map(_featured => (
           <Playlist
-            key={f.playlist_id}
+            type="featured"
+            key={_featured.playlist_id}
+            id={_featured.playlist_id}
             playing={playing}
             play={featuredPlay}
             playingId={featuredPlayingId}
-            type="featured"
-            id={f.playlist_id}
-            name={f.playlist_name}
-            description={f.playlist_description}
-            cover={f.playlist_cover}
-            trackCount={f.playlist_track.length}
+            name={_featured.playlist_name}
+            description={_featured.playlist_description}
+            cover={_featured.playlist_cover}
+            trackCount={_featured.playlist_track.length}
           />
         ))
       }

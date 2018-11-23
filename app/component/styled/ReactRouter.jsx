@@ -4,12 +4,15 @@ import styled from 'react-emotion';
 
 export const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.NATURAL_2};
-  padding: 0.5em 0.64rem;
-  margin: 0.25em 0;
   font-weight: bold;
   text-decoration: none;
   border-left: 6px solid transparent;
   cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0 !important;
+  height: 36px;
 
   &:hover {
     color: ${props => props.theme.PRIMARY_4};

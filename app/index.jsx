@@ -39,7 +39,7 @@ import Spinner from '@app/component/presentational/Spinner';
 import Search from '@app/component/svg/Search';
 import Trending from '@app/component/svg/Trending';
 import Settings from '@app/component/svg/Settings';
-import Download from '@app/component/svg/Download';
+// import Download from '@app/component/svg/Download';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 import {
   WolfColaContainer,
@@ -78,31 +78,38 @@ const WolfCola = () => {
                   </Link>
 
                   <div className="__navigation">
-                    <NavLinkStyled to="/" exact>Featured</NavLinkStyled>
-                    <NavLinkStyled to="/search">
+                    {/* generic */}
+                    <NavLinkStyled className="px-2" to="/" exact>Featured</NavLinkStyled>
+                    <NavLinkStyled className="px-2 py-3" to="/search">
                       <span>Search</span>
-                      <Search style={{ float: 'right' }} />
+                      <Search strokeWidth="1px" />
                     </NavLinkStyled>
-                    <NavLinkStyled to="/trending">
+                    <NavLinkStyled className="px-2 py-3" to="/trending">
                       <span>Trending</span>
-                      <Trending style={{ float: 'right' }} />
+                      <Trending strokeWidth="1px" />
                     </NavLinkStyled>
-                    <NavLinkStyled to="/collection">Genres &amp; Moods</NavLinkStyled>
+                    <NavLinkStyled className="px-2 py-3" to="/collection">Genres &amp; Moods</NavLinkStyled>
 
-                    <NavLinkStyled to="/recent">Recently Played</NavLinkStyled>
-                    <NavLinkStyled to="/songs">Songs</NavLinkStyled>
-                    <NavLinkStyled to="/albums">Albums</NavLinkStyled>
-                    <NavLinkStyled to="/artists">Artists</NavLinkStyled>
+                    {/* recent */}
+                    <NavLinkStyled className="px-2 py-3 mt-3" to="/recent">Recently Played</NavLinkStyled>
 
-                    <NavLinkStyled to="/settings">
+                    {/* your music */}
+                    <NavLinkStyled className="px-2 py-3 mt-3" to="/songs">Songs</NavLinkStyled>
+                    <NavLinkStyled className="px-2 py-3" to="/albums">Albums</NavLinkStyled>
+                    <NavLinkStyled className="px-2 py-3" to="/artists">Artists</NavLinkStyled>
+
+                    {/* setting++ */}
+                    <NavLinkStyled className="px-2 mt-3 mb-5" to="/settings">
                       <span>Settings</span>
-                      <Settings style={{ float: 'right' }} />
+                      <Settings strokeWidth="1px" />
                     </NavLinkStyled>
+
+                    {/*
                     <NavLinkStyled to="https://github.com/Zefenify/Wolf-Cola/releases" target="_blank">
                       <span>Install Desktop App</span>
-                      <Download style={{ float: 'right' }} />
+                      <Download strokeWidth="1px" />
                     </NavLinkStyled>
-                    <div style={{ paddingBottom: '2em' }} />
+                    */}
                   </div>
                 </NavigationContainer>
 

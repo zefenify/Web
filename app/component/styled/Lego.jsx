@@ -38,7 +38,7 @@ export const NavigationMainContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
-  height: 100vh - 90px;
+  height: 100vh - 90px; /* 90px control */
 `;
 
 
@@ -98,7 +98,7 @@ export const MainContainer = styled.div`
   flex: 1 0 calc(100vw - 220px);
   height: calc(100vh - 90px);
   background-color: ${props => props.theme.BACKGROUND_MAIN};
-  color: hsl(0, 0%, 90%);
+  color: ${props => props.theme.NATURAL_2};
   overflow-y: auto;
   padding: 1em 2em;
   padding-bottom: 0;

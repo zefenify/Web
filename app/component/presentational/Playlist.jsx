@@ -86,7 +86,7 @@ const PlaylistContainer = styled(Link)`
   }
 
   .__playlist-count {
-    color: ${props => props.theme.NATURAL_5};
+    color: ${props => props.theme.NATURAL_4};
   }
 
   &:active {
@@ -121,9 +121,9 @@ function Playlist({
         </div>
       </div>
 
-      <strong className="m-0 p-0 mt-1 __playlist-title">{ name }</strong>
-      <p className="m-0 p-0 mt-1 __playlist-description">{ description }</p>
-      <small className="m-0 p-0 mt-1 __playlist-count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
+      <strong className="m-0 p-0 mt-2 __playlist-title">{ name }</strong>
+      <p className="m-0 p-0 mt-2 __playlist-description">{ description }</p>
+      <small className="m-0 p-0 mt-2 __playlist-count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
     </PlaylistContainer>
   );
 }

@@ -1,9 +1,11 @@
 import React from 'react';
 import { bool, func } from 'prop-types';
 
+
 const PlayPause = ({
-  onClick,
   playing,
+  onClick,
+  ...otherProps
 }) => (
   <svg
     width="24"
@@ -15,19 +17,21 @@ const PlayPause = ({
     strokeLinecap="round"
     strokeLinejoin="round"
     onClick={onClick}
+    {...otherProps}
   >
     {
-      playing ?
+      playing ? (
         <g>
           <circle cx="12" cy="12" r="10" />
           <line x1="10" y1="15" x2="10" y2="9" />
           <line x1="14" y1="15" x2="14" y2="9" />
         </g>
-        :
+      ) : (
         <g>
           <circle cx="12" cy="12" r="10" />
           <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
         </g>
+      )
     }
   </svg>
 );

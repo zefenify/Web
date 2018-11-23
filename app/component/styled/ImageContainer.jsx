@@ -9,10 +9,10 @@ import styled from 'react-emotion';
 // all images on Zefenify are square
 const ImageContainer = styled.div`
   position: relative;
-  border: 1px solid ${props => props.border || props.theme.divider};
+  border: 1px solid ${props => props.border || props.theme.NATURAL_7};
   border-radius: ${props => props.borderRadius || '6px'};
 
-  .container {
+  .__image-container {
     position: relative;
     height: 0;
     padding-bottom: 100%;
@@ -31,13 +31,17 @@ const ImageContainer = styled.div`
   }
 `;
 
-const Container = props => (
-  <ImageContainer {...props}>
-    <div className="container">
-      { props.children }
-    </div>
-  </ImageContainer>
-);
+const Container = (props) => {
+  const { children, ...otherProps } = props;
+
+  return (
+    <ImageContainer {...otherProps}>
+      <div className="__image-container">
+        { children }
+      </div>
+    </ImageContainer>
+  );
+};
 
 Container.propTypes = {
   children: element,

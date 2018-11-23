@@ -61,7 +61,9 @@ const Settings = ({
   onSubmit,
 }) => (
   <HeaderView>
-    <div className="__header"><h1 className="m-0">Settings</h1></div>
+    <div className="__header">
+      <h1 className="m-0">Settings</h1>
+    </div>
 
     <div className="__view d-flex flex-column align-items-center flex-shrink-0 flex-nowrap">
       <div className="mb-5">

@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 
 
 export const NavLinkStyled = styled(NavLink)`
-  color: ${props => props.theme.navLink__color};
+  color: ${props => props.theme.NATURAL_2};
   padding: 0.5em 0.64rem;
   margin: 0.25em 0;
   font-weight: bold;
@@ -12,13 +12,13 @@ export const NavLinkStyled = styled(NavLink)`
   cursor: default;
 
   &:hover {
-    color: ${props => props.theme.navLink__color_hover};
+    color: ${props => props.theme.PRIMARY_4};
   }
 
   &.active {
-    color: ${props => props.theme.navLinkActive__color};
-    border-left: 6px solid ${props => props.theme.primary};
-    background-color: ${props => props.theme.navLinkActive__backgroundColor};
+    color: ${props => props.theme.NATURAL_2};
+    border-left: 6px solid ${props => props.theme.PRIMARY_4};
+    background-color: ${props => props.theme.NATURAL_6};
   }
 `;
 

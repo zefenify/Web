@@ -71,13 +71,13 @@ const WolfCola = () => {
             <WolfColaContainer className="booting" id="wolf-cola-container">
               <NavigationMainContainer>
                 <NavigationContainer>
-                  <Link className="brand" to="/">
-                    <img className="brand__image" alt="zefenify logo" src="static/image/zefenify.png" />
-                    <span className="brand__text">Zefenify</span>
+                  <Link className="__brand" to="/">
+                    <img className="__brand__image" alt="zefenify logo" src="static/image/zefenify.png" />
+                    <span className="__brand__text">Zefenify</span>
                     <Spinner loading={state.loading} />
                   </Link>
 
-                  <div className="nav-list">
+                  <div className="__navigation">
                     <NavLinkStyled to="/" exact>Featured</NavLinkStyled>
                     <NavLinkStyled to="/search">
                       <span>Search</span>

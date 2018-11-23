@@ -51,7 +51,7 @@ export const NavigationContainer = styled.div`
   background-color: ${props => props.theme.BACKGROUND_NAVIGATION};
   overflow-y: auto;
 
-  .brand {
+  .__brand {
     position: absolute;
     left: 0;
     right: 0;
@@ -66,6 +66,7 @@ export const NavigationContainer = styled.div`
     font-size: 1.2em;
     text-decoration: none;
     color: inherit;
+    box-shadow: 0 0 4px 2px ${props => props.theme.SHADOW};
 
     &__image {
       width: 40px;
@@ -78,7 +79,7 @@ export const NavigationContainer = styled.div`
     }
   }
 
-  .navigation-list {
+  .__navigation {
     position: absolute;
     display: flex;
     flex-direction: column;

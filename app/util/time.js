@@ -1,31 +1,29 @@
-export default {
-  /**
-   * given duration in seconds returns hour:minute:second
-   *
-   * @param {Number} duration `Howl.duration` (seconds)
-   * @param {Boolean} dumbo
-   * @type {String}
-   */
-  human(duration = 0, dumbo = false) {
-    const parsedDuration = Number.parseFloat(duration);
+/**
+ * given duration in seconds returns hour:minute:second
+ *
+ * @param {Number} duration `Howl.duration` (seconds)
+ * @param {Boolean} dumbo
+ * @type {String}
+ */
+export const human = (duration = 0, dumbo = false) => {
+  const parsedDuration = Number.parseFloat(duration);
 
-    // this will be triggered on next and remainder is true
-    if (Number.isNaN(parsedDuration)) {
-      return '0:00';
-    }
+  // this will be triggered on next and remainder is true
+  if (Number.isNaN(parsedDuration)) {
+    return '0:00';
+  }
 
-    const hours = Math.floor(parsedDuration / 3600);
-    const minutes = Math.floor((parsedDuration - (hours * 3600)) / 60);
-    const seconds = Math.floor(parsedDuration - ((hours * 3600) + (minutes * 60)));
+  const hour = Math.floor(parsedDuration / 3600);
+  const minute = Math.floor((parsedDuration - (hour * 3600)) / 60);
+  const second = Math.floor(parsedDuration - ((hour * 3600) + (minute * 60)));
 
-    if (dumbo === false) {
-      return `${hours > 0 ? hours : ''}${hours > 0 ? ':' : ''}${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-    }
+  if (dumbo === false) {
+    return `${hour > 0 ? hour : ''}${hour > 0 ? ':' : ''}${minute}:${second < 10 ? `0${second}` : second}`;
+  }
 
-    return {
-      hours,
-      minutes,
-      seconds,
-    };
-  },
+  return {
+    hour,
+    minute,
+    second,
+  };
 };

@@ -40,7 +40,7 @@ export default createSelector([props => props.song, props => props.user, props =
   });
 
   if (albumId === undefined && queueInitial.length > 0) {
-    // finding `albumPlayingIndex`...
+    // finding `albumPlayingIndex` for album view...
     albumList.forEach((album) => {
       if (trackListSame(album.relationships.track, queueInitial) === true) {
         albumPlayingId = album.album_id;
@@ -49,7 +49,7 @@ export default createSelector([props => props.song, props => props.user, props =
   }
 
   if (albumList.length === 1 && albumId !== undefined) {
-    // building `duration` and `albumPlaying` for album view...
+    // building `duration` and `albumPlaying` for single album view...
     return {
       album: albumList,
       albumPlayingId,

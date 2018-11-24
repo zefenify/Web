@@ -40,7 +40,18 @@ const AlbumsContainer = ({ match }) => {
   }, [user, song, playing, current, queueInitial, match]);
 
   const albumPlayPause = (albumId = 'ZEFENIFY') => {
+    // `albumPlayingId` will only be set in album list view
+    // ergo when this condition is met, we already have a playing album state
     if (albumId === state.albumPlayingId) {
+      store.dispatch({
+        type: PLAY_PAUSE_REQUEST,
+      });
+
+      return;
+    }
+
+    // we in album view and *this* album is being toggled via top play / pause
+    if (albumId === match.params.id && current !== null && state.albumPlaying === true) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });

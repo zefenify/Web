@@ -1,30 +1,46 @@
-import React, { Component } from 'react';
-import { bool, shape, oneOfType, string } from 'prop-types';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-
 import store from '@app/redux/store';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
-import albumsBuild from '@app/redux/selector/albumsBuild';
-
 import Albums from '@app/component/presentational/Albums';
-import { withContext } from '@app/component/context/context';
+import albumBuild from '@app/redux/selector/albumBuild';
+import { Context } from '@app/component/context/context';
 
-class AlbumsContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = albumsBuild(props);
 
-    this.albumPlayPause = this.albumPlayPause.bind(this);
-    this.albumsPlayPause = this.albumsPlayPause.bind(this);
-    this.trackPlayPause = this.trackPlayPause.bind(this);
-    this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
-    this.contextMenuTrack = this.contextMenuTrack.bind(this);
-  }
+const AlbumsContainer = ({ match }) => {
+  const {
+    user,
+    song,
+    playing,
+    current,
+    queueInitial,
+  } = useContext(Context);
+  const [state, setState] = useState({
+    album: [],
+    albumPlayingId: '',
+    albumPlaying: false,
+    duration: {
+      hour: 0,
+      minute: 0,
+      second: 0,
+    },
+  });
 
-  albumPlayPause(albumId) {
-    if (albumId === this.state.albumsPlayingId) {
+  useEffect(() => {
+    setState(Object.assign(state, albumBuild({
+      user,
+      song,
+      playing,
+      current,
+      queueInitial,
+      match,
+    })));
+  }, [user, song, playing, current, queueInitial, match]);
+
+  const albumPlayPause = (albumId = 'ZEFENIFY') => {
+    if (albumId === state.albumPlayingId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -32,7 +48,7 @@ class AlbumsContainer extends Component {
       return;
     }
 
-    const albumIndex = this.state.albums.findIndex(album => album.album_id === albumId);
+    const albumIndex = state.album.findIndex(album => album.album_id === albumId);
 
     if (albumIndex === -1) {
       return;
@@ -41,50 +57,21 @@ class AlbumsContainer extends Component {
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.albums[albumIndex].relationships.track[0],
-        queue: this.state.albums[albumIndex].relationships.track,
-        queueInitial: this.state.albums[albumIndex].relationships.track,
+        play: state.album[albumIndex].relationships.track[0],
+        queue: state.album[albumIndex].relationships.track,
+        queueInitial: state.album[albumIndex].relationships.track,
       },
     });
 
-    this.setState(() => ({
-      albumsPlayingId: albumId,
+    setState(Object.assign(state, {
+      albumPlayingId: albumId,
     }));
 
-    store.dispatch(urlCurrentPlaying(`${this.props.match.url}/${albumId}`));
-  }
+    store.dispatch(urlCurrentPlaying(`${match.url}/${albumId}`));
+  };
 
-  albumsPlayPause() {
-    if (this.state.albums === null) {
-      return;
-    }
-
-    if (this.props.current === null || this.state.albumPlaying === false) {
-      // -> booting playlist
-      store.dispatch({
-        type: PLAY_REQUEST,
-        payload: {
-          play: this.state.albums[0].relationships.track[0],
-          queue: this.state.albums[0].relationships.track,
-          queueInitial: this.state.albums[0].relationships.track,
-        },
-      });
-
-      this.setState(() => ({
-        albumPlaying: true,
-      }));
-
-      store.dispatch(urlCurrentPlaying(this.props.match.url));
-    } else if (this.props.current !== null) {
-      // -> resuming / pausing album
-      store.dispatch({
-        type: PLAY_PAUSE_REQUEST,
-      });
-    }
-  }
-
-  trackPlayPause(trackId) {
-    if (this.props.current !== null && this.props.current.track_id === trackId) {
+  const trackPlayPause = (trackId = 'ZEFENIFY') => {
+    if (current !== null && current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -92,7 +79,7 @@ class AlbumsContainer extends Component {
       return;
     }
 
-    const trackIdIndex = this.state.albums[0].relationships.track.findIndex(track => track.track_id === trackId);
+    const trackIdIndex = state.album[0].relationships.track.findIndex(track => track.track_id === trackId);
 
     if (trackIdIndex === -1) {
       return;
@@ -101,31 +88,31 @@ class AlbumsContainer extends Component {
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.albums[0].relationships.track[trackIdIndex],
-        queue: this.state.albums[0].relationships.track,
-        queueInitial: this.state.albums[0].relationships.track,
+        play: state.album[0].relationships.track[trackIdIndex],
+        queue: state.album[0].relationships.track,
+        queueInitial: state.album[0].relationships.track,
       },
     });
 
-    this.setState(() => ({
-      playingAlbum: true,
+    setState(Object.assign(state, {
+      albumPlaying: true,
     }));
 
-    store.dispatch(urlCurrentPlaying(this.props.match.url));
-  }
+    store.dispatch(urlCurrentPlaying(match.url));
+  };
 
-  contextMenuAlbum() {
+  const contextMenuAlbum = () => {
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_ALBUM,
-        payload: this.state.albums[0],
+        payload: state.album[0],
       },
     });
-  }
+  };
 
-  contextMenuTrack(trackId) {
-    const trackIndex = this.state.albums[0].relationships.track.findIndex(track => track.track_id === trackId);
+  const contextMenuTrack = (trackId = 'ZEFENIFY') => {
+    const trackIndex = state.album[0].relationships.track.findIndex(track => track.track_id === trackId);
 
     if (trackIndex === -1) {
       return;
@@ -135,52 +122,25 @@ class AlbumsContainer extends Component {
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_TRACK,
-        payload: this.state.albums[0].relationships.track[trackIndex],
+        payload: state.album[0].relationships.track[trackIndex],
       },
     });
-  }
+  };
 
-  render() {
-    return (
-      <Albums
-        user={this.props.user}
-        playing={this.props.playing}
-        current={this.props.current}
-        albumId={this.props.match.params.id}
-        albums={this.state.albums}
-        albumPlaying={this.state.albumPlaying}
-        duration={this.state.duration}
-        albumsPlayingId={this.state.albumsPlayingId}
-        albumPlayPause={this.albumPlayPause}
-        albumsPlayPause={this.albumsPlayPause}
-        trackPlayPause={this.trackPlayPause}
-        contextMenuAlbum={this.contextMenuAlbum}
-        contextMenuTrack={this.contextMenuTrack}
-      />
-    );
-  }
-}
-
-AlbumsContainer.getDerivedStateFromProps = nextProps => albumsBuild(nextProps);
-
-AlbumsContainer.propTypes = {
-  playing: bool,
-  current: shape({}),
-  match: shape({
-    url: string,
-    params: shape({
-      id: oneOfType([shape({}), string]),
-    }),
-  }),
-  user: shape({}),
+  return (
+    <Albums
+      user={user}
+      playing={playing}
+      current={current}
+      albumPlayPause={albumPlayPause}
+      trackPlayPause={trackPlayPause}
+      contextMenuAlbum={contextMenuAlbum}
+      contextMenuTrack={contextMenuTrack}
+      albumId={match.params.id}
+      {...state}
+    />
+  );
 };
 
-AlbumsContainer.defaultProps = {
-  playing: false,
-  current: null,
-  match: { params: { id: undefined } },
-  user: null,
-};
 
-// export default withContext('user', 'song', 'playing', 'current', 'queueInitial')(AlbumsContainer);
 export default AlbumsContainer;

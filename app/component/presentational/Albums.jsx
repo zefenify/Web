@@ -1,57 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { func, string, number, shape, bool, arrayOf, oneOfType } from 'prop-types';
+import {
+  func,
+  string,
+  number,
+  shape,
+  bool,
+  arrayOf,
+  oneOfType,
+} from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
-
+import PlayPause from '@app/component/svg/PlayPause';
 import ImageContainer from '@app/component/styled/ImageContainer';
 import HeaderView from '@app/component/styled/HeaderView';
-import PlayPause from '@app/component/svg/PlayPause';
-import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
-
+import ArtistList from '@app/component/presentational/ArtistList';
 import Album from '@app/component/presentational/Album';
 
-const AlbumsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-
-  &.center-content {
-    flex: 1 0 auto;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .mute {
-    color: ${props => props.theme.mute};
-  }
-`;
 
 const AlbumContainer = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
   flex: 0 0 25%;
-  padding: 0 1em;
-  margin-bottom: 3em;
   text-decoration: none;
-  color: #fff;
+  color: hsl(0, 0%, 100%);
   transition: transform 256ms;
-  will-change: transform;
 
   &.active {
-    color: ${props => props.theme.primary};
+    color: ${props => props.theme.PRIMARY_4};
 
-    .album-title {
-      color: ${props => props.theme.primary};
+    .__album-title {
+      color: ${props => props.theme.PRIMARY_4};
     }
   }
 
   &:not(.active) {
     svg {
-      color: #fff !important;
+      color: hsl(0, 0%, 100%) !important;
     }
   }
 
@@ -59,7 +45,7 @@ const AlbumContainer = styled.div`
     flex: 0 0 20%;
   }
 
-  .album-cover {
+  .__album-cover {
     position: relative;
 
     &__overlay {
@@ -68,9 +54,6 @@ const AlbumContainer = styled.div`
       right: 0;
       bottom: 0;
       left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       background-color: rgba(51, 51, 51, 0.75);
       border-radius: 6px;
       color: inherit;
@@ -85,32 +68,24 @@ const AlbumContainer = styled.div`
       }
     }
 
-    .album-cover__overlay {
+    .__album-cover__overlay {
       opacity: 0;
     }
 
-    &:hover .album-cover__overlay {
+    &:hover .__album-cover__overlay {
       opacity: 1;
     }
   }
 
-  .album-title {
-    padding: 0;
-    margin: 0;
+  .__album-title {
     line-height: 125%;
-    margin-top: 0.5em;
-    font-size: 1.25em;
-    color: ${props => props.theme.text};
+    color: ${props => props.theme.NATURAL_2};
   }
 
-  .album-artist {
-    padding: 0;
-    margin: 0;
-    margin-top: 0.5em;
-
+  .__album-artist {
     a {
       text-decoration: none;
-      color: ${props => props.theme.mute};
+      color: ${props => props.theme.NATURAL_4};
     }
   }
 
@@ -124,45 +99,44 @@ const Albums = ({
   playing,
   user,
   albumId,
-  albums,
+  album,
   albumPlaying,
   duration,
-  albumsPlayPause,
   trackPlayPause,
   contextMenuAlbum,
   contextMenuTrack,
-  albumsPlayingId,
+  albumPlayingId,
   albumPlayPause,
 }) => {
   if (user === null) {
     return (
-      <AlbumsContainer className="center-content">
-        <h2 className="mute">You need to be logged in to view saved albums</h2>
-        <Link to="/settings"><Button border themeColor backgroundColor="transparent">Go to Settings</Button></Link>
-      </AlbumsContainer>
+      <div className="d-flex flex-column flex-grow-1 flex-shrink-0 align-items-center justify-content-center">
+        <h2>You Need to Be Logged in to View Saved Albums</h2>
+        <Link to="/settings"><Button>Go to Settings</Button></Link>
+      </div>
     );
   }
 
-  if (albums.length === 0) {
+  if (album.length === 0) {
     return (
-      <AlbumsContainer className="center-content">
-        <h2 className="mute">You have no saved albums...yet</h2>
-      </AlbumsContainer>
+      <div className="d-flex flex-column flex-grow-1 flex-shrink-0 align-items-center justify-content-center">
+        <h2>You Have No Saved Albums...Yet</h2>
+      </div>
     );
   }
 
-  if (albumId !== undefined && albums.length === 1) {
+  if (albumId !== undefined && album.length === 1) {
     return (
       <Album
-        title={albums[0].album_name}
-        cover={albums[0].album_cover}
-        artist={albums[0].album_artist}
-        tracks={albums[0].relationships.track}
+        title={album[0].album_name}
+        cover={album[0].album_cover}
+        artist={album[0].album_artist}
+        tracks={album[0].relationships.track}
         current={current}
         playing={playing}
         albumPlaying={albumPlaying}
         duration={duration}
-        albumPlayPause={albumsPlayPause}
+        albumPlayPause={() => albumPlayPause(album[0].album_id)}
         trackPlayPause={trackPlayPause}
         contextMenuAlbum={contextMenuAlbum}
         contextMenuTrack={contextMenuTrack}
@@ -172,29 +146,30 @@ const Albums = ({
 
   return (
     <HeaderView>
-      <div className="title">
-        <h2>Albums</h2>
+      <div className="__header">
+        <h1>Albums</h1>
       </div>
 
-      <div className="list">
+      <div className="__view">
         {
-          albums.map(album => (
-            <AlbumContainer key={album.album_id} className={album.album_id === albumsPlayingId ? 'active' : ''}>
-              <div className="album-cover">
+          album.map(_album => (
+            <AlbumContainer key={_album.album_id} className={`d-flex flex-column px-3${_album.album_id === albumPlayingId ? ' active' : ''}`}>
+              <div className="__album-cover">
                 <ImageContainer>
-                  <img src={`${BASE_S3}${album.album_cover.s3_name}`} alt={album.album_name} />
+                  <img src={`${BASE_S3}${_album.album_cover.s3_name}`} alt={_album.album_name} />
                 </ImageContainer>
 
-                <Link to={`/albums/${album.album_id}`} className="album-cover__overlay">
+                <Link to={`/albums/${_album.album_id}`} className="d-flex flex-column justify-content-center align-items-center __album-cover__overlay">
                   <PlayPause
-                    onClick={(e) => { e.preventDefault(); albumPlayPause(album.album_id); }}
-                    playing={playing && album.album_id === albumsPlayingId}
+                    strokeWidth="1px"
+                    onClick={(event) => { event.preventDefault(); albumPlayPause(_album.album_id); }}
+                    playing={playing && _album.album_id === albumPlayingId}
                   />
                 </Link>
               </div>
 
-              <strong className="album-title">{ album.album_name }</strong>
-              <ArtistList className="album-artist" artists={album.album_artist} />
+              <h2 className="m-0 p-0 mt-2 mb-1 __album-title">{ _album.album_name }</h2>
+              <ArtistList className="m-0 p-0 mb-5 __album-artist" artists={_album.album_artist} />
             </AlbumContainer>
           ))
         }
@@ -205,19 +180,18 @@ const Albums = ({
 
 Albums.propTypes = {
   playing: bool,
-  albums: arrayOf(shape({})),
-  albumId: oneOfType([shape({}), string]),
   user: shape({}),
-  albumPlaying: bool,
-  albumsPlayingId: string,
-  albumPlayPause: func.isRequired,
   current: shape({}),
+  album: arrayOf(shape({})),
+  albumId: oneOfType([shape({}), string]),
+  albumPlaying: bool,
+  albumPlayingId: string,
+  albumPlayPause: func.isRequired,
   duration: shape({
     hours: number,
     minutes: number,
     seconds: number,
   }),
-  albumsPlayPause: func.isRequired,
   trackPlayPause: func.isRequired,
   contextMenuAlbum: func.isRequired,
   contextMenuTrack: func.isRequired,
@@ -227,14 +201,14 @@ Albums.defaultProps = {
   playing: false,
   current: null,
   albumPlaying: false,
-  albums: [],
+  album: [],
   albumId: undefined,
   user: null,
-  albumsPlayingId: '',
+  albumPlayingId: '',
   duration: {
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    hour: 0,
+    minute: 0,
+    second: 0,
   },
 };
 

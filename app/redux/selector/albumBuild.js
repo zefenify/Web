@@ -5,30 +5,31 @@ import { human } from '@app/util/time';
 import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
 
+
 // eslint-disable-next-line
 export default createSelector([props => props.song, props => props.user, props => props.queueInitial, props => props.match.params.id], (song, user, queueInitial, albumId) => {
   if (song === null || user === null || Object.hasOwnProperty.call(song.included, 'album') === false) {
     return {
-      albums: [],
-      albumsPlayingId: '',
+      album: [],
+      albumPlayingId: '',
       albumPlaying: false,
       duration: {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
+        hour: 0,
+        minute: 0,
+        second: 0,
       },
     };
   }
 
   const included = cloneDeep(song.included);
-  const albums = albumId === undefined ? Object.values(included.album) : Object.values(included.album).filter(album => album.album_id === albumId);
+  const albumList = albumId === undefined ? Object.values(included.album) : Object.values(included.album).filter(album => album.album_id === albumId);
   const savedTrackIds = song.data.song_track;
-  let albumsPlayingId = '';
+  let albumPlayingId = '';
 
-  // fix your face, I'm going to be mutating albums...
+  // fix your face, I'm going to be mutating albumList...
   // removing tracks that are not saved in album relationship...
-  albums.forEach((album) => {
-    // albums -> removing tracks that are not saved -> passing to track for referencing...
+  albumList.forEach((album) => {
+    // albumList -> removing tracks that are not saved -> passing to track for referencing...
     // eslint-disable-next-line
     album.relationships.track = track(album.relationships.track.filter(trackId => savedTrackIds.includes(trackId)).map(trackId => included.track[trackId]), included);
     // album artist mapping...
@@ -39,32 +40,32 @@ export default createSelector([props => props.song, props => props.user, props =
   });
 
   if (albumId === undefined && queueInitial.length > 0) {
-    // finding `albumsPlayingIndex`...
-    albums.forEach((album) => {
+    // finding `albumPlayingIndex`...
+    albumList.forEach((album) => {
       if (trackListSame(album.relationships.track, queueInitial) === true) {
-        albumsPlayingId = album.album_id;
+        albumPlayingId = album.album_id;
       }
     });
   }
 
-  if (albums.length === 1 && albumId !== undefined) {
+  if (albumList.length === 1 && albumId !== undefined) {
     // building `duration` and `albumPlaying` for album view...
     return {
-      albums,
-      albumsPlayingId,
-      duration: human(albums[0].relationships.track.reduce((totalD, t) => totalD + t.track_track.s3_meta.duration, 0), true),
-      albumPlaying: trackListSame(albums[0].relationships.track, queueInitial),
+      album: albumList,
+      albumPlayingId,
+      albumPlaying: trackListSame(albumList[0].relationships.track, queueInitial),
+      duration: human(albumList[0].relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
     };
   }
 
   return {
-    albums,
-    albumsPlayingId,
+    album: albumList,
+    albumPlayingId,
     albumPlaying: false,
     duration: {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
+      hour: 0,
+      minute: 0,
+      second: 0,
     },
   };
 });

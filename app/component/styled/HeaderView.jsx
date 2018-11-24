@@ -19,7 +19,7 @@ const HeaderView = styled.div`
     display: flex;
     align-items: center;
     height: 60px;
-    padding: 0 2em;
+    padding: 0 2rem;
     box-shadow: 0 0 4px 2px ${props => props.theme.SHADOW};
   }
 
@@ -33,7 +33,7 @@ const HeaderView = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: auto;
-    padding: 1em 1em 0 1em;
+    padding: 1rem 1rem 0 1rem;
     height: calc(100vh - 150px); /* 60px top + 90px control */
   }
 `;

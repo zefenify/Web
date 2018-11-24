@@ -75,7 +75,7 @@ export const NavigationContainer = styled.div`
     }
 
     &__text {
-      color: ${props => props.theme.NATURAL_1};
+      color: ${props => props.theme.NATURAL_2};
     }
   }
 

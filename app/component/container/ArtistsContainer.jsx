@@ -53,7 +53,7 @@ const ArtistsContainer = ({ match }) => {
    *
    * @param  {String} artistId
    */
-  const artistPlayPause = (artistId = '') => {
+  const artistPlayPause = (artistId = 'ZEFENIFY') => {
     if (state.artist.length === 0) {
       return;
     }
@@ -91,7 +91,7 @@ const ArtistsContainer = ({ match }) => {
     }));
   };
 
-  const albumPlayPause = (albumId = '') => {
+  const albumPlayPause = (albumId = 'ZEFENIFY') => {
     if (current === null || state.albumPlayingId !== albumId) {
       const artistIndex = state.artist.findIndex(artist => artist.artist_id === this.props.match.params.id);
 
@@ -126,7 +126,7 @@ const ArtistsContainer = ({ match }) => {
     }
   };
 
-  const trackPlayPause = (trackId) => {
+  const trackPlayPause = (trackId = 'ZEFENIFY') => {
     if (current !== null && current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,

@@ -190,7 +190,7 @@ const Arist = ({
           {`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${trackCount} song${trackCount > 1 ? 's' : ''}`}
         </p>
         <div className="play-share">
-          <Button className="play-share__play-big" onClick={artistPlayPause}>
+          <Button className="play-share__play-big" onClick={() => artistPlayPause(artist.artist_id)}>
             {`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}
           </Button>
           <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={contextMenuArtist}>

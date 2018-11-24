@@ -28,10 +28,14 @@ const AlbumContainer = styled.div`
   transition: transform 256ms;
 
   &.active {
-    color: ${props => props.theme.PRIMARY_4};
+    color: ${props => props.theme.PRIMARY_4}; /* this will be inherited by SVG */
 
     .__album-title {
       color: ${props => props.theme.PRIMARY_4};
+    }
+
+    .__album-artist a {
+      color: ${props => props.theme.PRIMARY_5};
     }
   }
 
@@ -78,15 +82,12 @@ const AlbumContainer = styled.div`
   }
 
   .__album-title {
-    line-height: 125%;
     color: ${props => props.theme.NATURAL_2};
   }
 
-  .__album-artist {
-    a {
-      text-decoration: none;
-      color: ${props => props.theme.NATURAL_4};
-    }
+  .__album-artist a {
+    text-decoration: none;
+    color: ${props => props.theme.NATURAL_4};
   }
 
   &:active {

@@ -1,56 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { func, string, number, shape, bool, arrayOf } from 'prop-types';
+import {
+  func,
+  string,
+  number,
+  shape,
+  bool,
+  arrayOf,
+} from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
-
-import HeaderView from '@app/component/styled/HeaderView';
 import PlayPause from '@app/component/svg/PlayPause';
-import Button from '@app/component/styled/Button';
+import HeaderView from '@app/component/styled/HeaderView';
 import ImageContainer from '@app/component/styled/ImageContainer';
-
+import Button from '@app/component/styled/Button';
 import Artist from '@app/component/presentational/Artist';
 
-const ArtistsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-
-  &.center-content {
-    flex: 1 0 auto;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .mute {
-    color: ${props => props.theme.mute};
-  }
-`;
 
 const ArtistContainer = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
   flex: 0 0 25%;
-  padding: 0 1em;
   text-decoration: none;
-  margin-bottom: 2em;
-  color: #fff;
   transition: transform 256ms;
   will-change: transform;
 
   &.active {
-    color: ${props => props.theme.primary};
+    color: ${props => props.theme.PRIMARY_4};
 
-    .artist-name {
-      color: ${props => props.theme.primary};
+    .__artist-name {
+      color: ${props => props.theme.PRIMARY_4};
     }
   }
 
   &:not(.active) {
     svg {
-      color: #fff !important;
+      color: hsl(0, 0%, 100%) !important;
     }
   }
 
@@ -58,7 +43,7 @@ const ArtistContainer = styled.div`
     flex: 0 0 20%;
   }
 
-  .artist-cover {
+  .__artist-cover {
     position: relative;
 
     &__overlay {
@@ -67,39 +52,28 @@ const ArtistContainer = styled.div`
       right: 0;
       bottom: 0;
       left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       background-color: rgba(51, 51, 51, 0.75);
       color: inherit;
       border-radius: 50%;
 
       svg {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         color: inherit;
         width: 64px;
         height: 64px;
       }
     }
 
-    .artist-cover__overlay {
+    .__artist-cover__overlay {
       opacity: 0;
     }
 
-    &:hover .artist-cover__overlay {
+    &:hover .__artist-cover__overlay {
       opacity: 1;
     }
   }
 
-  .artist-name {
-    padding: 0;
-    margin: 0;
-    line-height: 125%;
-    margin-top: 0.5em;
-    font-size: 1.25em;
-    color: ${props => props.theme.text};
+  .__artist-name {
+    color: ${props => props.theme.NATURAL_2};
     text-align: center;
   }
 
@@ -113,11 +87,10 @@ const Artists = ({
   playing,
   artistId,
   user,
-  artists,
+  artist,
   trackCount,
   albumPlayingId,
   artistPlayingId,
-  artistsPlayPause,
   artistPlayPause,
   trackPlayPause,
   albumPlayPause,
@@ -127,28 +100,28 @@ const Artists = ({
 }) => {
   if (user === null) {
     return (
-      <ArtistsContainer className="center-content">
-        <h2 className="mute">You need to be logged in to view saved artists</h2>
-        <Link to="/settings"><Button border themeColor backgroundColor="transparent">Go to Settings</Button></Link>
-      </ArtistsContainer>
+      <div className="d-flex flex-column flex-grow-1 flex-shrink-0 align-items-center justify-content-center">
+        <h2>You Need to Be Logged in to View Saved Artists</h2>
+        <Link to="/settings"><Button>Go to Settings</Button></Link>
+      </div>
     );
   }
 
-  if (artists.length === 0) {
+  if (artist.length === 0) {
     return (
-      <ArtistsContainer className="center-content">
-        <h2 className="mute">You have no saved artists...yet</h2>
-      </ArtistsContainer>
+      <div className="d-flex flex-column flex-grow-1 flex-shrink-0 align-items-center justify-content-center">
+        <h2>You Have No Saved Artists...Yet</h2>
+      </div>
     );
   }
 
-  if (artistId !== undefined && artists.length === 1) {
+  if (artistId !== undefined && artist.length === 1) {
     return (
       <Artist
-        artist={artists[0]}
+        artist={artist[0]}
         current={current}
         playing={playing}
-        aristPlaying={artistPlayingId === artists[0].artist_id}
+        aristPlaying={artistPlayingId === artist[0].artist_id}
         trackCount={trackCount}
         albumPlayingId={albumPlayingId}
         playingArist={false}
@@ -164,28 +137,29 @@ const Artists = ({
 
   return (
     <HeaderView>
-      <div className="title">
-        <h2>Artists</h2>
+      <div className="__header">
+        <h1>Artists</h1>
       </div>
 
-      <div className="list">
+      <div className="__view">
         {
-          artists.map(artist => (
-            <ArtistContainer key={artist.artist_id} className={artist.artist_id === artistPlayingId ? 'active' : ''}>
-              <div className="artist-cover">
+          artist.map(_artist => (
+            <ArtistContainer key={_artist.artist_id} className={`d-flex flex-column flex-shrink-0 py-0 px-3 ${_artist.artist_id === artistPlayingId ? 'active' : ''}`}>
+              <div className="__artist-cover">
                 <ImageContainer borderRadius="50%">
-                  <img src={`${BASE_S3}${artist.artist_cover.s3_name}`} alt={artist.artist_name} />
+                  <img src={`${BASE_S3}${_artist.artist_cover.s3_name}`} alt={_artist.artist_name} />
                 </ImageContainer>
 
-                <Link to={`/artists/${artist.artist_id}`} className="artist-cover__overlay">
+                <Link to={`/artists/${_artist.artist_id}`} className="d-flex align-items-center justify-content-center __artist-cover__overlay">
                   <PlayPause
-                    onClick={(e) => { e.preventDefault(); artistsPlayPause(artist.artist_id); }}
-                    playing={playing && artist.artist_id === artistPlayingId}
+                    strokeWidth="1px"
+                    onClick={(event) => { event.preventDefault(); artistPlayPause(_artist.artist_id); }}
+                    playing={playing && _artist.artist_id === artistPlayingId}
                   />
                 </Link>
               </div>
 
-              <strong className="artist-name">{ artist.artist_name }</strong>
+              <h2 className="__artist-name m-0 p-0 mt-2 mb-5">{ _artist.artist_name }</h2>
             </ArtistContainer>
           ))
         }
@@ -198,12 +172,11 @@ Artists.propTypes = {
   artistId: string,
   current: shape({}),
   user: shape({}),
-  artists: arrayOf(shape({})),
+  artist: arrayOf(shape({})),
   playing: bool,
   albumPlayingId: string,
   trackCount: number,
   artistPlayingId: string,
-  artistsPlayPause: func.isRequired,
   artistPlayPause: func.isRequired,
   trackPlayPause: func.isRequired,
   albumPlayPause: func.isRequired,
@@ -216,7 +189,7 @@ Artists.defaultProps = {
   artistId: '',
   current: null,
   user: null,
-  artists: [],
+  artist: [],
   playing: false,
   artistPlayingId: '',
   albumPlayingId: '',

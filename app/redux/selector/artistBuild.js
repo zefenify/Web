@@ -12,14 +12,14 @@ import track from '@app/util/track';
 export default createSelector([props => props.song, props => props.user, props => props.queueInitial, props => props.match.params.id], (song, user, queueInitial, artistId) => {
   if (song === null || user === null || Object.hasOwnProperty.call(song.included, 'album') === false) {
     return {
-      artists: [],
+      artist: [],
       artistPlayingId: '',
       albumPlayingId: '',
       trackCount: 0,
     };
   }
 
-  let albumsWithTracksFilteredAndYearOrdered = cloneDeep(Object.values(song.included.album)).map((album) => {
+  let albumListWithTrackFilteredAndYearOrdered = cloneDeep(Object.values(song.included.album)).map((album) => {
     // I'm going to be mutating the *copy* so hold your horses...
 
     // eslint-disable-next-line
@@ -36,13 +36,13 @@ export default createSelector([props => props.song, props => props.user, props =
     return album;
   });
 
-  albumsWithTracksFilteredAndYearOrdered = reverse(sortBy(albumsWithTracksFilteredAndYearOrdered, album => album.album_year));
+  albumListWithTrackFilteredAndYearOrdered = reverse(sortBy(albumListWithTrackFilteredAndYearOrdered, album => album.album_year));
 
-  const tracks = track(song.data.song_track.map(trackId => song.included.track[trackId]), song.included);
-  const artistsWithFeaturingRemoved = {};
+  const trackList = track(song.data.song_track.map(trackId => song.included.track[trackId]), song.included);
+  const artistWithFeaturingRemoved = {};
 
-  uniqBy(flatten(tracks.map(t => t.track_album.album_artist)), 'artist_id').forEach((artist) => {
-    artistsWithFeaturingRemoved[artist.artist_id] = Object.assign({}, song.included.artist[artist.artist_id], {
+  uniqBy(flatten(trackList.map(_track => _track.track_album.album_artist)), 'artist_id').forEach((artist) => {
+    artistWithFeaturingRemoved[artist.artist_id] = Object.assign({}, song.included.artist[artist.artist_id], {
       artist_cover: song.included.s3[artist.artist_cover],
       relationships: {
         album: [],
@@ -51,15 +51,15 @@ export default createSelector([props => props.song, props => props.user, props =
     });
   });
 
-  albumsWithTracksFilteredAndYearOrdered.forEach((album) => {
+  albumListWithTrackFilteredAndYearOrdered.forEach((album) => {
     album.album_artist.forEach((artist) => {
-      artistsWithFeaturingRemoved[artist.artist_id].relationships.album.push(album);
+      artistWithFeaturingRemoved[artist.artist_id].relationships.album.push(album);
     });
   });
 
   let artistPlayingId = '';
   let albumPlayingId = '';
-  Object.values(artistsWithFeaturingRemoved).forEach((artist) => {
+  Object.values(artistWithFeaturingRemoved).forEach((artist) => {
     if (trackListSame(flatten(artist.relationships.album.map(album => album.relationships.track)), queueInitial) === true) {
       artistPlayingId = artist.artist_id;
     }
@@ -72,9 +72,9 @@ export default createSelector([props => props.song, props => props.user, props =
   });
 
   if (artistId !== undefined) {
-    if (artistsWithFeaturingRemoved[artistId] === undefined) {
+    if (artistWithFeaturingRemoved[artistId] === undefined) {
       return {
-        artists: artistsWithFeaturingRemoved[artistId] === undefined ? [] : [artistsWithFeaturingRemoved[artistId]],
+        artist: artistWithFeaturingRemoved[artistId] === undefined ? [] : [artistWithFeaturingRemoved[artistId]],
         albumPlayingId,
         artistPlayingId,
         trackCount: 0,
@@ -82,12 +82,12 @@ export default createSelector([props => props.song, props => props.user, props =
     }
 
     const artistTracksFlat = [];
-    artistsWithFeaturingRemoved[artistId].relationships.album.forEach((album) => {
+    artistWithFeaturingRemoved[artistId].relationships.album.forEach((album) => {
       artistTracksFlat.push(...album.relationships.track);
     });
 
     return {
-      artists: artistsWithFeaturingRemoved[artistId] === undefined ? [] : [artistsWithFeaturingRemoved[artistId]],
+      artist: artistWithFeaturingRemoved[artistId] === undefined ? [] : [artistWithFeaturingRemoved[artistId]],
       albumPlayingId,
       artistPlayingId,
       trackCount: artistTracksFlat.length,
@@ -95,7 +95,7 @@ export default createSelector([props => props.song, props => props.user, props =
   }
 
   return {
-    artists: Object.values(artistsWithFeaturingRemoved),
+    artist: Object.values(artistWithFeaturingRemoved),
     albumPlayingId,
     artistPlayingId,
     trackCount: 0,

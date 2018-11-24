@@ -122,10 +122,13 @@ const WolfCola = () => {
                     <Route exact path="/search" component={SearchContainer} />
                     <Route exact path="/trending/:category(yesterday|today|week|popularity)" component={TrendingContainer} />
                     <Route exact path="/collection/:id?" component={CollectionContainer} />
+
                     <Route exact path="/recent" component={RecentContainer} />
+
                     <Route exact path="/songs" component={SongsContainer} />
                     <Route exact path="/albums/:id?" component={AlbumsContainer} />
                     <Route exact path="/artists/:id?" component={ArtistsContainer} />
+
                     <Route exact path="/settings" component={SettingsContainer} />
                     <Route exact path="/queue" component={QueueContainer} />
                     <Redirect exact push={false} from="/trending" to="/trending/yesterday" />

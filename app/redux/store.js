@@ -71,7 +71,7 @@ const store = createStore(
     queueNext: [], // queue of tracks that have been requested to be played next
     queueInitial: [], // queue of tracks to be played [used on repeat `ALL` and queue is empty]
     history: [], // where played tracks will are pushed [repeat `ONE` will only push once]
-    song: [], // saved tracks
+    song: null, // saved tracks { data, included }
     // playlist: [],
     crossfade: 0, // in seconds
     duration: 0, // current playing track duration in seconds

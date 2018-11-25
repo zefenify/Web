@@ -35,6 +35,7 @@ const HeaderView = styled.div`
     overflow-y: auto;
     padding: 1rem 1rem 0 1rem;
     height: calc(100vh - 150px); /* 60px top + 90px control */
+    -webkit-overflow-scrolling: touch;
   }
 `;
 

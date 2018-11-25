@@ -6,6 +6,7 @@ import reverse from 'lodash/reverse';
 import uniqBy from 'lodash/uniqBy';
 
 import trackListSame from '@app/util/trackListSame';
+import { human } from '@app/util/time';
 import track from '@app/util/track';
 
 // eslint-disable-next-line
@@ -32,6 +33,8 @@ export default createSelector([props => props.song, props => props.user, props =
     album.album_artist = album.album_artist.map(artistId => song.included.artist[artistId]);
     // eslint-disable-next-line
     album.album_cover = song.included.s3[album.album_cover];
+    // eslint-disable-next-line
+    album.duration = human(album.relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
 
     return album;
   });

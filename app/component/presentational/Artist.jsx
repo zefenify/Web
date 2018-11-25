@@ -1,11 +1,16 @@
-import React from 'react';
-import { shape, bool, number, string, func } from 'prop-types';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  shape,
+  bool,
+  number,
+  string,
+  func,
+} from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
-
 import ImageContainer from '@app/component/styled/ImageContainer';
-import Divider from '@app/component/styled/Divider';
 import Album from '@app/component/presentational/Album';
 import Button from '@app/component/styled/Button';
 import Share from '@app/component/svg/Share';
@@ -19,7 +24,20 @@ const ArtistContainer = styled.div`
       width: 250px;
     }
   }
+
+  .ArtistContainer__appears {
+    a {
+      flex: 0 0 25%;
+      text-decoration: none;
+      color: ${props => props.theme.NATURAL_2};
+
+      @media(min-width: 1282px) {
+        flex: 0 0 20%;
+      }
+    }
+  }
 `;
+
 
 const Arist = ({
   artist,
@@ -100,101 +118,32 @@ const Arist = ({
       )
     }
     {/* ./ artist album */}
-  </ArtistContainer>
-);
-
-/*
-    <div className="artist">
-      <div className="artist__image" style={{ background: `transparent url('${BASE_S3}${artist.artist_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-      <div className="artist__info">
-        <p>ARTIST</p>
-        <h1>{ artist.artist_name }</h1>
-        <p style={{ marginTop: '0.25em' }}>
-          {`${artist.relationships.album.length} album${artist.relationships.album.length > 1 ? 's' : ''}, ${trackCount} song${trackCount > 1 ? 's' : ''}`}
-        </p>
-        <div className="play-share">
-          <Button className="play-share__play-big" onClick={() => artistPlayPause(artist.artist_id)}>
-            {`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}
-          </Button>
-          <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={contextMenuArtist}>
-            <Share />
-          </Button>
-        </div>
-      </div>
-    </div>
-
 
     {
-      artist.relationships.album.length === 0 ? null : (
-        <div className="album-list">
-          <h2><Divider text>Albums&nbsp;</Divider></h2>
+      artist.relationships.track.length === 0 ? null : (
+        <Fragment>
+          <h1 className="m-0 p-0 mt-5 mb-3">Appears On</h1>
 
-          {
-            artist.relationships.album.map(album => (
-              <div className="album-list__album album" key={`${artist.artist_id}-${album.album_id}`}>
-                <div className="album-cover">
-                  <Link to={`/album/${album.album_id}`} className="album-cover__cover" style={{ background: `transparent url('${BASE_S3}${album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-                  <div className="album-cover__info album-info">
-                    <p className="album-info__year">{ album.album_year }</p>
-                    <Link className="album-info__name" to={`/album/${album.album_id}`}>{ album.album_name }</Link>
-                    <div className="play-share">
-                      <Button outline border themeColor backgroundColor="transparent" className="play-share__play-small" onClick={() => albumPlayPause(album.album_id)}>{`${playing && albumPlayingId === album.album_id ? 'PAUSE' : 'PLAY'}`}</Button>
-                      <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={() => contextMenuAlbum(album.album_id)}><Share /></Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="album__track-list track-list">
-                  <Divider />
-                  {
-                    album.relationships.track.map((track, index) => (
-                      <Track
-                        fullDetail={false}
-                        key={track.track_id}
-                        currentTrackId={current === null ? '' : current.track_id}
-                        trackNumber={index + 1}
-                        trackPlayPause={trackPlayPause}
-                        playing={playing}
-                        trackId={track.track_id}
-                        trackName={track.track_name}
-                        trackFeaturing={track.track_featuring}
-                        trackAlbum={album}
-                        trackDuration={track.track_track.s3_meta.duration}
-                        contextMenuTrack={contextMenuTrack}
-                      />
-                    ))
-                  }
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      )
-    }
-
-    {
-      artist.relationships.track.length === 0 ? null : <div style={{ marginTop: '2em' }}>
-        <h2><Divider text>Appears On&nbsp;</Divider></h2>
-
-        <div className="appears-container">
-          <div className="appears-container__list appears-list">
+          {/* the -ve margin accounts for __view padding */}
+          <div className="d-flex flex-row flex-wrap ArtistContainer__appears mb-3" style={{ margin: '0 -1rem' }}>
             {
               artist.relationships.track.map(track => (
-                <Link key={track.track_id} to={`/album/${track.track_album.album_id}`} className="appears-list__album appears-album">
+                <Link key={track.track_id} to={`/album/${track.track_album.album_id}`} className="mb-5 px-3">
                   <ImageContainer>
                     <img src={`${BASE_S3}${track.track_album.album_cover.s3_name}`} alt={track.track_album.album_name} />
                   </ImageContainer>
 
-                  <p className="appears-album__name">{track.track_album.album_name}</p>
-                  <p className="appears-album__year">{track.track_album.album_year}</p>
+                  <h2 className="m-0 p-0 mt-2">{ track.track_album.album_name }</h2>
+                  <p className="m-0 p-0 mt-1">{ track.track_album.album_year }</p>
                 </Link>
               ))
             }
           </div>
-        </div>
-      </div>
+        </Fragment>
+      )
     }
-    */
+  </ArtistContainer>
+);
 
 Arist.propTypes = {
   artist: shape({}),

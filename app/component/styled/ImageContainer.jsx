@@ -12,7 +12,7 @@ const ImageContainer = styled.div`
   border: 1px solid ${props => props.border || props.theme.NATURAL_7};
   border-radius: ${props => props.borderRadius || '6px'};
 
-  .__image-container {
+  .ImageContainer__image-container {
     position: relative;
     height: 0;
     padding-bottom: 100%;
@@ -36,7 +36,7 @@ const Container = (props) => {
 
   return (
     <ImageContainer {...otherProps}>
-      <div className="__image-container">
+      <div className="ImageContainer__image-container">
         { children }
       </div>
     </ImageContainer>

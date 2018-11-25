@@ -2,12 +2,15 @@ import styled from 'react-emotion';
 
 
 const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${props => props.theme.PRIMARY_4};
   border-radius: 2rem;
-  border: ${props => props.border ? `1px solid ${props.theme.NATURAL_2}` : 'none'};
+  border: ${props => props.themeBorder ? `1px solid ${props.theme.NATURAL_4}` : 'none'};
   padding: 0.75rem 2rem;
   height: 38px;
-  color: hsl(0, 0%, 100%);
+  color: ${props => props.themeColor ? props.theme.NATURAL_2 : 'hsl(0, 0%, 100%)'};
   transition: transform 250ms;
   box-shadow: 0 2px 6px ${props => props.theme.SHADOW};
 

@@ -1,21 +1,17 @@
 import React from 'react';
 import { arrayOf, string, shape } from 'prop-types';
 import { Link } from 'react-router-dom';
-import styled from 'react-emotion';
 
-const Muted = styled.span`
-  color: ${props => props.theme.mute};
-`;
 
 const ArtistList = ({
-  artists,
-  className,
+  artist,
+  ...props
 }) => (
-  <span className={className}>
+  <span {...props}>
     {
-      artists.map((artist, index) => (
-        <Link to={`/artist/${artist.artist_id}`} key={artist.artist_id}>
-          <span>{artist.artist_name}</span>{ (artists.length > 1 && (index < artists.length - 1)) ? <span>{ (index < artists.length - 2) ? <Muted>,</Muted> : <Muted>&nbsp;&amp;</Muted> } </span> : null }
+      artist.map((_artist, index) => (
+        <Link to={`/artist/${_artist.artist_id}`} key={_artist.artist_id}>
+          <span>{_artist.artist_name}</span>{ (artist.length > 1 && (index < artist.length - 1)) ? <span>{ (index < artist.length - 2) ? <span>,</span> : <span>&nbsp;&amp;</span> } </span> : null }
         </Link>
       ))
     }
@@ -23,12 +19,12 @@ const ArtistList = ({
 );
 
 ArtistList.propTypes = {
-  artists: arrayOf(shape({})),
+  artist: arrayOf(shape({})),
   className: string,
 };
 
 ArtistList.defaultProps = {
-  artists: [],
+  artist: [],
   className: '',
 };
 

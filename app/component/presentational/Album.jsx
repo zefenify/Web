@@ -116,7 +116,7 @@ const HeaderTracks = ({
           <h1 className="info-container__title">{ title }</h1>
           <p className="info-container__by">
             <span className="text-muted">By&nbsp;</span>
-            <ArtistList artists={artist} />
+            <ArtistList artist={artist} />
           </p>
           <p className="info-container__duration">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
 

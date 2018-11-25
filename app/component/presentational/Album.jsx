@@ -71,7 +71,7 @@ const Album = ({
           <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
         </ImageContainer>
 
-        <div className="d-flex flex-row justify-content-center my-3">
+        <div className="d-flex flex-row justify-content-center mt-4">
           <Button className="mr-3" style={{ width: '125px' }} onClick={albumPlayPause}>{`${albumPlaying && playing ? 'PAUSE' : 'PLAY'}`}</Button>
 
           <Button

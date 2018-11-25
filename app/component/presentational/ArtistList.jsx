@@ -1,13 +1,10 @@
-import React from 'react';
-import { arrayOf, string, shape } from 'prop-types';
+import React, { Fragment } from 'react';
+import { arrayOf, shape } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 
-const ArtistList = ({
-  artist,
-  ...props
-}) => (
-  <span {...props}>
+const ArtistList = ({ artist }) => (
+  <Fragment>
     {
       artist.map((_artist, index) => (
         <Link to={`/artist/${_artist.artist_id}`} key={_artist.artist_id}>
@@ -15,17 +12,15 @@ const ArtistList = ({
         </Link>
       ))
     }
-  </span>
+  </Fragment>
 );
 
 ArtistList.propTypes = {
   artist: arrayOf(shape({})),
-  className: string,
 };
 
 ArtistList.defaultProps = {
   artist: [],
-  className: '',
 };
 
 export default ArtistList;

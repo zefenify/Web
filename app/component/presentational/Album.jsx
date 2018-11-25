@@ -1,99 +1,45 @@
 import React from 'react';
-import { bool, number, string, arrayOf, shape, func } from 'prop-types';
+import {
+  bool,
+  number,
+  string,
+  arrayOf,
+  shape,
+  func,
+} from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
-
 import ArtistList from '@app/component/presentational/ArtistList';
 import Button from '@app/component/styled/Button';
 import Share from '@app/component/svg/Share';
-import Divider from '@app/component/styled/Divider';
 import Track from '@app/component/presentational/Track';
+import ImageContainer from '@app/component/styled/ImageContainer';
 
-const HeaderTracksContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-`;
 
-const Header = styled.div`
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 2em;
-
-  .image {
-    flex: 0 0 200px;
-    height: 200px;
-    width: 200px;
-    border-radius: 6px;
-    border: 1px solid ${props => props.theme.divider};
+const AlbumContainer = styled.div`
+  .AlbumContainer__album-info {
+    flex: 0 0 250px;
+    height: 250px;
+    width: 250px;
   }
 
-  .info {
-    margin-left: 1em;
+  .AlbumContainer__artist-list a {
+    color: ${props => props.theme.NATURAL_3};
+    text-decoration: none;
+    font-size: 1.125rem;
   }
 
-  .info-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: calc(100vw - (400px + 5em));
-
-    &__type {
-      margin: 0;
-      text-transform: uppercase;
-    }
-
-    &__title {
-      margin: 0;
-      flex: 1 0 auto;
-      text-transform: capitalize;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    &__by {
-      margin: 0;
-      font-size: 1em;
-      margin-top: 0.5em;
-
-      a {
-        font-size: 1.25em;
-        text-decoration: none;
-        color: inherit;
-      }
-    }
-
-    &__duration {
-      margin: 0;
-      margin-top: 0.5em;
-      color: ${props => props.theme.mute};
-    }
-
-    .play-share {
-      margin-top: 1em;
-    }
-  }
-
-  .text-muted {
-    color: ${props => props.theme.mute};
+  .AlbumContainer__album-year-track-count {
+    color: ${props => props.theme.NATURAL_4};
   }
 `;
 
-const Tracks = styled.div`
-  flex: 1 0 auto;
 
-  & > *:last-child {
-    margin-bottom: 1px;
-  }
-`;
-
-const HeaderTracks = ({
+const Album = ({
   title,
   cover,
+  year,
   artist,
   tracks,
   current,
@@ -105,31 +51,42 @@ const HeaderTracks = ({
   contextMenuAlbum,
   contextMenuTrack,
 }) => {
-  const { hours, minutes, seconds } = duration;
+  const { hour, minute, second } = duration;
 
   return (
-    <HeaderTracksContainer>
-      <Header>
-        <div className="image" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }} />
-        <div className="info info-container">
-          <p className="info-container__type">ALBUM</p>
-          <h1 className="info-container__title">{ title }</h1>
-          <p className="info-container__by">
-            <span className="text-muted">By&nbsp;</span>
-            <ArtistList artist={artist} />
-          </p>
-          <p className="info-container__duration">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
+    <AlbumContainer className="d-flex flex-row flex-shrink-0">
+      <div className="AlbumContainer__album-info">
+        <ImageContainer borderRadius="6px">
+          <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
+        </ImageContainer>
 
-          <div className="play-share">
-            <Button className="play-share__play-big" onClick={albumPlayPause}>{`${albumPlaying && playing ? 'PAUSE' : 'PLAY'}`}</Button>
-            <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={contextMenuAlbum}><Share /></Button>
+        <div className="d-flex flex-column align-items-center">
+          <h2 className="m-0 p-0 mt-3">{ title }</h2>
+
+          <div className="AlbumContainer__artist-list mt-2">
+            <ArtistList artist={artist} />
+          </div>
+
+          <div className="AlbumContainer__album-year-track-count d-flex flex-column align-items-center mt-3">
+            <span>{`${year} • ${tracks.length} SONG${tracks.length > 1 ? 'S' : ''} • ${hour > 0 ? `${hour} hr` : ''} ${minute} min ${hour > 0 ? '' : `${second} sec`}`}</span>
+          </div>
+
+          <div className="d-flex flex-row justify-content-center mt-4">
+            <Button className="mr-3" style={{ width: '125px' }} onClick={albumPlayPause}>{`${albumPlaying && playing ? 'PAUSE' : 'PLAY'}`}</Button>
+            <Button
+              className="p-0"
+              style={{ backgroundColor: 'transparent', width: '38px' }}
+              themeColor
+              themeBorder
+              onClick={contextMenuAlbum}
+            >
+              <Share />
+            </Button>
           </div>
         </div>
-      </Header>
+      </div>
 
-      <Divider />
-
-      <Tracks>
+      <div className="d-flex flex-column flex-grow-1" style={{ paddingLeft: '2rem' }}>
         {
           tracks.map((track, index) => (
             <Track
@@ -148,21 +105,22 @@ const HeaderTracks = ({
             />
           ))
         }
-      </Tracks>
-    </HeaderTracksContainer>
+      </div>
+    </AlbumContainer>
   );
 };
 
-HeaderTracks.propTypes = {
+Album.propTypes = {
   cover: shape({}),
   title: string,
+  year: number,
   artist: arrayOf(shape({})),
   current: shape({}),
   tracks: arrayOf(shape({})),
   duration: shape({
-    hours: number,
-    minutes: number,
-    seconds: number,
+    hour: number,
+    minute: number,
+    second: number,
   }),
   playing: bool,
   albumPlaying: bool,
@@ -172,19 +130,20 @@ HeaderTracks.propTypes = {
   contextMenuTrack: func.isRequired,
 };
 
-HeaderTracks.defaultProps = {
+Album.defaultProps = {
   cover: {},
   title: '',
+  year: 1991,
   artist: [],
   current: null,
   tracks: [],
   duration: {
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    hour: 0,
+    minute: 0,
+    second: 0,
   },
   playing: false,
   albumPlaying: false,
 };
 
-export default HeaderTracks;
+export default Album;

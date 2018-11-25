@@ -73,6 +73,7 @@ const TrackContainer = styled.div`
   position: relative;
   width: 100%;
   border-bottom: 1px solid ${props => props.theme.NATURAL_7};
+  transition: background-color 128ms;
 
   /* the sketch makes way more sense for 'TrackContainer__control' rules */
   /* default state */
@@ -114,6 +115,8 @@ const TrackContainer = styled.div`
 
   /* non playing track is on hover */
   &:hover {
+    background-color: ${props => props.theme.NATURAL_7};
+
     .TrackContainer__control {
       &__play-pause {
         display: block;

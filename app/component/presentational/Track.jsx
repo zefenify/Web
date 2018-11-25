@@ -1,14 +1,21 @@
 import React from 'react';
-import { func, number, string, bool, arrayOf, shape } from 'prop-types';
+import {
+  func,
+  number,
+  string,
+  bool,
+  arrayOf,
+  shape,
+} from 'prop-types';
 import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
 
 import { human } from '@app/util/time';
-
 import ArtistList from '@app/component/presentational/ArtistList';
 import Share from '@app/component/svg/Share';
 
-const PlayPause = ({ onClick, playing, className }) => (
+
+const PlayPause = ({ onClick, playing, ...props }) => (
   <svg
     width="24"
     height="24"
@@ -19,30 +26,31 @@ const PlayPause = ({ onClick, playing, className }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
     onClick={onClick}
-    className={className}
+    {...props}
   >
     {
-      playing ?
+      playing ? (
         <g>
           <rect x="6" y="4" width="4" height="16" fill="currentColor" />
           <rect x="14" y="4" width="4" height="16" fill="currentColor" />
         </g>
-        : <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
+      ) : <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
     }
   </svg>
 );
 
+
 PlayPause.propTypes = {
   onClick: func.isRequired,
   playing: bool,
-  className: string,
 };
 
 PlayPause.defaultProps = {
   playing: false,
-  className: '',
 };
 
+
+// this isn't inside `svg` folder because it would clash --- EH!? EH!?
 const Volume = props => (
   <svg
     width="24"
@@ -60,111 +68,99 @@ const Volume = props => (
   </svg>
 );
 
+
 const TrackContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+  position: relative;
   width: 100%;
-  border-bottom: 1px solid ${props => props.theme.divider};
+  border-bottom: 1px solid ${props => props.theme.NATURAL_7};
 
-  & > * {
-    flex: 1 1 auto;
-    padding: 0.8em 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+  /* the sketch makes way more sense for 'TrackContainer__control' rules */
+  /* default state */
+  .TrackContainer__control {
+    min-width: 32px;
 
-  & a {
-    text-decoration: none;
-    color: inherit;
-
-    &:hover {
-      color: ${props => props.theme.primary};
-    }
-  }
-
-  & .track-number-icon {
-    position: relative;
-    flex: 0 0 5%;
-    padding-left: 0.5em;
-
-    &__number {
-      display: block;
+    &__track-number {
+      opacity: 0;
     }
 
-    &__icon {
-      display: none;
+    &__play-pause {
       position: absolute;
-      left: 0;
-      top: 6px;
-      width: 1em;
-      font-size: 2em;
+      display: none;
+    }
+
+    &__volume {
+      position: absolute;
+      display: none;
     }
   }
 
-  &.full-detail .name {
-    flex: 0 0 38%;
-  }
-
-  & .name {
-    flex: 1 0 auto;
-
-    &__featuring {
-      color: ${props => props.theme.mute};
-    }
-  }
-
-  & .artist-name {
-    flex: 0 0 25%;
-  }
-
-  & .album-name {
-    flex: 0 0 20%;
-  }
-
-  & .share {
-    flex: 0 0 4%;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  & .duration {
-    padding-right: 0.5em;
-    flex: 0 0 8%;
-    text-align: right;
-  }
-
-  &.active {
-    color: ${props => props.theme.primary};
-
-    &.active_playing {
-      & .track-number-icon__number {
-        display: none;
-      }
-
-      &:hover .track-number-icon_volume {
-        display: none !important;
+  /* a track that's not being played AND not on hover */
+  &:not(.active):not(:hover) {
+    .TrackContainer__control {
+      &__track-number {
+        opacity: 1;
       }
     }
   }
 
-  &:hover {
-    background-color: ${props => props.theme.hover};
-
-    & .track-number-icon {
-      &__number {
-        display: none;
-      }
-
-      &__icon {
+  /* current track is equal to 'current' */
+  &:not(:hover).active {
+    .TrackContainer__control {
+      &__volume {
         display: block;
       }
     }
   }
+
+  /* non playing track is on hover */
+  &:hover {
+    .TrackContainer__control {
+      &__play-pause {
+        display: block;
+      }
+
+      &__volume {
+        display: none;
+      }
+    }
+  }
+
+  /* share ... */
+  .TrackContainer__kdot {
+    opacity: 0;
+  }
+
+  &:hover .TrackContainer__kdot {
+    opacity: 1;
+  }
+
+  .TrackContainer__track-name {
+    font-size: 1.125rem;
+  }
+
+  .TrackContainer__artist {
+    color: ${props => props.theme.NATURAL_4};
+
+    a {
+      text-decoration: none;
+      color: ${props => props.theme.NATURAL_3};
+    }
+  }
+
+  &.active {
+    color: ${props => props.theme.PRIMARY_4};
+
+    .TrackContainer__artist {
+      color: ${props => props.theme.PRIMARY_5};
+
+      a {
+        text-decoration: none;
+        color: ${props => props.theme.PRIMARY_4};
+      }
+    }
+  }
 `;
+
 
 const Track = ({
   fullDetail,
@@ -178,59 +174,76 @@ const Track = ({
   trackPlayPause,
   playing,
   contextMenuTrack,
-}) => {
-  if (fullDetail === false) {
-    return (
-      <TrackContainer onContextMenu={(e) => { e.preventDefault(); contextMenuTrack(trackId); }} className={`${currentTrackId === trackId ? 'active' : ''} ${(currentTrackId === trackId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => trackPlayPause(trackId)}>
-        <div className="track-number-icon">
-          <span className="track-number-icon__number">{ trackNumber }</span>
-          <PlayPause
-            className="track-number-icon__icon"
-            playing={currentTrackId === trackId && playing}
-            onClick={() => trackPlayPause(trackId)}
-          />
-          <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentTrackId === trackId && playing) ? 'block' : 'none'}` }} />
-        </div>
-        <div className="name">
-          <span>{ trackName }</span>
-          {
-            trackFeaturing.length > 0
-              ? <span className="name__featuring"> - <ArtistList artists={trackFeaturing} /></span>
-              : null
-          }
-        </div>
-        <div className="share" onClick={() => contextMenuTrack(trackId)}><Share /></div>
-        <div className="duration">{ human(trackDuration) }</div>
-      </TrackContainer>
-    );
-  }
+}) => (
+  <TrackContainer
+    onContextMenu={(e) => { e.preventDefault(); contextMenuTrack(trackId); }}
+    className={`d-flex flex-row justify-content-center align-items-center flex-shrink-0 py-3 ${currentTrackId === trackId ? 'active' : ''}`}
+    onDoubleClick={() => trackPlayPause(trackId)}
+  >
+    {/* track number */}
+    <div className="TrackContainer__control d-flex justify-content-center align-items-center flex-grow-0 px-2">
+      <span className="TrackContainer__control__track-number">{ trackNumber }</span>
 
-  return (
-    <TrackContainer onContextMenu={(e) => { e.preventDefault(); contextMenuTrack(trackId); }} className={`full-detail ${currentTrackId === trackId ? 'active' : ''} ${(currentTrackId === trackId && playing) ? 'active_playing' : ''}`} onDoubleClick={() => trackPlayPause(trackId)}>
-      <div className="track-number-icon">
-        <span className="track-number-icon__number">{ trackNumber }</span>
-        <PlayPause
-          className="track-number-icon__icon"
-          playing={currentTrackId === trackId && playing}
-          onClick={() => trackPlayPause(trackId)}
-        />
-        <Volume className="track-number-icon__icon track-number-icon_volume" style={{ display: `${(currentTrackId === trackId && playing) ? 'block' : 'none'}` }} />
-      </div>
-      <div className="name">
-        <span>{ trackName }</span>
+      <PlayPause
+        className="TrackContainer__control__play-pause"
+        playing={currentTrackId === trackId && playing}
+        onClick={() => trackPlayPause(trackId)}
+      />
+
+      <Volume className="TrackContainer__control__volume" />
+    </div>
+    {/* ./track number */}
+
+    {/* track name / artist / album */}
+    <div className="flex-grow-1 d-flex flex-column px-2">
+      <p className="m-0 p-0 TrackContainer__track-name">{ trackName }</p>
+
+      <div className="d-flex flex-row TrackContainer__artist">
         {
-          trackFeaturing.length > 0
-            ? <span className="name__featuring"> - <ArtistList artists={trackFeaturing} /></span>
+          fullDetail === true
+            ? (<span className="mt-1 pr-2"><ArtistList artist={trackAlbum.album_artist} /></span>)
             : null
         }
+
+        {
+          trackFeaturing.length > 0
+            ? (
+              <span className="mt-1 pr-2">
+                <span className="TrackContainer__themed-mute">feat.&nbsp;</span>
+                <ArtistList artist={trackFeaturing} />
+              </span>
+            ) : null
+        }
+
+        {
+          fullDetail === true ? (
+            <span className="mt-1">
+              <span className="pr-2 TrackContainer__themed-mute">•</span>
+              <Link to={`/album/${trackAlbum.album_id}`}>{ trackAlbum.album_name }</Link>
+            </span>
+          ) : null
+        }
       </div>
-      <ArtistList className="artist-name" artists={trackAlbum.album_artist} />
-      <Link to={`/album/${trackAlbum.album_id}`} className="album-name">{ trackAlbum.album_name }</Link>
-      <div className="share" onClick={() => contextMenuTrack(trackId)}><Share /></div>
-      <div className="duration">{ human(trackDuration) }</div>
-    </TrackContainer>
-  );
-};
+    </div>
+    {/* ./ track name / artist / album */}
+
+    {/* context menu + time */}
+    <div className="flex-grow-0 d-flex flex-row align-items-center px-2">
+      <div
+        className="TrackContainer__kdot pr-3"
+        tabIndex="0"
+        role="button"
+        onKeyPress={() => contextMenuTrack(trackId)}
+        onClick={() => contextMenuTrack(trackId)}
+      >
+        <Share />
+      </div>
+      <div>{ human(trackDuration) }</div>
+    </div>
+    {/* ./ context menu + time */}
+  </TrackContainer>
+);
+
 
 Track.propTypes = {
   fullDetail: bool,
@@ -246,8 +259,10 @@ Track.propTypes = {
   playing: bool.isRequired,
 };
 
+
 Track.defaultProps = {
   fullDetail: true,
 };
+
 
 export default Track;

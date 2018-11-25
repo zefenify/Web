@@ -7,6 +7,7 @@ import {
   shape,
   func,
 } from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
@@ -24,7 +25,12 @@ const AlbumContainer = styled.div`
     width: 250px;
   }
 
-  .AlbumContainer__artist-list a {
+  .AlbumContainer__album-title a {
+    color: ${props => props.theme.NATURAL_2};
+    text-decoration: none;
+  }
+
+  .AlbumContainer__album-artist a {
     color: ${props => props.theme.NATURAL_3};
     text-decoration: none;
     font-size: 1.125rem;
@@ -37,6 +43,8 @@ const AlbumContainer = styled.div`
 
 
 const Album = ({
+  showArtist,
+  albumId,
   title,
   cover,
   year,
@@ -60,33 +68,38 @@ const Album = ({
           <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
         </ImageContainer>
 
-        <div className="d-flex flex-column align-items-center">
-          <h2 className="m-0 p-0 mt-3">{ title }</h2>
+        <div className="d-flex flex-row justify-content-center mt-3">
+          <Button className="mr-3" style={{ width: '125px' }} onClick={albumPlayPause}>{`${albumPlaying && playing ? 'PAUSE' : 'PLAY'}`}</Button>
 
-          <div className="AlbumContainer__artist-list mt-2">
-            <ArtistList artist={artist} />
-          </div>
-
-          <div className="AlbumContainer__album-year-track-count d-flex flex-column align-items-center mt-3">
-            <span>{`${year} • ${tracks.length} SONG${tracks.length > 1 ? 'S' : ''} • ${hour > 0 ? `${hour} hr` : ''} ${minute} min ${hour > 0 ? '' : `${second} sec`}`}</span>
-          </div>
-
-          <div className="d-flex flex-row justify-content-center mt-4">
-            <Button className="mr-3" style={{ width: '125px' }} onClick={albumPlayPause}>{`${albumPlaying && playing ? 'PAUSE' : 'PLAY'}`}</Button>
-            <Button
-              className="p-0"
-              style={{ backgroundColor: 'transparent', width: '38px' }}
-              themeColor
-              themeBorder
-              onClick={contextMenuAlbum}
-            >
-              <Share />
-            </Button>
-          </div>
+          <Button
+            className="p-0"
+            style={{ backgroundColor: 'transparent', width: '38px' }}
+            themeColor
+            themeBorder
+            noShadow
+            onClick={contextMenuAlbum}
+          >
+            <Share />
+          </Button>
         </div>
       </div>
 
       <div className="d-flex flex-column flex-grow-1" style={{ paddingLeft: '2rem' }}>
+        <h1 className="m-0 AlbumContainer__album-title"><Link to={`/album/${albumId}`}>{ title }</Link></h1>
+
+        {
+          showArtist === false ? null : (
+            <div className="mt-2 AlbumContainer__album-artist">
+              <span>By&nbsp;</span>
+              <ArtistList artist={artist} />
+            </div>
+          )
+        }
+
+        <div className="AlbumContainer__album-year-track-count mt-2">
+          <span>{`${year} • ${tracks.length} Song${tracks.length > 1 ? 's' : ''} • ${hour > 0 ? `${hour} hr` : ''} ${minute} min ${hour > 0 ? '' : `${second} sec`}`}</span>
+        </div>
+
         {
           tracks.map((track, index) => (
             <Track
@@ -111,6 +124,8 @@ const Album = ({
 };
 
 Album.propTypes = {
+  showArtist: bool,
+  albumId: string,
   cover: shape({}),
   title: string,
   year: number,
@@ -131,6 +146,8 @@ Album.propTypes = {
 };
 
 Album.defaultProps = {
+  showArtist: false,
+  albumId: '',
   cover: {},
   title: '',
   year: 1991,

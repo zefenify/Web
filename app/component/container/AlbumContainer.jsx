@@ -181,10 +181,12 @@ const AlbumContainer = ({ match }) => {
 
   return (
     <Album
+      showArtist={state.albumId !== undefined} // By <ArtistList> rendered in only single album view
       current={current}
       playing={playing}
       albumPlaying={state.albumPlaying}
       duration={state.duration}
+      albumId={state.album.album_id}
       title={state.album.album_name}
       cover={state.album.album_cover}
       artist={state.album.album_artist}

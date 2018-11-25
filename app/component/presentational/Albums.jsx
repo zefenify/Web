@@ -129,6 +129,8 @@ const Albums = ({
   if (albumId !== undefined && album.length === 1) {
     return (
       <Album
+        showArtist
+        albumId={album[0].album_id}
         title={album[0].album_name}
         year={album[0].album_year}
         cover={album[0].album_cover}

@@ -23,8 +23,8 @@ export const DARK = {
 
 export const LIGHT = {
   BACKGROUND_MAIN: 'hsl(0, 0%, 100%)',
-  BACKGROUND_NAVIGATION: 'hsl(0, 0%, 77%)',
-  BACKGROUND_CONTROL: 'hsl(0, 0%, 93%)',
+  BACKGROUND_NAVIGATION: 'hsl(0, 0%, 93%)',
+  BACKGROUND_CONTROL: 'hsl(180, 0%, 86%)',
   SHADOW: 'hsla(100, 0%, 0%, 0.2)',
 
   PRIMARY_1: '#3B0D0C',

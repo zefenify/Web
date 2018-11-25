@@ -30,11 +30,11 @@ const AlbumContainer = styled.div`
   &.active {
     color: ${props => props.theme.PRIMARY_4}; /* this will be inherited by SVG */
 
-    .__album-title {
+    .AlbumContainer__album-title {
       color: ${props => props.theme.PRIMARY_4};
     }
 
-    .__album-artist a {
+    .AlbumContainer__album-artist a {
       color: ${props => props.theme.PRIMARY_5};
     }
   }
@@ -49,7 +49,7 @@ const AlbumContainer = styled.div`
     flex: 0 0 20%;
   }
 
-  .__album-cover {
+  .AlbumContainer__album-cover {
     position: relative;
 
     &__overlay {
@@ -72,20 +72,20 @@ const AlbumContainer = styled.div`
       }
     }
 
-    .__album-cover__overlay {
+    .AlbumContainer__album-cover__overlay {
       opacity: 0;
     }
 
-    &:hover .__album-cover__overlay {
+    &:hover .AlbumContainer__album-cover__overlay {
       opacity: 1;
     }
   }
 
-  .__album-title {
+  .AlbumContainer__album-title {
     color: ${props => props.theme.NATURAL_2};
   }
 
-  .__album-artist a {
+  .AlbumContainer__album-artist a {
     text-decoration: none;
     color: ${props => props.theme.NATURAL_4};
   }
@@ -130,6 +130,7 @@ const Albums = ({
     return (
       <Album
         title={album[0].album_name}
+        year={album[0].album_year}
         cover={album[0].album_cover}
         artist={album[0].album_artist}
         tracks={album[0].relationships.track}
@@ -155,12 +156,12 @@ const Albums = ({
         {
           album.map(_album => (
             <AlbumContainer key={_album.album_id} className={`d-flex flex-column px-3${_album.album_id === albumPlayingId ? ' active' : ''}`}>
-              <div className="__album-cover">
+              <div className="AlbumContainer__album-cover">
                 <ImageContainer>
                   <img src={`${BASE_S3}${_album.album_cover.s3_name}`} alt={_album.album_name} />
                 </ImageContainer>
 
-                <Link to={`/albums/${_album.album_id}`} className="d-flex flex-column justify-content-center align-items-center __album-cover__overlay">
+                <Link to={`/albums/${_album.album_id}`} className="d-flex flex-column justify-content-center align-items-center AlbumContainer__album-cover__overlay">
                   <PlayPause
                     strokeWidth="1px"
                     onClick={(event) => { event.preventDefault(); albumPlayPause(_album.album_id); }}
@@ -169,8 +170,10 @@ const Albums = ({
                 </Link>
               </div>
 
-              <h2 className="m-0 p-0 mt-2 mb-1 __album-title">{ _album.album_name }</h2>
-              <ArtistList className="m-0 p-0 mb-5 __album-artist" artists={_album.album_artist} />
+              <h2 className="m-0 p-0 mt-2 mb-1 AlbumContainer__album-title">{ _album.album_name }</h2>
+              <div className="m-0 p-0 mb-5 AlbumContainer__album-artist">
+                <ArtistList artist={_album.album_artist} />
+              </div>
             </AlbumContainer>
           ))
         }

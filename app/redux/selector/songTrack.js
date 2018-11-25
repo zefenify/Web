@@ -8,11 +8,11 @@ export default createSelector([state => state.song], (song) => {
     return [];
   }
 
-  const tracks = track(Object.values(song.included.track), song.included);
+  const trackList = track(Object.values(song.included.track), song.included);
 
   // re-building { [trackId]: track } for sorting, recent top...
   const trackIdMapTrack = {};
-  tracks.forEach((_track) => {
+  trackList.forEach((_track) => {
     trackIdMapTrack[_track.track_id] = _track;
   });
 

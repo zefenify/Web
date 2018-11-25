@@ -6,9 +6,9 @@ import { human } from '@app/util/time';
 export default createSelector([state => state.song], (song) => {
   if (song === null) {
     return {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
+      hour: 0,
+      minute: 0,
+      second: 0,
     };
   }
 

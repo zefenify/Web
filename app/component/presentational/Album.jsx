@@ -21,8 +21,11 @@ import ImageContainer from '@app/component/styled/ImageContainer';
 const AlbumContainer = styled.div`
   .AlbumContainer__album-info {
     flex: 0 0 250px;
-    height: 250px;
-    width: 250px;
+
+    img {
+      height: 250px;
+      width: 250px;
+    }
   }
 
   .AlbumContainer__album-title a {
@@ -63,7 +66,7 @@ const Album = ({
 
   return (
     <AlbumContainer className="d-flex flex-row flex-shrink-0">
-      <div className="AlbumContainer__album-info">
+      <div className="AlbumContainer__album-info mb-5">
         <ImageContainer borderRadius="6px">
           <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
         </ImageContainer>
@@ -96,7 +99,7 @@ const Album = ({
           )
         }
 
-        <div className="AlbumContainer__album-year-track-count mt-2">
+        <div className="AlbumContainer__album-year-track-count my-2">
           <span>{`${year} • ${tracks.length} Song${tracks.length > 1 ? 's' : ''} • ${hour > 0 ? `${hour} hr` : ''} ${minute} min ${hour > 0 ? '' : `${second} sec`}`}</span>
         </div>
 

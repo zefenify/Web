@@ -5,6 +5,7 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   background-color: ${props => props.theme.PRIMARY_4};
   border-radius: 2rem;
   border: ${props => props.themeBorder ? `1px solid ${props.theme.NATURAL_4}` : 'none'};

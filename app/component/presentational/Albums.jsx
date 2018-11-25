@@ -113,7 +113,7 @@ const Albums = ({
     return (
       <div className="d-flex flex-column flex-grow-1 flex-shrink-0 align-items-center justify-content-center">
         <h2>You Need to Be Logged in to View Saved Albums</h2>
-        <Link to="/settings"><Button>Go to Settings</Button></Link>
+        <Link to="/settings" style={{ textDecoration: 'none' }}><Button>Go to Settings</Button></Link>
       </div>
     );
   }

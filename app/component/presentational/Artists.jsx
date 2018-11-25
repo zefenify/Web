@@ -102,7 +102,7 @@ const Artists = ({
     return (
       <div className="d-flex flex-column flex-grow-1 flex-shrink-0 align-items-center justify-content-center">
         <h2>You Need to Be Logged in to View Saved Artists</h2>
-        <Link to="/settings"><Button>Go to Settings</Button></Link>
+        <Link style={{ textDecoration: 'none' }} to="/settings"><Button>Go to Settings</Button></Link>
       </div>
     );
   }

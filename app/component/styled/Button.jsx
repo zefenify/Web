@@ -12,7 +12,7 @@ const Button = styled.button`
   height: 38px;
   color: ${props => props.themeColor ? props.theme.NATURAL_2 : 'hsl(0, 0%, 100%)'};
   transition: transform 250ms;
-  box-shadow: 0 2px 6px ${props => props.theme.SHADOW};
+  box-shadow: ${props => props.noShadow ? 'nine' : `0 2px 6px ${props.theme.SHADOW}`};
 
   &:disabled {
     opacity: 0.25;

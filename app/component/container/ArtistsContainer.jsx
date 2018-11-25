@@ -93,7 +93,7 @@ const ArtistsContainer = ({ match }) => {
 
   const albumPlayPause = (albumId = 'ZEFENIFY') => {
     if (current === null || state.albumPlayingId !== albumId) {
-      const artistIndex = state.artist.findIndex(artist => artist.artist_id === this.props.match.params.id);
+      const artistIndex = state.artist.findIndex(artist => artist.artist_id === match.params.id);
 
       if (artistIndex === -1) {
         return;

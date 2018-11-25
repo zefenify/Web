@@ -1,167 +1,22 @@
 import React from 'react';
 import { shape, bool, number, string, func } from 'prop-types';
-import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
 
 import ImageContainer from '@app/component/styled/ImageContainer';
 import Divider from '@app/component/styled/Divider';
-import Track from '@app/component/presentational/Track';
+import Album from '@app/component/presentational/Album';
 import Button from '@app/component/styled/Button';
 import Share from '@app/component/svg/Share';
 
+
 const ArtistContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-
-  .artist {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 2em;
-
-    &__image {
-      flex: 0 0 200px;
-      height: 200px;
-      width: 200px;
-      border-radius: 50%;
-      border: 1px solid ${props => props.theme.divider};
-    }
-
-    &__info {
-      flex: 1 0 auto;
-      display: flex;
-      flex-direction: column;
-      margin-left: 1em;
-      justify-content: center;
-
-      & > * {
-        margin: 0;
-      }
-
-      & > p:not(:first-child) {
-        color: ${props => props.theme.mute};
-      }
-
-      .play-share {
-        margin-top: 1em;
-      }
-    }
-  }
-
-  .album-list {
-    &__album {
-      margin-top: 2em;
-      padding-bottom: 1px;
-    }
-  }
-
-  .album {
-    &__track-list {
-      margin-top: 2em;
-    }
-  }
-
-  .album-cover {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
+  .ArtistContainer__artist {
     &__cover {
-      width: 150px;
-      height: 150px;
-      flex: 0 0 150px;
-      border-radius: 6px;
-      border: 1px solid ${props => props.theme.divider};
-    }
-
-    &__info {
-      flex: 1 0 auto;
-      padding-left: 1em;
-    }
-  }
-
-  .album-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1 0 auto;
-    max-width: calc(100vw - (350px + 4em));
-
-    &__year {
-      font-size: 1.25em;
-      color: ${props => props.theme.mute};
-      margin: 0;
-    }
-
-    &__name {
-      flex: 0 1 auto;
-      font-size: 3em;
-      font-weight: bold;
-      padding: 0;
-      margin: 0;
-      margin-bottom: 0.25em;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      text-decoration: none;
-      color: inherit;
-    }
-  }
-
-  .track-list {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .appears-container {
-    position: absolute;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 0 1em;
-
-    &__list {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-  }
-
-  .appears-list {
-    &__album {
-      flex: 0 0 25%;
-
-      @media(min-width: 1282px) {
-        flex: 0 0 20%;
-      }
-    }
-  }
-
-  .appears-album {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 0 1em;
-    margin-bottom: 3em;
-    text-decoration: none;
-    color: inherit;
-
-    &__name {
-      font-size: 1.25em;
-      font-weight: bold;
-      margin: 0;
-      margin-top: 0.5em;
-    }
-
-    &__year {
-      padding: 0;
-      margin: 0;
-      margin-top: 0.5em;
-      line-height: 1.25em;
-      color: ${props => props.theme.mute};
+      flex: 0 0 250px;
+      height: 250px;
+      width: 250px;
     }
   }
 `;
@@ -180,7 +35,75 @@ const Arist = ({
   contextMenuAlbum,
   contextMenuTrack,
 }) => (
-  <ArtistContainer>
+  <ArtistContainer className="d-flex flex-column flex-shrink-0">
+    {/* artist info */}
+    <div className="d-flex flex-column align-items-center ArtistContainer__artist">
+      <ImageContainer className="ArtistContainer__artist__cover" borderRadius="50%">
+        <img src={`${BASE_S3}${artist.artist_cover.s3_name}`} alt={artist.artist_name} />
+      </ImageContainer>
+
+      <div className="d-flex flex-column align-items-center">
+        <h1 className="m-0 p-0 mt-3">{ artist.artist_name }</h1>
+
+        <p className="m-0 p-0 mt-2">
+          {`${artist.relationships.album.length} Album${artist.relationships.album.length > 1 ? 's' : ''} • ${trackCount} Song${trackCount > 1 ? 's' : ''}`}
+        </p>
+
+        <div className="d-flex flex-row align-items-center mt-4">
+          <Button className="mr-3" style={{ width: '125px' }} onClick={() => artistPlayPause(artist.artist_id)}>
+            {`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}
+          </Button>
+
+          <Button
+            className="p-0"
+            style={{ backgroundColor: 'transparent', width: '38px' }}
+            themeColor
+            themeBorder
+            noShadow
+            onClick={contextMenuArtist}
+          >
+            <Share />
+          </Button>
+        </div>
+      </div>
+    </div>
+    {/* ./ artist info */}
+
+    {/* artist album */}
+    {
+      artist.relationships.album.length === 0 ? null : (
+        <div className="d-flex flex-column flex-shrink-0 mt-5">
+          <h1 className="m-0 mb-3">{ `Album${artist.relationships.album.length > 1 ? 's' : ''}` }</h1>
+
+          {
+            artist.relationships.album.map(album => (
+              <Album
+                key={album.album_id}
+                albumId={album.album_id}
+                title={album.album_name}
+                year={album.album_year}
+                cover={album.album_cover}
+                artist={album.album_artist}
+                tracks={album.relationships.track}
+                duration={album.duration}
+                current={current}
+                playing={playing}
+                albumPlaying={albumPlayingId === album.album_id}
+                albumPlayPause={() => albumPlayPause(album.album_id)}
+                contextMenuAlbum={() => contextMenuAlbum(album.album_id)}
+                trackPlayPause={trackPlayPause}
+                contextMenuTrack={contextMenuTrack}
+              />
+            ))
+          }
+        </div>
+      )
+    }
+    {/* ./ artist album */}
+  </ArtistContainer>
+);
+
+/*
     <div className="artist">
       <div className="artist__image" style={{ background: `transparent url('${BASE_S3}${artist.artist_cover.s3_name}') 50% 50% / cover no-repeat` }} />
       <div className="artist__info">
@@ -199,6 +122,7 @@ const Arist = ({
         </div>
       </div>
     </div>
+
 
     {
       artist.relationships.album.length === 0 ? null : (
@@ -270,8 +194,7 @@ const Arist = ({
         </div>
       </div>
     }
-  </ArtistContainer>
-);
+    */
 
 Arist.propTypes = {
   artist: shape({}),

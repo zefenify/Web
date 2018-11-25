@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { string, bool, shape } from 'prop-types';
+import React, { useState, useEffect, useContext } from 'react';
+import { string, shape } from 'prop-types';
 import flatten from 'lodash/flatten';
 import cloneDeep from 'lodash/cloneDeep';
 import sortBy from 'lodash/sortBy';
@@ -8,138 +8,123 @@ import uniqBy from 'lodash/uniqBy';
 
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM, CONTEXT_ARTIST } from '@app/redux/constant/contextMenu';
-
+import {
+  CONTEXT_MENU_ON_REQUEST,
+  CONTEXT_TRACK,
+  CONTEXT_ALBUM,
+  CONTEXT_ARTIST,
+} from '@app/redux/constant/contextMenu';
 import trackListSame from '@app/util/trackListSame';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
+import { human } from '@app/util/time';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import store from '@app/redux/store';
-
 import Artist from '@app/component/presentational/Artist';
-import { withContext } from '@app/component/context/context';
+import { Context } from '@app/component/context/context';
 
-class ArtistContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      artist: null,
-      trackCount: 0,
-      tracksFlatten: [], // all tracks in artist album flattened
-      albumPlayingId: '', // controls queue set on album play
-      aristPlaying: false, // checks the current queueInitial is filled with artists track [flat]
+
+let requestCancel = null;
+
+const ArtistContainer = ({ match }) => {
+  const {
+    current,
+    playing,
+    user,
+    queueInitial,
+  } = useContext(Context);
+  const [state, setState] = useState({
+    artist: null,
+    trackCount: 0,
+    trackFlatten: [], // all tracks in artist album flattened
+    albumPlayingId: '', // controls queue set on album play
+    aristPlaying: false, // checks the current queueInitial is filled with artists track [flat]
+  });
+
+  useEffect(() => {
+    store.dispatch(loading(true));
+
+    api(`${BASE}artist/${match.params.id}`, user, (cancel) => {
+      requestCancel = cancel;
+    }).then(({ data, included }) => {
+      store.dispatch(loading(false));
+
+      // sorting by `album.album_year` [ascending order] -> reversing
+      const albumList = reverse(sortBy(data.relationships.album.map((albumId) => {
+        const album = cloneDeep(included.album[albumId]);
+        album.album_artist = album.album_artist.map(artistId => included.artist[artistId]);
+        album.relationships.track = track(album.relationships.track.map(trackId => included.track[trackId]), included);
+        album.album_cover = included.s3[album.album_cover];
+        album.duration = human(album.relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
+
+        return album;
+      }), album => album.album_year));
+
+      const trackList = uniqBy(track(data.relationships.track.map(trackId => included.track[trackId]), included), _track => _track.track_album.album_id);
+      const trackFlatten = flatten(albumList.map(album => album.relationships.track));
+
+      let albumPlayingId = '';
+      albumList.forEach((album) => {
+        if (trackListSame(queueInitial, album.relationships.track) === true) {
+          albumPlayingId = album.album_id;
+        }
+      });
+
+      setState(Object.assign(state, {
+        artist: Object.assign({}, data, {
+          artist_cover: included.s3[data.artist_cover],
+          relationships: {
+            album: albumList,
+            track: trackList,
+          },
+        }),
+        trackFlatten,
+        trackCount: trackFlatten.length,
+        aristPlaying: trackListSame(queueInitial, trackFlatten),
+        albumPlayingId,
+      }));
+    }, error(store));
+
+    return () => {
+      store.dispatch(loading(false));
+      requestCancel();
     };
+  }, [user, match.params.id]);
 
-    this.artistPlayPause = this.artistPlayPause.bind(this);
-    this.trackPlayPause = this.trackPlayPause.bind(this);
-    this.albumPlayPause = this.albumPlayPause.bind(this);
-    this.contextMenuArtist = this.contextMenuArtist.bind(this);
-    this.contextMenuAlbum = this.contextMenuAlbum.bind(this);
-    this.contextMenuTrack = this.contextMenuTrack.bind(this);
-    this.afterFetch = this.afterFetch.bind(this);
-  }
-
-  componentDidMount() {
-    store.dispatch(loading(true));
-    api(`${BASE}artist/${this.props.match.params.id}`, this.props.user, (cancel) => {
-      this.cancelRequest = cancel;
-    }).then((data) => {
-      store.dispatch(loading(false));
-      this.afterFetch(data);
-    }, error(store));
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id === this.props.match.params.id) {
-      return;
-    }
-
-    store.dispatch(loading(true));
-    api(`${BASE}artist/${nextProps.match.params.id}`, this.props.user, (cancel) => {
-      this.cancelRequest = cancel;
-    }).then((data) => {
-      store.dispatch(loading(false));
-      this.afterFetch(data);
-    }, error(store));
-  }
-
-  componentWillUnmount() {
-    store.dispatch(loading(false));
-    this.cancelRequest();
-  }
-
-  afterFetch({ data, included }) {
-    const { queueInitial } = store.getState();
-
-    // sorting by `album.album_year` [ascending order] -> reversing
-    const albums = reverse(sortBy(data.relationships.album.map((albumId) => {
-      const album = cloneDeep(included.album[albumId]);
-      album.album_artist = album.album_artist.map(artistId => included.artist[artistId]);
-      album.relationships.track = track(album.relationships.track.map(trackId => included.track[trackId]), included);
-      album.album_cover = included.s3[album.album_cover];
-
-      return album;
-    }), album => album.album_year));
-
-    const tracks = uniqBy(track(data.relationships.track.map(trackId => included.track[trackId]), included), t => t.track_album.album_id);
-    const tracksFlatten = flatten(albums.map(album => album.relationships.track));
-
-    let albumPlayingId = '';
-    albums.forEach((album) => {
-      if (trackListSame(queueInitial, album.relationships.track) === true) {
-        albumPlayingId = album.album_id;
-      }
-    });
-
-    this.setState(() => ({
-      artist: Object.assign({}, data, {
-        artist_cover: included.s3[data.artist_cover],
-        relationships: {
-          album: albums,
-          track: tracks,
-        },
-      }),
-      tracksFlatten,
-      trackCount: tracksFlatten.length,
-      aristPlaying: trackListSame(queueInitial, tracksFlatten),
-      albumPlayingId,
-    }));
-  }
-
-  artistPlayPause() {
-    if (this.state.artist === null || this.state.tracksFlatten.length === 0) {
+  const artistPlayPause = () => {
+    if (state.artist === null || state.trackFlatten.length === 0) {
       return;
     }
 
     // booting playlist...
-    if (this.props.current === null || this.state.aristPlaying === false) {
+    if (current === null || state.aristPlaying === false) {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: this.state.tracksFlatten[0],
-          queue: this.state.tracksFlatten,
-          queueInitial: this.state.tracksFlatten,
+          play: state.trackFlatten[0],
+          queue: state.trackFlatten,
+          queueInitial: state.trackFlatten,
         },
       });
 
-      this.setState(() => ({
+      setState(Object.assign(state, {
         albumPlayingId: '',
         aristPlaying: true,
       }));
 
-      store.dispatch(urlCurrentPlaying(this.props.match.url));
-      // resuming / pausing playlist
-    } else if (this.props.current !== null) {
+      store.dispatch(urlCurrentPlaying(match.url));
+      // resuming / pausing playlist i.e. state.aristPlaying === true
+    } else if (current !== null) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
     }
-  }
+  };
 
-  albumPlayPause(albumId) {
-    if (this.props.current === null || this.state.albumPlayingId !== albumId) {
-      const albumIndex = this.state.artist.relationships.album.findIndex(album => album.album_id === albumId);
+  const albumPlayPause = (albumId = 'ZEFENIFY') => {
+    if (current === null || state.albumPlayingId !== albumId) {
+      const albumIndex = state.artist.relationships.album.findIndex(album => album.album_id === albumId);
 
       if (albumIndex === -1) {
         return;
@@ -148,31 +133,31 @@ class ArtistContainer extends Component {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: this.state.artist.relationships.album[albumIndex].relationships.track[0],
-          queue: this.state.artist.relationships.album[albumIndex].relationships.track,
-          queueInitial: this.state.artist.relationships.album[albumIndex].relationships.track,
+          play: state.artist.relationships.album[albumIndex].relationships.track[0],
+          queue: state.artist.relationships.album[albumIndex].relationships.track,
+          queueInitial: state.artist.relationships.album[albumIndex].relationships.track,
         },
       });
 
-      this.setState(() => ({
+      setState(Object.assign(state, {
         albumPlayingId: albumId,
-        aristPlaying: trackListSame(this.state.artist.relationships.album[albumIndex].relationships.track, this.state.tracksFlatten),
+        aristPlaying: trackListSame(state.artist.relationships.album[albumIndex].relationships.track, state.trackFlatten),
       }));
 
-      store.dispatch(urlCurrentPlaying(this.props.match.url));
+      store.dispatch(urlCurrentPlaying(match.url));
 
       return;
     }
 
-    if (this.state.albumPlayingId === albumId) {
+    if (state.albumPlayingId === albumId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
     }
-  }
+  };
 
-  trackPlayPause(trackId) {
-    if (this.props.current !== null && this.props.current.track_id === trackId) {
+  const trackPlayPause = (trackId = 'ZEFENIFY') => {
+    if (current !== null && current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -180,37 +165,37 @@ class ArtistContainer extends Component {
       return;
     }
 
-    const trackIndex = this.state.tracksFlatten.findIndex(t => t.track_id === trackId);
+    const trackIndex = state.trackFlatten.findIndex(_track => _track.track_id === trackId);
 
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.tracksFlatten[trackIndex],
-        queue: this.state.tracksFlatten,
-        queueInitial: this.state.tracksFlatten,
+        play: state.trackFlatten[trackIndex],
+        queue: state.trackFlatten,
+        queueInitial: state.trackFlatten,
       },
     });
 
-    this.setState(() => ({
+    setState(Object.assign(state, {
       albumPlayingId: '',
       aristPlaying: true,
     }));
 
-    store.dispatch(urlCurrentPlaying(this.props.match.url));
-  }
+    store.dispatch(urlCurrentPlaying(match.url));
+  };
 
-  contextMenuArtist() {
+  const contextMenuArtist = () => {
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_ARTIST,
-        payload: this.state.artist,
+        payload: state.artist,
       },
     });
-  }
+  };
 
-  contextMenuAlbum(albumId) {
-    const albumIndex = this.state.artist.relationships.album.findIndex(album => album.album_id === albumId);
+  const contextMenuAlbum = (albumId = 'ZEFENIFY') => {
+    const albumIndex = state.artist.relationships.album.findIndex(album => album.album_id === albumId);
 
     if (albumIndex === -1) {
       return;
@@ -220,13 +205,13 @@ class ArtistContainer extends Component {
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_ALBUM,
-        payload: this.state.artist.relationships.album[albumIndex],
+        payload: state.artist.relationships.album[albumIndex],
       },
     });
-  }
+  };
 
-  contextMenuTrack(trackId) {
-    const trackIndex = this.state.tracksFlatten.findIndex(t => t.track_id === trackId);
+  const contextMenuTrack = (trackId = 'ZEFENIFY') => {
+    const trackIndex = state.trackFlatten.findIndex(_track => _track.track_id === trackId);
 
     if (trackIndex === -1) {
       return;
@@ -236,52 +221,40 @@ class ArtistContainer extends Component {
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_TRACK,
-        payload: this.state.tracksFlatten[trackIndex],
+        payload: state.trackFlatten[trackIndex],
       },
     });
+  };
+
+  if (state.artist === null) {
+    return null;
   }
 
-  render() {
-    if (this.state.artist === null) {
-      return null;
-    }
-
-    return (
-      <Artist
-        artist={this.state.artist}
-        current={this.props.current}
-        playing={this.props.playing}
-        trackCount={this.state.trackCount}
-        albumPlayingId={this.state.albumPlayingId}
-        aristPlaying={this.state.aristPlaying}
-        artistPlayPause={this.artistPlayPause}
-        trackPlayPause={this.trackPlayPause}
-        albumPlayPause={this.albumPlayPause}
-        contextMenuArtist={this.contextMenuArtist}
-        contextMenuAlbum={this.contextMenuAlbum}
-        contextMenuTrack={this.contextMenuTrack}
-      />
-    );
-  }
-}
+  return (
+    <Artist
+      artist={state.artist}
+      current={current}
+      playing={playing}
+      trackCount={state.trackCount}
+      albumPlayingId={state.albumPlayingId}
+      aristPlaying={state.aristPlaying}
+      artistPlayPause={artistPlayPause}
+      trackPlayPause={trackPlayPause}
+      albumPlayPause={albumPlayPause}
+      contextMenuArtist={contextMenuArtist}
+      contextMenuAlbum={contextMenuAlbum}
+      contextMenuTrack={contextMenuTrack}
+    />
+  );
+};
 
 ArtistContainer.propTypes = {
-  current: shape({}),
-  playing: bool,
   match: shape({
     url: string,
     params: shape({
       id: string,
     }),
   }).isRequired,
-  user: shape({}),
 };
 
-ArtistContainer.defaultProps = {
-  current: null,
-  playing: false,
-  user: null,
-};
-
-// export default withContext('current', 'playing', 'user')(ArtistContainer);
 export default ArtistContainer;

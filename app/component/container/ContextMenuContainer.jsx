@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { withRouter } from 'react-router';
 
 import store from '@app/redux/store';
 import { CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
 import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST } from '@app/redux/constant/song';
 import { queueNextAdd, queueNextRemove } from '@app/redux/action/queueNext';
-
 import ContextMenu from '@app/component/presentational/ContextMenu';
-import { withContext } from '@app/component/context/context';
+import { Context } from '@app/component/context/context';
 
 const contextMenuClose = () => {
   const { contextMenu } = store.getState();
@@ -43,14 +42,28 @@ const _queueNextRemove = (queueNextIndex) => {
   store.dispatch(queueNextRemove(queueNextIndex));
 };
 
-const ContextMenuContainer = props => (<ContextMenu
-  {...props}
-  contextMenuClose={contextMenuClose}
-  songSave={songSave}
-  songRemove={songRemove}
-  queueNextAdd={_queueNextAdd}
-  queueNextRemove={_queueNextRemove}
-/>);
+const ContextMenuContainer = (props) => {
+  const {
+    contextMenu,
+    user,
+    song,
+    queueNext,
+  } = useContext(Context);
 
-// export default withRouter(withContext('contextMenu', 'user', 'song', 'queueNext')(ContextMenuContainer));
+  return (
+    <ContextMenu
+      queueNext={queueNext}
+      song={song}
+      user={user}
+      contextMenu={contextMenu}
+      contextMenuClose={contextMenuClose}
+      songSave={songSave}
+      songRemove={songRemove}
+      queueNextAdd={_queueNextAdd}
+      queueNextRemove={_queueNextRemove}
+      {...props}
+    />
+  );
+};
+
 export default withRouter(ContextMenuContainer);

@@ -1,85 +1,51 @@
 import React from 'react';
-import { bool, number, string, arrayOf, shape, func } from 'prop-types';
+import {
+  bool,
+  number,
+  string,
+  arrayOf,
+  shape,
+  func,
+} from 'prop-types';
 import styled from 'react-emotion';
 
 import { BASE_S3 } from '@app/config/api';
-
 import Button from '@app/component/styled/Button';
 import Share from '@app/component/svg/Share';
-import Divider from '@app/component/styled/Divider';
 import Track from '@app/component/presentational/Track';
+import ImageContainer from '@app/component/styled/ImageContainer';
+
 
 const HeaderTracksContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-`;
+  .HeaderTracksContainer__header {
+    flex: 0 0 250px;
 
-const Header = styled.div`
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 2em;
-
-  .image {
-    flex: 0 0 200px;
-    height: 200px;
-    width: 200px;
-    border-radius: 6px;
-    border: 1px solid ${props => props.theme.divider};
+    img {
+      height: 250px;
+      width: 250px;
+    }
   }
 
-  .info {
-    margin-left: 1em;
-  }
-
-  .info-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: calc(100vw - (400px + 5em));
-
+  .HeaderTracksContainer {
     &__type {
-      margin: 0;
-      text-transform: uppercase;
+      text-transform: capitalize;
+      color: ${props => props.theme.NATURAL_4};
     }
 
     &__title {
-      flex: 1 0 auto;
-      text-transform: capitalize;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      margin: 0;
+      color: ${props => props.theme.NATURAL_2};
     }
 
     &__description {
-      margin: 0;
-      font-size: 1.2em;
-      line-height: 1.25em;
-      color: ${props => props.theme.mute};
+      color: ${props => props.theme.NATURAL_3};
     }
 
     &__duration {
-      margin: 0;
-      margin-top: 0.25em;
-      color: ${props => props.theme.mute};
-    }
-
-    .play-share {
-      margin-top: 1em;
+      color: ${props => props.theme.NATURAL_4};
     }
   }
 `;
 
-const Tracks = styled.div`
-  flex: 1 0 auto;
-
-  & > *:last-child {
-    margin-bottom: 1px;
-  }
-`;
 
 const HeaderTracks = ({
   type,
@@ -96,27 +62,36 @@ const HeaderTracks = ({
   contextMenuPlaylist,
   contextMenuTrack,
 }) => {
-  const { hours, minutes, seconds } = duration;
+  const { hour, minute, second } = duration;
 
   return (
-    <HeaderTracksContainer>
-      <Header>
-        <div className="image" style={{ background: `transparent url('${BASE_S3}${cover.s3_name}') 50% 50% / cover no-repeat` }} />
-        <div className="info info-container">
-          <p className="info-container__type">{type}</p>
-          <h1 className="info-container__title">{title}</h1>
-          <p className="info-container__description">{description}</p>
-          <p className="info-container__duration">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hours > 0 ? `${hours} hr` : ''} ${minutes} min ${hours > 0 ? '' : `${seconds} sec`}`}</p>
-          <div className="play-share">
-            <Button className="play-share__play-big" onClick={tracksPlayPause}>{`${tracksPlaying ? 'PAUSE' : 'PLAY'}`}</Button>
-            <Button className="play-share__share" border themeColor backgroundColor="transparent" padding="0" onClick={contextMenuPlaylist}><Share /></Button>
-          </div>
+    <HeaderTracksContainer className="d-flex flex-row flex-shrink-0">
+      <div className="HeaderTracksContainer__header mb-5">
+        <ImageContainer borderRadius="6px">
+          <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
+        </ImageContainer>
+
+        <div className="d-flex flex-row justify-content-center mt-4">
+          <Button className="mr-3" style={{ width: '125px' }} onClick={tracksPlayPause}>{`${tracksPlaying ? 'PAUSE' : 'PLAY'}`}</Button>
+          <Button
+            className="p-0"
+            style={{ backgroundColor: 'transparent', width: '38px' }}
+            themeColor
+            themeBorder
+            noShadow
+            onClick={contextMenuPlaylist}
+          >
+            <Share />
+          </Button>
         </div>
-      </Header>
+      </div>
 
-      <Divider />
+      <div className="d-flex flex-column flex-grow-1" style={{ paddingLeft: '2rem' }}>
+        <h3 className="m-0 p-0 HeaderTracksContainer__type">{ type }</h3>
+        <h1 className="m-0 p-0 mt-1 HeaderTracksContainer__title">{ title }</h1>
+        <p className="m-0 p-0 mt-2 HeaderTracksContainer__description">{ description }</p>
+        <p className="m-0 p-0 my-2 HeaderTracksContainer__duration">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hour > 0 ? `${hour} hr` : ''} ${minute} min ${hour > 0 ? '' : `${second} sec`}`}</p>
 
-      <Tracks>
         {
           tracks.map((track, index) => (
             <Track
@@ -134,7 +109,7 @@ const HeaderTracks = ({
             />
           ))
         }
-      </Tracks>
+      </div>
     </HeaderTracksContainer>
   );
 };

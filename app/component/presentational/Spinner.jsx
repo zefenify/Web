@@ -31,8 +31,8 @@ const SpinnerContainer = styled.div`
     color: ${props => props.theme.PRIMARY_4};
   }
 
-  &.active .__double-bounce1,
-  &.active .__double-bounce2 {
+  &.active .SpinnerContainer__double-bounce1,
+  &.active .SpinnerContainer__double-bounce2 {
     position: absolute;
     right: 0;
     width: 24px;
@@ -43,7 +43,7 @@ const SpinnerContainer = styled.div`
     animation: ${bounce} 2.0s infinite ease-in-out;
   }
 
-  &.active .__double-bounce2 {
+  &.active .SpinnerContainer__double-bounce2 {
     animation-delay: -1.0s;
   }
 `;
@@ -52,8 +52,8 @@ const SpinnerContainer = styled.div`
 function Spinner({ loading }) {
   return (
     <SpinnerContainer className={loading ? 'active' : ''}>
-      <div className="__double-bounce1" />
-      <div className="__double-bounce2" />
+      <div className="SpinnerContainer__double-bounce1" />
+      <div className="SpinnerContainer__double-bounce2" />
     </SpinnerContainer>
   );
 }

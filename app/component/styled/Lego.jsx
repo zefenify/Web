@@ -17,11 +17,12 @@ export const WolfColaContainer = styled.div`
   opacity: 1;
   filter: blur(0px);
   transform: scale3d(1, 1, 1);
-  transition: transform 256ms, filter 0ms, opacity 256ms;
-  will-change: transform, filter, opacity;
+  transition: transform 256ms;
 
   &.context-menu-active {
     opacity: 0.92;
+    /* firefox chokes on blur */
+    /* even only setting -webkit flag on fliter, Firefox picks it up */
     filter: blur(4px);
     transform: scale3d(0.96, 0.96, 1);
   }

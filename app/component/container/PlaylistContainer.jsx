@@ -1,130 +1,111 @@
-import React, { Component } from 'react';
-import { bool, string, shape } from 'prop-types';
+import React, { useState, useEffect, useContext } from 'react';
+import { string, shape } from 'prop-types';
 
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
-import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import trackListSame from '@app/util/trackListSame';
 import { human } from '@app/util/time';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
-
-import HeaderTracks from '@app/component/presentational/HeaderTracks';
-
-import { loading } from '@app/redux/action/loading';
 import store from '@app/redux/store';
-import { withContext } from '@app/component/context/context';
+import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
+import { loading } from '@app/redux/action/loading';
+import HeaderTracks from '@app/component/presentational/HeaderTracks';
+import { Context } from '@app/component/context/context';
 
-class PlaylistContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      featured: null,
-      duration: {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      },
-      playingFeatured: false,
-      playlistId: props.match.params.id,
-    };
 
-    this.tracksPlayPause = this.tracksPlayPause.bind(this);
-    this.trackPlayPause = this.trackPlayPause.bind(this);
-    this.contextMenuPlaylist = this.contextMenuPlaylist.bind(this);
-    this.contextMenuTrack = this.contextMenuTrack.bind(this);
-    this.build = this.build.bind(this);
-  }
+let requestCancel = () => {};
 
-  componentDidMount() {
-    this.build();
-  }
+const PlaylistContainer = ({ match }) => {
+  const {
+    current,
+    playing,
+    user,
+    queueInitial,
+  } = useContext(Context);
+  const [state, setState] = useState({
+    featured: null,
+    duration: {
+      hour: 0,
+      minute: 0,
+      second: 0,
+    },
+    playingFeatured: false,
+    playlistId: match.params.id || '',
+  });
 
-  componentDidUpdate(previousProps, previousState) {
-    if (previousState.playlistId !== this.state.playlistId) {
-      this.build();
-    }
-  }
-
-  componentWillUnmount() {
-    store.dispatch(loading(false));
-    this.cancelRequest();
-  }
-
-  build() {
+  useEffect(() => {
     store.dispatch(loading(true));
-    api(`${BASE}playlist/${this.props.match.params.id}`, this.props.user, (cancel) => {
-      this.cancelRequest = cancel;
-    }).then((data) => {
+
+    api(`${BASE}playlist/${match.params.id}`, user, (cancel) => {
+      requestCancel = cancel;
+    }).then(({ data, included }) => {
       store.dispatch(loading(false));
       // mapping track...
-      const playlistTrack = Object.assign({}, data.data, {
-        playlist_track: data.data.playlist_track.map(trackId => data.included.track[trackId]),
+      const playlistTrack = Object.assign({}, data, {
+        playlist_track: data.playlist_track.map(trackId => included.track[trackId]),
       });
-      const tracks = track(playlistTrack.playlist_track, data.included);
 
-      this.setState(() => ({
-        featured: Object.assign({}, data.data, {
-          playlist_cover: data.included.s3[data.data.playlist_cover],
-          playlist_track: tracks,
+      const trackList = track(playlistTrack.playlist_track, included);
+
+      setState(Object.assign(state, {
+        featured: Object.assign({}, data, {
+          playlist_cover: included.s3[data.playlist_cover],
+          playlist_track: trackList,
         }),
-        duration: human(tracks.reduce((totalD, t) => totalD + t.track_track.s3_meta.duration, 0), true),
-      }), () => {
-        const { queueInitial } = store.getState();
+        duration: human(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
+      }));
 
-        if (queueInitial.length === 0 || this.state.featured.playlist_track.length === 0) {
-          this.setState(() => ({
-            playingFeatured: false,
-          }));
+      if (queueInitial.length === 0 || state.featured.playlist_track.length === 0) {
+        setState(Object.assign(state, {
+          playingFeatured: false,
+        }));
 
-          return;
-        }
+        return;
+      }
 
-        if (trackListSame(this.state.featured.playlist_track, queueInitial)) {
-          this.setState(() => ({
-            playingFeatured: true,
-          }));
-        } else {
-          this.setState(() => ({
-            playingFeatured: false,
-          }));
-        }
-      });
+      setState(Object.assign(state, {
+        playingFeatured: trackListSame(state.featured.playlist_track, queueInitial),
+      }));
     }, error(store));
-  }
 
-  tracksPlayPause() {
-    if (this.state.featured === null) {
+    return () => {
+      requestCancel();
+    };
+  }, [user, match.params.id]);
+
+  const tracksPlayPause = () => {
+    if (state.featured === null) {
       return;
     }
 
     // booting playlist
-    if (this.props.current === null || this.state.playingFeatured === false) {
+    if (current === null || state.playingFeatured === false) {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: this.state.featured.playlist_track[0],
-          queue: this.state.featured.playlist_track,
-          queueInitial: this.state.featured.playlist_track,
+          play: state.featured.playlist_track[0],
+          queue: state.featured.playlist_track,
+          queueInitial: state.featured.playlist_track,
         },
       });
 
-      this.setState(() => ({
+      setState(Object.assign(state, {
         playingFeatured: true,
       }));
 
-      store.dispatch(urlCurrentPlaying(this.props.match.url));
+      store.dispatch(urlCurrentPlaying(match.url));
       // resuming / pausing playlist
-    } else if (this.props.current !== null) {
+    } else if (current !== null) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
     }
-  }
+  };
 
-  trackPlayPause(trackId) {
-    if (this.props.current !== null && this.props.current.track_id === trackId) {
+  const trackPlayPause = (trackId) => {
+    if (current !== null && current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -132,7 +113,7 @@ class PlaylistContainer extends Component {
       return;
     }
 
-    const trackIdIndex = this.state.featured.playlist_track.findIndex(t => t.track_id === trackId);
+    const trackIdIndex = state.featured.playlist_track.findIndex(_track => _track.track_id === trackId);
 
     if (trackIdIndex === -1) {
       return;
@@ -141,31 +122,31 @@ class PlaylistContainer extends Component {
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: this.state.featured.playlist_track[trackIdIndex],
-        queue: this.state.featured.playlist_track,
-        queueInitial: this.state.featured.playlist_track,
+        play: state.featured.playlist_track[trackIdIndex],
+        queue: state.featured.playlist_track,
+        queueInitial: state.featured.playlist_track,
       },
     });
 
-    this.setState(() => ({
+    setState(Object.assign(state, {
       playingFeatured: true,
     }));
 
-    store.dispatch(urlCurrentPlaying(this.props.match.url));
-  }
+    store.dispatch(urlCurrentPlaying(match.url));
+  };
 
-  contextMenuPlaylist() {
+  const contextMenuPlaylist = () => {
     store.dispatch({
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_PLAYLIST,
-        payload: this.state.featured,
+        payload: state.featured,
       },
     });
-  }
+  };
 
-  contextMenuTrack(trackId) {
-    const trackIndex = this.state.featured.playlist_track.findIndex(t => t.track_id === trackId);
+  const contextMenuTrack = (trackId = 'ZEFENIFY') => {
+    const trackIndex = state.featured.playlist_track.findIndex(_track => _track.track_id === trackId);
 
     if (trackIndex === -1) {
       return;
@@ -175,50 +156,35 @@ class PlaylistContainer extends Component {
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_TRACK,
-        payload: this.state.featured.playlist_track[trackIndex],
+        payload: state.featured.playlist_track[trackIndex],
       },
     });
-  }
+  };
 
-  render() {
-    if (this.state.featured === null) {
-      return null;
-    }
-
-    return (
-      <HeaderTracks
-        type={this.props.match.params.type}
-        current={this.props.current}
-        playing={this.props.playing}
-        tracksPlaying={this.props.playing && this.state.playingFeatured}
-        duration={this.state.duration}
-        tracksPlayPause={this.tracksPlayPause}
-        trackPlayPause={this.trackPlayPause}
-        title={this.state.featured.playlist_name}
-        description={this.state.featured.playlist_description}
-        cover={this.state.featured.playlist_cover}
-        tracks={this.state.featured.playlist_track}
-        contextMenuPlaylist={this.contextMenuPlaylist}
-        contextMenuTrack={this.contextMenuTrack}
-      />
-    );
-  }
-}
-
-PlaylistContainer.getDerivedStateFromProps = (nextProps, prevState) => {
-  if (nextProps.match.params.id === prevState.playlistId) {
+  if (state.featured === null) {
     return null;
   }
 
-  return {
-    playlistId: nextProps.match.params.id,
-  };
+  return (
+    <HeaderTracks
+      type={match.params.type}
+      current={current}
+      playing={playing}
+      tracksPlaying={playing && state.playingFeatured}
+      duration={state.duration}
+      tracksPlayPause={tracksPlayPause}
+      trackPlayPause={trackPlayPause}
+      title={state.featured.playlist_name}
+      description={state.featured.playlist_description}
+      cover={state.featured.playlist_cover}
+      tracks={state.featured.playlist_track}
+      contextMenuPlaylist={contextMenuPlaylist}
+      contextMenuTrack={contextMenuTrack}
+    />
+  );
 };
 
 PlaylistContainer.propTypes = {
-  current: shape({}),
-  playing: bool,
-  user: shape({}),
   match: shape({
     url: string,
     params: shape({
@@ -227,11 +193,4 @@ PlaylistContainer.propTypes = {
   }).isRequired,
 };
 
-PlaylistContainer.defaultProps = {
-  current: null,
-  playing: false,
-  user: null,
-};
-
-// export default withContext('current', 'playing', 'user', 'urlCurrentPlaying')(PlaylistContainer);
 export default PlaylistContainer;

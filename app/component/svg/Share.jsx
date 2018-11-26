@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Share = () => (
+const Share = props => (
   <svg
     width="24"
     height="24"
@@ -10,6 +10,7 @@ const Share = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <circle cx="12" cy="12" r="1" />
     <circle cx="20" cy="12" r="1" />

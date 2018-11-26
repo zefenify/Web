@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SkipBack = () => (
+const SkipBack = props => (
   <svg
     width="24"
     height="24"
@@ -10,6 +10,7 @@ const SkipBack = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <polygon points="19 20 9 12 19 4 19 20" fill="currentColor" />
     <line x1="5" y1="19" x2="5" y2="5" />

@@ -4,6 +4,7 @@ import { func, number } from 'prop-types';
 const Volume = ({
   onClick,
   volume,
+  ...props
 }) => (
   <svg
     width="24"
@@ -15,6 +16,7 @@ const Volume = ({
     strokeLinecap="round"
     strokeLinejoin="round"
     onClick={onClick}
+    {...props}
   >
     {
       volume > 0.6 ?

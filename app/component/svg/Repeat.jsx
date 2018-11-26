@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Repeat = () => (
+const Repeat = props => (
   <svg
     width="24"
     height="24"
@@ -10,6 +10,7 @@ const Repeat = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <polyline points="17 1 21 5 17 9" />
     <path d="M3 11V9a4 4 0 0 1 4-4h14" />

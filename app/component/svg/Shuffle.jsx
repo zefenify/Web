@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Shuffle = () => (
+const Shuffle = props => (
   <svg
     width="24"
     height="24"
@@ -10,6 +10,7 @@ const Shuffle = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <polyline points="16 3 21 3 21 8" />
     <line x1="4" y1="20" x2="21" y2="3" />

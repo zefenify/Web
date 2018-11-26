@@ -363,10 +363,6 @@ injectGlobal`
     display: flex !important;
   }
 
-  .d-inline-flex {
-    display: inline-flex !important;
-  }
-
   .flex-row {
     flex-direction: row !important;
   }

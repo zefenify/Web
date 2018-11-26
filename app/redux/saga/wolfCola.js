@@ -191,8 +191,16 @@ const tracker = () => {
     trackerInProgress = true;
 
     while (wolfCola[wolfCola.playingKey] !== null && wolfCola[wolfCola.playingKey].playing()) {
-      // current playback progress
-      yield put(playbackPosition(wolfCola[wolfCola.playingKey].seek()));
+      const seek = wolfCola[wolfCola.playingKey].seek();
+
+      if (typeof seek === 'number') {
+        yield put(playbackPosition(wolfCola[wolfCola.playingKey].seek()));
+      } else {
+        // ANC:
+        // on object is fired at song boot time
+        // this shouldn't happen. this is a monkey patch
+        yield put(playbackPosition(0));
+      }
 
       if (wolfCola.crossfadeInProgress === false) {
         const state = yield select();

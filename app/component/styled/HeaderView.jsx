@@ -31,6 +31,7 @@ const HeaderView = styled.div`
     left: 0;
     display: flex;
     flex-direction: row;
+    align-items: start;
     flex-wrap: wrap;
     overflow-y: auto;
     padding: 1rem 1rem 0 1rem;

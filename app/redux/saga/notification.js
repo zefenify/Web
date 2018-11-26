@@ -13,7 +13,7 @@ function* _notificationOn(action) {
   yield call(delay, 500); // that's for the DOM animation to complete (if there was a previous one)
 
   const NotificationContainer = document.querySelector('#notification-container');
-  NotificationContainer.classList.add('notification-active');
+  NotificationContainer.classList.add('active');
 
   yield call(delay, NOTIFICATION_DURATION);
   yield put({
@@ -24,7 +24,7 @@ function* _notificationOn(action) {
 
 function* _notificationOff() {
   const NotificationContainer = document.querySelector('#notification-container');
-  NotificationContainer.classList.remove('notification-active');
+  NotificationContainer.classList.remove('active');
 
   yield call(delay, 500);
   yield put(notification(null));

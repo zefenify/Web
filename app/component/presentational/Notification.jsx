@@ -17,24 +17,23 @@ const NotificationContainer = styled.div`
   padding: 0.5em 1em;
   transform: translate3d(0, -128px, 0);
   transition: transform 500ms;
-  will-change: transform;
 
-  .message {
+  .NotificationContainer__message {
     flex: 1 0 auto;
-    color: #ffffff;
+    color: hsl(0, 0%, 100%);
   }
 
-  .close-button {
+  .NotificationContainer__close-button {
     width: 24px;
     height: 24px;
     flex: 0 0 auto;
 
     svg {
-      stroke: #ffffff;
+      stroke: hsl(0, 0%, 100%);
     }
   }
 
-  &.notification-active {
+  &.active {
     transform: translate3d(0, 0, 0);
   }
 `;
@@ -44,8 +43,8 @@ const Notification = ({
   close,
 }) => (
   <NotificationContainer id="notification-container">
-    <div className="message">{ notification === null ? null : notification.message }</div>
-    <ClearButton className="close-button" onClick={close}><Close strokeWidth="1" /></ClearButton>
+    <div className="NotificationContainer__message">{ notification === null ? null : notification.message }</div>
+    <ClearButton className="NotificationContainer__close-button" onClick={close}><Close strokeWidth="1" /></ClearButton>
   </NotificationContainer>
 );
 

@@ -20,6 +20,7 @@ import ContextOverlayContainer from '@app/component/container/ContextOverlayCont
 import SpaceContainer from '@app/component/container/SpaceContainer';
 import { Context } from '@app/component/context/context';
 import Mobile from '@app/component/presentational/Mobile';
+import ControlContainer from '@app/component/container/ControlContainer';
 import HomeContainer from '@app/component/container/HomeContainer';
 import SettingsContainer from '@app/component/container/SettingsContainer';
 import PlaylistContainer from '@app/component/container/PlaylistContainer';
@@ -139,7 +140,7 @@ const WolfCola = () => {
                 </MainContainer>
               </NavigationMainContainer>
 
-              <ControlsContainer />
+              <ControlContainer />
             </WolfColaContainer>
 
             <Mobile />

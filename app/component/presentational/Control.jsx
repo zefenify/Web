@@ -18,171 +18,83 @@ import PlayPause from '@app/component/svg/PlayPause';
 import Volume from '@app/component/svg/Volume';
 import List from '@app/component/svg/List';
 
+
 const ControlsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 70px;
-  background-color: ${props => props.theme.control__backgroundColor};
-  color: ${props => props.theme.control__color};
-`;
+  height: 90px;
+  background-color: ${props => props.theme.BACKGROUND_CONTROL};
+  color: ${props => props.theme.NATURAL_2};
 
-const NowPlayingContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 250px;
-  padding-left: 6px;
+  .ControlsContainer {
+    &__queue {
+      cursor: pointer;
+      text-decoration: none;
+      color: ${props => props.theme.NATURAL_2};
+    }
 
-  .track {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 250px;
+    &__now-playing {
+      width: 250px;
+    }
 
     &__artwork {
       width: 60px;
       height: 60px;
       border-radius: 2px;
       text-decoration: none;
+      border: 1px solid ${props => props.theme.NATURAL_7};
     }
 
-    &__name {
-      padding-left: 6px;
-      width: 184px;
+    &__track-name {
+      color: ${props => props.theme.NATURAL_2};
     }
-  }
 
-  .track-name {
-    display: flex;
-    flex-direction: column;
-
-    &__name,
     &__artist {
-      padding: 0;
-      margin: 0;
-      width: 184px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      color: ${props => props.theme.NATURAL_4};
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
     }
 
-    &__name {
-      margin-bottom: 0.5em;
-      color: ${props => props.theme.control__color};
+    &__control {
+      height: 40px;
+
+      & > div {
+        position: relative;
+        padding: 0 1.5rem;
+      }
     }
 
-    &__artist a {
-      color: ${props => props.theme.control__color_mute};
-      text-decoration: none;
-    }
-  }
-`;
-
-const MusicControlsContainer = styled.div`
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-`;
-
-const MusicControls = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  font-size: 1.75em;
-  padding-top: 0.5em;
-
-  .control {
-    position: relative;
-    display: flex;
-    transition: transform 256ms;
-    will-change: transform;
-
-    &_active {
-      color: ${props => props.theme.primary};
-    }
-
-    &__state {
+    &__repeat {
       position: absolute;
-      top: -4px;
+      top: -0.25rem;
       right: 20px;
-      width: 14px;
-      height: 14px;
-      padding: 0.25em 0.5em;
-      border-radius: 50%;
-      background-color: ${props => props.theme.primary};
-      color: #fff;
-      font-size: 9px;
-      margin: 0 auto;
-      text-align: center;
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      background-color: ${props => props.theme.PRIMARY_4};
+      font-size: 0.64rem;
+      color: ${props => props.theme.NATURAL_2};
     }
 
-    &:hover {
-      transform: scale3d(1.075, 1.075, 1);
+    &__progress {
+      height: 30px;
+      /* width: calc(100vw - 475px); */
+      width: auto;
+      cursor: default;
+
+      &__time {
+        flex: 1 1 25px;
+        font-size: 0.8rem;
+      }
+    }
+
+    &--active {
+      color: ${props => props.theme.PRIMARY_4};
     }
   }
-
-  & > * {
-    padding: 0 1em;
-  }
 `;
 
-// Now Playing: 250px
-// Volume: 175px
-// Queue: 50px
-const MusicProgress = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  width: calc(100vw - 475px);
-  padding: 0 1em;
-  cursor: default;
-
-  .time {
-    flex: 1 1 25px;
-    padding: 0 0.75em;
-    font-size: 0.8em;
-  }
-
-  .progress {
-    flex: 1 1 auto;
-  }
-`;
-
-const QueueContainer = styled(Link)`
-  flex: 0 1 50px;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1em;
-  cursor: pointer;
-  text-decoration: none;
-  color: ${props => props.theme.control__color};
-  transition: transform 256ms;
-  will-change: transform;
-
-  &:active {
-    transform: scale3d(0.95, 0.95, 1);
-  }
-`;
-
-const VolumeContainer = styled.div`
-  flex: 0 1 175px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1em;
-
-  input[type="range"] {
-    margin: 0 0.5em;
-  }
-`;
 
 const Control = ({
   current,
@@ -205,54 +117,82 @@ const Control = ({
   setRepeat,
   urlCurrentPlaying,
 }) => (
-  <ControlsContainer>
-    <NowPlayingContainer>
+  <ControlsContainer className="d-flex flex-direction-row align-items-center px-3">
+    <div className="ControlsContainer__now-playing flex-grow-0 flex-shrink-0">
       {
         current !== null
           ? (
-            <div className="track">
+            <div className="d-flex flex-row align-items-center">
               {
                 urlCurrentPlaying === null
-                ? <div className="track__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-                : <Link to={urlCurrentPlaying} className="track__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                  ? <div className="ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                  : <Link to={urlCurrentPlaying} className="ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
               }
-              <div className="track__name track-name">
-                <p className="track-name__name">{ current.track_name }</p>
-                <div className="track-name__artist">
-                  <ArtistList artists={current.track_album.album_artist} />
+
+              <div className="d-flex flex-column px-2">
+                <p className="m-0 p-0 ControlsContainer__track-name">{ current.track_name }</p>
+                <div className="ControlsContainer__artist mt-2">
+                  <ArtistList artist={current.track_album.album_artist} />
                 </div>
               </div>
             </div>
           ) : null
       }
-    </NowPlayingContainer>
+    </div>
 
-    <MusicControlsContainer>
-      <MusicControls>
-        <div className={`control ${shuffle ? 'control_active' : ''}`} onClick={toggleShuffle}>
-          <Shuffle />
+    <div className="d-flex flex-column flex-grow-1 flex-shrink-1">
+      <div className="d-flex flex-row align-items-center justify-content-center pt-2 ControlsContainer__control">
+        <div
+          tabIndex="-1"
+          role="button"
+          className={`${shuffle ? 'ControlsContainer--active' : ''}`}
+          onKeyPress={toggleShuffle}
+          onClick={toggleShuffle}
+        >
+          <Shuffle width="20" height="20" />
         </div>
 
-        <div className="control" onClick={previous}>
-          <SkipBack />
+        <div
+          tabIndex="-1"
+          role="button"
+          onKeyPress={previous}
+          onClick={previous}
+        >
+          <SkipBack width="20" height="20" />
         </div>
 
-        <div className="control" onClick={togglePlayPause}>
-          <PlayPause playing={playing} />
+        <div
+          tabIndex="-1"
+          role="button"
+          onKeyPress={togglePlayPause}
+          onClick={togglePlayPause}
+        >
+          <PlayPause strokeWidth="1" width="32" height="32" playing={playing} />
         </div>
 
-        <div className="control" onClick={next}>
-          <SkipForward />
+        <div
+          tabIndex="-1"
+          role="button"
+          onKeyPress={next}
+          onClick={next}
+        >
+          <SkipForward width="20" height="20" />
         </div>
 
-        <div className={`control ${repeat === 'OFF' ? '' : 'control_active'}`} onClick={setRepeat}>
-          <Repeat />
-          <div className="control__state" style={{ opacity: repeat === 'ONE' ? 1 : 0 }}>1</div>
+        <div
+          tabIndex="-1"
+          role="button"
+          className={`${repeat === 'OFF' ? '' : 'ControlsContainer--active'}`}
+          onKeyPress={setRepeat}
+          onClick={setRepeat}
+        >
+          <Repeat width="20" height="20" />
+          <div className="d-flex flex-row align-items-center justify-content-center ControlsContainer__repeat" style={{ opacity: repeat === 'ONE' ? 1 : 0 }} />
         </div>
-      </MusicControls>
+      </div>
 
-      <MusicProgress>
-        <div className="time">
+      <div className="d-flex flex-row align-items-center justify-content-center py-0 px-3 ControlsContainer__progress">
+        <div className="ControlsContainer__progress__time pr-2">
           {`${playbackPosition === 0 ? '0:00' : human(playbackPosition)}`}
         </div>
 
@@ -262,33 +202,34 @@ const Control = ({
           max={duration}
           step="1"
           value={playbackPosition}
-          className="progress"
+          className="flex-grow-1 flex-shrink-1"
           onChange={e => seek(e)}
         />
 
-        <ClearButton className="time" onClick={toggleRemaining}>
+        <ClearButton className="ControlsContainer__progress__time pl-2" onClick={toggleRemaining}>
           <span style={{ opacity: remaining ? 1 : 0 }}>-&nbsp;</span>
           <span>{`${remaining ? human(duration - playbackPosition) : human(duration)}`}</span>
         </ClearButton>
-      </MusicProgress>
-    </MusicControlsContainer>
+      </div>
+    </div>
 
-    <QueueContainer to="/queue" id="queue-container">
+    <Link to="/queue" className="d-flex flex-row align-items-center justify-content-center py-0 px-3 ControlsContainer__queue">
       <List />
-    </QueueContainer>
+    </Link>
 
-    <VolumeContainer>
-      <Volume volume={volume} onClick={() => volume === 0 ? maxVolume() : muteVolume()} />
+    <div className="d-flex flex-row align-items-center justify-content-center p-0 py-3">
+      <Volume className="pr-1 flex-shrink-0" volume={volume} onClick={() => volume === 0 ? maxVolume() : muteVolume()} />
 
       <Range
+        className="flex-grow-0"
         type="range"
         min="0"
         max="1"
         step="0.1"
         value={volume}
-        onChange={e => setVolume(e)}
+        onChange={setVolume}
       />
-    </VolumeContainer>
+    </div>
   </ControlsContainer>
 );
 

@@ -105,12 +105,3 @@ export const MainContainer = styled.div`
   padding-bottom: 0;
   padding-top: 2em;
 `;
-
-
-export const ControlsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 90px;
-  background-color: ${props => props.theme.BACKGROUND_CONTROL};
-`;

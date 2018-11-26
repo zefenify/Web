@@ -11,11 +11,7 @@ import Divider from '@app/component/styled/Divider';
 import ImageContainer from '@app/component/styled/ImageContainer';
 
 const SearchContainer = styled.div`
-  display: flex;
-  flex: 0 1 auto;
-  flex-direction: column;
-
-  .search {
+  .SearchContainer__search {
     position: absolute;
     top: 0;
     left: 0;
@@ -25,117 +21,66 @@ const SearchContainer = styled.div`
     height: 94px;
     padding: 1em 2em 0.25em 2em;
     flex-direction: column;
-    background-color: ${props => props.theme.search__backgroundColor};
-    box-shadow: 0 0 4px 2px ${props => props.theme.search__shadow};
+    background-color: ${props => props.theme.BACKGROUND_MAIN};
+    box-shadow: 0 0 4px 2px ${props => props.theme.SHADOW};
 
     &__label {
       font-size: 1em;
       margin-bottom: 0.5em;
-      color: ${props => props.theme.searchLabel__color};
+      color: ${props => props.theme.NATURAL_4};
     }
 
     &__input {
       font-size: 42px;
       font-weight: bold;
       border: none;
-      color: ${props => props.theme.searchInput__color};
+      color: ${props => props.theme.NATURAL_2};
       background-color: transparent;
     }
   }
 
-  .result {
+  .SearchContainer__result {
     position: absolute;
     top: 95px;
     right: 0;
     bottom: 0;
     left: 0;
-    display: flex;
-    flex: 1 0 auto;
-    flex-direction: row;
     overflow-y: auto;
-    padding: 2em;
-    padding-bottom: 0;
-    margin-bottom: 1px;
 
-    &.no-matches {
-      bottom: 70px;
-      flex: 1 0 auto;
-      justify-content: center;
-      align-items: center;
-      font-size: 2em;
+    &__item {
+      flex: 0 0 20%;
+      text-decoration: none;
+      color: ${props => props.theme.NATURAL_4};
     }
 
-    &__list {
-      flex: 1 1 auto;
-
-      & > h2:first-child {
-        margin-top: 0;
-      }
-    }
-
-    .result-match-list {
-      display: flex;
-      flex-direction: row;
-      min-height: 225px;
-      max-width: calc(100vw - (200px + 4em));
-      overflow-x: scroll;
-
-      &__match {
-        padding-right: 2em;
-        flex: 0 0 20%;
-      }
-    }
-  }
-
-  .artist {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-
-    &__name {
-      text-align: center;
-    }
-  }
-
-  .apu {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-
-    &__name {
-      margin: 0.5em 0;
-    }
-
-    &__year {
-      margin: 0;
-      margin-bottom: 1em;
-      color: ${props => props.theme.mute};
+    &__image {
+      flex: 0 0 250px;
+      height: 250px;
+      width: 250px;
     }
   }
 `;
 
 const Search = ({
   q,
-  matches,
+  match,
   current,
   playing,
-  handleChange,
+  onChange,
   trackPlayPause,
   contextMenuTrack,
 }) => {
   // initial component mount
-  if (matches === null) {
+  if (match === null) {
     return (
-      <SearchContainer>
-        <div className="search">
-          <div className="search__label">Search for an Artist, Song, Album or Playlist</div>
+      <SearchContainer className="d-flex flex-column">
+        <div className="SearchContainer__search">
+          <div className="SearchContainer__search__label">Search for an Artist, Song, Album or Playlist</div>
           <input
-            className="search__input"
+            className="SearchContainer__search__input"
             placeholder="Search"
             value={q}
-            onChange={handleChange}
+            onChange={onChange}
           />
         </div>
       </SearchContainer>
@@ -143,26 +88,26 @@ const Search = ({
   }
 
   // no matches found
-  if (isEqual(matches, {
+  if (isEqual(match, {
     album: [],
     artist: [],
     playlist: [],
     track: [],
   })) {
     return (
-      <SearchContainer>
-        <div className="search">
-          <div className="search__label">Search for an Artist, Song, Album or Playlist</div>
+      <SearchContainer className="d-flex flex-column">
+        <div className="SearchContainer__search">
+          <div className="SearchContainer__search__label">Search for an Artist, Song, Album or Playlist</div>
           <input
-            className="search__input"
+            className="SearchContainer__search__input"
             placeholder="Search"
             value={q}
-            onChange={handleChange}
+            onChange={onChange}
           />
         </div>
 
-        <div className="result no-matches">
-          <h3>No Results</h3>
+        <div className="d-flex flex-row align-items-center justify-content-center SearchContainer__result">
+          <h2>No Results</h2>
         </div>
       </SearchContainer>
     );
@@ -171,76 +116,110 @@ const Search = ({
   // search has result...
   return (
     <SearchContainer>
-      <div className="search">
-        <div className="search__label">Search for an Artist, Song, Album or Playlist</div>
+      <div className="SearchContainer__search">
+        <div className="SearchContainer__search__label">Search for an Artist, Song, Album or Playlist</div>
         <input
-          className="search__input"
+          className="SearchContainer__search__input"
           placeholder="Search"
           value={q}
-          onChange={handleChange}
+          onChange={onChange}
         />
       </div>
 
-      <div className="result">
-        <div className="result__list">
-          { /* artist */ }
-          { matches.artist.length > 0 ? <h2><Divider text>Artists&nbsp;</Divider></h2> : null }
-          {
-            matches.artist.length > 0 ?
-              <div className="result-match-list">
-                { matches.artist.map(artist => (
-                  <Link key={artist.artist_id} to={`artist/${artist.artist_id}`} className="result-match-list__match artist">
-                    <ImageContainer borderRadius="50%">
-                      <img alt={`${artist.artist_name}`} src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
-                    </ImageContainer>
-                    <h3 className="artist__name">{ artist.artist_name }</h3>
-                  </Link>))
-                }
-              </div> : null
-          }
+      <div className="d-flex flex-column px-3 pt-0 pb-0 SearchContainer__result">
+        {/* artist */}
+        {
+          match.artist.length === 0 ? null : (
+            <div className="mb-5">
+              <h1 className="m-0 p-0 px-3 my-2">Artists</h1>
 
-          { /* album */ }
-          { /* apu: album-playlist[-uplaylist] */ }
-          { matches.album.length > 0 ? <h2><Divider text>Albums&nbsp;</Divider></h2> : null }
-          {
-            matches.album.length > 0 ?
-              <div className="result-match-list">
-                { matches.album.map(album => (
-                  <Link key={album.album_id} to={`album/${album.album_id}`} className="result-match-list__match apu">
-                    <ImageContainer>
-                      <img alt={`${album.album_name}`} src={`${BASE_S3}${album.album_cover.s3_name}`} />
-                    </ImageContainer>
-                    <h3 className="apu__name">{ album.album_name }</h3>
-                    <p className="apu__year">{ album.album_year }</p>
-                  </Link>))
-                }
-              </div> : null
-          }
+              {
+                match.artist.length > 0 ? (
+                  <div className="d-flex flex-row flex-nowrap mx-3" style={{ overflowX: 'auto' }}>
+                    {
+                      match.artist.map(artist => (
+                        <Link key={artist.artist_id} to={`artist/${artist.artist_id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
+                          <ImageContainer borderRadius="50%" className="SearchContainer__result__image">
+                            <img alt={`${artist.artist_name}`} src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
+                          </ImageContainer>
 
-          { /* playlist */ }
-          { matches.playlist.length > 0 ? <h2><Divider text>Playlists&nbsp;</Divider></h2> : null }
-          {
-            matches.playlist.length > 0 ?
-              <div className="result-match-list">
-                { matches.playlist.map(playlist => (
-                  <Link key={playlist.playlist_id} to={`playlist/${playlist.playlist_id}`} className="result-match-list__match apu">
-                    <ImageContainer>
-                      <img alt={`${playlist.playlist_name}`} src={`${BASE_S3}${playlist.playlist_cover.s3_name}`} />
-                    </ImageContainer>
-                    <h3 className="apu__name">{ playlist.playlist_name }</h3>
-                  </Link>))
-                }
-              </div> : null
-          }
+                          <h2 className="m-0 p-0 mt-2">{ artist.artist_name }</h2>
+                        </Link>
+                      ))
+                    }
+                  </div>
+                ) : null
+              }
+            </div>
+          )
+        }
+        {/* ./ artist */}
 
-          { /* track */ }
-          { matches.track.length > 0 ? <h2><Divider text>Tracks&nbsp;</Divider></h2> : null }
-          {
-            matches.track.length > 0 ?
-              <div>
-                <Divider />
+        {/* album */}
+        {
+          match.album.length === 0 ? null : (
+            <div className="mb-5">
+              <h1 className="m-0 p-0 px-3 my-2">Albums</h1>
+
+              {
+                match.album.length > 0 ? (
+                  <div className="d-flex flex-row flex-nowrap mx-3" style={{ overflowX: 'auto' }}>
+                    {
+                      match.album.map(album => (
+                        <Link key={album.album_id} to={`album/${album.album_id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
+                          <ImageContainer className="SearchContainer__result__image">
+                            <img alt={`${album.album_name}`} src={`${BASE_S3}${album.album_cover.s3_name}`} />
+                          </ImageContainer>
+
+                          <h2 className="m-0 p-0 mt-2">{ album.album_name }</h2>
+                        </Link>
+                      ))
+                    }
+                  </div>
+                ) : null
+              }
+            </div>
+          )
+        }
+        {/* ./ album */}
+
+        {/* playlist */}
+        {
+          match.playlist.length === 0 ? null : (
+            <div className="mb-5">
+              <h1 className="m-0 p-0 px-3 my-2">Playlists</h1>
+
+              {
+                match.playlist.length > 0 ? (
+                  <div className="d-flex flex-row flex-nowrap mx-3" style={{ overflowX: 'auto' }}>
+                    {
+                      match.playlist.map(playlist => (
+                        <Link key={playlist.playlist_id} to={`playlist/${playlist.playlist_id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
+                          <ImageContainer className="SearchContainer__result__image">
+                            <img alt={`${playlist.playlist_name}`} src={`${BASE_S3}${playlist.playlist_cover.s3_name}`} />
+                          </ImageContainer>
+
+                          <h2 className="m-0 p-0 mt-2">{ playlist.playlist_name }</h2>
+                        </Link>
+                      ))
+                    }
+                  </div>
+                ) : null
+              }
+            </div>
+          )
+        }
+        {/* ./ playlist */}
+
+        {/* track */}
+        {
+          match.track.length === 0 ? null : (
+            <div>
+              <h1 className="m-0 p-0 px-3 my-2">Tracks</h1>
+
+              <div className="px-3">
                 {
-                  matches.track.map((track, index) => (
+                  match.track.map((track, index) => (
                     <Track
                       key={track.track_id}
                       currentTrackId={current === null ? '' : current.track_id}
@@ -256,9 +235,11 @@ const Search = ({
                     />
                   ))
                 }
-              </div> : null
-          }
-        </div>
+              </div>
+            </div>
+          )
+        }
+        {/* ./ track */}
       </div>
     </SearchContainer>
   );
@@ -266,17 +247,17 @@ const Search = ({
 
 Search.propTypes = {
   q: string,
-  matches: shape({}),
+  match: shape({}),
   current: shape({}),
   playing: bool,
-  handleChange: func.isRequired,
+  onChange: func.isRequired,
   trackPlayPause: func.isRequired,
   contextMenuTrack: func.isRequired,
 };
 
 Search.defaultProps = {
   q: '',
-  matches: null,
+  match: null,
   current: null,
   playing: false,
 };

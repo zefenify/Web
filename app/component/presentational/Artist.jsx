@@ -119,6 +119,7 @@ const Arist = ({
     }
     {/* ./ artist album */}
 
+    {/* track */}
     {
       artist.relationships.track.length === 0 ? null : (
         <Fragment>
@@ -142,6 +143,7 @@ const Arist = ({
         </Fragment>
       )
     }
+    {/* ./ track */}
   </ArtistContainer>
 );
 

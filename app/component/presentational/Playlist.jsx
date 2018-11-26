@@ -75,7 +75,6 @@ const PlaylistContainer = styled(Link)`
   }
 
   .__playlist-title {
-    line-height: 125%;
     font-size: 1.25em;
     font-weight: bold;
     color: ${props => props.theme.NATURAL_2};
@@ -122,7 +121,7 @@ function Playlist({
       </div>
 
       <strong className="m-0 p-0 mt-2 __playlist-title">{ name }</strong>
-      <p className="m-0 p-0 mt-2 __playlist-description">{ description }</p>
+      <p className="m-0 p-0 mt-1 __playlist-description">{ description }</p>
       <small className="m-0 p-0 mt-2 __playlist-count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
     </PlaylistContainer>
   );

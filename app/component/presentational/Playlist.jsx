@@ -23,15 +23,15 @@ const PlaylistContainer = styled(Link)`
   transition: transform 128ms;
 
   &.active {
-    .__playlist-title {
+    .PlaylistContainer__title {
       color: ${props => props.theme.PRIMARY_4};
     }
 
-    .__playlist-description {
+    .PlaylistContainer__description {
       color: ${props => props.theme.PRIMARY_4};
     }
 
-    .__playlist-count {
+    .PlaylistContainer__count {
       color: ${props => props.theme.PRIMARY_5};
     }
   }
@@ -46,7 +46,7 @@ const PlaylistContainer = styled(Link)`
     width: 20%;
   }
 
-  .__playlist-cover {
+  .PlaylistContainer__cover {
     position: relative;
 
     &__overlay {
@@ -65,26 +65,26 @@ const PlaylistContainer = styled(Link)`
       }
     }
 
-    .__playlist-cover__overlay {
+    .PlaylistContainer__cover__overlay {
       opacity: 0;
     }
 
-    &:hover .__playlist-cover__overlay {
+    &:hover .PlaylistContainer__cover__overlay {
       opacity: 1;
     }
   }
 
-  .__playlist-title {
+  .PlaylistContainer__title {
     font-size: 1.25em;
     font-weight: bold;
     color: ${props => props.theme.NATURAL_2};
   }
 
-  .__playlist-description {
+  .PlaylistContainer__description {
     color: ${props => props.theme.NATURAL_2};
   }
 
-  .__playlist-count {
+  .PlaylistContainer__count {
     color: ${props => props.theme.NATURAL_4};
   }
 
@@ -106,12 +106,12 @@ function Playlist({
 }) {
   return (
     <PlaylistContainer to={`/${type}/${id}`} className={`d-flex flex-column flex-shrink-0 py-0 px-3 mb-4 ${id === playingId ? 'active' : ''}`}>
-      <div className="__playlist-cover">
+      <div className="PlaylistContainer__cover">
         <ImageContainer>
           <img src={`${BASE_S3}${cover.s3_name}`} alt={name} />
         </ImageContainer>
 
-        <div className="d-flex align-items-center justify-content-center __playlist-cover__overlay">
+        <div className="d-flex align-items-center justify-content-center PlaylistContainer__cover__overlay">
           <PlayPause
             strokeWidth="1px"
             playing={id === playingId && playing}
@@ -120,9 +120,9 @@ function Playlist({
         </div>
       </div>
 
-      <strong className="m-0 p-0 mt-2 __playlist-title">{ name }</strong>
-      <p className="m-0 p-0 mt-1 __playlist-description">{ description }</p>
-      <small className="m-0 p-0 mt-2 __playlist-count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
+      <strong className="m-0 p-0 mt-2 PlaylistContainer__title">{ name }</strong>
+      <p className="m-0 p-0 mt-1 PlaylistContainer__description">{ description }</p>
+      <small className="m-0 p-0 mt-2 PlaylistContainer__count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
     </PlaylistContainer>
   );
 }

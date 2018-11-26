@@ -19,28 +19,30 @@ import ImageContainer from '@app/component/styled/ImageContainer';
 
 
 const AlbumContainer = styled.div`
-  .AlbumContainer__album-info {
-    flex: 0 0 250px;
+  .AlbumContainer {
+    &__album-info {
+      flex: 0 0 250px;
 
-    img {
-      height: 250px;
-      width: 250px;
+      img {
+        height: 250px;
+        width: 250px;
+      }
     }
-  }
 
-  .AlbumContainer__album-title a {
-    color: ${props => props.theme.NATURAL_2};
-    text-decoration: none;
-  }
+    &__album-title a {
+      color: ${props => props.theme.NATURAL_2};
+      text-decoration: none;
+    }
 
-  .AlbumContainer__album-artist a {
-    color: ${props => props.theme.NATURAL_3};
-    text-decoration: none;
-    font-size: 1.125rem;
-  }
+    &__album-artist a {
+      color: ${props => props.theme.NATURAL_3};
+      text-decoration: none;
+      font-size: 1.125rem;
+    }
 
-  .AlbumContainer__album-year-track-count {
-    color: ${props => props.theme.NATURAL_4};
+    &__album-year-track-count {
+      color: ${props => props.theme.NATURAL_4};
+    }
   }
 `;
 

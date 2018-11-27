@@ -161,16 +161,4 @@ Settings.defaultProps = {
   loading: false,
 };
 
-export default memo(Settings, (previousProps, nextProps) => isEqual({
-  theme: previousProps.theme,
-  user: previousProps.user,
-  crossfade: previousProps.crossfade,
-  state: previousProps.state,
-  loading: previousProps.loading,
-}, {
-  theme: nextProps.theme,
-  user: nextProps.user,
-  crossfade: nextProps.crossfade,
-  state: nextProps.state,
-  loading: nextProps.loading,
-}));
+export default memo(Settings);

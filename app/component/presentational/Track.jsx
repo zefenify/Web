@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   func,
   number,
@@ -9,6 +9,7 @@ import {
 } from 'prop-types';
 import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 import { human } from '@app/util/time';
 import ArtistList from '@app/component/presentational/ArtistList';
@@ -38,7 +39,6 @@ const PlayPause = ({ onClick, playing, ...props }) => (
     }
   </svg>
 );
-
 
 PlayPause.propTypes = {
   onClick: func.isRequired,
@@ -247,9 +247,9 @@ const Track = ({
   </TrackContainer>
 );
 
-
 Track.propTypes = {
   fullDetail: bool,
+  playing: bool.isRequired,
   currentTrackId: string.isRequired,
   trackId: string.isRequired,
   trackNumber: number.isRequired,
@@ -259,13 +259,20 @@ Track.propTypes = {
   trackDuration: number.isRequired,
   trackPlayPause: func.isRequired,
   contextMenuTrack: func.isRequired,
-  playing: bool.isRequired,
 };
-
 
 Track.defaultProps = {
   fullDetail: true,
 };
 
-
-export default Track;
+export default memo(Track, (previousProps, nextProps) => isEqual({
+  fullDetail: previousProps.fullDetail,
+  playing: previousProps.playing,
+  currentTrackId: previousProps.currentTrackId,
+  trackId: previousProps.trackId,
+}, {
+  fullDetail: nextProps.fullDetail,
+  playing: nextProps.playing,
+  currentTrackId: nextProps.currentTrackId,
+  trackId: nextProps.trackId,
+}));

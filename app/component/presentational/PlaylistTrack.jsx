@@ -64,7 +64,6 @@ const PlaylistTrack = ({
   contextMenuTrack,
   match,
 }) => {
-  console.log('BAD');
   const { hour, minute, second } = duration;
 
   return (
@@ -118,7 +117,6 @@ const PlaylistTrack = ({
 };
 
 PlaylistTrack.propTypes = {
-  type: string,
   cover: shape({}),
   title: string,
   description: string,
@@ -144,7 +142,6 @@ PlaylistTrack.propTypes = {
 };
 
 PlaylistTrack.defaultProps = {
-  type: 'playlist',
   cover: {},
   title: '',
   description: '',

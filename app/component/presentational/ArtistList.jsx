@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { memo, Fragment } from 'react';
 import { arrayOf, shape } from 'prop-types';
 import { Link } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 
 const ArtistList = ({ artist }) => (
@@ -23,4 +24,8 @@ ArtistList.defaultProps = {
   artist: [],
 };
 
-export default ArtistList;
+export default memo(ArtistList, (previousProps, nextProps) => isEqual({
+  artist: previousProps.artist,
+}, {
+  artist: nextProps.artist,
+}));

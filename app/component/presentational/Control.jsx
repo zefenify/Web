@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   arrayOf,
   func,
@@ -10,14 +10,13 @@ import {
 } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 import { human } from '@app/util/time';
-
 import ArtistList from '@app/component/presentational/ArtistList';
 import Range from '@app/component/styled/Range';
 import { ClearButton } from '@app/component/styled/Button';
-
 import SkipBack from '@app/component/svg/SkipBack';
 import SkipForward from '@app/component/svg/SkipForward';
 import Repeat from '@app/component/svg/Repeat';
@@ -281,4 +280,26 @@ Control.defaultProps = {
   urlCurrentPlaying: null,
 };
 
-export default Control;
+export default memo(Control, (previousProps, nextProps) => isEqual({
+  current: previousProps.current,
+  queueNext: previousProps.queueNext,
+  playing: previousProps.playing,
+  shuffle: previousProps.shuffle,
+  repeat: previousProps.repeat,
+  volume: previousProps.volume,
+  remaining: previousProps.remaining,
+  duration: previousProps.duration,
+  playbackPosition: previousProps.playbackPosition,
+  urlCurrentPlaying: previousProps.urlCurrentPlaying,
+}, {
+  current: nextProps.current,
+  queueNext: nextProps.queueNext,
+  playing: nextProps.playing,
+  shuffle: nextProps.shuffle,
+  repeat: nextProps.repeat,
+  volume: nextProps.volume,
+  remaining: nextProps.remaining,
+  duration: nextProps.duration,
+  playbackPosition: nextProps.playbackPosition,
+  urlCurrentPlaying: nextProps.urlCurrentPlaying,
+}));

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   func,
   shape,
@@ -6,10 +6,12 @@ import {
   number,
   arrayOf,
 } from 'prop-types';
+import isEqual from 'react-fast-compare';
 
 import Track from '@app/component/presentational/Track';
 import Button from '@app/component/styled/Button';
 import HeaderView from '@app/component/styled/HeaderView';
+
 
 const Queue = ({
   playing,
@@ -89,4 +91,12 @@ Queue.defaultProps = {
   },
 };
 
-export default Queue;
+export default memo(Queue, (previousProps, nextProps) => isEqual({
+  playing: previousProps.playing,
+  current: previousProps.current,
+  queueNext: previousProps.queueNext,
+}, {
+  playing: nextProps.playing,
+  current: nextProps.current,
+  queueNext: nextProps.queueNext,
+}));

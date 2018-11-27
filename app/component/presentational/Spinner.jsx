@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { bool } from 'prop-types';
 import styled from 'react-emotion';
 import { keyframes } from 'emotion';
+import isEqual from 'react-fast-compare';
 
 
 const bounce = keyframes`
@@ -66,5 +67,8 @@ Spinner.defaultProps = {
   loading: false,
 };
 
-
-export default Spinner;
+export default memo(Spinner, (previousProps, nextProps) => isEqual({
+  loading: previousProps.loading,
+}, {
+  loading: nextProps.loading,
+}));

@@ -3,6 +3,7 @@ import styled from 'react-emotion';
 
 import Download from '@app/component/svg/Download';
 
+
 const MobileContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -44,6 +45,7 @@ const MobileContainer = styled.div`
     color: hsl(0, 0%, 30%);
   }
 `;
+
 
 const Mobile = () => (
   <MobileContainer>

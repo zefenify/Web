@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { func, arrayOf, shape } from 'prop-types';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import {
   CONTEXT_TRACK,
@@ -318,4 +319,16 @@ ContextMenu.defaultProps = {
   history: null,
 };
 
-export default ContextMenu;
+export default memo(ContextMenu, (previousProps, nextProps) => isEqual({
+  contextMenu: previousProps.contextMenu,
+  user: previousProps.user,
+  song: previousProps.song,
+  queueNext: previousProps.queueNext,
+  history: previousProps.history,
+}, {
+  contextMenu: nextProps.contextMenu,
+  user: nextProps.user,
+  song: nextProps.song,
+  queueNext: nextProps.queueNext,
+  history: nextProps.history,
+}));

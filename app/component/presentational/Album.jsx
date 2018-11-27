@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   bool,
   number,
@@ -9,6 +9,7 @@ import {
 } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 import ArtistList from '@app/component/presentational/ArtistList';
@@ -168,4 +169,14 @@ Album.defaultProps = {
   albumPlaying: false,
 };
 
-export default Album;
+export default memo(Album, (previousProps, nextProps) => isEqual({
+  albumId: previousProps.albumId,
+  current: previousProps.current,
+  playing: previousProps.playing,
+  albumPlaying: previousProps.albumPlaying,
+}, {
+  albumId: nextProps.albumId,
+  current: nextProps.current,
+  playing: nextProps.playing,
+  albumPlaying: nextProps.albumPlaying,
+}));

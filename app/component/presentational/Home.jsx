@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   bool,
   func,
@@ -6,9 +6,11 @@ import {
   arrayOf,
   shape,
 } from 'prop-types';
+import isEqual from 'react-fast-compare';
 
 import Playlist from '@app/component/presentational/Playlist';
 import HeaderView from '@app/component/styled/HeaderView';
+
 
 const Home = ({
   playing,
@@ -55,4 +57,12 @@ Home.defaultProps = {
   featuredPlayingId: '',
 };
 
-export default Home;
+export default memo(Home, (previousProps, nextProps) => isEqual({
+  playing: previousProps.playing,
+  featured: previousProps.featured,
+  featuredPlayingId: previousProps.featuredPlayingId,
+}, {
+  playing: nextProps.playing,
+  featured: nextProps.featured,
+  featuredPlayingId: nextProps.featuredPlayingId,
+}));

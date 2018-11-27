@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { func, shape } from 'prop-types';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import Close from '@app/component/svg/Close';
 import { ClearButton } from '@app/component/styled/Button';
+
 
 const NotificationContainer = styled.div`
   position: fixed;
@@ -38,6 +40,7 @@ const NotificationContainer = styled.div`
   }
 `;
 
+
 const Notification = ({
   notification,
   close,
@@ -57,4 +60,8 @@ Notification.defaultProps = {
   notification: null,
 };
 
-export default Notification;
+export default memo(Notification, (previousProps, nextProps) => isEqual({
+  notification: previousProps.notification,
+}, {
+  notification: nextProps.notification,
+}));

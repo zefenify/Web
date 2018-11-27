@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   func,
@@ -7,10 +7,12 @@ import {
   number,
   arrayOf,
 } from 'prop-types';
+import isEqual from 'react-fast-compare';
 
 import Track from '@app/component/presentational/Track';
 import Button from '@app/component/styled/Button';
 import HeaderView from '@app/component/styled/HeaderView';
+
 
 const Songs = ({
   playing,
@@ -105,4 +107,17 @@ Songs.defaultProps = {
   songPlaying: false,
 };
 
-export default Songs;
+
+export default memo(Songs, (previousProps, nextProps) => isEqual({
+  playing: previousProps.playing,
+  current: previousProps.current,
+  user: previousProps.user,
+  song: previousProps.song,
+  songPlaying: previousProps.songPlaying,
+}, {
+  playing: nextProps.playing,
+  current: nextProps.current,
+  user: nextProps.user,
+  song: nextProps.song,
+  songPlaying: nextProps.songPlaying,
+}));

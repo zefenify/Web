@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   func,
   shape,
@@ -6,6 +6,7 @@ import {
   number,
   arrayOf,
 } from 'prop-types';
+import isEqual from 'react-fast-compare';
 
 import Track from '@app/component/presentational/Track';
 import Button from '@app/component/styled/Button';
@@ -93,4 +94,14 @@ Recent.defaultProps = {
   },
 };
 
-export default Recent;
+export default memo(Recent, (previousProps, nextProps) => isEqual({
+  playing: previousProps.playing,
+  tracksPlaying: previousProps.tracksPlaying,
+  current: previousProps.current,
+  track: previousProps.track,
+}, {
+  playing: nextProps.playing,
+  tracksPlaying: nextProps.tracksPlaying,
+  current: nextProps.current,
+  track: nextProps.track,
+}));

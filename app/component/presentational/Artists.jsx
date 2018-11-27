@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   func,
@@ -9,6 +9,7 @@ import {
   arrayOf,
 } from 'prop-types';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 import PlayPause from '@app/component/svg/PlayPause';
@@ -196,4 +197,20 @@ Artists.defaultProps = {
   trackCount: 0,
 };
 
-export default Artists;
+export default memo(Artists, (previousProps, nextProps) => isEqual({
+  artistId: previousProps.artistId,
+  current: previousProps.current,
+  user: previousProps.user,
+  artist: previousProps.artist,
+  playing: previousProps.playing,
+  albumPlayingId: previousProps.albumPlayingId,
+  artistPlayingId: previousProps.artistPlayingId,
+}, {
+  artistId: nextProps.artistId,
+  current: nextProps.current,
+  user: nextProps.user,
+  artist: nextProps.artist,
+  playing: nextProps.playing,
+  albumPlayingId: nextProps.albumPlayingId,
+  artistPlayingId: nextProps.artistPlayingId,
+}));

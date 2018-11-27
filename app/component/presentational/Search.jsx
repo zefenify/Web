@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   string,
   func,
@@ -64,6 +64,7 @@ const SearchContainer = styled.div`
     }
   }
 `;
+
 
 const Search = ({
   q,
@@ -266,4 +267,14 @@ Search.defaultProps = {
   playing: false,
 };
 
-export default Search;
+export default memo(Search, (previousProps, nextProps) => isEqual({
+  q: previousProps.q,
+  match: previousProps.match,
+  current: previousProps.current,
+  playing: previousProps.playing,
+}, {
+  q: nextProps.q,
+  match: nextProps.match,
+  current: nextProps.current,
+  playing: nextProps.playing,
+}));

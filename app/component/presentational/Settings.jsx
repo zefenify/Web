@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   bool,
   func,
@@ -7,10 +7,12 @@ import {
   shape,
 } from 'prop-types';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import Button from '@app/component/styled/Button';
 import Range from '@app/component/styled/Range';
 import HeaderView from '@app/component/styled/HeaderView';
+
 
 const DMCA = styled.a`
   text-decoration: none;
@@ -21,6 +23,7 @@ const DMCA = styled.a`
   margin-bottom: 1em;
   border: 1px solid #ff6d5e;
 `;
+
 
 const Form = styled.form`
   input {
@@ -48,6 +51,7 @@ const Form = styled.form`
     }
   }
 `;
+
 
 const Settings = ({
   crossfade,
@@ -157,4 +161,16 @@ Settings.defaultProps = {
   loading: false,
 };
 
-export default Settings;
+export default memo(Settings, (previousProps, nextProps) => isEqual({
+  theme: previousProps.theme,
+  user: previousProps.user,
+  crossfade: previousProps.crossfade,
+  state: previousProps.state,
+  loading: previousProps.loading,
+}, {
+  theme: nextProps.theme,
+  user: nextProps.user,
+  crossfade: nextProps.crossfade,
+  state: nextProps.state,
+  loading: nextProps.loading,
+}));

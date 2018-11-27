@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   string,
   bool,
@@ -9,6 +9,7 @@ import {
 } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 import PlayPause from '@app/component/svg/PlayPause';
@@ -93,7 +94,8 @@ const PlaylistContainer = styled(Link)`
   }
 `;
 
-function Playlist({
+
+const Playlist = ({
   type,
   id,
   playing,
@@ -103,7 +105,7 @@ function Playlist({
   trackCount,
   cover,
   play,
-}) {
+}) => {
   return (
     <PlaylistContainer to={`/${type}/${id}`} className={`d-flex flex-column flex-shrink-0 py-0 px-3 mb-4 ${id === playingId ? 'active' : ''}`}>
       <div className="PlaylistContainer__cover">
@@ -125,7 +127,7 @@ function Playlist({
       <small className="m-0 p-0 mt-2 PlaylistContainer__count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
     </PlaylistContainer>
   );
-}
+};
 
 Playlist.propTypes = {
   type: oneOf(['featured', 'playlist']),
@@ -150,4 +152,12 @@ Playlist.defaultProps = {
   cover: {},
 };
 
-export default Playlist;
+export default memo(Playlist, (previousProps, nextProps) => isEqual({
+  id: previousProps.id,
+  playing: previousProps.playing,
+  playingId: previousProps.playingId,
+}, {
+  id: nextProps.id,
+  playing: nextProps.playing,
+  playingId: nextProps.playingId,
+}));

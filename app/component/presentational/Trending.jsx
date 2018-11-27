@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   arrayOf,
   shape,
@@ -9,9 +9,11 @@ import {
 } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import Track from '@app/component/presentational/Track';
 import Button from '@app/component/styled/Button';
+
 
 const TrendingContainer = styled.div`
   .TrendingContainer {
@@ -166,4 +168,16 @@ Trending.defaultProps = {
   trendingPlaying: false,
 };
 
-export default Trending;
+export default memo(Trending, (previousProps, nextProps) => isEqual({
+  trending: previousProps.trending,
+  current: previousProps.current,
+  playing: previousProps.playing,
+  category: previousProps.category,
+  trendingPlaying: previousProps.trendingPlaying,
+}, {
+  trending: nextProps.trending,
+  current: nextProps.current,
+  playing: nextProps.playing,
+  category: nextProps.category,
+  trendingPlaying: nextProps.trendingPlaying,
+}));

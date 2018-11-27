@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   func,
@@ -9,6 +9,7 @@ import {
   shape,
 } from 'prop-types';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 import ImageContainer from '@app/component/styled/ImageContainer';
@@ -90,8 +91,8 @@ const Collection = ({
         {
           collection.collection_playlist.map(playlist => (
             <Playlist
-              key={playlist.playlist_id}
               type="playlist"
+              key={playlist.playlist_id}
               playing={playing}
               play={playlistPlay}
               playingId={playlistPlayingId}
@@ -109,12 +110,12 @@ const Collection = ({
 };
 
 Collection.propTypes = {
+  collectionName: string,
+  playlistPlayingId: string,
   playing: bool,
   collectionId: string,
   collection: oneOfType([shape({}), arrayOf(shape({}))]),
   playlistPlay: func.isRequired,
-  collectionName: string,
-  playlistPlayingId: string,
 };
 
 Collection.defaultProps = {
@@ -125,4 +126,16 @@ Collection.defaultProps = {
   playlistPlayingId: '',
 };
 
-export default Collection;
+export default memo(Collection, (previousProps, nextProps) => isEqual({
+  collectionName: previousProps.collectionName,
+  playlistPlayingId: previousProps.playlistPlayingId,
+  playing: previousProps.playing,
+  collectionId: previousProps.collectionId,
+  collection: previousProps.collection,
+}, {
+  collectionName: nextProps.collectionName,
+  playlistPlayingId: nextProps.playlistPlayingId,
+  playing: nextProps.playing,
+  collectionId: nextProps.collectionId,
+  collection: nextProps.collection,
+}));

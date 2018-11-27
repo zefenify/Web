@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { memo, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import {
   shape,
@@ -8,6 +8,7 @@ import {
   func,
 } from 'prop-types';
 import styled from 'react-emotion';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 import ImageContainer from '@app/component/styled/ImageContainer';
@@ -171,4 +172,16 @@ Arist.defaultProps = {
   aristPlaying: false,
 };
 
-export default Arist;
+export default memo(Arist, (previousProps, nextProps) => isEqual({
+  artist: previousProps.artist,
+  current: previousProps.current,
+  playing: previousProps.playing,
+  albumPlayingId: previousProps.albumPlayingId,
+  aristPlaying: previousProps.aristPlaying,
+}, {
+  artist: nextProps.artist,
+  current: nextProps.current,
+  playing: nextProps.playing,
+  albumPlayingId: nextProps.albumPlayingId,
+  aristPlaying: nextProps.aristPlaying,
+}));

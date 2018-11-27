@@ -47,7 +47,6 @@ import {
   NavigationContainer,
   NavigationMainContainer,
   MainContainer,
-  ControlsContainer,
 } from '@app/component/styled/lego';
 
 

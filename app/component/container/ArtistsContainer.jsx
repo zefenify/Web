@@ -182,7 +182,7 @@ const ArtistsContainer = ({ match }) => {
     });
   };
 
-  const contextMenuAlbum = (albumId) => {
+  const contextMenuAlbum = (albumId = 'ZEFENIFY') => {
     const artistIndex = state.artist.findIndex(artist => artist.artist_id === match.params.id);
 
     if (artistIndex === -1) {
@@ -204,7 +204,7 @@ const ArtistsContainer = ({ match }) => {
     });
   };
 
-  const contextMenuTrack = (trackId) => {
+  const contextMenuTrack = (trackId = 'ZEFENIFY') => {
     let track = null;
 
     state.artist.forEach((artist) => {

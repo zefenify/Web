@@ -57,7 +57,7 @@ const HomeContainer = () => {
     };
   }, []);
 
-  const featuredPlay = (featuredId) => {
+  const featuredPlay = (featuredId = 'ZEFENIFY') => {
     // trigger _stop_...
     if (state.featuredPlayingId === featuredId) {
       // pausing whatever was playing...

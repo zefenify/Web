@@ -104,7 +104,7 @@ const PlaylistContainer = ({ match }) => {
     }
   };
 
-  const trackPlayPause = (trackId) => {
+  const trackPlayPause = (trackId = 'ZEFENIFY') => {
     if (current !== null && current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,

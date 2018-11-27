@@ -118,7 +118,7 @@ const AlbumContainer = ({ match }) => {
     }
   };
 
-  const trackPlayPause = (trackId) => {
+  const trackPlayPause = (trackId = 'ZEFENIFY') => {
     if (current !== null && current.track_id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
@@ -159,7 +159,7 @@ const AlbumContainer = ({ match }) => {
     });
   };
 
-  const contextMenuTrack = (trackId) => {
+  const contextMenuTrack = (trackId = 'ZEFENIFY') => {
     const trackIndex = state.album.relationships.track.findIndex(_track => _track.track_id === trackId);
 
     if (trackIndex === -1) {

@@ -11,7 +11,7 @@ import track from '@app/util/track';
 import store from '@app/redux/store';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import { loading } from '@app/redux/action/loading';
-import HeaderTracks from '@app/component/presentational/HeaderTracks';
+import PlaylistTrack from '@app/component/presentational/PlaylistTrack';
 import { Context } from '@app/component/context/context';
 
 
@@ -166,7 +166,7 @@ const PlaylistContainer = ({ match }) => {
   }
 
   return (
-    <HeaderTracks
+    <PlaylistTrack
       type={match.params.type}
       current={current}
       playing={playing}

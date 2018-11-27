@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   bool,
   number,
@@ -8,6 +8,8 @@ import {
   func,
 } from 'prop-types';
 import styled from 'react-emotion';
+import { withRouter } from 'react-router';
+import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
 import Button from '@app/component/styled/Button';
@@ -16,8 +18,8 @@ import Track from '@app/component/presentational/Track';
 import ImageContainer from '@app/component/styled/ImageContainer';
 
 
-const HeaderTracksContainer = styled.div`
-  .HeaderTracksContainer__header {
+const PlaylistTrackContainer = styled.div`
+  .PlaylistTrackContainer__header {
     flex: 0 0 250px;
 
     img {
@@ -26,7 +28,7 @@ const HeaderTracksContainer = styled.div`
     }
   }
 
-  .HeaderTracksContainer {
+  .PlaylistTrackContainer {
     &__type {
       text-transform: capitalize;
       color: ${props => props.theme.NATURAL_4};
@@ -47,8 +49,7 @@ const HeaderTracksContainer = styled.div`
 `;
 
 
-const HeaderTracks = ({
-  type,
+const PlaylistTrack = ({
   title,
   description,
   cover,
@@ -61,12 +62,14 @@ const HeaderTracks = ({
   trackPlayPause,
   contextMenuPlaylist,
   contextMenuTrack,
+  match,
 }) => {
+  console.log('BAD');
   const { hour, minute, second } = duration;
 
   return (
-    <HeaderTracksContainer className="d-flex flex-row flex-shrink-0">
-      <div className="HeaderTracksContainer__header mb-5">
+    <PlaylistTrackContainer className="d-flex flex-row flex-shrink-0">
+      <div className="PlaylistTrackContainer__header mb-5">
         <ImageContainer borderRadius="6px">
           <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
         </ImageContainer>
@@ -87,10 +90,10 @@ const HeaderTracks = ({
       </div>
 
       <div className="d-flex flex-column flex-grow-1" style={{ paddingLeft: '2rem' }}>
-        <h3 className="m-0 p-0 HeaderTracksContainer__type">{ type }</h3>
-        <h1 className="m-0 p-0 mt-1 HeaderTracksContainer__title">{ title }</h1>
-        <p className="m-0 p-0 mt-2 HeaderTracksContainer__description">{ description }</p>
-        <p className="m-0 p-0 my-2 HeaderTracksContainer__duration">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hour > 0 ? `${hour} hr` : ''} ${minute} min ${hour > 0 ? '' : `${second} sec`}`}</p>
+        <h3 className="m-0 p-0 PlaylistTrackContainer__type">{ match.params.type }</h3>
+        <h1 className="m-0 p-0 mt-1 PlaylistTrackContainer__title">{ title }</h1>
+        <p className="m-0 p-0 mt-2 PlaylistTrackContainer__description">{ description }</p>
+        <p className="m-0 p-0 my-2 PlaylistTrackContainer__duration">{`${tracks.length} song${tracks.length > 1 ? 's' : ''}, ${hour > 0 ? `${hour} hr` : ''} ${minute} min ${hour > 0 ? '' : `${second} sec`}`}</p>
 
         {
           tracks.map((track, index) => (
@@ -110,11 +113,11 @@ const HeaderTracks = ({
           ))
         }
       </div>
-    </HeaderTracksContainer>
+    </PlaylistTrackContainer>
   );
 };
 
-HeaderTracks.propTypes = {
+PlaylistTrack.propTypes = {
   type: string,
   cover: shape({}),
   title: string,
@@ -126,6 +129,12 @@ HeaderTracks.propTypes = {
     minutes: number,
     seconds: number,
   }),
+  match: shape({
+    url: string,
+    params: shape({
+      id: string,
+    }),
+  }).isRequired,
   playing: bool,
   tracksPlaying: bool,
   tracksPlayPause: func.isRequired,
@@ -134,7 +143,7 @@ HeaderTracks.propTypes = {
   contextMenuTrack: func.isRequired,
 };
 
-HeaderTracks.defaultProps = {
+PlaylistTrack.defaultProps = {
   type: 'playlist',
   cover: {},
   title: '',
@@ -150,4 +159,22 @@ HeaderTracks.defaultProps = {
   tracksPlaying: false,
 };
 
-export default HeaderTracks;
+export default withRouter(memo(PlaylistTrack, (previousProps, nextProps) => isEqual({
+  type: previousProps.type,
+  cover: previousProps.cover,
+  title: previousProps.title,
+  description: previousProps.description,
+  current: previousProps.current,
+  tracks: previousProps.tracks,
+  playing: previousProps.playing,
+  tracksPlaying: previousProps.tracksPlaying,
+}, {
+  type: nextProps.type,
+  cover: nextProps.cover,
+  title: nextProps.title,
+  description: nextProps.description,
+  current: nextProps.current,
+  tracks: nextProps.tracks,
+  playing: nextProps.playing,
+  tracksPlaying: nextProps.tracksPlaying,
+})));

@@ -199,7 +199,7 @@ const tracker = () => {
         // ANC:
         // on object is fired at song boot time
         // this shouldn't happen. this is a monkey patch
-        yield put(playbackPosition(0));
+        // yield put(playbackPosition(0));
       }
 
       if (wolfCola.crossfadeInProgress === false) {

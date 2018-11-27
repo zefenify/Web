@@ -1,5 +1,13 @@
 import React from 'react';
-import { func, bool, string, number, oneOfType, shape } from 'prop-types';
+import {
+  arrayOf,
+  func,
+  bool,
+  string,
+  number,
+  oneOfType,
+  shape,
+} from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 
@@ -29,6 +37,10 @@ const ControlsContainer = styled.div`
       cursor: pointer;
       text-decoration: none;
       color: ${props => props.theme.NATURAL_2};
+
+      &.active {
+        color: ${props => props.theme.PRIMARY_4};
+      }
     }
 
     &__now-playing {
@@ -98,6 +110,7 @@ const ControlsContainer = styled.div`
 
 const Control = ({
   current,
+  queueNext,
   togglePlayPause,
   next,
   previous,
@@ -213,7 +226,7 @@ const Control = ({
       </div>
     </div>
 
-    <Link to="/queue" className="py-0 px-3 ControlsContainer__queue">
+    <Link to="/queue" className={`py-0 px-3 ControlsContainer__queue${queueNext.length > 0 ? ' active' : ''}`}>
       <List width="20" height="20px" />
     </Link>
 
@@ -234,6 +247,7 @@ const Control = ({
 
 Control.propTypes = {
   current: oneOfType([shape({})]),
+  queueNext: arrayOf(shape({})),
   togglePlayPause: func.isRequired,
   next: func.isRequired,
   previous: func.isRequired,
@@ -256,6 +270,7 @@ Control.propTypes = {
 
 Control.defaultProps = {
   current: null,
+  queueNext: [],
   playing: false,
   shuffle: false,
   repeat: 'OFF',

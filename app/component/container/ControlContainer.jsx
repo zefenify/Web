@@ -93,10 +93,12 @@ const ControlContainer = () => {
     volume,
     remaining,
     urlCurrentPlaying,
+    queueNext,
   } = useContext(Context);
 
   return (
     <Control
+      queueNext={queueNext}
       current={current}
       duration={duration}
       playbackPosition={playbackPosition}

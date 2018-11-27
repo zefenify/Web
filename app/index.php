@@ -8,7 +8,7 @@
 
     <title>Zefenify • Ethiopian. Music.</title>
 <?php
-$cardAPI = 'https://zefenify.com/api/card';
+$cardAPI = 'https://zefenify.it/api/card';
 $opts = [
   'http' => [
     'method' => 'GET',

@@ -1,14 +1,18 @@
 import React from 'react';
-import { string, func, bool, shape } from 'prop-types';
+import {
+  string,
+  func,
+  bool,
+  shape,
+} from 'prop-types';
 import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
-
 import Track from '@app/component/presentational/Track';
-import Divider from '@app/component/styled/Divider';
 import ImageContainer from '@app/component/styled/ImageContainer';
+
 
 const SearchContainer = styled.div`
   .SearchContainer__search {

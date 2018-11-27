@@ -67,7 +67,7 @@ const ControlsContainer = styled.div`
 
     &__repeat {
       position: absolute;
-      top: -0.25rem;
+      top: -0.175rem;
       right: 20px;
       width: 12px;
       height: 12px;
@@ -213,15 +213,14 @@ const Control = ({
       </div>
     </div>
 
-    <Link to="/queue" className="d-flex flex-row align-items-center justify-content-center py-0 px-3 ControlsContainer__queue">
-      <List />
+    <Link to="/queue" className="py-0 px-3 ControlsContainer__queue">
+      <List width="20" height="20px" />
     </Link>
 
-    <div className="d-flex flex-row align-items-center justify-content-center p-0 py-3">
-      <Volume className="pr-1 flex-shrink-0" volume={volume} onClick={() => volume === 0 ? maxVolume() : muteVolume()} />
+    <div className="d-flex flex-row align-items-center justify-content-center px-0 py-3">
+      <Volume className="mr-2 flex-shrink-0" volume={volume} onClick={() => volume === 0 ? maxVolume() : muteVolume()} />
 
       <Range
-        className="flex-grow-0"
         type="range"
         min="0"
         max="1"

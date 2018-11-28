@@ -100,6 +100,10 @@ const ControlsContainer = styled.div`
       }
     }
 
+    &__queue-volume {
+      width: 250px;
+    }
+
     &--active {
       color: ${props => props.theme.PRIMARY_4};
     }
@@ -130,7 +134,7 @@ const Control = ({
   urlCurrentPlaying,
 }) => (
   <ControlsContainer className="d-flex flex-direction-row align-items-center px-3">
-    <div className="ControlsContainer__now-playing flex-grow-0 flex-shrink-0">
+    <div className="flex-grow-0 flex-shrink-0 ControlsContainer__now-playing">
       {
         current !== null
           ? (
@@ -225,21 +229,23 @@ const Control = ({
       </div>
     </div>
 
-    <Link to="/queue" className={`py-0 px-3 ControlsContainer__queue${queueNext.length > 0 ? ' active' : ''}`}>
-      <List width="20" height="20px" />
-    </Link>
+    <div className="ControlsContainer__queue-volume flex-grow-0 flex-shrink-0 d-flex flex-row align-items-center">
+      <Link to="/queue" className={`py-0 px-3 ControlsContainer__queue${queueNext.length > 0 ? ' active' : ''}`}>
+        <List width="20" height="20px" />
+      </Link>
 
-    <div className="d-flex flex-row align-items-center justify-content-center px-0 py-3">
-      <Volume className="mr-2 flex-shrink-0" volume={volume} onClick={() => volume === 0 ? maxVolume() : muteVolume()} />
+      <div className="flex-grow-1 d-flex flex-row align-items-center justify-content-center p-3">
+        <Volume className="mr-2 flex-shrink-0" volume={volume} onClick={() => volume === 0 ? maxVolume() : muteVolume()} />
 
-      <Range
-        type="range"
-        min="0"
-        max="1"
-        step="0.1"
-        value={volume}
-        onChange={setVolume}
-      />
+        <Range
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value={volume}
+          onChange={setVolume}
+        />
+      </div>
     </div>
   </ControlsContainer>
 );

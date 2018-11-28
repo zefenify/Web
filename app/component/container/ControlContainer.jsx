@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { VOLUME_REQUEST } from '@app/redux/constant/volume';
 import { REPEAT_REQUEST } from '@app/redux/constant/repeat';
@@ -10,6 +10,7 @@ import {
   SEEK_REQUEST,
   PLAY_PAUSE_REQUEST,
 } from '@app/redux/constant/wolfCola';
+import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST } from '@app/redux/constant/song';
 import store from '@app/redux/store';
 import Control from '@app/component/presentational/Control';
 import { Context } from '@app/component/context/context';
@@ -94,7 +95,32 @@ const ControlContainer = () => {
     remaining,
     urlCurrentPlaying,
     queueNext,
+    song,
   } = useContext(Context);
+  const [state, setState] = useState({
+    liked: false,
+  });
+
+  useEffect(() => {
+    if (song === null || current === null) {
+      setState(Object.assign(state, {
+        like: false,
+      }));
+
+      return;
+    }
+
+    setState(Object.assign(state, {
+      like: Object.keys(song.included.track).includes(current.track_id),
+    }));
+  }, [song === null ? song : song.included.track, current === null ? current : current.track_id]);
+
+  const likeTrackToggle = (track) => {
+    store.dispatch({
+      type: state.like === true ? SONG_REMOVE_REQUEST : SONG_SAVE_REQUEST,
+      payload: track,
+    });
+  };
 
   return (
     <Control
@@ -108,6 +134,8 @@ const ControlContainer = () => {
       volume={volume}
       remaining={remaining}
       urlCurrentPlaying={urlCurrentPlaying}
+      likeTrackToggle={likeTrackToggle}
+      {...state}
       {...dispatches}
     />
   );

@@ -90,7 +90,7 @@ const ContextMenu = ({
   if (contextMenu === null) {
     return (
       <ContextMenuContainer id="context-menu-container">
-        <ClearButton className="close-SVG-container" onClick={contextMenuClose}>
+        <ClearButton aria-label="close" className="close-SVG-container" onClick={contextMenuClose}>
           <Close />
         </ClearButton>
       </ContextMenuContainer>

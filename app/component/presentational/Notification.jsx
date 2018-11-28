@@ -47,7 +47,7 @@ const Notification = ({
 }) => (
   <NotificationContainer id="notification-container">
     <div className="NotificationContainer__message">{ notification === null ? null : notification.message }</div>
-    <ClearButton className="NotificationContainer__close-button" onClick={close}><Close strokeWidth="1" /></ClearButton>
+    <ClearButton aria-label="close" className="NotificationContainer__close-button" onClick={close}><Close strokeWidth="1" /></ClearButton>
   </NotificationContainer>
 );
 

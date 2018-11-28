@@ -175,6 +175,7 @@ const Control = ({
     <div
       tabIndex="-1"
       role="button"
+      aria-label="like"
       onKeyPress={likeTrackToggle}
       onClick={likeTrackToggle}
       className={`px-2 ControlsContainer__like${current === null ? '' : ' active'}${like === true ? ' like' : ''}`}
@@ -187,6 +188,7 @@ const Control = ({
         <div
           tabIndex="-1"
           role="button"
+          aria-label="shuffle"
           className={`${shuffle ? 'ControlsContainer--active' : ''}`}
           onKeyPress={toggleShuffle}
           onClick={toggleShuffle}
@@ -197,6 +199,7 @@ const Control = ({
         <div
           tabIndex="-1"
           role="button"
+          aria-label="previous"
           onKeyPress={previous}
           onClick={previous}
         >
@@ -206,6 +209,7 @@ const Control = ({
         <div
           tabIndex="-1"
           role="button"
+          aria-label={playing === true ? 'pause' : 'play'}
           onKeyPress={togglePlayPause}
           onClick={togglePlayPause}
         >
@@ -215,6 +219,7 @@ const Control = ({
         <div
           tabIndex="-1"
           role="button"
+          aria-label="next"
           onKeyPress={next}
           onClick={next}
         >
@@ -224,6 +229,7 @@ const Control = ({
         <div
           tabIndex="-1"
           role="button"
+          aria-label="repeat"
           className={`${repeat === 'OFF' ? '' : 'ControlsContainer--active'}`}
           onKeyPress={setRepeat}
           onClick={setRepeat}

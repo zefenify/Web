@@ -12,7 +12,7 @@ const Range = styled.input`
     border: none;
     padding: 1px 2px;
     border-radius: 4px;
-    background: ${props => props.theme.PRIMARY_4};
+    background: ${props => props.theme.NATURAL_4};
     box-shadow: none;
     outline: none;
 

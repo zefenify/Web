@@ -75,7 +75,7 @@ const HomeContainer = () => {
       const playlistTrack = Object.assign({}, data, {
         playlist_track: data.playlist_track.map(trackId => included.track[trackId]),
       });
-      const tracks = track(playlistTrack.playlist_track, included);
+      const trackList = track(playlistTrack.playlist_track, included);
 
       setState(Object.assign(state, {
         featuredPlayingId: featuredId,
@@ -85,9 +85,9 @@ const HomeContainer = () => {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: tracks[0],
-          queue: tracks,
-          queueInitial: tracks,
+          play: trackList[0],
+          queue: trackList,
+          queueInitial: trackList,
         },
       });
 

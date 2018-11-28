@@ -115,10 +115,17 @@ const ControlContainer = () => {
     }));
   }, [song === null ? song : song.included.track, current === null ? current : current.track_id]);
 
-  const likeTrackToggle = (track) => {
+  const likeTrackToggle = () => {
+    const { like } = state;
+
+    // optimistic update
+    setState(Object.assign(state, {
+      like: !like,
+    }));
+
     store.dispatch({
-      type: state.like === true ? SONG_REMOVE_REQUEST : SONG_SAVE_REQUEST,
-      payload: track,
+      type: like === true ? SONG_REMOVE_REQUEST : SONG_SAVE_REQUEST,
+      payload: current,
     });
   };
 

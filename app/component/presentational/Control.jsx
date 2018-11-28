@@ -24,6 +24,7 @@ import Shuffle from '@app/component/svg/Shuffle';
 import PlayPause from '@app/component/svg/PlayPause';
 import Volume from '@app/component/svg/Volume';
 import List from '@app/component/svg/List';
+import Heart from '@app/component/svg/Heart';
 
 
 const ControlsContainer = styled.div`
@@ -104,6 +105,19 @@ const ControlsContainer = styled.div`
       width: 250px;
     }
 
+    &__like {
+      opacity: 0;
+      transition: opacity 250ms;
+
+      &.active {
+        opacity: 1;
+      }
+
+      &.like {
+        color: ${props => props.theme.PRIMARY_4};
+      }
+    }
+
     &--active {
       color: ${props => props.theme.PRIMARY_4};
     }
@@ -112,6 +126,7 @@ const ControlsContainer = styled.div`
 
 
 const Control = ({
+  like,
   current,
   queueNext,
   togglePlayPause,
@@ -132,6 +147,7 @@ const Control = ({
   maxVolume,
   setRepeat,
   urlCurrentPlaying,
+  likeTrackToggle,
 }) => (
   <ControlsContainer className="d-flex flex-direction-row align-items-center px-3">
     <div className="flex-grow-0 flex-shrink-0 ControlsContainer__now-playing">
@@ -141,7 +157,7 @@ const Control = ({
             <div className="d-flex flex-row align-items-center">
               {
                 urlCurrentPlaying === null
-                  ? <div className="ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                  ? <div className="flex-shrink-0 ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
                   : <Link to={urlCurrentPlaying} className="ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
               }
 
@@ -154,6 +170,16 @@ const Control = ({
             </div>
           ) : null
       }
+    </div>
+
+    <div
+      tabIndex="-1"
+      role="button"
+      onKeyPress={likeTrackToggle}
+      onClick={likeTrackToggle}
+      className={`ControlsContainer__like${current === null ? '' : ' active'}${like === true ? ' like' : ''}`}
+    >
+      <Heart strokeWidth="2" fill={like === true ? 'currentColor' : 'none'} />
     </div>
 
     <div className="d-flex flex-column flex-grow-1 flex-shrink-1">
@@ -251,6 +277,7 @@ const Control = ({
 );
 
 Control.propTypes = {
+  like: bool,
   current: oneOfType([shape({})]),
   queueNext: arrayOf(shape({})),
   togglePlayPause: func.isRequired,
@@ -271,9 +298,11 @@ Control.propTypes = {
   muteVolume: func.isRequired,
   maxVolume: func.isRequired,
   setRepeat: func.isRequired,
+  likeTrackToggle: func.isRequired,
 };
 
 Control.defaultProps = {
+  like: false,
   current: null,
   queueNext: [],
   playing: false,
@@ -287,6 +316,7 @@ Control.defaultProps = {
 };
 
 export default memo(Control, (previousProps, nextProps) => isEqual({
+  like: previousProps.like,
   current: previousProps.current,
   queueNext: previousProps.queueNext,
   playing: previousProps.playing,
@@ -298,6 +328,7 @@ export default memo(Control, (previousProps, nextProps) => isEqual({
   playbackPosition: previousProps.playbackPosition,
   urlCurrentPlaying: previousProps.urlCurrentPlaying,
 }, {
+  like: nextProps.current,
   current: nextProps.current,
   queueNext: nextProps.queueNext,
   playing: nextProps.playing,

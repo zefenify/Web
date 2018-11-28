@@ -18,22 +18,30 @@ import Share from '@app/component/svg/Share';
 
 
 const ArtistContainer = styled.div`
-  .ArtistContainer__artist {
-    &__cover {
-      flex: 0 0 250px;
-      height: 250px;
-      width: 250px;
+  .ArtistContainer {
+    &__artist {
+      &__cover {
+        flex: 0 0 250px;
+        height: 250px;
+        width: 250px;
+      }
     }
-  }
 
-  .ArtistContainer__appears {
-    a {
-      flex: 0 0 25%;
-      text-decoration: none;
-      color: ${props => props.theme.NATURAL_2};
+    &__album-container {
+      & > div:not(:last-child) {
+        margin-bottom: 3rem;
+      }
+    }
 
-      @media(min-width: 1282px) {
-        flex: 0 0 20%;
+    &__appears {
+      a {
+        flex: 0 0 25%;
+        text-decoration: none;
+        color: ${props => props.theme.NATURAL_2};
+
+        @media(min-width: 1282px) {
+          flex: 0 0 20%;
+        }
       }
     }
   }
@@ -91,7 +99,7 @@ const Arist = ({
     {/* artist album */}
     {
       artist.relationships.album.length === 0 ? null : (
-        <div className="d-flex flex-column flex-shrink-0 mt-5">
+        <div className="d-flex flex-column flex-shrink-0 mt-5 ArtistContainer__album-container">
           <h1 className="m-0 mb-3">{ `Album${artist.relationships.album.length > 1 ? 's' : ''}` }</h1>
 
           {

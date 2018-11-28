@@ -21,7 +21,7 @@ import ImageContainer from '@app/component/styled/ImageContainer';
 
 const AlbumContainer = styled.div`
   .AlbumContainer {
-    &__album-info {
+    &__album-play-more {
       flex: 0 0 250px;
 
       img {
@@ -69,7 +69,7 @@ const Album = ({
 
   return (
     <AlbumContainer className="d-flex flex-row flex-shrink-0">
-      <div className="AlbumContainer__album-info mb-5">
+      <div className="AlbumContainer__album-play-more mb-5">
         <ImageContainer borderRadius="6px">
           <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
         </ImageContainer>

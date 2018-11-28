@@ -177,9 +177,9 @@ const Control = ({
       role="button"
       onKeyPress={likeTrackToggle}
       onClick={likeTrackToggle}
-      className={`ControlsContainer__like${current === null ? '' : ' active'}${like === true ? ' like' : ''}`}
+      className={`px-2 ControlsContainer__like${current === null ? '' : ' active'}${like === true ? ' like' : ''}`}
     >
-      <Heart strokeWidth="2" fill={like === true ? 'currentColor' : 'none'} />
+      <Heart strokeWidth="1" fill={like === true ? 'currentColor' : 'none'} />
     </div>
 
     <div className="d-flex flex-column flex-grow-1 flex-shrink-1">

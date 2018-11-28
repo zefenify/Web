@@ -106,7 +106,7 @@ const Playlist = ({
   cover,
   play,
 }) => (
-  <PlaylistContainer to={`/${type}/${id}`} className={`d-flex flex-column flex-shrink-0 py-0 px-3 mb-4 ${active === true ? 'active' : ''}`}>
+  <PlaylistContainer to={`/${type}/${id}`} className={`d-flex flex-column flex-shrink-0 pt-0 px-3 pb-4 ${active === true ? 'active' : ''}`}>
     <div className="PlaylistContainer__cover">
       <ImageContainer>
         <img src={`${BASE_S3}${cover.s3_name}`} alt={name} />

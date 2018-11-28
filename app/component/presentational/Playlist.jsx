@@ -99,41 +99,39 @@ const Playlist = ({
   type,
   id,
   playing,
-  playingId,
+  active,
   name,
   description,
   trackCount,
   cover,
   play,
-}) => {
-  return (
-    <PlaylistContainer to={`/${type}/${id}`} className={`d-flex flex-column flex-shrink-0 py-0 px-3 mb-4 ${id === playingId ? 'active' : ''}`}>
-      <div className="PlaylistContainer__cover">
-        <ImageContainer>
-          <img src={`${BASE_S3}${cover.s3_name}`} alt={name} />
-        </ImageContainer>
+}) => (
+  <PlaylistContainer to={`/${type}/${id}`} className={`d-flex flex-column flex-shrink-0 py-0 px-3 mb-4 ${active === true ? 'active' : ''}`}>
+    <div className="PlaylistContainer__cover">
+      <ImageContainer>
+        <img src={`${BASE_S3}${cover.s3_name}`} alt={name} />
+      </ImageContainer>
 
-        <div className="d-flex align-items-center justify-content-center PlaylistContainer__cover__overlay">
-          <PlayPause
-            strokeWidth="1px"
-            playing={id === playingId && playing}
-            onClick={(event) => { event.preventDefault(); play(id); }}
-          />
-        </div>
+      <div className="d-flex align-items-center justify-content-center PlaylistContainer__cover__overlay">
+        <PlayPause
+          strokeWidth="1px"
+          playing={playing}
+          onClick={(event) => { event.preventDefault(); play(id); }}
+        />
       </div>
+    </div>
 
-      <strong className="m-0 p-0 mt-2 PlaylistContainer__title">{ name }</strong>
-      <p className="m-0 p-0 mt-1 PlaylistContainer__description">{ description }</p>
-      <small className="m-0 p-0 mt-2 PlaylistContainer__count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
-    </PlaylistContainer>
-  );
-};
+    <strong className="m-0 p-0 mt-2 PlaylistContainer__title">{ name }</strong>
+    <p className="m-0 p-0 mt-1 PlaylistContainer__description">{ description }</p>
+    <small className="m-0 p-0 mt-2 PlaylistContainer__count">{`${trackCount} SONG${trackCount > 1 ? 'S' : ''}`}</small>
+  </PlaylistContainer>
+);
 
 Playlist.propTypes = {
   type: oneOf(['featured', 'playlist']),
   id: string,
   playing: bool,
-  playingId: string,
+  active: bool,
   name: string,
   description: string,
   trackCount: number,
@@ -145,7 +143,7 @@ Playlist.defaultProps = {
   type: 'playlist',
   id: '',
   playing: false,
-  playingId: '',
+  active: false,
   name: '',
   description: '',
   trackCount: 0,
@@ -155,9 +153,9 @@ Playlist.defaultProps = {
 export default memo(Playlist, (previousProps, nextProps) => isEqual({
   id: previousProps.id,
   playing: previousProps.playing,
-  playingId: previousProps.playingId,
+  active: previousProps.active,
 }, {
   id: nextProps.id,
   playing: nextProps.playing,
-  playingId: nextProps.playingId,
+  active: nextProps.active,
 }));

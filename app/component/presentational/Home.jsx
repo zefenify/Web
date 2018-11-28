@@ -30,9 +30,9 @@ const Home = ({
             type="featured"
             key={_featured.playlist_id}
             id={_featured.playlist_id}
-            playing={playing}
+            playing={playing && featuredPlayingId === _featured.playlist_id}
+            active={featuredPlayingId === _featured.playlist_id}
             play={featuredPlay}
-            playingId={featuredPlayingId}
             name={_featured.playlist_name}
             description={_featured.playlist_description}
             cover={_featured.playlist_cover}

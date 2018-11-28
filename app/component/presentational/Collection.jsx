@@ -93,7 +93,8 @@ const Collection = ({
             <Playlist
               type="playlist"
               key={playlist.playlist_id}
-              playing={playing}
+              playing={playing && playlistPlayingId === playlist.playlist_id}
+              active={playlistPlayingId === playlist.playlist_id}
               play={playlistPlay}
               playingId={playlistPlayingId}
               id={playlist.playlist_id}

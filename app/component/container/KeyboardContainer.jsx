@@ -8,6 +8,9 @@ import {
   PREVIOUS_REQUEST,
   PLAY_PAUSE_REQUEST,
 } from '@app/redux/constant/wolfCola';
+import { SHUFFLE_REQUEST } from '@app/redux/constant/shuffle';
+import { REPEAT_REQUEST } from '@app/redux/constant/repeat';
+import { VOLUME_REQUEST } from '@app/redux/constant/volume';
 import store from '@app/redux/store';
 
 
@@ -44,6 +47,31 @@ const KeyboardContainer = () => {
             type: PREVIOUS_REQUEST,
           });
           break;
+
+        case 's':
+        case 'S':
+          store.dispatch({
+            type: SHUFFLE_REQUEST,
+          });
+          break;
+
+        case 'r':
+        case 'R':
+          store.dispatch({
+            type: REPEAT_REQUEST,
+          });
+          break;
+
+        case 'm':
+        case 'M': {
+          const { volume } = store.getState();
+
+          store.dispatch({
+            type: VOLUME_REQUEST,
+            payload: volume === 0 ? 1 : 0,
+          });
+          break;
+        }
 
         default:
       }

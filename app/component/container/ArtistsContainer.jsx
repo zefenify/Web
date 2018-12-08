@@ -23,30 +23,21 @@ const ArtistsContainer = ({ match }) => {
     playing,
     queueInitial,
   } = useContext(Context);
-  const [state, setState] = useState({
-    artist: [],
-    artistPlayingId: '',
-    albumPlayingId: '',
-    duration: {
-      hour: 0,
-      minute: 0,
-      second: 0,
-    },
-  });
+  const [state, setState] = useState(artistBuild({
+    song,
+    user,
+    queueInitial,
+    match,
+  }));
 
   useEffect(() => {
     setState(Object.assign(state, artistBuild({
       song,
       user,
-      current,
-      playing,
       queueInitial,
       match,
     })));
-
-    // TODO:
-    // remove selector logic as it's no longer needed
-  }, [song, user, current, playing, queueInitial, match]);
+  }, [song, user, queueInitial, match]);
 
   /**
    * given an artist id, it'll build the payload for `PLAY_REQUEST`

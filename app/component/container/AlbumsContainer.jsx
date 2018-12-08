@@ -17,27 +17,21 @@ const AlbumsContainer = ({ match }) => {
     current,
     queueInitial,
   } = useContext(Context);
-  const [state, setState] = useState({
-    album: [],
-    albumPlayingId: '',
-    albumPlaying: false,
-    duration: {
-      hour: 0,
-      minute: 0,
-      second: 0,
-    },
-  });
+  const [state, setState] = useState(albumBuild({
+    song,
+    user,
+    queueInitial,
+    match,
+  }));
 
   useEffect(() => {
     setState(Object.assign(state, albumBuild({
-      user,
       song,
-      playing,
-      current,
+      user,
       queueInitial,
       match,
     })));
-  }, [user, song, playing, current, queueInitial, match]);
+  }, [song, user, queueInitial, match]);
 
   const albumPlayPause = (albumId = 'ZEFENIFY') => {
     // `albumPlayingId` will only be set in album list view

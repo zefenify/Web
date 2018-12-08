@@ -17,7 +17,7 @@ import { LIGHT, DARK } from '@app/config/theme';
 import '@app/component/styled/Global';
 import ErrorBoundaryContainer from '@app/component/container/ErrorBoundaryContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
-import SpaceContainer from '@app/component/container/SpaceContainer';
+import KeyboardContainer from '@app/component/container/KeyboardContainer';
 import { Context } from '@app/component/context/context';
 import Mobile from '@app/component/presentational/Mobile';
 import ControlContainer from '@app/component/container/ControlContainer';
@@ -145,7 +145,7 @@ const WolfCola = () => {
             <Mobile />
             <ContextMenuContainer />
             <ContextOverlayContainer />
-            <SpaceContainer />
+            <KeyboardContainer />
           </ErrorBoundaryContainer>
         </Router>
       </ThemeProvider>

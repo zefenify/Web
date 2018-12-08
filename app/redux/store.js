@@ -90,7 +90,7 @@ const store = createStore(
     urlCurrentPlaying: null,
   },
   // applyMiddleware(sagaMiddleware), // production
-  window.devToolsExtension ? compose(applyMiddleware(sagaMiddleware), window.devToolsExtension()) : applyMiddleware(sagaMiddleware), // development
+  window.__REDUX_DEVTOOLS_EXTENSION__ ? compose(applyMiddleware(sagaMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__()) : applyMiddleware(sagaMiddleware), // development
 );
 
 

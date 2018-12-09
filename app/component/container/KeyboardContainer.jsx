@@ -16,7 +16,7 @@ import store from '@app/redux/store';
 
 // we're leaving Redux Saga `throttle` effects - RAW
 // we need to prevent scrolling on space and fire `PLAY_PAUSE_REQUEST` after `KEY`s
-const KEY = 'keydown';
+const KEY = 'keyup';
 const WAIT = 64;
 
 const KeyboardContainer = () => {

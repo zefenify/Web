@@ -22,7 +22,7 @@ const WAIT = 64;
 const KeyboardContainer = () => {
   useEffect(() => {
     document.querySelector('body').addEventListener(KEY, debounce((event) => {
-      if (window.location.pathname.includes('/search') === true) {
+      if (window.location.pathname.includes('/search') === true || window.location.pathname.includes('/settings') === true) {
         return;
       }
 

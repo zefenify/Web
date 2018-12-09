@@ -39,7 +39,7 @@ export const NavigationMainContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
-  height: 100vh - 90px; /* 90px control */
+  height: calc(100vh - 90px); /* 90px control */
 `;
 
 

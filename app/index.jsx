@@ -61,7 +61,7 @@ const WolfCola = () => {
     return () => {
       unsubscribe();
     };
-  });
+  }, []);
 
   return (
     <Context.Provider value={state}>

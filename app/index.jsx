@@ -40,7 +40,7 @@ import Spinner from '@app/component/presentational/Spinner';
 import Search from '@app/component/svg/Search';
 import Trending from '@app/component/svg/Trending';
 import Settings from '@app/component/svg/Settings';
-// import Download from '@app/component/svg/Download';
+import Download from '@app/component/svg/Download';
 import { NavLinkStyled } from '@app/component/styled/ReactRouter';
 import {
   WolfColaContainer,
@@ -99,17 +99,15 @@ const WolfCola = () => {
                     <NavLinkStyled className="px-2 py-3" to="/artists">Artists</NavLinkStyled>
 
                     {/* setting++ */}
-                    <NavLinkStyled className="px-2 mt-3 mb-5" to="/settings">
+                    <NavLinkStyled className="px-2 py-3 mt-3" to="/settings">
                       <span>Settings</span>
                       <Settings strokeWidth="1px" />
                     </NavLinkStyled>
 
-                    {/*
-                    <NavLinkStyled to="https://github.com/Zefenify/Wolf-Cola/releases" target="_blank">
+                    <a className="px-2 py-3 my-3 __install" href="https://github.com/Zefenify/Wolf-Cola/releases" target="_blank" rel="noopener noreferrer">
                       <span>Install Desktop App</span>
                       <Download strokeWidth="1px" />
-                    </NavLinkStyled>
-                    */}
+                    </a>
                   </div>
                 </NavigationContainer>
 

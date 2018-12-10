@@ -90,6 +90,24 @@ export const NavigationContainer = styled.div`
     left: 0;
     overflow-y: auto;
   }
+
+  /* this is a definiton of a botch job */
+  .__install {
+    color: ${props => props.theme.NATURAL_2};
+    font-weight: bold;
+    text-decoration: none;
+    border-left: 6px solid transparent;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0 !important;
+    height: 36px;
+
+    &:hover {
+      color: ${props => props.theme.PRIMARY_4};
+    }
+  }
 `;
 
 

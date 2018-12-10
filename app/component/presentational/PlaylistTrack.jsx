@@ -78,6 +78,7 @@ const PlaylistTrack = ({
           <Button
             className="p-0"
             style={{ backgroundColor: 'transparent', width: '38px' }}
+            aria-label="more"
             themeColor
             themeBorder
             noShadow

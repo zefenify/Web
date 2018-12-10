@@ -236,6 +236,7 @@ const Track = ({
         className="TrackContainer__kdot pr-3"
         tabIndex="0"
         role="button"
+        aria-label="more"
         onKeyPress={() => contextMenuTrack(trackId)}
         onClick={() => contextMenuTrack(trackId)}
       >

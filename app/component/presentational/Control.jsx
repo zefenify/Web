@@ -251,6 +251,7 @@ const Control = ({
           step="1"
           value={playbackPosition}
           className="flex-grow-1 flex-shrink-1"
+          aria-label="seek"
           onChange={e => seek(e)}
         />
 
@@ -262,7 +263,7 @@ const Control = ({
     </div>
 
     <div className="ControlsContainer__queue-volume flex-grow-0 flex-shrink-0 d-flex flex-row align-items-center">
-      <Link to="/queue" className={`py-0 px-3 ControlsContainer__queue${queueNext.length > 0 ? ' active' : ''}`}>
+      <Link to="/queue" className={`py-0 px-3 ControlsContainer__queue${queueNext.length > 0 ? ' active' : ''}`} aria-label="queue">
         <List width="20" height="20px" />
       </Link>
 
@@ -275,6 +276,7 @@ const Control = ({
           max="1"
           step="0.1"
           value={volume}
+          aria-label="volume"
           onChange={setVolume}
         />
       </div>

@@ -1,6 +1,11 @@
 /* eslint max-len: off */
 
-import React, { useState, useContext } from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -21,11 +26,16 @@ let throttle = null;
 
 
 const SearchContainer = () => {
+  const inputSearch = useRef(null);
   const { user, current, playing } = useContext(Context);
   const [state, setState] = useState({
     q: '',
     match: null,
   });
+
+  useEffect(() => {
+    inputSearch.current.focus();
+  }, []);
 
   const contextMenuTrack = (trackId = 'ZEFENIFY') => {
     const trackIndex = state.match.track.findIndex(_track => _track.track_id === trackId);
@@ -117,6 +127,7 @@ const SearchContainer = () => {
   return (
     <Search
       {...state}
+      inputSearchRef={inputSearch}
       current={current}
       playing={playing}
       onChange={onChange}

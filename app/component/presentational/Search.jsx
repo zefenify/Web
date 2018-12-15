@@ -68,6 +68,7 @@ const SearchContainer = styled.div`
 
 const Search = ({
   q,
+  inputSearchRef,
   match,
   current,
   playing,
@@ -86,6 +87,7 @@ const Search = ({
             placeholder="Search"
             value={q}
             onChange={onChange}
+            ref={inputSearchRef}
           />
         </div>
       </SearchContainer>
@@ -108,6 +110,7 @@ const Search = ({
             placeholder="Search"
             value={q}
             onChange={onChange}
+            ref={inputSearchRef}
           />
         </div>
 
@@ -128,6 +131,7 @@ const Search = ({
           placeholder="Search"
           value={q}
           onChange={onChange}
+          ref={inputSearchRef}
         />
       </div>
 
@@ -252,6 +256,7 @@ const Search = ({
 
 Search.propTypes = {
   q: string,
+  inputSearchRef: shape({}),
   match: shape({}),
   current: shape({}),
   playing: bool,
@@ -262,6 +267,7 @@ Search.propTypes = {
 
 Search.defaultProps = {
   q: '',
+  inputSearchRef: null,
   match: null,
   current: null,
   playing: false,

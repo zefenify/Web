@@ -1,25 +1,19 @@
-/* global document */
 /* eslint no-console: off */
 
-import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { LOCALFORAGE_STORE } from '@app/config/localforage';
+import { getItem, setItem } from '@app/util/mugatu';
+import { LOCALSTORAGE } from '@app/config/localStorage';
 import { THEME_REQUEST } from '@app/redux/constant/theme';
 import { theme } from '@app/redux/action/theme';
 
 
-export function* themeBootFromLocalforage() {
+export function* themeBootFromLocalStorage() {
   try {
-    const localforageTheme = yield localforage.getItem(LOCALFORAGE_STORE.THEME);
-    yield put(theme(localforageTheme === null ? 'DARK' : localforageTheme)); // default boot is `DARK`
-
-    const WolfColaContainer = document.querySelector('#wolf-cola-container');
-    if (WolfColaContainer !== null) {
-      WolfColaContainer.classList.remove('booting');
-    }
+    const localStorageTheme = getItem(LOCALSTORAGE.THEME);
+    yield put(theme(localStorageTheme === null ? 'DARK' : localStorageTheme)); // default boot is `DARK`
   } catch (themeGetError) {
-    console.warn('Unable to Boot Theme from Localforage', themeGetError);
+    console.warn('Unable to Boot Theme from localStorage', themeGetError);
   }
 }
 
@@ -32,9 +26,9 @@ function* _theme() {
   yield put(theme(nextThemeState));
 
   try {
-    yield localforage.setItem(LOCALFORAGE_STORE.THEME, nextThemeState);
+    setItem(LOCALSTORAGE.THEME, nextThemeState);
   } catch (themeSetError) {
-    console.warn('Unable to save Theme State to Localforage', themeSetError);
+    console.warn('Unable to save Theme State to localStorage', themeSetError);
   }
 }
 

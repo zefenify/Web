@@ -9,7 +9,6 @@
     "emotion": "^9.2.12",
     "emotion-theming": "^9.2.9",
     "howler": "^2.1.0",
-    "localforage": "^1.7.3",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "^16.7.0-alpha.2",

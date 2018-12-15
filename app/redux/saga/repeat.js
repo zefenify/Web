@@ -1,19 +1,19 @@
 /* eslint no-console: off */
 
-import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { LOCALFORAGE_STORE } from '@app/config/localforage';
+import { getItem, setItem } from '@app/util/mugatu';
+import { LOCALSTORAGE } from '@app/config/localStorage';
 import { REPEAT_REQUEST } from '@app/redux/constant/repeat';
 import { repeat } from '@app/redux/action/repeat';
 
 
-export function* repeatBootFromLocalforage() {
+export function* repeatBootFromLocalStorage() {
   try {
-    const localforageRepeat = yield localforage.getItem(LOCALFORAGE_STORE.REPEAT);
-    yield put(repeat(localforageRepeat === null ? 'OFF' : localforageRepeat));
+    const localStorageRepeat = getItem(LOCALSTORAGE.REPEAT);
+    yield put(repeat(localStorageRepeat === null ? 'OFF' : localStorageRepeat));
   } catch (repeatGetError) {
-    console.warn('Unable to boot repeat from LF', repeatGetError);
+    console.warn('Unable to Boot Repeat from localStorage', repeatGetError);
   }
 }
 
@@ -24,9 +24,9 @@ function* _repeat() {
   yield put(repeat(nextRepeatModeMapper[state.repeat] || 'OFF'));
 
   try {
-    yield localforage.setItem(LOCALFORAGE_STORE.REPEAT, nextRepeatModeMapper[state.repeat] || 'OFF');
+    setItem(LOCALSTORAGE.REPEAT, nextRepeatModeMapper[state.repeat] || 'OFF');
   } catch (repeatSetError) {
-    console.warn('Unable to save repeat state to LF', repeatSetError);
+    console.warn('Unable to save Repeat State to localStorage', repeatSetError);
   }
 }
 

@@ -37,7 +37,7 @@ import contextMenu from '@app/redux/reducer/contextMenu';
 import song from '@app/redux/reducer/song';
 import notification from '@app/redux/reducer/notification';
 import urlCurrentPlaying from '@app/redux/reducer/urlCurrentPlaying';
-import rootSaga from '@app/redux/saga/sagas';
+import rootSaga from '@app/redux/saga/index';
 
 
 const sagaMiddleware = createSagaMiddleware();

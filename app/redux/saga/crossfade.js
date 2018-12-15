@@ -1,19 +1,19 @@
 /* eslint no-console: off */
 
-import localforage from 'localforage';
 import { put, takeEvery } from 'redux-saga/effects';
 
-import { LOCALFORAGE_STORE } from '@app/config/localforage';
+import { getItem, setItem } from '@app/util/mugatu';
+import { LOCALSTORAGE } from '@app/config/localStorage';
 import { CROSSFADE_REQUEST, CROSSFADE_DEFAULT } from '@app/redux/constant/crossfade';
 import { crossfade } from '@app/redux/action/crossfade';
 
 
-export function* crossfadeBootFromLocalforage() {
+export function* crossfadeBootFromLocalStorage() {
   try {
-    const localforageCrossfade = yield localforage.getItem(LOCALFORAGE_STORE.CROSSFADE);
-    yield put(crossfade(localforageCrossfade || CROSSFADE_DEFAULT));
+    const localStorageCrossfade = getItem(LOCALSTORAGE.CROSSFADE);
+    yield put(crossfade(localStorageCrossfade || CROSSFADE_DEFAULT));
   } catch (crossfadeGetError) {
-    console.warn('Unable to boot crossfade from LF', crossfadeGetError);
+    console.warn('Unable to Boot Crossfade from localStorage', crossfadeGetError);
   }
 }
 
@@ -22,9 +22,9 @@ function* _crossfade(action) {
   yield put(crossfade(action.payload));
 
   try {
-    yield localforage.setItem(LOCALFORAGE_STORE.CROSSFADE, action.payload);
+    setItem(LOCALSTORAGE.CROSSFADE, action.payload);
   } catch (crossfadeSetError) {
-    console.warn('Unable to save crossfade from LF', crossfadeSetError);
+    console.warn('Unable to save Crossfade from localStorage', crossfadeSetError);
   }
 }
 

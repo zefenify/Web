@@ -1,12 +1,12 @@
 import { all } from 'redux-saga/effects';
 
-import { themeBootFromLocalforage, themeRequest } from '@app/redux/saga/theme';
-import { volumeBootFromLocalforage, volumeRequest } from '@app/redux/saga/volume';
-import { repeatBootFromLocalforage, repeatRequest } from '@app/redux/saga/repeat';
-import { shuffleBootFromLocalforage, shuffleRequest } from '@app/redux/saga/shuffle';
-import { crossfadeBootFromLocalforage, crossfadeRequest } from '@app/redux/saga/crossfade';
-import { remainingBootFromLocalforage, remainingRequest } from '@app/redux/saga/remaining';
-import { userBootFromLocalforage, userRequest } from '@app/redux/saga/user';
+import { themeBootFromLocalStorage, themeRequest } from '@app/redux/saga/theme';
+import { volumeBootFromLocalStorage, volumeRequest } from '@app/redux/saga/volume';
+import { repeatBootFromLocalStorage, repeatRequest } from '@app/redux/saga/repeat';
+import { shuffleBootFromLocalStorage, shuffleRequest } from '@app/redux/saga/shuffle';
+import { crossfadeBootFromLocalStorage, crossfadeRequest } from '@app/redux/saga/crossfade';
+import { remainingBootFromLocalStorage, remainingRequest } from '@app/redux/saga/remaining';
+import { userBootFromLocalStorage, userRequest } from '@app/redux/saga/user';
 import {
   playRequest,
   previousRequest,
@@ -25,15 +25,15 @@ import { notificationOnRequest, notificationOffRequest } from '@app/redux/saga/n
 
 
 function* rootSaga() {
-  yield crossfadeBootFromLocalforage();
-  yield volumeBootFromLocalforage();
-  yield shuffleBootFromLocalforage();
-  yield repeatBootFromLocalforage();
-  yield remainingBootFromLocalforage();
-  yield userBootFromLocalforage();
+  yield crossfadeBootFromLocalStorage();
+  yield volumeBootFromLocalStorage();
+  yield shuffleBootFromLocalStorage();
+  yield repeatBootFromLocalStorage();
+  yield remainingBootFromLocalStorage();
+  yield userBootFromLocalStorage();
+  yield themeBootFromLocalStorage();
 
   yield all([
-    themeBootFromLocalforage(),
     themeRequest(),
     volumeRequest(),
     repeatRequest(),

@@ -1,20 +1,20 @@
 /* eslint no-console: off */
 
-import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { LOCALFORAGE_STORE } from '@app/config/localforage';
+import { getItem, setItem } from '@app/util/mugatu';
+import { LOCALSTORAGE } from '@app/config/localStorage';
 import { REMAINING_REQUEST } from '@app/redux/constant/remaining';
 import { remaining } from '@app/redux/action/remaining';
 
 
-export function* remainingBootFromLocalforage() {
+export function* remainingBootFromLocalStorage() {
   try {
-    const localforageRemaining = yield localforage.getItem(LOCALFORAGE_STORE.REMAINING);
+    const localStorageRemaining = getItem(LOCALSTORAGE.REMAINING);
     // default behavior or remaining is false i.e. end timer is always displayed
-    yield put(remaining(localforageRemaining || false));
+    yield put(remaining(localStorageRemaining || false));
   } catch (remainingGetError) {
-    console.warn('Unable to boot remaining from LF', remainingGetError);
+    console.warn('Unable to Boot Remaining from localStorage', remainingGetError);
   }
 }
 
@@ -24,9 +24,9 @@ function* _remaining() {
   yield put(remaining(!state.remaining));
 
   try {
-    yield localforage.setItem(LOCALFORAGE_STORE.REMAINING, !state.remaining);
+    setItem(LOCALSTORAGE.REMAINING, !state.remaining);
   } catch (remainingSetError) {
-    console.warn('Unable to save remaining state to LF', remainingSetError);
+    console.warn('Unable to save Remaining State to localStorage', remainingSetError);
   }
 }
 

@@ -58,6 +58,11 @@ const WolfCola = () => {
       setState(store.getState());
     });
 
+    const wolfColaContainer = document.querySelector('#wolf-cola-container');
+    if (wolfColaContainer !== null) {
+      wolfColaContainer.classList.remove('booting');
+    }
+
     return () => {
       unsubscribe();
     };

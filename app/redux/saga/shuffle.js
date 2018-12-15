@@ -1,19 +1,19 @@
 /* eslint no-console: off */
 
-import localforage from 'localforage';
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { LOCALFORAGE_STORE } from '@app/config/localforage';
+import { getItem, setItem } from '@app/util/mugatu';
+import { LOCALSTORAGE } from '@app/config/localStorage';
 import { SHUFFLE_REQUEST } from '@app/redux/constant/shuffle';
 import { shuffle } from '@app/redux/action/shuffle';
 
 
-export function* shuffleBootFromLocalforage() {
+export function* shuffleBootFromLocalStorage() {
   try {
-    const localforageShuffle = yield localforage.getItem(LOCALFORAGE_STORE.SHUFFLE);
-    yield put(shuffle(localforageShuffle === null ? false : localforageShuffle));
+    const localStorageShuffle = getItem(LOCALSTORAGE.SHUFFLE);
+    yield put(shuffle(localStorageShuffle === null ? false : localStorageShuffle));
   } catch (shuffleGetError) {
-    console.warn('Unable to boot shuffle from LF', shuffleGetError);
+    console.warn('Unable to Boot Shuffle from localStorage', shuffleGetError);
   }
 }
 
@@ -23,9 +23,9 @@ function* _shuffle() {
   yield put(shuffle(!state.shuffle));
 
   try {
-    yield localforage.setItem(LOCALFORAGE_STORE.SHUFFLE, !state.shuffle);
+    setItem(LOCALSTORAGE.SHUFFLE, !state.shuffle);
   } catch (shuffleSetError) {
-    console.warn('Unable to save shuffle state to LF', shuffleSetError);
+    console.warn('Unable to save Shuffle State to localStorage', shuffleSetError);
   }
 }
 

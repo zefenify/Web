@@ -18,7 +18,7 @@ function* _contextMenuOn(action) {
 
   // this is not suppose to happen - only one context at at time
   if (state.contextMenu !== null) {
-    console.warn('double context triggered, ANC');
+    console.warn('Double Context Triggered, ANC');
     return;
   }
 

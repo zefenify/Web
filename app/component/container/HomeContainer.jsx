@@ -91,7 +91,7 @@ const HomeContainer = () => {
         },
       });
 
-      store.dispatch(urlCurrentPlaying(`/playlist/${featuredId}`));
+      store.dispatch(urlCurrentPlaying(`/featured/${featuredId}`));
     }, error(store));
   };
 

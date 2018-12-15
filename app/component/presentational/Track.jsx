@@ -74,6 +74,8 @@ const TrackContainer = styled.div`
   width: 100%;
   border-bottom: 1px solid ${props => props.theme.NATURAL_7};
   transition: background-color 128ms;
+  max-height: 75px;
+  min-height: 75px;
 
   /* the sketch makes way more sense for 'TrackContainer__control' rules */
   /* default state */

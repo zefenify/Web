@@ -27,7 +27,8 @@ export const getItem = (key = '') => {
   }
 
   try {
-    return JSON.parse(value).value || null;
+    const JSONParsed = JSON.parse(value);
+    return JSONParsed.value === null ? null : JSONParsed.value;
   } catch (exception) {
     return null;
   }

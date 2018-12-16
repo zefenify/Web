@@ -178,4 +178,5 @@ TrendingContainer.propTypes = {
   }).isRequired,
 };
 
+
 export default TrendingContainer;

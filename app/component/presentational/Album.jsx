@@ -170,6 +170,7 @@ Album.defaultProps = {
   albumPlaying: false,
 };
 
+
 export default memo(Album, (previousProps, nextProps) => isEqual({
   albumId: previousProps.albumId,
   current: previousProps.current,

@@ -8,6 +8,7 @@ import { queueNextAdd, queueNextRemove } from '@app/redux/action/queueNext';
 import ContextMenu from '@app/component/presentational/ContextMenu';
 import { Context } from '@app/component/context/context';
 
+
 const contextMenuClose = () => {
   const { contextMenu } = store.getState();
 
@@ -20,12 +21,14 @@ const contextMenuClose = () => {
   });
 };
 
+
 const songSave = (track) => {
   store.dispatch({
     type: SONG_SAVE_REQUEST,
     payload: track,
   });
 };
+
 
 const songRemove = (track) => {
   store.dispatch({
@@ -34,13 +37,16 @@ const songRemove = (track) => {
   });
 };
 
+
 const _queueNextAdd = (track) => {
   store.dispatch(queueNextAdd(track));
 };
 
+
 const _queueNextRemove = (queueNextIndex) => {
   store.dispatch(queueNextRemove(queueNextIndex));
 };
+
 
 const ContextMenuContainer = (props) => {
   const {
@@ -65,5 +71,6 @@ const ContextMenuContainer = (props) => {
     />
   );
 };
+
 
 export default withRouter(ContextMenuContainer);

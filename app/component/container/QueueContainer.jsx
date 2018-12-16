@@ -3,13 +3,12 @@ import { shape, string } from 'prop-types';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
-
 import store from '@app/redux/store';
 import tracksDuration from '@app/redux/selector/tracksDuration';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
-
 import Queue from '@app/component/presentational/Queue';
 import { Context } from '@app/component/context/context';
+
 
 const QueueContainer = ({ match }) => {
   const {
@@ -87,10 +86,12 @@ const QueueContainer = ({ match }) => {
   );
 };
 
+
 QueueContainer.propTypes = {
   match: shape({
     url: string,
   }).isRequired,
 };
+
 
 export default QueueContainer;

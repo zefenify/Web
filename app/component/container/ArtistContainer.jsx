@@ -257,4 +257,5 @@ ArtistContainer.propTypes = {
   }).isRequired,
 };
 
+
 export default ArtistContainer;

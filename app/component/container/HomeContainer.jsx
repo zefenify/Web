@@ -13,6 +13,7 @@ import Home from '@app/component/presentational/Home';
 
 
 let requestCancel = () => {};
+
 const HomeContainer = () => {
   const { user, playing } = useContext(Context);
   const [state, setState] = useState({

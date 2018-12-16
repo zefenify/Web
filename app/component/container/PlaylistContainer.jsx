@@ -184,6 +184,7 @@ const PlaylistContainer = ({ match }) => {
   );
 };
 
+
 PlaylistContainer.propTypes = {
   match: shape({
     url: string,
@@ -192,5 +193,6 @@ PlaylistContainer.propTypes = {
     }),
   }).isRequired,
 };
+
 
 export default PlaylistContainer;

@@ -17,6 +17,8 @@ const contextMenuClose = () => {
   });
 };
 
+
 const ContextOverlayContainer = () => <ContextOverlay contextMenuClose={contextMenuClose} />;
+
 
 export default ContextOverlayContainer;

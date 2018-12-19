@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
-import flatten from 'lodash/flatten';
-import cloneDeep from 'lodash/cloneDeep';
-import sortBy from 'lodash/sortBy';
-import reverse from 'lodash/reverse';
-import uniqBy from 'lodash/uniqBy';
+import flatten from 'lodash/fp/flatten';
+import cloneDeep from 'lodash/fp/cloneDeep';
+import sortBy from 'lodash/fp/sortBy';
+import reverse from 'lodash/fp/reverse';
+import uniqBy from 'lodash/fp/uniqBy';
 
 import trackListSame from '@app/util/trackListSame';
 import { human } from '@app/util/time';

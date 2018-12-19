@@ -87,7 +87,7 @@ const AlbumContainer = ({ match }) => {
       store.dispatch(loading(false));
       requestCancel();
     };
-  }, [user, match.params.id]);
+  }, [match.params.id]);
 
   const albumPlayPause = () => {
     if (state.album === null) {

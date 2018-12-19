@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { string, shape } from 'prop-types';
 import isEqual from 'react-fast-compare';
 
@@ -11,6 +11,7 @@ import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import Collection from '@app/component/presentational/Collection';
 import { Context } from '@app/component/context/context';
+import useEffectDeep from '@app/hook/useEffectDeep';
 
 
 let requestCancel = () => {};
@@ -24,7 +25,7 @@ const CollectionContainer = ({ match }) => {
     playlistPlayingId: '',
   });
 
-  useEffect(() => {
+  useEffectDeep(() => {
     store.dispatch(loading(true));
 
     setState(Object.assign(state, {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { string, shape } from 'prop-types';
 import flatten from 'lodash/flatten';
 import cloneDeep from 'lodash/cloneDeep';
@@ -23,6 +23,7 @@ import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import store from '@app/redux/store';
 import Artist from '@app/component/presentational/Artist';
 import { Context } from '@app/component/context/context';
+import useEffectDeep from '@app/hook/useEffectDeep';
 
 
 let requestCancel = null;
@@ -42,7 +43,7 @@ const ArtistContainer = ({ match }) => {
     aristPlaying: false, // checks the current queueInitial is filled with artists track [flat]
   });
 
-  useEffect(() => {
+  useEffectDeep(() => {
     store.dispatch(loading(true));
 
     api(`${BASE}artist/${match.params.id}`, user, (cancel) => {

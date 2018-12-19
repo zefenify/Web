@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { string, shape } from 'prop-types';
 
 import { BASE } from '@app/config/api';
@@ -13,6 +13,7 @@ import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import { loading } from '@app/redux/action/loading';
 import PlaylistTrack from '@app/component/presentational/PlaylistTrack';
 import { Context } from '@app/component/context/context';
+import useEffectDeep from '@app/hook/useEffectDeep';
 
 
 let requestCancel = () => {};
@@ -35,7 +36,7 @@ const PlaylistContainer = ({ match }) => {
     playlistId: match.params.id || '',
   });
 
-  useEffect(() => {
+  useEffectDeep(() => {
     store.dispatch(loading(true));
 
     api(`${BASE}playlist/${match.params.id}`, user, (cancel) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { string, shape } from 'prop-types';
 
 import { BASE } from '@app/config/api';
@@ -13,6 +13,7 @@ import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import Trending from '@app/component/presentational/Trending';
 import { Context } from '@app/component/context/context';
+import useEffectDeep from '@app/hook/useEffectDeep';
 
 
 let requestCancel = () => {};
@@ -35,7 +36,7 @@ const TrendingContainer = ({ match }) => {
     trendingPlaying: false,
   });
 
-  useEffect(() => {
+  useEffectDeep(() => {
     setState(Object.assign(state, {
       trending: null,
     }));

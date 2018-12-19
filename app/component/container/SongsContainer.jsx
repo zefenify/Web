@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { shape, string } from 'prop-types';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -10,6 +10,7 @@ import songPlaying from '@app/redux/selector/songPlaying';
 import songTrack from '@app/redux/selector/songTrack';
 import Songs from '@app/component/presentational/Songs';
 import { Context } from '@app/component/context/context';
+import useEffectDeep from '@app/hook/useEffectDeep';
 
 
 const SongsContainer = ({ match }) => {
@@ -26,7 +27,7 @@ const SongsContainer = ({ match }) => {
     songPlaying: songPlaying({ song, queueInitial }),
   });
 
-  useEffect(() => {
+  useEffectDeep(() => {
     setState(Object.assign(state, {
       song: songTrack({ song }),
       totalDuration: songDuration({ song }),

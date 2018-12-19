@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { VOLUME_REQUEST } from '@app/redux/constant/volume';
 import { REPEAT_REQUEST } from '@app/redux/constant/repeat';
@@ -14,6 +14,7 @@ import { SONG_SAVE_REQUEST, SONG_REMOVE_REQUEST } from '@app/redux/constant/song
 import store from '@app/redux/store';
 import Control from '@app/component/presentational/Control';
 import { Context } from '@app/component/context/context';
+import useEffectDeep from '@app/hook/useEffectDeep';
 
 
 const dispatches = {
@@ -101,7 +102,7 @@ const ControlContainer = () => {
     liked: false,
   });
 
-  useEffect(() => {
+  useEffectDeep(() => {
     if (song === null || current === null) {
       setState(Object.assign(state, {
         like: false,
@@ -113,7 +114,7 @@ const ControlContainer = () => {
     setState(Object.assign(state, {
       like: Object.keys(song.included.track).includes(current.track_id),
     }));
-  }, [song === null ? song : song.included.track, current === null ? current : current.track_id]);
+  }, [song, current]);
 
   const likeTrackToggle = () => {
     const { like } = state;

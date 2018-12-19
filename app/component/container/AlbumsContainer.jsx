@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -7,6 +7,7 @@ import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import Albums from '@app/component/presentational/Albums';
 import albumBuild from '@app/redux/selector/albumBuild';
 import { Context } from '@app/component/context/context';
+import useEffectDeep from '@app/hook/useEffectDeep';
 
 
 const AlbumsContainer = ({ match }) => {
@@ -24,7 +25,7 @@ const AlbumsContainer = ({ match }) => {
     match,
   }));
 
-  useEffect(() => {
+  useEffectDeep(() => {
     setState(Object.assign(state, albumBuild({
       song,
       user,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import flatten from 'lodash/flatten';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -13,6 +13,7 @@ import artistBuild from '@app/redux/selector/artistBuild';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import { Context } from '@app/component/context/context';
 import Artists from '@app/component/presentational/Artists';
+import useEffectDeep from '@app/hook/useEffectDeep';
 
 
 const ArtistsContainer = ({ match }) => {
@@ -30,7 +31,7 @@ const ArtistsContainer = ({ match }) => {
     match,
   }));
 
-  useEffect(() => {
+  useEffectDeep(() => {
     setState(Object.assign(state, artistBuild({
       song,
       user,

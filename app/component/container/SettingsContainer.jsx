@@ -30,7 +30,7 @@ const logout = () => {
 
   store.dispatch({
     type: SONG,
-    payload: [],
+    payload: null,
   });
 };
 

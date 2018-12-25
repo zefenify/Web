@@ -127,6 +127,7 @@ const ControlsContainer = styled.div`
 
 const Control = ({
   like,
+  user,
   current,
   queueNext,
   togglePlayPause,
@@ -179,6 +180,7 @@ const Control = ({
       onKeyPress={likeTrackToggle}
       onClick={likeTrackToggle}
       className={`px-2 ControlsContainer__like${current === null ? '' : ' active'}${like === true ? ' like' : ''}`}
+      style={{ display: user === null ? 'none' : undefined }}
     >
       <Heart strokeWidth="1" fill={like === true ? 'currentColor' : 'none'} />
     </div>
@@ -285,6 +287,7 @@ const Control = ({
 );
 
 Control.propTypes = {
+  user: shape({}),
   like: bool,
   current: oneOfType([shape({})]),
   queueNext: arrayOf(shape({})),
@@ -310,6 +313,7 @@ Control.propTypes = {
 };
 
 Control.defaultProps = {
+  user: null,
   like: false,
   current: null,
   queueNext: [],
@@ -324,6 +328,7 @@ Control.defaultProps = {
 };
 
 export default memo(Control, (previousProps, nextProps) => isEqual({
+  user: previousProps.user,
   like: previousProps.like,
   current: previousProps.current,
   queueNext: previousProps.queueNext,
@@ -336,6 +341,7 @@ export default memo(Control, (previousProps, nextProps) => isEqual({
   playbackPosition: previousProps.playbackPosition,
   urlCurrentPlaying: previousProps.urlCurrentPlaying,
 }, {
+  user: previousProps.user,
   like: nextProps.current,
   current: nextProps.current,
   queueNext: nextProps.queueNext,

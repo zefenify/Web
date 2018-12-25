@@ -7,7 +7,7 @@ import {
   shape,
   func,
 } from 'prop-types';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { withRouter } from 'react-router';
 import isEqual from 'react-fast-compare';
 

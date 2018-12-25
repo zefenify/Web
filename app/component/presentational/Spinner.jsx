@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { bool } from 'prop-types';
-import styled from 'react-emotion';
-import { keyframes } from 'emotion';
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/core';
 import isEqual from 'react-fast-compare';
 
 

@@ -6,8 +6,7 @@ import {
   number,
   shape,
 } from 'prop-types';
-import styled from 'react-emotion';
-import isEqual from 'react-fast-compare';
+import styled from '@emotion/styled';
 
 import Button from '@app/component/styled/Button';
 import Range from '@app/component/styled/Range';

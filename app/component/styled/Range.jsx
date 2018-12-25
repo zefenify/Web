@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 
 
 // https://codepen.io/aronwoost/pen/nlyrf + some styling tweaks, theme and Firefox fix

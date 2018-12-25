@@ -8,7 +8,7 @@ import {
   string,
 } from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import isEqual from 'react-fast-compare';
 
 import Track from '@app/component/presentational/Track';

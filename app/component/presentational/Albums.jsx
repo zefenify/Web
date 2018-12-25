@@ -9,7 +9,7 @@ import {
   arrayOf,
   oneOfType,
 } from 'prop-types';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { func } from 'prop-types';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 
 
 const ContextOverlayContainer = styled.div`

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { func } from 'prop-types';
 
 import Button from '@app/component/styled/Button';

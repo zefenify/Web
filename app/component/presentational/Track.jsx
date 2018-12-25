@@ -7,7 +7,7 @@ import {
   arrayOf,
   shape,
 } from 'prop-types';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
 

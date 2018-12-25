@@ -14,7 +14,7 @@ import { ThemeProvider } from 'emotion-theming';
 
 import store from '@app/redux/store';
 import { LIGHT, DARK } from '@app/config/theme';
-import '@app/component/styled/Global';
+import GlobalStyle from '@app/component/styled/Global';
 import ErrorBoundaryContainer from '@app/component/container/ErrorBoundaryContainer';
 import ContextOverlayContainer from '@app/component/container/ContextOverlayContainer';
 import KeyboardContainer from '@app/component/container/KeyboardContainer';
@@ -145,6 +145,7 @@ const WolfCola = () => {
               <ControlContainer />
             </WolfColaContainer>
 
+            <GlobalStyle />
             <Mobile />
             <ContextMenuContainer />
             <ContextOverlayContainer />

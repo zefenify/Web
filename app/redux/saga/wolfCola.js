@@ -3,7 +3,7 @@
  * *direct* association with Redux store, but knows what sags to call
  */
 
-import { eventChannel, END, delay } from 'redux-saga';
+import { eventChannel, END } from 'redux-saga';
 import {
   select,
   put,
@@ -13,6 +13,7 @@ import {
   throttle,
   takeEvery,
   takeLatest,
+  delay,
 } from 'redux-saga/effects';
 import { Howl } from 'howler';
 import random from 'lodash/fp/random';
@@ -215,7 +216,7 @@ const tracker = () => {
         }
       }
 
-      yield call(delay, 1000);
+      yield delay(1000);
     }
 
     trackerInProgress = false;
@@ -420,7 +421,7 @@ function* _play(action) {
  */
 function* _seek(action) {
   // delaying by 64ms to avoid too quick seek operations. An equivalent of an inside throttle effect
-  yield call(delay, 64);
+  yield delay(64);
   const { payload } = action;
   yield put(playbackPosition(payload));
 

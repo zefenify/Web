@@ -1,12 +1,11 @@
 /* global document */
 /* eslint no-console: off */
 
-import { delay } from 'redux-saga';
 import {
-  call,
   put,
   select,
   takeEvery,
+  delay,
 } from 'redux-saga/effects';
 
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_MENU_OFF_REQUEST } from '@app/redux/constant/contextMenu';
@@ -48,7 +47,7 @@ function* _contextMenuOff() {
   const ContextOverlayContainer = document.querySelector('#context-overlay-container');
   ContextOverlayContainer.style.zIndex = 98;
 
-  yield call(delay, 256);
+  yield delay(256);
   yield put(contextMenuOff(null));
 }
 

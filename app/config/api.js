@@ -1,10 +1,10 @@
 // production
 // export const HEADER = 'Authorization';
-// export const BASE = 'https://zefenify.it/api/';
-// export const BASE_S3 = 'https://zefenify.it/api/@S3/';
-// export const BASE_SHARE = 'https://zefenify.it/';
-// export const FAUTH = 'https://zefenify.it/api/fauth/';
-// export const SEARCH = 'https://zefenify.it/api/search';
+// export const BASE = 'https://zefenify.com/api/';
+// export const BASE_S3 = 'https://zefenify.com/api/@S3/';
+// export const BASE_SHARE = 'https://zefenify.com/';
+// export const FAUTH = 'https://zefenify.com/api/fauth/';
+// export const SEARCH = 'https://zefenify.com/api/search';
 // export const CACHE_AGE = 21600; // in seconds (6 hours)
 
 // development

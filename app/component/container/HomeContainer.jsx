@@ -29,8 +29,10 @@ const HomeContainer = () => {
     }).then(({ data, included }) => {
       store.dispatch(loading(false));
 
-      setState(Object.assign(state, {
-        featured: data.map(featured => Object.assign({}, featured, {
+      setState(previousState => ({
+        ...previousState,
+        featured: data.map(featured => ({
+          ...featured,
           playlist_cover: included.s3[featured.playlist_cover],
         })),
       }));
@@ -47,7 +49,8 @@ const HomeContainer = () => {
         }
       });
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         featuredPlayingId,
       }));
     }, error(store));
@@ -78,7 +81,8 @@ const HomeContainer = () => {
       });
       const trackList = track(playlistTrack.playlist_track, included);
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         featuredPlayingId: featuredId,
       }));
 

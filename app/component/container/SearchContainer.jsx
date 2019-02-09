@@ -57,10 +57,6 @@ const SearchContainer = () => {
     const { target } = event;
     const q = target.value;
 
-    if (q.length > 16) {
-      return;
-    }
-
     clearTimeout(throttle);
     requestCancel();
 
@@ -71,7 +67,7 @@ const SearchContainer = () => {
     }));
 
     throttle = setTimeout(() => {
-      if (state.q === '' || state.q.length < 2) {
+      if (q === '' || q.length < 2 || q.length > 16) {
         setState(previousState => ({
           ...previousState,
           match: null,

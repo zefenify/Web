@@ -64,14 +64,16 @@ const SearchContainer = () => {
     clearTimeout(throttle);
     requestCancel();
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       match: null,
       q,
     }));
 
     throttle = setTimeout(() => {
       if (state.q === '' || state.q.length < 2) {
-        setState(Object.assign(state, {
+        setState(previousState => ({
+          ...previousState,
           match: null,
         }));
 
@@ -89,7 +91,8 @@ const SearchContainer = () => {
         match.playlist = match.playlist.map(playlist => Object.assign({}, playlist, { playlist_cover: cloneDeep(included.s3[playlist.playlist_cover]) }));
         match.track = track(match.track, included);
 
-        setState(Object.assign(state, {
+        setState(previousState => ({
+          ...previousState,
           match,
         }));
       }, error(store));

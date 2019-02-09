@@ -28,7 +28,8 @@ const SongsContainer = ({ match }) => {
   });
 
   useEffectDeep(() => {
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       song: songTrack({ song }),
       totalDuration: songDuration({ song }),
       songPlaying: songPlaying({ song, queueInitial }),
@@ -80,7 +81,8 @@ const SongsContainer = ({ match }) => {
       },
     });
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       songPlaying: true,
     }));
 

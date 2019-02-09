@@ -57,7 +57,8 @@ const AlbumContainer = ({ match }) => {
 
       const trackList = track(albumTrackList, included);
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         album: {
           album_id: data.album_id,
           album_name: data.album_name,
@@ -72,14 +73,16 @@ const AlbumContainer = ({ match }) => {
       }));
 
       if (queueInitial.length === 0 || state.album.relationships.track.length === 0) {
-        setState(Object.assign(state, {
+        setState(previousState => ({
+          ...previousState,
           albumPlaying: false,
         }));
 
         return;
       }
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         albumPlaying: trackListSame(state.album.relationships.track, queueInitial),
       }));
     }, error(store));
@@ -106,7 +109,8 @@ const AlbumContainer = ({ match }) => {
         },
       });
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         albumPlaying: true,
       }));
 
@@ -143,7 +147,8 @@ const AlbumContainer = ({ match }) => {
       },
     });
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       albumPlaying: true,
     }));
 

@@ -37,7 +37,8 @@ const TrendingContainer = ({ match }) => {
   });
 
   useEffectDeep(() => {
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       trending: null,
     }));
 
@@ -50,20 +51,23 @@ const TrendingContainer = ({ match }) => {
 
         const trending = track(data, included);
 
-        setState(Object.assign(state, {
+        setState(previousState => ({
+          ...previousState,
           trending,
           duration: human(trending.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
         }));
 
         if (queueInitial.length === 0 || state.trending.length === 0) {
-          setState(Object.assign(state, {
+          setState(previousState => ({
+            ...previousState,
             trendingPlaying: false,
           }));
 
           return;
         }
 
-        setState(Object.assign(state, {
+        setState(previousState => ({
+          ...previousState,
           trendingPlaying: trackListSame(state.trending, queueInitial),
         }));
       }, error(store));
@@ -90,7 +94,8 @@ const TrendingContainer = ({ match }) => {
         },
       });
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         trendingPlaying: true,
       }));
 
@@ -128,7 +133,8 @@ const TrendingContainer = ({ match }) => {
       },
     });
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       trendingPlaying: true,
     }));
 

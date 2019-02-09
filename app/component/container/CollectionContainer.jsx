@@ -28,7 +28,8 @@ const CollectionContainer = ({ match }) => {
   useEffectDeep(() => {
     store.dispatch(loading(true));
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       collection: null,
     }));
 
@@ -45,7 +46,8 @@ const CollectionContainer = ({ match }) => {
           })),
         }));
 
-        setState(Object.assign(state, {
+        setState(previousState => ({
+          ...previousState,
           collectionName: 'Genre & Moods',
           collection,
           collectionId: '',
@@ -80,7 +82,8 @@ const CollectionContainer = ({ match }) => {
         }
       });
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         collectionName: data.collection_name,
         collection,
         collectionId: match.params.id,
@@ -113,7 +116,8 @@ const CollectionContainer = ({ match }) => {
 
       const trackList = track(playlistTrack.playlist_track, included);
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         playlistPlayingId: playlistId,
       }));
 

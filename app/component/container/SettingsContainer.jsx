@@ -56,7 +56,8 @@ const SettingsContainer = (props) => {
       return;
     }
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       [name]: value,
     }));
   };
@@ -90,7 +91,8 @@ const SettingsContainer = (props) => {
 
       post(`${BASE}email`, context.user, { email: state.email })
         .then(() => {
-          setState(Object.assign(state, {
+          setState(previousState => ({
+            ...previousState,
             verificationCodeSent: true,
           }));
 

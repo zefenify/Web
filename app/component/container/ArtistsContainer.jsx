@@ -32,12 +32,15 @@ const ArtistsContainer = ({ match }) => {
   }));
 
   useEffectDeep(() => {
-    setState(Object.assign(state, artistBuild({
-      song,
-      user,
-      queueInitial,
-      match,
-    })));
+    setState(previousState => ({
+      ...previousState,
+      ...artistBuild({
+        song,
+        user,
+        queueInitial,
+        match,
+      }),
+    }));
   }, [song, user, queueInitial, match]);
 
   /**
@@ -77,7 +80,8 @@ const ArtistsContainer = ({ match }) => {
       type: PLAY_PAUSE_REQUEST,
     });
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       artistPlayingId: artistId,
       albumPlayingId: '',
     }));

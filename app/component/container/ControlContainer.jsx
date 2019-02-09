@@ -105,14 +105,16 @@ const ControlContainer = () => {
 
   useEffectDeep(() => {
     if (song === null || current === null) {
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         like: false,
       }));
 
       return;
     }
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       like: Object.keys(song.included.track).includes(current.track_id),
     }));
   }, [song, current]);
@@ -121,7 +123,8 @@ const ControlContainer = () => {
     const { like } = state;
 
     // optimistic update
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       like: !like,
     }));
 

@@ -72,14 +72,16 @@ const ArtistContainer = ({ match }) => {
         }
       });
 
-      setState(Object.assign(state, {
-        artist: Object.assign({}, data, {
+      setState(previousState => ({
+        ...previousState,
+        artist: {
+          ...data,
           artist_cover: included.s3[data.artist_cover],
           relationships: {
             album: albumList,
             track: trackList,
           },
-        }),
+        },
         trackFlatten,
         trackCount: trackFlatten.length,
         aristPlaying: trackListSame(queueInitial, trackFlatten),
@@ -109,7 +111,8 @@ const ArtistContainer = ({ match }) => {
         },
       });
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         albumPlayingId: '',
         aristPlaying: true,
       }));
@@ -140,7 +143,8 @@ const ArtistContainer = ({ match }) => {
         },
       });
 
-      setState(Object.assign(state, {
+      setState(previousState => ({
+        ...previousState,
         albumPlayingId: albumId,
         aristPlaying: trackListSame(state.artist.relationships.album[albumIndex].relationships.track, state.trackFlatten),
       }));
@@ -177,7 +181,8 @@ const ArtistContainer = ({ match }) => {
       },
     });
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       albumPlayingId: '',
       aristPlaying: true,
     }));

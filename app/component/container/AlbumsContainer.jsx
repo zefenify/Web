@@ -26,12 +26,15 @@ const AlbumsContainer = ({ match }) => {
   }));
 
   useEffectDeep(() => {
-    setState(Object.assign(state, albumBuild({
-      song,
-      user,
-      queueInitial,
-      match,
-    })));
+    setState(previousState => ({
+      ...previousState,
+      ...albumBuild({
+        song,
+        user,
+        queueInitial,
+        match,
+      }),
+    }));
   }, [song, user, queueInitial, match]);
 
   const albumPlayPause = (albumId = 'ZEFENIFY') => {
@@ -69,7 +72,8 @@ const AlbumsContainer = ({ match }) => {
       },
     });
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       albumPlayingId: albumId,
     }));
 
@@ -100,7 +104,8 @@ const AlbumsContainer = ({ match }) => {
       },
     });
 
-    setState(Object.assign(state, {
+    setState(previousState => ({
+      ...previousState,
       albumPlaying: true,
     }));
 

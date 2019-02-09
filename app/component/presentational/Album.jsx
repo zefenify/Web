@@ -20,30 +20,28 @@ import ImageContainer from '@app/component/styled/ImageContainer';
 
 
 const AlbumContainer = styled.div`
-  .AlbumContainer {
-    &__album-play-more {
-      flex: 0 0 250px;
+  .album-play-more {
+    flex: 0 0 250px;
 
-      img {
-        height: 250px;
-        width: 250px;
-      }
+    img {
+      height: 250px;
+      width: 250px;
     }
+  }
 
-    &__album-title a {
-      color: ${props => props.theme.NATURAL_2};
-      text-decoration: none;
-    }
+  .album-title a {
+    color: ${props => props.theme.NATURAL_2};
+    text-decoration: none;
+  }
 
-    &__album-artist a {
-      color: ${props => props.theme.NATURAL_3};
-      text-decoration: none;
-      font-size: 1.125rem;
-    }
+  .album-artist a {
+    color: ${props => props.theme.NATURAL_3};
+    text-decoration: none;
+    font-size: 1.125rem;
+  }
 
-    &__album-year-track-count {
-      color: ${props => props.theme.NATURAL_4};
-    }
+  .album-year-track-count {
+    color: ${props => props.theme.NATURAL_4};
   }
 `;
 
@@ -69,7 +67,7 @@ const Album = ({
 
   return (
     <AlbumContainer className="d-flex flex-row flex-shrink-0">
-      <div className="AlbumContainer__album-play-more mb-5">
+      <div className="album-play-more mb-5">
         <ImageContainer borderRadius="6px">
           <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
         </ImageContainer>
@@ -92,18 +90,18 @@ const Album = ({
       </div>
 
       <div className="d-flex flex-column flex-grow-1" style={{ paddingLeft: '2rem' }}>
-        <h1 className="m-0 AlbumContainer__album-title"><Link to={`/album/${albumId}`}>{ title }</Link></h1>
+        <h1 className="m-0 album-title"><Link to={`/album/${albumId}`}>{ title }</Link></h1>
 
         {
           showArtist === false ? null : (
-            <div className="mt-2 AlbumContainer__album-artist">
+            <div className="mt-2 album-artist">
               <span>By&nbsp;</span>
               <ArtistList artist={artist} />
             </div>
           )
         }
 
-        <div className="AlbumContainer__album-year-track-count my-2">
+        <div className="album-year-track-count my-2">
           <span>{`${year} • ${tracks.length} Song${tracks.length > 1 ? 's' : ''} • ${hour > 0 ? `${hour} hr` : ''} ${minute} min ${hour > 0 ? '' : `${second} sec`}`}</span>
         </div>
 

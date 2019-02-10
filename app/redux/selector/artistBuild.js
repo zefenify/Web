@@ -39,12 +39,12 @@ export default createSelector([props => props.song, props => props.user, props =
     return album;
   });
 
-  albumListWithTrackFilteredAndYearOrdered = reverse(sortBy(albumListWithTrackFilteredAndYearOrdered, album => album.album_year));
+  albumListWithTrackFilteredAndYearOrdered = reverse(sortBy('album_year')(albumListWithTrackFilteredAndYearOrdered));
 
   const trackList = track(song.data.song_track.map(trackId => song.included.track[trackId]), song.included);
   const artistWithFeaturingRemoved = {};
 
-  uniqBy(flatten(trackList.map(_track => _track.track_album.album_artist)), 'artist_id').forEach((artist) => {
+  uniqBy('artist_id')(flatten(trackList.map(_track => _track.track_album.album_artist))).forEach((artist) => {
     artistWithFeaturingRemoved[artist.artist_id] = Object.assign({}, song.included.artist[artist.artist_id], {
       artist_cover: song.included.s3[artist.artist_cover],
       relationships: {

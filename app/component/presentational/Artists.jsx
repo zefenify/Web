@@ -116,7 +116,7 @@ const Artists = ({
     );
   }
 
-  if (artistId !== undefined && artist.length === 1) {
+  if (artistId !== '' && artist.length === 1) {
     return (
       <Artist
         artist={artist[0]}

@@ -18,7 +18,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
-    new CleanWebpackPlugin([path.resolve(__dirname, 'build')]),
+    new CleanWebpackPlugin(),
   ],
   optimization: {
     splitChunks: {

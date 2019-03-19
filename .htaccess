@@ -418,19 +418,19 @@ AddDefaultCharset utf-8
 # https://blogs.msdn.microsoft.com/ieinternals/2010/03/30/combating-clickjacking-with-x-frame-options/
 # https://www.owasp.org/index.php/Clickjacking
 
-# <IfModule mod_headers.c>
+<IfModule mod_headers.c>
 
-#     Header set X-Frame-Options "DENY"
+    Header set X-Frame-Options "DENY"
 
-#     # `mod_headers` cannot match based on the content-type, however,
-#     # the `X-Frame-Options` response header should be send only for
-#     # HTML documents and not for the other resources.
+    # `mod_headers` cannot match based on the content-type, however,
+    # the `X-Frame-Options` response header should be send only for
+    # HTML documents and not for the other resources.
 
-#     <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
-#         Header unset X-Frame-Options
-#     </FilesMatch>
+    <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
+        Header unset X-Frame-Options
+    </FilesMatch>
 
-# </IfModule>
+</IfModule>
 
 # ----------------------------------------------------------------------
 # | Content Security Policy (CSP)                                      |
@@ -453,19 +453,27 @@ AddDefaultCharset utf-8
 # https://www.html5rocks.com/en/tutorials/security/content-security-policy/
 # https://w3c.github.io/webappsec-csp/
 
-# <IfModule mod_headers.c>
+<IfModule mod_headers.c>
 
-#     Header set Content-Security-Policy "script-src 'self'; object-src 'self'"
+    Header set Content-Security-Policy "script-src 'self'; object-src 'self'"
 
-#     # `mod_headers` cannot match based on the content-type, however,
-#     # the `Content-Security-Policy` response header should be send
-#     # only for HTML documents and not for the other resources.
+    # `mod_headers` cannot match based on the content-type, however,
+    # the `Content-Security-Policy` response header should be send
+    # only for HTML documents and not for the other resources.
 
-#     <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
-#         Header unset Content-Security-Policy
-#     </FilesMatch>
+    <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
+        Header unset Content-Security-Policy
+    </FilesMatch>
 
-# </IfModule>
+</IfModule>
+
+# ---------------------------------------------------------------------
+# | Strict Transport Policy                                           |
+# ---------------------------------------------------------------------
+
+<IfModule mod_headers.c>
+    Header set Strict-Transport-Security max-age=63072000
+</IfModule>
 
 # ----------------------------------------------------------------------
 # | File access                                                        |

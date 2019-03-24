@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { string, shape } from 'prop-types';
 
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -151,6 +152,15 @@ const AlbumsContainer = ({ match }) => {
       {...state}
     />
   );
+};
+
+AlbumsContainer.propTypes = {
+  match: shape({
+    url: string,
+    params: shape({
+      id: string,
+    }),
+  }).isRequired,
 };
 
 

@@ -29,28 +29,25 @@ const HomeContainer = () => {
     }).then(({ data, included }) => {
       store.dispatch(loading(false));
 
-      setState(previousState => ({
-        ...previousState,
-        featured: data.map(featured => ({
-          ...featured,
-          playlist_cover: included.s3[featured.playlist_cover],
-        })),
+      const featured = data.map(featuredPlaylist => ({
+        ...featuredPlaylist,
+        playlist_cover: included.s3[featuredPlaylist.playlist_cover],
       }));
-
       const { queueInitial } = store.getState();
       const queueInitialTrackId = queueInitial.map(queueTrack => queueTrack.track_id);
       let featuredPlayingId = '';
-
-      state.featured.forEach((featured) => {
+      featured.forEach((featuredPlaylist) => {
         // NOTE:
-        // not using `trackSameList` because we're going to be comparing `track_id` of each feature playlist...
-        if (isEqual(featured.playlist_track, queueInitialTrackId) === true) {
-          featuredPlayingId = featured.playlist_id;
+        // not using `trackSameList` because we're going to be comparing `track_id`
+        // of each feature playlist...
+        if (isEqual(featuredPlaylist.playlist_track, queueInitialTrackId) === true) {
+          featuredPlayingId = featuredPlaylist.playlist_id;
         }
       });
 
       setState(previousState => ({
         ...previousState,
+        featured,
         featuredPlayingId,
       }));
     }, error(store));

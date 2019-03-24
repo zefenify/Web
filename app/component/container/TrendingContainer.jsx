@@ -54,21 +54,9 @@ const TrendingContainer = ({ match }) => {
         setState(previousState => ({
           ...previousState,
           trending,
+          // eslint-disable-next-line
           duration: human(trending.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
-        }));
-
-        if (queueInitial.length === 0 || state.trending.length === 0) {
-          setState(previousState => ({
-            ...previousState,
-            trendingPlaying: false,
-          }));
-
-          return;
-        }
-
-        setState(previousState => ({
-          ...previousState,
-          trendingPlaying: trackListSame(state.trending, queueInitial),
+          trendingPlaying: trackListSame(trending, queueInitial),
         }));
       }, error(store));
 

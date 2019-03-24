@@ -49,6 +49,7 @@ const PlaylistContainer = ({ match }) => {
       });
 
       const trackList = track(playlistTrack.playlist_track, included);
+      // eslint-disable-next-line
       const duration = human(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
       const featured = {
         ...data,

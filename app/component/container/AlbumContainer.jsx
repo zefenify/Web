@@ -56,34 +56,23 @@ const AlbumContainer = ({ match }) => {
       }
 
       const trackList = track(albumTrackList, included);
-
-      setState(previousState => ({
-        ...previousState,
-        album: {
-          album_id: data.album_id,
-          album_name: data.album_name,
-          album_artist: data.album_artist.map(artistId => included.artist[artistId]),
-          album_cover: included.s3[data.album_cover],
-          album_year: data.album_year,
-          relationships: {
-            track: trackList,
-          },
+      const duration = human(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
+      const album = {
+        album_id: data.album_id,
+        album_name: data.album_name,
+        album_artist: data.album_artist.map(artistId => included.artist[artistId]),
+        album_cover: included.s3[data.album_cover],
+        album_year: data.album_year,
+        relationships: {
+          track: trackList,
         },
-        duration: human(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
-      }));
-
-      if (queueInitial.length === 0 || state.album.relationships.track.length === 0) {
-        setState(previousState => ({
-          ...previousState,
-          albumPlaying: false,
-        }));
-
-        return;
-      }
+      };
 
       setState(previousState => ({
         ...previousState,
-        albumPlaying: trackListSame(state.album.relationships.track, queueInitial),
+        album,
+        duration,
+        albumPlaying: trackListSame(album.relationships.track, queueInitial),
       }));
     }, error(store));
 

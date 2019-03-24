@@ -49,29 +49,18 @@ const PlaylistContainer = ({ match }) => {
       });
 
       const trackList = track(playlistTrack.playlist_track, included);
+      const duration = human(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
+      const featured = {
+        ...data,
+        playlist_cover: included.s3[data.playlist_cover],
+        playlist_track: trackList,
+      };
 
       setState(previousState => ({
         ...previousState,
-        featured: {
-          ...data,
-          playlist_cover: included.s3[data.playlist_cover],
-          playlist_track: trackList,
-        },
-        duration: human(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
-      }));
-
-      if (queueInitial.length === 0 || state.featured.playlist_track.length === 0) {
-        setState(previousState => ({
-          ...previousState,
-          playingFeatured: false,
-        }));
-
-        return;
-      }
-
-      setState(previousState => ({
-        ...previousState,
-        playingFeatured: trackListSame(state.featured.playlist_track, queueInitial),
+        featured,
+        duration,
+        playingFeatured: trackListSame(featured.playlist_track, queueInitial),
       }));
     }, error(store));
 

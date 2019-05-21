@@ -11,7 +11,7 @@ import { crossfade } from '@app/redux/action/crossfade';
 export function* crossfadeBootFromLocalStorage() {
   try {
     const localStorageCrossfade = getItem(LOCALSTORAGE.CROSSFADE);
-    yield put(crossfade(localStorageCrossfade || CROSSFADE_DEFAULT));
+    yield put(crossfade(localStorageCrossfade === null ? CROSSFADE_DEFAULT : localStorageCrossfade));
   } catch (crossfadeGetError) {
     console.warn('Unable to Boot Crossfade from localStorage', crossfadeGetError);
   }

@@ -1,13 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { string, shape } from 'prop-types';
 
-import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
 import trackListSame from '@app/util/trackListSame';
 import time from '@app/util/time';
-import api, { error } from '@app/util/api';
-import track from '@app/util/track';
+import { gql, error } from '@app/util/api';
 import store from '@app/redux/store';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import { loading } from '@app/redux/action/loading';
@@ -39,29 +37,53 @@ const PlaylistContainer = ({ match }) => {
   useEffectDeep(() => {
     store.dispatch(loading(true));
 
-    api(`${BASE}playlist/${match.params.id}`, user, (cancel) => {
+    gql(user, `query Playlist($id: String!) {
+      playlist(id: $id) {
+        id
+        name
+        description
+        cover {
+          name
+        }
+        track {
+          id
+          name
+          featuring {
+            id
+            name
+          }
+          album {
+            id
+            name
+            artist {
+              id
+              name
+            }
+            cover {
+              name
+            }
+            year
+          }
+          track {
+            name
+            meta {
+              duration
+            }
+          }
+        }
+      }
+    }`, { id: match.params.id }, (cancel) => {
       requestCancel = cancel;
-    }).then(({ data, included }) => {
+    }).then(({ data: { playlist } }) => {
       store.dispatch(loading(false));
-      // mapping track...
-      const playlistTrack = Object.assign({}, data, {
-        playlist_track: data.playlist_track.map(trackId => included.track[trackId]),
-      });
 
-      const trackList = track(playlistTrack.playlist_track, included);
-      // eslint-disable-next-line
-      const duration = time(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
-      const featured = {
-        ...data,
-        playlist_cover: included.s3[data.playlist_cover],
-        playlist_track: trackList,
-      };
+      const duration = time(playlist.track.reduce((totalDuration, _track) => totalDuration + _track.track.meta.duration, 0), true);
 
       setState(previousState => ({
         ...previousState,
-        featured,
+        featured: playlist,
         duration,
-        playingFeatured: trackListSame(featured.playlist_track, queueInitial),
+        playingFeatured: trackListSame(playlist.track, queueInitial),
       }));
     }, error(store));
 
@@ -80,9 +102,9 @@ const PlaylistContainer = ({ match }) => {
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {
-          play: state.featured.playlist_track[0],
-          queue: state.featured.playlist_track,
-          queueInitial: state.featured.playlist_track,
+          play: state.featured.track[0],
+          queue: state.featured.track,
+          queueInitial: state.featured.track,
         },
       });
 
@@ -101,7 +123,7 @@ const PlaylistContainer = ({ match }) => {
   };
 
   const trackPlayPause = (trackId = 'ZEFENIFY') => {
-    if (current !== null && current.track_id === trackId) {
+    if (current !== null && current.id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -109,7 +131,7 @@ const PlaylistContainer = ({ match }) => {
       return;
     }
 
-    const trackIdIndex = state.featured.playlist_track.findIndex(_track => _track.track_id === trackId);
+    const trackIdIndex = state.featured.track.findIndex(_track => _track.id === trackId);
 
     if (trackIdIndex === -1) {
       return;
@@ -118,9 +140,9 @@ const PlaylistContainer = ({ match }) => {
     store.dispatch({
       type: PLAY_REQUEST,
       payload: {
-        play: state.featured.playlist_track[trackIdIndex],
-        queue: state.featured.playlist_track,
-        queueInitial: state.featured.playlist_track,
+        play: state.featured.track[trackIdIndex],
+        queue: state.featured.track,
+        queueInitial: state.featured.track,
       },
     });
 
@@ -143,7 +165,7 @@ const PlaylistContainer = ({ match }) => {
   };
 
   const contextMenuTrack = (trackId = 'ZEFENIFY') => {
-    const trackIndex = state.featured.playlist_track.findIndex(_track => _track.track_id === trackId);
+    const trackIndex = state.featured.track.findIndex(_track => _track.id === trackId);
 
     if (trackIndex === -1) {
       return;
@@ -153,7 +175,7 @@ const PlaylistContainer = ({ match }) => {
       type: CONTEXT_MENU_ON_REQUEST,
       payload: {
         type: CONTEXT_TRACK,
-        payload: state.featured.playlist_track[trackIndex],
+        payload: state.featured.track[trackIndex],
       },
     });
   };
@@ -171,10 +193,10 @@ const PlaylistContainer = ({ match }) => {
       duration={state.duration}
       tracksPlayPause={tracksPlayPause}
       trackPlayPause={trackPlayPause}
-      title={state.featured.playlist_name}
-      description={state.featured.playlist_description}
-      cover={state.featured.playlist_cover}
-      tracks={state.featured.playlist_track}
+      title={state.featured.name}
+      description={state.featured.description}
+      cover={state.featured.cover}
+      tracks={state.featured.track}
       contextMenuPlaylist={contextMenuPlaylist}
       contextMenuTrack={contextMenuTrack}
     />

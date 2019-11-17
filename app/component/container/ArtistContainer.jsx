@@ -1,12 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { string, shape } from 'prop-types';
-import flatten from 'lodash/flatten';
-import cloneDeep from 'lodash/cloneDeep';
-import sortBy from 'lodash/sortBy';
-import reverse from 'lodash/reverse';
-import uniqBy from 'lodash/uniqBy';
+import sortBy from 'lodash/fp/sortBy';
+import reverse from 'lodash/fp/reverse';
 
-import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import {
   CONTEXT_MENU_ON_REQUEST,
@@ -15,8 +11,7 @@ import {
   CONTEXT_ARTIST,
 } from '@app/redux/constant/contextMenu';
 import trackListSame from '@app/util/trackListSame';
-import api, { error } from '@app/util/api';
-import track from '@app/util/track';
+import { gql, error } from '@app/util/api';
 import time from '@app/util/time';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
@@ -46,46 +41,83 @@ const ArtistContainer = ({ match }) => {
   useEffectDeep(() => {
     store.dispatch(loading(true));
 
-    api(`${BASE}artist/${match.params.id}`, user, (cancel) => {
+    gql(null, `query Artist($id: String!) {
+      artist(id: $id) {
+        id
+        name
+        cover {
+          name
+        }
+        relationships {
+          album {
+            id
+            name
+            year
+            cover {
+              name
+            }
+            relationships {
+              track {
+                id
+                name
+                featuring {
+                  id
+                  name
+                }
+                album {
+                  id
+                  name
+                  year
+                  cover {
+                    name
+                  }
+                }
+                track {
+                  name
+                  meta {
+                    duration
+                  }
+                }
+              }
+            }
+          }
+          track {
+            id
+            album {
+              id
+              name
+              year
+              cover {
+                name
+              }
+            }
+          }
+        }
+      }
+    }`, { id: match.params.id }, (cancel) => {
       requestCancel = cancel;
-    }).then(({ data, included }) => {
+    }).then(({ data: { artist } }) => {
       store.dispatch(loading(false));
 
-      // sorting by `album.album_year` [ascending order] -> reversing
-      const albumList = reverse(sortBy(data.relationships.album.map((albumId) => {
-        const album = cloneDeep(included.album[albumId]);
-        album.album_artist = album.album_artist.map(artistId => included.artist[artistId]);
-        album.relationships.track = track(album.relationships.track.map(trackId => included.track[trackId]), included);
-        album.album_cover = included.s3[album.album_cover];
-        album.duration = time(album.relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
-
-        return album;
-      }), album => album.album_year));
-
-      const trackList = uniqBy(track(data.relationships.track.map(trackId => included.track[trackId]), included), _track => _track.track_album.album_id);
-      const trackFlatten = flatten(albumList.map(album => album.relationships.track));
-
-      let albumPlayingId = '';
-      albumList.forEach((album) => {
-        if (trackListSame(queueInitial, album.relationships.track) === true) {
-          albumPlayingId = album.album_id;
-        }
-      });
+      const trackFlatten = artist.relationships.album.flatMap(album => album.relationships.track);
+      const playingAlbum = artist.relationships.album.find(album => trackListSame(queueInitial, album.relationships.track) === true);
 
       setState(previousState => ({
         ...previousState,
         artist: {
-          ...data,
-          artist_cover: included.s3[data.artist_cover],
+          ...artist,
           relationships: {
-            album: albumList,
-            track: trackList,
+            ...artist.relationships,
+            album: reverse(sortBy(album => album.year)(artist.relationships.album.map(album => ({
+              ...album,
+              duration: time(album.relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track.meta.duration, 0), true),
+            })))),
           },
         },
         trackFlatten,
         trackCount: trackFlatten.length,
         aristPlaying: trackListSame(queueInitial, trackFlatten),
-        albumPlayingId,
+        albumPlayingId: playingAlbum === undefined ? '' : playingAlbum.id,
       }));
     }, error(store));
 
@@ -128,7 +160,7 @@ const ArtistContainer = ({ match }) => {
 
   const albumPlayPause = (albumId = 'ZEFENIFY') => {
     if (current === null || state.albumPlayingId !== albumId) {
-      const albumIndex = state.artist.relationships.album.findIndex(album => album.album_id === albumId);
+      const albumIndex = state.artist.relationships.album.findIndex(album => album.id === albumId);
 
       if (albumIndex === -1) {
         return;
@@ -170,7 +202,7 @@ const ArtistContainer = ({ match }) => {
       return;
     }
 
-    const trackIndex = state.trackFlatten.findIndex(_track => _track.track_id === trackId);
+    const trackIndex = state.trackFlatten.findIndex(_track => _track.id === trackId);
 
     store.dispatch({
       type: PLAY_REQUEST,
@@ -201,7 +233,7 @@ const ArtistContainer = ({ match }) => {
   };
 
   const contextMenuAlbum = (albumId = 'ZEFENIFY') => {
-    const albumIndex = state.artist.relationships.album.findIndex(album => album.album_id === albumId);
+    const albumIndex = state.artist.relationships.album.findIndex(album => album.id === albumId);
 
     if (albumIndex === -1) {
       return;
@@ -217,7 +249,7 @@ const ArtistContainer = ({ match }) => {
   };
 
   const contextMenuTrack = (trackId = 'ZEFENIFY') => {
-    const trackIndex = state.trackFlatten.findIndex(_track => _track.track_id === trackId);
+    const trackIndex = state.trackFlatten.findIndex(_track => _track.id === trackId);
 
     if (trackIndex === -1) {
       return;

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import cloneDeep from 'lodash/cloneDeep';
 
-import { human } from '@app/util/time';
+import time from '@app/util/time';
 import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
 
@@ -54,7 +54,7 @@ export default createSelector([props => props.song, props => props.user, props =
       album: albumList,
       albumPlayingId,
       albumPlaying: trackListSame(albumList[0].relationships.track, queueInitial),
-      duration: human(albumList[0].relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
+      duration: time(albumList[0].relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
     };
   }
 

@@ -46,16 +46,16 @@ const Queue = ({
           {
             queueNext.map((track, index) => (
               <Track
-                key={track.track_id}
-                currentTrackId={current === null ? '' : current.track_id}
+                key={track.id}
+                currentTrackId={current === null ? '' : current.id}
                 trackNumber={index + 1}
                 trackPlayPause={trackPlayPause}
                 playing={playing}
-                trackId={track.track_id}
-                trackName={track.track_name}
-                trackFeaturing={track.track_featuring}
-                trackDuration={track.track_track.s3_meta.duration}
-                trackAlbum={track.track_album}
+                trackId={track.id}
+                trackName={track.name}
+                trackFeaturing={track.featuring}
+                trackDuration={track.track.meta.duration}
+                trackAlbum={track.album}
                 contextMenuTrack={contextMenuTrack}
               />
             ))

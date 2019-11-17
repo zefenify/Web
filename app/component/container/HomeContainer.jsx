@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import isEqual from 'react-fast-compare';
 
-import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import track from '@app/util/track';
-import api, { gql, error } from '@app/util/api';
+import { gql, error } from '@app/util/api';
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
@@ -69,29 +67,54 @@ const HomeContainer = () => {
       return;
     }
 
-    api(`${BASE}playlist/${featuredId}`, user, (cancel) => {
+    gql(user, `query Playlist($id: String!) {
+      playlist(id: $id) {
+        id
+        name
+        description
+        cover {
+          name
+        }
+        track {
+          id
+          name
+          featuring {
+            id
+            name
+          }
+          album {
+            id
+            name
+            artist {
+              id
+              name
+            }
+            cover {
+              name
+            }
+            year
+          }
+          track {
+            name
+          }
+        }
+      }
+    }`, { id: featuredId }, (cancel) => {
       requestCancel = cancel;
-    }).then(({ data, included }) => {
-      // mapping track...
-      const playlistTrack = Object.assign({}, data, {
-        playlist_track: data.playlist_track.map(trackId => included.track[trackId]),
+    }).then(({ data: { playlist } }) => {
+      store.dispatch({
+        type: PLAY_REQUEST,
+        payload: {
+          play: playlist.track[0],
+          queue: playlist.track,
+          queueInitial: playlist.track,
+        },
       });
-      const trackList = track(playlistTrack.playlist_track, included);
 
       setState(previousState => ({
         ...previousState,
         featuredPlayingId: featuredId,
       }));
-
-      // playing...
-      store.dispatch({
-        type: PLAY_REQUEST,
-        payload: {
-          play: trackList[0],
-          queue: trackList,
-          queueInitial: trackList,
-        },
-      });
 
       store.dispatch(urlCurrentPlaying(`/featured/${featuredId}`));
     }, error(store));

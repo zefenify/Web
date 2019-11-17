@@ -6,6 +6,8 @@
     "no-underscore-dangle": "off",
     "import/no-unresolved": "off",
     "import/no-extraneous-dependencies": "off",
-    "arrow-parens": "off"
+    "max-len": "off",
+    "arrow-parens": "off",
+    "react/jsx-fragments": "off"
   }
 }

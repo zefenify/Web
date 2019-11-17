@@ -158,14 +158,14 @@ const Control = ({
             <div className="d-flex flex-row align-items-center">
               {
                 urlCurrentPlaying === null
-                  ? <div className="flex-shrink-0 ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
-                  : <Link to={urlCurrentPlaying} className="ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.track_album.album_cover.s3_name}') 50% 50% / cover no-repeat` }} />
+                  ? <div className="flex-shrink-0 ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.album.cover.name}') 50% 50% / cover no-repeat` }} />
+                  : <Link to={urlCurrentPlaying} className="ControlsContainer__artwork" style={{ background: `transparent url('${BASE_S3}${current.album.cover.name}') 50% 50% / cover no-repeat` }} />
               }
 
               <div className="d-flex flex-column px-2">
-                <p className="m-0 p-0 ControlsContainer__track-name">{ current.track_name }</p>
+                <p className="m-0 p-0 ControlsContainer__track-name">{ current.name }</p>
                 <div className="ControlsContainer__artist mt-2">
-                  <ArtistList artist={current.track_album.album_artist} />
+                  <ArtistList artist={current.album.artist} />
                 </div>
               </div>
             </div>

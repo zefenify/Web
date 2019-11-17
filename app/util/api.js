@@ -28,8 +28,9 @@ const api = (URL, user = null, cancel, force = false) => new Promise((resolve, r
     }
 
     // validating cache...
-    if (isPast(API_CACHE_TIMESTAMP[URL]) === false) {
+    if (Date.now() < API_CACHE_TIMESTAMP[URL]) {
       resolve(cloneDeep(API_CACHE[URL]));
+
       return;
     }
   }
@@ -46,7 +47,7 @@ const api = (URL, user = null, cancel, force = false) => new Promise((resolve, r
     })
     .then((axiosResponse) => {
       API_CACHE[URL] = axiosResponse.data;
-      API_CACHE_TIMESTAMP[URL] = addSeconds(new Date(), CACHE_AGE);
+      API_CACHE_TIMESTAMP[URL] = Date.now() + (CACHE_AGE * 1000);
       resolve(cloneDeep(API_CACHE[URL]));
     }, (axiosError) => {
       // request cancellation will not reject

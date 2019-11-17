@@ -28,15 +28,15 @@ const Home = ({
         featured.map(_featured => (
           <Playlist
             type="featured"
-            key={_featured.playlist_id}
-            id={_featured.playlist_id}
-            playing={playing && featuredPlayingId === _featured.playlist_id}
-            active={featuredPlayingId === _featured.playlist_id}
+            key={_featured.id}
+            id={_featured.id}
+            playing={playing && featuredPlayingId === _featured.id}
+            active={featuredPlayingId === _featured.id}
             play={featuredPlay}
-            name={_featured.playlist_name}
-            description={_featured.playlist_description}
-            cover={_featured.playlist_cover}
-            trackCount={_featured.playlist_track.length}
+            name={_featured.name}
+            description={_featured.description}
+            cover={_featured.cover}
+            trackCount={_featured.track.length}
           />
         ))
       }

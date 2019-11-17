@@ -16,7 +16,7 @@ import ArtistList from '@app/component/presentational/ArtistList';
 import Share from '@app/component/svg/Share';
 
 
-const PlayPause = ({ onClick, playing, ...props }) => (
+const PlayPause = ({ onClick, playing, ...rest }) => (
   <svg
     width="24"
     height="24"
@@ -27,7 +27,7 @@ const PlayPause = ({ onClick, playing, ...props }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
     onClick={onClick}
-    {...props}
+    {...rest}
   >
     {
       playing ? (
@@ -204,7 +204,7 @@ const Track = ({
       <div className="d-flex flex-row TrackContainer__artist">
         {
           fullDetail === true
-            ? (<span className="mt-1 pr-2"><ArtistList artist={trackAlbum.album_artist} /></span>)
+            ? (<span className="mt-1 pr-2"><ArtistList artist={trackAlbum.artist} /></span>)
             : null
         }
 
@@ -222,7 +222,7 @@ const Track = ({
           fullDetail === true ? (
             <span className="mt-1">
               <span className="pr-2 TrackContainer__themed-mute">•</span>
-              <Link to={`/album/${trackAlbum.album_id}`}>{ trackAlbum.album_name }</Link>
+              <Link to={`/album/${trackAlbum.id}`}>{ trackAlbum.name }</Link>
             </span>
           ) : null
         }

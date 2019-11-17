@@ -108,8 +108,8 @@ const ContextMenu = ({
   }
 
   if (queueNext.length > 0 && type === CONTEXT_TRACK) {
-    const queueNextTrackIds = queueNext.map(track => track.track_id);
-    trackIndexInQueueNext = queueNextTrackIds.findIndex(trackId => trackId === payload.track_id);
+    const queueNextTrackIds = queueNext.map(track => track.id);
+    trackIndexInQueueNext = queueNextTrackIds.findIndex(trackId => trackId === payload.id);
   }
 
   switch (type) {

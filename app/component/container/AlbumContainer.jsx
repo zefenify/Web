@@ -1,13 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { string, shape } from 'prop-types';
 
-import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import trackListSame from '@app/util/trackListSame';
 import time from '@app/util/time';
-import api, { error } from '@app/util/api';
-import track from '@app/util/track';
+import { gql, error } from '@app/util/api';
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
@@ -39,39 +37,48 @@ const AlbumContainer = ({ match }) => {
   useEffectDeep(() => {
     store.dispatch(loading(true));
 
-    api(`${BASE}album/${match.params.id}`, user, (cancel) => {
-      requestCancel = cancel;
-    }).then(({ data, included }) => {
-      store.dispatch(loading(false));
-
-      const paramTrackId = match.params.trackId;
-      let albumTrackList = [];
-
-      if (paramTrackId === undefined) {
-        albumTrackList = data.relationships.track.map(trackId => included.track[trackId]);
-      } else {
-        albumTrackList = data.relationships.track
-          .filter(trackId => paramTrackId === trackId)
-          .map(trackId => included.track[trackId]);
+    gql(user, `query Album($id: String!) {
+      album(id: $id) {
+        id
+        name
+        artist {
+          id
+          name
+        }
+        cover {
+          name
+        }
+        relationships {
+          track {
+            id
+            name
+            track {
+              name
+              meta {
+                duration
+              }
+            }
+            album {
+              cover {
+                name
+              }
+            }
+            featuring {
+              id
+              name
+            }
+          }
+        }
       }
-
-      const trackList = track(albumTrackList, included);
-      const duration = time(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
-      const album = {
-        album_id: data.album_id,
-        album_name: data.album_name,
-        album_artist: data.album_artist.map(artistId => included.artist[artistId]),
-        album_cover: included.s3[data.album_cover],
-        album_year: data.album_year,
-        relationships: {
-          track: trackList,
-        },
-      };
+    }`, { id: match.params.id }, (cancel) => {
+      requestCancel = cancel;
+    }).then(({ data: { album } }) => {
+      store.dispatch(loading(false));
 
       setState(previousState => ({
         ...previousState,
         album,
-        duration,
+        duration: time(album.relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track.meta.duration, 0), true),
         albumPlaying: trackListSame(album.relationships.track, queueInitial),
       }));
     }, error(store));
@@ -113,7 +120,7 @@ const AlbumContainer = ({ match }) => {
   };
 
   const trackPlayPause = (trackId = 'ZEFENIFY') => {
-    if (current !== null && current.track_id === trackId) {
+    if (current !== null && current.id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -121,7 +128,7 @@ const AlbumContainer = ({ match }) => {
       return;
     }
 
-    const trackIdIndex = state.album.relationships.track.findIndex(_track => _track.track_id === trackId);
+    const trackIdIndex = state.album.relationships.track.findIndex(_track => _track.id === trackId);
 
     if (trackIdIndex === -1) {
       return;
@@ -155,7 +162,7 @@ const AlbumContainer = ({ match }) => {
   };
 
   const contextMenuTrack = (trackId = 'ZEFENIFY') => {
-    const trackIndex = state.album.relationships.track.findIndex(_track => _track.track_id === trackId);
+    const trackIndex = state.album.relationships.track.findIndex(_track => _track.id === trackId);
 
     if (trackIndex === -1) {
       return;
@@ -181,10 +188,10 @@ const AlbumContainer = ({ match }) => {
       playing={playing}
       albumPlaying={state.albumPlaying}
       duration={state.duration}
-      albumId={state.album.album_id}
-      title={state.album.album_name}
-      cover={state.album.album_cover}
-      artist={state.album.album_artist}
+      albumId={state.album.id}
+      title={state.album.name}
+      cover={state.album.cover}
+      artist={state.album.artist}
       tracks={state.album.relationships.track}
       albumPlayPause={albumPlayPause}
       trackPlayPause={trackPlayPause}

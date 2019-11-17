@@ -66,18 +66,18 @@ const Arist = ({
     {/* artist info */}
     <div className="d-flex flex-column align-items-center ArtistContainer__artist">
       <ImageContainer className="ArtistContainer__artist__cover" borderRadius="50%">
-        <img src={`${BASE_S3}${artist.artist_cover.s3_name}`} alt={artist.artist_name} />
+        <img src={`${BASE_S3}${artist.cover.name}`} alt={artist.name} />
       </ImageContainer>
 
       <div className="d-flex flex-column align-items-center">
-        <h1 className="m-0 p-0 mt-3">{ artist.artist_name }</h1>
+        <h1 className="m-0 p-0 mt-3">{ artist.name }</h1>
 
         <p className="m-0 p-0 mt-2">
           {`${artist.relationships.album.length} Album${artist.relationships.album.length > 1 ? 's' : ''} • ${trackCount} Song${trackCount > 1 ? 's' : ''}`}
         </p>
 
         <div className="d-flex flex-row align-items-center mt-4">
-          <Button className="mr-3" style={{ width: '125px' }} onClick={() => artistPlayPause(artist.artist_id)}>
+          <Button className="mr-3" style={{ width: '125px' }} onClick={() => artistPlayPause(artist.id)}>
             {`${playing && aristPlaying ? 'PAUSE' : 'PLAY'}`}
           </Button>
 
@@ -106,19 +106,19 @@ const Arist = ({
           {
             artist.relationships.album.map(album => (
               <Album
-                key={album.album_id}
-                albumId={album.album_id}
-                title={album.album_name}
-                year={album.album_year}
-                cover={album.album_cover}
-                artist={album.album_artist}
+                key={album.id}
+                albumId={album.id}
+                title={album.name}
+                year={album.year}
+                cover={album.cover}
+                artist={album.artist}
                 tracks={album.relationships.track}
                 duration={album.duration}
                 current={current}
                 playing={playing}
-                albumPlaying={albumPlayingId === album.album_id}
-                albumPlayPause={() => albumPlayPause(album.album_id)}
-                contextMenuAlbum={() => contextMenuAlbum(album.album_id)}
+                albumPlaying={albumPlayingId === album.id}
+                albumPlayPause={() => albumPlayPause(album.id)}
+                contextMenuAlbum={() => contextMenuAlbum(album.id)}
                 trackPlayPause={trackPlayPause}
                 contextMenuTrack={contextMenuTrack}
               />
@@ -139,13 +139,13 @@ const Arist = ({
           <div className="d-flex flex-row flex-wrap ArtistContainer__appears mb-3" style={{ margin: '0 -1rem' }}>
             {
               artist.relationships.track.map(track => (
-                <Link key={track.track_id} to={`/album/${track.track_album.album_id}`} className="mb-5 px-3">
+                <Link key={track.id} to={`/album/${track.album.id}`} className="mb-5 px-3">
                   <ImageContainer>
-                    <img src={`${BASE_S3}${track.track_album.album_cover.s3_name}`} alt={track.track_album.album_name} />
+                    <img src={`${BASE_S3}${track.album.cover.name}`} alt={track.album.name} />
                   </ImageContainer>
 
-                  <h2 className="m-0 p-0 mt-2">{ track.track_album.album_name }</h2>
-                  <p className="m-0 p-0 mt-1">{ track.track_album.album_year }</p>
+                  <h2 className="m-0 p-0 mt-2">{ track.album.name }</h2>
+                  <p className="m-0 p-0 mt-1">{ track.album.year }</p>
                 </Link>
               ))
             }

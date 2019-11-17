@@ -41,8 +41,8 @@ const RecentContainer = ({ match }) => {
   };
 
   const trackPlayPause = (trackId = 'ZEFENIFY') => {
-    if (current === null || current.track_id !== trackId) {
-      const trackIndex = history.findIndex(track => track.track_id === trackId);
+    if (current === null || current.id !== trackId) {
+      const trackIndex = history.findIndex(track => track.id === trackId);
 
       if (trackIndex === -1) {
         return;
@@ -67,7 +67,7 @@ const RecentContainer = ({ match }) => {
   };
 
   const contextMenuTrack = (trackId = 'ZEFENIFY') => {
-    const trackIndex = history.findIndex(track => track.track_id === trackId);
+    const trackIndex = history.findIndex(track => track.id === trackId);
 
     if (trackIndex === -1) {
       return;

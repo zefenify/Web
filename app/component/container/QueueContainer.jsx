@@ -32,8 +32,8 @@ const QueueContainer = ({ match }) => {
   };
 
   const trackPlayPause = (trackId = 'ZEFENIFY') => {
-    if (current === null || current.track_id !== trackId) {
-      const trackIndex = queueNext.findIndex(track => track.track_id === trackId);
+    if (current === null || current.id !== trackId) {
+      const trackIndex = queueNext.findIndex(track => track.id === trackId);
 
       if (trackIndex === -1) {
         return;
@@ -58,7 +58,7 @@ const QueueContainer = ({ match }) => {
   };
 
   const contextMenuTrack = (trackId = 'ZEFENIFY') => {
-    const trackIndex = queueNext.findIndex(track => track.track_id === trackId);
+    const trackIndex = queueNext.findIndex(track => track.id === trackId);
 
     if (trackIndex === -1) {
       return;

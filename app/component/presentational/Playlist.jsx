@@ -109,7 +109,7 @@ const Playlist = ({
   <PlaylistContainer to={`/${type}/${id}`} className={`d-flex flex-column flex-shrink-0 pt-0 px-3 pb-4 ${active === true ? 'active' : ''}`}>
     <div className="PlaylistContainer__cover">
       <ImageContainer>
-        <img src={`${BASE_S3}${cover.s3_name}`} alt={name} />
+        <img src={`${BASE_S3}${cover.name}`} alt={name} />
       </ImageContainer>
 
       <div className="d-flex align-items-center justify-content-center PlaylistContainer__cover__overlay">

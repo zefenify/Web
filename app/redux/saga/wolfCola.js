@@ -113,7 +113,7 @@ const howlerLoadErrorChannel = key => eventChannel((emitter) => {
  * @return {Boolean}
  */
 // eslint-disable-next-line
-const playingLastHistory = state => state.history.length === 1 && state.current.track_id === state.history[0].track_id;
+const playingLastHistory = state => state.history.length === 1 && state.current.id === state.history[0].id;
 
 
 /**
@@ -209,7 +209,7 @@ const tracker = () => {
         // checking for crossfade threshold...
         if ((state.duration - state.playbackPosition) <= state.crossfade) {
           // sending played, [`track_popularity` and `trend`] will be set
-          api(`${BASE}played/${state.current.track_id}`, state.user).then(() => {}, () => {});
+          api(`${BASE}played/${state.current.id}`, state.user).then(() => {}, () => {});
           yield put({
             type: NEXT_REQUEST,
           });
@@ -268,8 +268,7 @@ function* _play(action) {
    * @param  {Boolean} state.shuffle
    */
   if (state.shuffle === true) {
-    // eslint-disable-next-line
-    yield put(queueRemove(payload.queue.findIndex(song => song.track_id === payload.play.track_id)));
+    yield put(queueRemove(payload.queue.findIndex(song => song.id === payload.play.id)));
   }
 
   // setting `play` payload to current
@@ -369,7 +368,7 @@ function* _play(action) {
    * - light [no preparation until asked]
    */
   wolfCola[wolfCola.playingKey] = new Howl({
-    src: [`${BASE_S3}${payload.play.track_track.s3_name}`],
+    src: [`${BASE_S3}${payload.play.track.name}`],
     html5: true,
     autoplay: true,
     format: ['mp3'],
@@ -401,7 +400,7 @@ function* _play(action) {
 
   // music loaded, setting duration
   // eslint-disable-next-line
-  yield put(duration(Number.isFinite(wolfCola[wolfCola.playingKey].duration()) ? wolfCola[wolfCola.playingKey].duration() : payload.play.track_track.s3_meta.duration));
+  yield put(duration(Number.isFinite(wolfCola[wolfCola.playingKey].duration()) ? wolfCola[wolfCola.playingKey].duration() : payload.play.track.meta.duration));
 
   // setting playing - USING Howler object [autoplay]
   yield put(playing(wolfCola[wolfCola.playingKey].playing()));
@@ -449,7 +448,7 @@ function* _next() {
   }
 
   if (state.queueNext.length > 0) {
-    const play = Object.assign({}, state.queueNext[0]);
+    const play = ({ ...state.queueNext[0] });
 
     // POP-ing entry from `queueNext`...
     yield put(queueNextRemove(0));
@@ -497,7 +496,7 @@ function* _next() {
 
   // PUSH-ing song to history...
   if (state.current !== null) {
-    const historyIndex = state.history.findIndex(song => song.track_id === state.current.track_id);
+    const historyIndex = state.history.findIndex(song => song.id === state.current.id);
 
     /**
      * if song that is playing is in history, the behavior here (taken from Apple Music) is to
@@ -554,7 +553,7 @@ function* _next() {
    * shuffle is `OFF` and there are songs in the queue
    * `_play` will be requested with the next song from the queue
    */
-  let nextPlayIndex = state.queueInitial.findIndex(song => song.track_id === state.current.track_id) + 1;
+  let nextPlayIndex = state.queueInitial.findIndex(song => song.id === state.current.id) + 1;
 
   // the current song that's being played is the last song in the queue
   if (nextPlayIndex === state.queueInitial.length) {
@@ -636,7 +635,7 @@ function* _previous() {
     return;
   }
 
-  const historyIndex = state.history.findIndex(song => song.track_id === state.history[0].track_id);
+  const historyIndex = state.history.findIndex(song => song.id === state.history[0].id);
 
   /**
    * `previous` request POPs a song from history entry

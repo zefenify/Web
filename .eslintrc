@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "airbnb"
+  ],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "arrow-parens": "off"
+  }
+}

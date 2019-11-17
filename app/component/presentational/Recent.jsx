@@ -47,16 +47,16 @@ const Recent = ({
           {
             track.map((_track, index) => (
               <Track
-                key={_track.track_id}
+                key={_track.id}
                 currentTrackId={current === null ? 'ZEFENIFY' : current.track_id}
                 trackNumber={index + 1}
                 trackPlayPause={trackPlayPause}
                 playing={playing}
-                trackId={_track.track_id}
-                trackName={_track.track_name}
-                trackFeaturing={_track.track_featuring}
-                trackDuration={_track.track_track.s3_meta.duration}
-                trackAlbum={_track.track_album}
+                trackId={_track.id}
+                trackName={_track.name}
+                trackFeaturing={_track.featuring}
+                trackDuration={_track.track_track.meta.duration}
+                trackAlbum={_track.album}
                 contextMenuTrack={contextMenuTrack}
               />
             ))

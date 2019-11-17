@@ -126,36 +126,36 @@ const ContextMenu = ({
 
           <div className="d-flex flex-column align-items-center flex-shrink-0">
             <ImageContainer className="ContextMenuContainer__image">
-              <img src={`${BASE_S3}${payload.track_album.album_cover.s3_name}`} alt={payload.track_album.album_name} />
+              <img src={`${BASE_S3}${payload.album.cover.name}`} alt={payload.album.name} />
             </ImageContainer>
 
-            <h2 className="m-0 p-0 mt-2">{ payload.track_name }</h2>
+            <h2 className="m-0 p-0 mt-2">{ payload.name }</h2>
           </div>
 
           <div className="d-flex flex-column flex-shrink-0 mt-3">
             <div className="ContextMenuContainer__small ContextMenuContainer__small--mute px-3">Artist</div>
             {
-              payload.track_album.album_artist.map(artist => (
+              payload.album.artist.map(artist => (
                 <ClearButton
-                  key={artist.artist_id}
+                  key={artist.id}
                   className="p-3 ContextMenuContainer__link"
-                  disabled={`/artist/${artist.artist_id}` === history.location.pathname}
-                  onClick={() => { contextMenuClose(); history.push(`/artist/${artist.artist_id}`); }}
+                  disabled={`/artist/${artist.id}` === history.location.pathname}
+                  onClick={() => { contextMenuClose(); history.push(`/artist/${artist.id}`); }}
                 >
-                  { artist.artist_name }
+                  { artist.name }
                 </ClearButton>
               ))
             }
 
             {
-              payload.track_featuring.map(artist => (
+              payload.featuring.map(artist => (
                 <ClearButton
-                  key={artist.artist_id}
+                  key={artist.id}
                   className="p-3 ContextMenuContainer__link"
-                  disabled={`/artist/${artist.artist_id}` === history.location.pathname}
-                  onClick={() => { contextMenuClose(); history.push(`/artist/${artist.artist_id}`); }}
+                  disabled={`/artist/${artist.id}` === history.location.pathname}
+                  onClick={() => { contextMenuClose(); history.push(`/artist/${artist.id}`); }}
                 >
-                  { artist.artist_name }
+                  { artist.name }
                 </ClearButton>
               ))
             }
@@ -163,7 +163,7 @@ const ContextMenu = ({
 
           <div className="d-flex flex-column flex-shrink-0 mt-2">
             <div className="ContextMenuContainer__small ContextMenuContainer__small--mute px-3">Album</div>
-            <ClearButton className="p-3 ContextMenuContainer__link" disabled={`/album/${payload.track_album.album_id}` === history.location.pathname} onClick={() => { contextMenuClose(); history.push(`/album/${payload.track_album.album_id}`); }}>Go to Album</ClearButton>
+            <ClearButton className="p-3 ContextMenuContainer__link" disabled={`/album/${payload.album.id}` === history.location.pathname} onClick={() => { contextMenuClose(); history.push(`/album/${payload.album.id}`); }}>Go to Album</ClearButton>
           </div>
 
           <div className="d-flex flex-column flex-shrink-0 mt-2">
@@ -186,9 +186,9 @@ const ContextMenu = ({
 
           <div className="d-flex flex-column flex-shrink-0 mt-2">
             <div className="ContextMenuContainer__small ContextMenuContainer__small--mute px-3">Share</div>
-            <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
-            <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.track_album.album_id}/${payload.track_id}&text=${payload.track_name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.album.id}/${payload.id}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.album.id}/${payload.id}&text=${payload.name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.album.id}/${payload.id}&text=${payload.name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
         </ContextMenuContainer>
       );
@@ -206,21 +206,21 @@ const ContextMenu = ({
 
           <div className="d-flex flex-column align-items-center flex-shrink-0">
             <ImageContainer className="ContextMenuContainer__image">
-              <img src={`${BASE_S3}${payload.album_cover.s3_name}`} alt={payload.album_name} />
+              <img src={`${BASE_S3}${payload.cover.name}`} alt={payload.name} />
             </ImageContainer>
 
-            <h2 className="m-0 p-0 mt-2">{ payload.album_name }</h2>
+            <h2 className="m-0 p-0 mt-2">{ payload.name }</h2>
           </div>
 
           <div className="d-flex flex-column flex-shrink-0 mt-3">
             <div className="ContextMenuContainer__small ContextMenuContainer__small--mute px-3">Artist</div>
             {
-              payload.album_artist.map(artist => (
+              payload.artist.map(artist => (
                 <ClearButton
-                  key={artist.artist_id}
+                  key={artist.id}
                   className="p-3 ContextMenuContainer__link"
-                  disabled={`/artist/${artist.artist_id}` === history.location.pathname}
-                  onClick={() => { contextMenuClose(); history.push(`/artist/${artist.artist_id}`); }}
+                  disabled={`/artist/${artist.id}` === history.location.pathname}
+                  onClick={() => { contextMenuClose(); history.push(`/artist/${artist.id}`); }}
                 >
                   { artist.artist_name }
                 </ClearButton>
@@ -230,9 +230,9 @@ const ContextMenu = ({
 
           <div className="d-flex flex-column flex-shrink-0 mt-2">
             <div className="ContextMenuContainer__small ContextMenuContainer__small--mute px-3">Share</div>
-            <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.album_id}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
-            <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.album_id}&text=${payload.album_name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}album/${payload.id}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}album/${payload.id}&text=${payload.name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}album/${payload.id}&text=${payload.name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
         </ContextMenuContainer>
       );
@@ -250,17 +250,17 @@ const ContextMenu = ({
 
           <div className="d-flex flex-column align-items-center flex-shrink-0">
             <ImageContainer borderRadius="50%" className="ContextMenuContainer__image">
-              <img src={`${BASE_S3}${payload.artist_cover.s3_name}`} alt={payload.artist_name} />
+              <img src={`${BASE_S3}${payload.cover.name}`} alt={payload.name} />
             </ImageContainer>
 
-            <h2 className="m-0 p-0 mt-2">{ payload.artist_name }</h2>
+            <h2 className="m-0 p-0 mt-2">{ payload.name }</h2>
           </div>
 
           <div className="d-flex flex-column flex-shrink-0 mt-2">
             <div className="ContextMenuContainer__small ContextMenuContainer__small--mute px-3">Share</div>
-            <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}artist/${payload.artist_id}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
-            <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}artist/${payload.artist_id}&text=${payload.artist_name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}artist/${payload.id}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}artist/${payload.id}&text=${payload.name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}artist/${payload.id}&text=${payload.name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
         </ContextMenuContainer>
       );
@@ -278,17 +278,17 @@ const ContextMenu = ({
 
           <div className="d-flex flex-column align-items-center flex-shrink-0">
             <ImageContainer className="ContextMenuContainer__image">
-              <img src={`${BASE_S3}${payload.playlist_cover.s3_name}`} alt={payload.playlist_name} />
+              <img src={`${BASE_S3}${payload.cover.name}`} alt={payload.name} />
             </ImageContainer>
 
-            <h2 className="m-0 p-0 mt-2">{ payload.playlist_name }</h2>
+            <h2 className="m-0 p-0 mt-2">{ payload.name }</h2>
           </div>
 
           <div className="d-flex flex-column flex-shrink-0 mt-2">
             <div className="ContextMenuContainer__small ContextMenuContainer__small--mute px-3">Share</div>
-            <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}playlist/${payload.playlist_id}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
-            <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}playlist/${payload.playlist_id}&text=${payload.playlist_name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a onClick={contextMenuClose} href={`https://www.facebook.com/sharer.php?u=${BASE_SHARE}playlist/${payload.id}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a onClick={contextMenuClose} href={`https://twitter.com/intent/tweet?url=${BASE_SHARE}playlist/${payload.id}&text=${payload.name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a onClick={contextMenuClose} href={`https://telegram.me/share/url?url=${BASE_SHARE}playlist/${payload.id}&text=${payload.name}`} className="p-3 ContextMenuContainer__link" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
         </ContextMenuContainer>
       );

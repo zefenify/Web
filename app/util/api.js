@@ -102,6 +102,50 @@ const postPatch = method => (URL, user = null, data, cancel) => new Promise((res
 });
 
 
+export const gql = (user, query = '', variables = {}, cancel, force = false) => new Promise((resolve, reject) => {
+  const { CancelToken } = axios;
+  const source = CancelToken.source();
+  const cacheURL = JSON.stringify({ query, variables });
+
+  if (force === false && Object.prototype.hasOwnProperty.call(API_CACHE, cacheURL) === true) {
+    if (cancel !== undefined) {
+      // calling with an empty function as no axios will be called...
+      cancel(() => {});
+    }
+
+    // validating cache...
+    if (Date.now() < API_CACHE_TIMESTAMP[cacheURL]) {
+      resolve(cloneDeep(API_CACHE[cacheURL]));
+
+      return;
+    }
+  }
+
+  axios.post('graphql', { query, variables }, {
+    cancelToken: source.token,
+    headers: {
+      [HEADER]: user === null ? undefined : user.jwt,
+    },
+  }).then(({ data }) => {
+    API_CACHE[cacheURL] = data;
+    API_CACHE_TIMESTAMP[cacheURL] = Date.now() + (CACHE_AGE * 1000);
+    resolve(cloneDeep(API_CACHE(cacheURL)));
+  }, (axiosError) => {
+    // request cancellation will not reject
+    if (axios.isCancel(axiosError)) {
+      return;
+    }
+
+    reject(axiosError);
+  });
+
+  if (cancel !== undefined) {
+    // passing the cancel token back...
+    cancel(source.cancel);
+  }
+});
+
+
 export const post = postPatch('post');
 
 

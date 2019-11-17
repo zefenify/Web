@@ -96,6 +96,9 @@ const HomeContainer = () => {
           }
           track {
             name
+            meta {
+              duration
+            }
           }
         }
       }

@@ -1,7 +1,5 @@
 import axios from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
-import addSeconds from 'date-fns/add_seconds';
-import isPast from 'date-fns/is_past';
 
 import { BASE, CACHE_AGE, HEADER } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';

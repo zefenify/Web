@@ -129,7 +129,7 @@ export const gql = (user, query = '', variables = {}, cancel, force = false) => 
   }).then(({ data }) => {
     API_CACHE[cacheURL] = data;
     API_CACHE_TIMESTAMP[cacheURL] = Date.now() + (CACHE_AGE * 1000);
-    resolve(cloneDeep(API_CACHE(cacheURL)));
+    resolve(cloneDeep(API_CACHE[cacheURL]));
   }, (axiosError) => {
     // request cancellation will not reject
     if (axios.isCancel(axiosError)) {

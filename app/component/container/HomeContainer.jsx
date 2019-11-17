@@ -4,7 +4,7 @@ import isEqual from 'react-fast-compare';
 import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import track from '@app/util/track';
-import api, { error } from '@app/util/api';
+import api, { gql, error } from '@app/util/api';
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
@@ -24,31 +24,31 @@ const HomeContainer = () => {
   useEffect(() => {
     store.dispatch(loading(true));
 
-    api(`${BASE}featured`, user, (cancel) => {
+    gql(user, `query Featured {
+      featured {
+        id
+        name
+        description
+        cover {
+          name
+        }
+        track {
+          id
+        }
+      }
+    }`, {}, (cancel) => {
       requestCancel = cancel;
-    }).then(({ data, included }) => {
+    }).then(({ data: { featured } }) => {
       store.dispatch(loading(false));
 
-      const featured = data.map(featuredPlaylist => ({
-        ...featuredPlaylist,
-        playlist_cover: included.s3[featuredPlaylist.playlist_cover],
-      }));
       const { queueInitial } = store.getState();
       const queueInitialTrackId = queueInitial.map(queueTrack => queueTrack.track_id);
-      let featuredPlayingId = '';
-      featured.forEach((featuredPlaylist) => {
-        // NOTE:
-        // not using `trackSameList` because we're going to be comparing `track_id`
-        // of each feature playlist...
-        if (isEqual(featuredPlaylist.playlist_track, queueInitialTrackId) === true) {
-          featuredPlayingId = featuredPlaylist.playlist_id;
-        }
-      });
+      const featuredPlaying = featured.find(featuredPlaylist => isEqual(featuredPlaylist.track, queueInitialTrackId));
 
       setState(previousState => ({
         ...previousState,
         featured,
-        featuredPlayingId,
+        featuredPlayingId: featuredPlaying === undefined ? '' : featuredPlaying.id,
       }));
     }, error(store));
 

@@ -70,7 +70,7 @@ const PlaylistTrack = ({
     <PlaylistTrackContainer className="d-flex flex-row flex-shrink-0">
       <div className="PlaylistTrackContainer__header mb-5">
         <ImageContainer borderRadius="6px">
-          <img src={`${BASE_S3}${cover.s3_name}`} alt={`Album cover for ${title}`} />
+          <img src={`${BASE_S3}${cover.name}`} alt={`Album cover for ${title}`} />
         </ImageContainer>
 
         <div className="d-flex flex-row justify-content-center mt-4">
@@ -98,16 +98,16 @@ const PlaylistTrack = ({
         {
           tracks.map((track, index) => (
             <Track
-              key={track.track_id}
-              currentTrackId={current === null ? '' : current.track_id}
+              key={track.id}
+              currentTrackId={current === null ? '' : current.id}
               trackNumber={index + 1}
               trackPlayPause={trackPlayPause}
               playing={playing}
-              trackId={track.track_id}
-              trackName={track.track_name}
-              trackFeaturing={track.track_featuring}
-              trackDuration={track.track_track.s3_meta.duration}
-              trackAlbum={track.track_album}
+              trackId={track.id}
+              trackName={track.name}
+              trackFeaturing={track.featuring}
+              trackDuration={track.track.meta.duration}
+              trackAlbum={track.album}
               contextMenuTrack={contextMenuTrack}
             />
           ))

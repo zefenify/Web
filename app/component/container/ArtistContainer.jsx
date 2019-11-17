@@ -17,7 +17,7 @@ import {
 import trackListSame from '@app/util/trackListSame';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
-import { human } from '@app/util/time';
+import time from '@app/util/time';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import store from '@app/redux/store';
@@ -57,7 +57,7 @@ const ArtistContainer = ({ match }) => {
         album.album_artist = album.album_artist.map(artistId => included.artist[artistId]);
         album.relationships.track = track(album.relationships.track.map(trackId => included.track[trackId]), included);
         album.album_cover = included.s3[album.album_cover];
-        album.duration = human(album.relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
+        album.duration = time(album.relationships.track.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
 
         return album;
       }), album => album.album_year));

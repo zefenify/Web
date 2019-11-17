@@ -5,7 +5,7 @@ import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_ALBUM } from '@app/redux/constant/contextMenu';
 import trackListSame from '@app/util/trackListSame';
-import { human } from '@app/util/time';
+import time from '@app/util/time';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 import store from '@app/redux/store';
@@ -56,7 +56,7 @@ const AlbumContainer = ({ match }) => {
       }
 
       const trackList = track(albumTrackList, included);
-      const duration = human(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
+      const duration = time(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
       const album = {
         album_id: data.album_id,
         album_name: data.album_name,

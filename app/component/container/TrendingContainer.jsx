@@ -6,7 +6,7 @@ import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/cont
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import trackListSame from '@app/util/trackListSame';
 import track from '@app/util/track';
-import { human } from '@app/util/time';
+import time from '@app/util/time';
 import api, { error } from '@app/util/api';
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
@@ -55,7 +55,7 @@ const TrendingContainer = ({ match }) => {
           ...previousState,
           trending,
           // eslint-disable-next-line
-          duration: human(trending.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
+          duration: time(trending.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true),
           trendingPlaying: trackListSame(trending, queueInitial),
         }));
       }, error(store));

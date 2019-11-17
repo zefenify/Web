@@ -11,7 +11,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
 
-import { human } from '@app/util/time';
+import time from '@app/util/time';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Share from '@app/component/svg/Share';
 
@@ -242,7 +242,7 @@ const Track = ({
       >
         <Share />
       </div>
-      <div>{ human(trackDuration) }</div>
+      <div>{ time(trackDuration) }</div>
     </div>
     {/* ./ context menu + time */}
   </TrackContainer>

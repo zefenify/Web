@@ -13,7 +13,7 @@ import styled from '@emotion/styled';
 import isEqual from 'react-fast-compare';
 
 import { BASE_S3 } from '@app/config/api';
-import { human } from '@app/util/time';
+import time from '@app/util/time';
 import ArtistList from '@app/component/presentational/ArtistList';
 import Range from '@app/component/styled/Range';
 import { ClearButton } from '@app/component/styled/Button';
@@ -243,7 +243,7 @@ const Control = ({
 
       <div className="d-flex flex-row align-items-center justify-content-center py-0 px-3 ControlsContainer__progress">
         <div className="ControlsContainer__progress__time pr-2">
-          {`${playbackPosition === 0 ? '0:00' : human(playbackPosition)}`}
+          {`${playbackPosition === 0 ? '0:00' : time(playbackPosition)}`}
         </div>
 
         <Range
@@ -259,7 +259,7 @@ const Control = ({
 
         <ClearButton className="ControlsContainer__progress__time pl-2" onClick={toggleRemaining}>
           <span style={{ opacity: remaining ? 1 : 0 }}>-&nbsp;</span>
-          <span>{`${remaining ? human(duration - playbackPosition) : human(duration)}`}</span>
+          <span>{`${remaining ? time(duration - playbackPosition) : time(duration)}`}</span>
         </ClearButton>
       </div>
     </div>

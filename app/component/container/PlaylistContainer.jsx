@@ -5,7 +5,7 @@ import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK, CONTEXT_PLAYLIST } from '@app/redux/constant/contextMenu';
 import trackListSame from '@app/util/trackListSame';
-import { human } from '@app/util/time';
+import time from '@app/util/time';
 import api, { error } from '@app/util/api';
 import track from '@app/util/track';
 import store from '@app/redux/store';
@@ -50,7 +50,7 @@ const PlaylistContainer = ({ match }) => {
 
       const trackList = track(playlistTrack.playlist_track, included);
       // eslint-disable-next-line
-      const duration = human(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
+      const duration = time(trackList.reduce((totalDuration, _track) => totalDuration + _track.track_track.s3_meta.duration, 0), true);
       const featured = {
         ...data,
         playlist_cover: included.s3[data.playlist_cover],

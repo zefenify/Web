@@ -67,6 +67,10 @@ const ArtistContainer = ({ match }) => {
                 album {
                   id
                   name
+                  artist {
+                    id
+                    name
+                  }
                   year
                   cover {
                     name

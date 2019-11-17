@@ -2,10 +2,10 @@
  * given duration in seconds returns hour:minute:second
  *
  * @param {Number} duration `Howl.duration` (seconds)
- * @param {Boolean} dumbo
+ * @param {Boolean} separate
  * @type {String}
  */
-export const human = (duration = 0, dumbo = false) => {
+export default (duration = 0, separate = false) => {
   const parsedDuration = Number.parseFloat(duration);
 
   // this will be triggered on next and remainder is true
@@ -17,7 +17,7 @@ export const human = (duration = 0, dumbo = false) => {
   const minute = Math.floor((parsedDuration - (hour * 3600)) / 60);
   const second = Math.floor(parsedDuration - ((hour * 3600) + (minute * 60)));
 
-  if (dumbo === false) {
+  if (separate === false) {
     return `${hour > 0 ? hour : ''}${hour > 0 ? ':' : ''}${minute}:${second < 10 ? `0${second}` : second}`;
   }
 

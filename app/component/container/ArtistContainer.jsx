@@ -41,7 +41,7 @@ const ArtistContainer = ({ match }) => {
   useEffectDeep(() => {
     store.dispatch(loading(true));
 
-    gql(null, `query Artist($id: String!) {
+    gql(user, `query Artist($id: String!) {
       artist(id: $id) {
         id
         name

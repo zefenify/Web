@@ -14,8 +14,8 @@ module.exports = merge(common, {
       },
     }),
     new HtmlWebpackPlugin({
-      template: 'app/index.php',
-      filename: 'index.php',
+      template: 'app/index.html',
+      filename: 'index.html',
       minify: {
         collapseInlineTagWhitespace: true,
         collapseWhitespace: true,

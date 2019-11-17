@@ -14,8 +14,8 @@ export default (queue1 = [], queue2 = []) => {
     return false;
   }
 
-  const firstMatch = queue1[0].track_id === queue2[0].track_id;
-  const lastMatch = queue1[queue1.length - 1].track_id === queue2[queue2.length - 1].track_id;
+  const firstMatch = queue1[0].id === queue2[0].id;
+  const lastMatch = queue1[queue1.length - 1].id === queue2[queue2.length - 1].id;
 
   return firstMatch && lastMatch;
 };

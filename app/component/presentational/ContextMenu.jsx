@@ -222,7 +222,7 @@ const ContextMenu = ({
                   disabled={`/artist/${artist.id}` === history.location.pathname}
                   onClick={() => { contextMenuClose(); history.push(`/artist/${artist.id}`); }}
                 >
-                  { artist.artist_name }
+                  { artist.name }
                 </ClearButton>
               ))
             }

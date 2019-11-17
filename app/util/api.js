@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cloneDeep from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/fp/cloneDeep';
 
 import { BASE, CACHE_AGE, HEADER } from '@app/config/api';
 import { NOTIFICATION_ON_REQUEST } from '@app/redux/constant/notification';

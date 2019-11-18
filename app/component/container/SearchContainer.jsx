@@ -35,7 +35,7 @@ const SearchContainer = () => {
   }, []);
 
   const contextMenuTrack = (trackId = 'ZEFENIFY') => {
-    const trackIndex = state.match.track.findIndex(_track => _track.track_id === trackId);
+    const trackIndex = state.match.track.findIndex(_track => _track.id === trackId);
 
     if (trackIndex === -1) {
       return;

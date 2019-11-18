@@ -52,20 +52,27 @@ const AlbumContainer = ({ match }) => {
           track {
             id
             name
+            featuring {
+              id
+              name
+            }
+            album {
+              id
+              name
+              artist {
+                id
+                name
+              }
+              cover {
+                name
+              }
+              year
+            }
             track {
               name
               meta {
                 duration
               }
-            }
-            album {
-              cover {
-                name
-              }
-            }
-            featuring {
-              id
-              name
             }
           }
         }

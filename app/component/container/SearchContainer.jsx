@@ -6,14 +6,11 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import cloneDeep from 'lodash/cloneDeep';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
 import { CONTEXT_MENU_ON_REQUEST, CONTEXT_TRACK } from '@app/redux/constant/contextMenu';
-import { SEARCH } from '@app/config/api';
 import store from '@app/redux/store';
-import track from '@app/util/track';
-import api, { error } from '@app/util/api';
+import { gql, error } from '@app/util/api';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
 import Search from '@app/component/presentational/Search';
@@ -77,26 +74,72 @@ const SearchContainer = () => {
       }
 
       store.dispatch(loading(true));
-      api(`${SEARCH}?q=${q}`, user, (cancel) => {
+
+      gql(user, `query Search($q: String!) {
+        search(q: $q) {
+          artist {
+            id
+            name
+            cover {
+              name
+            }
+          }
+          album {
+            id
+            name
+            cover {
+              name
+            }
+          }
+          playlist {
+            id
+            name
+            cover {
+              name
+            }
+          }
+          track {
+            id
+            name
+            featuring {
+              id
+              name
+            }
+            album {
+              id
+              name
+              artist {
+                id
+                name
+              }
+              cover {
+                name
+              }
+              year
+            }
+            track {
+              name
+              meta {
+                duration
+              }
+            }
+          }
+        }
+      }`, { q }, (cancel) => {
         requestCancel = cancel;
-      }).then(({ data, included }) => {
+      }).then(({ data: { search } }) => {
         store.dispatch(loading(false));
-        const match = data;
-        match.album = match.album.map(album => Object.assign({}, album, { album_cover: cloneDeep(included.s3[album.album_cover]) }));
-        match.artist = match.artist.map(artist => Object.assign({}, artist, { artist_cover: cloneDeep(included.s3[artist.artist_cover]) }));
-        match.playlist = match.playlist.map(playlist => Object.assign({}, playlist, { playlist_cover: cloneDeep(included.s3[playlist.playlist_cover]) }));
-        match.track = track(match.track, included);
 
         setState(previousState => ({
           ...previousState,
-          match,
+          match: search,
         }));
       }, error(store));
     }, THROTTLE_TIMEOUT);
   };
 
   const trackPlayPause = (trackId = 'ZEFENIFY') => {
-    if (current !== null && current.track_id === trackId) {
+    if (current !== null && current.id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -104,7 +147,7 @@ const SearchContainer = () => {
       return;
     }
 
-    const trackIdIndex = state.match.track.findIndex(_track => _track.track_id === trackId);
+    const trackIdIndex = state.match.track.findIndex(_track => _track.id === trackId);
 
     if (trackIdIndex === -1) {
       return;

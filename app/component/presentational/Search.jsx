@@ -147,12 +147,12 @@ const Search = ({
                   <div className="d-flex flex-row flex-nowrap mx-3" style={{ overflowX: 'auto' }}>
                     {
                       match.artist.map(artist => (
-                        <Link key={artist.artist_id} to={`artist/${artist.artist_id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
+                        <Link key={artist.id} to={`artist/${artist.id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
                           <ImageContainer borderRadius="50%" className="SearchContainer__result__image">
-                            <img alt={`${artist.artist_name}`} src={`${BASE_S3}${artist.artist_cover.s3_name}`} />
+                            <img alt={`${artist.name}`} src={`${BASE_S3}${artist.cover.name}`} />
                           </ImageContainer>
 
-                          <h2 className="m-0 p-0 mt-2">{ artist.artist_name }</h2>
+                          <h2 className="m-0 p-0 mt-2">{ artist.name }</h2>
                         </Link>
                       ))
                     }
@@ -175,12 +175,12 @@ const Search = ({
                   <div className="d-flex flex-row flex-nowrap mx-3" style={{ overflowX: 'auto' }}>
                     {
                       match.album.map(album => (
-                        <Link key={album.album_id} to={`album/${album.album_id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
+                        <Link key={album.id} to={`album/${album.id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
                           <ImageContainer className="SearchContainer__result__image">
-                            <img alt={`${album.album_name}`} src={`${BASE_S3}${album.album_cover.s3_name}`} />
+                            <img alt={`${album.name}`} src={`${BASE_S3}${album.cover.name}`} />
                           </ImageContainer>
 
-                          <h2 className="m-0 p-0 mt-2">{ album.album_name }</h2>
+                          <h2 className="m-0 p-0 mt-2">{ album.name }</h2>
                         </Link>
                       ))
                     }
@@ -203,12 +203,12 @@ const Search = ({
                   <div className="d-flex flex-row flex-nowrap mx-3" style={{ overflowX: 'auto' }}>
                     {
                       match.playlist.map(playlist => (
-                        <Link key={playlist.playlist_id} to={`playlist/${playlist.playlist_id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
+                        <Link key={playlist.id} to={`playlist/${playlist.id}`} className="d-flex flex-column align-items-center pr-4 SearchContainer__result__item">
                           <ImageContainer className="SearchContainer__result__image">
-                            <img alt={`${playlist.playlist_name}`} src={`${BASE_S3}${playlist.playlist_cover.s3_name}`} />
+                            <img alt={`${playlist.name}`} src={`${BASE_S3}${playlist.cover.name}`} />
                           </ImageContainer>
 
-                          <h2 className="m-0 p-0 mt-2">{ playlist.playlist_name }</h2>
+                          <h2 className="m-0 p-0 mt-2">{ playlist.name }</h2>
                         </Link>
                       ))
                     }
@@ -230,16 +230,16 @@ const Search = ({
                 {
                   match.track.map((track, index) => (
                     <Track
-                      key={track.track_id}
-                      currentTrackId={current === null ? '' : current.track_id}
+                      key={track.id}
+                      currentTrackId={current === null ? '' : current.id}
                       trackNumber={index + 1}
                       trackPlayPause={trackPlayPause}
                       playing={playing}
-                      trackId={track.track_id}
-                      trackName={track.track_name}
-                      trackFeaturing={track.track_featuring}
-                      trackDuration={track.track_track.s3_meta.duration}
-                      trackAlbum={track.track_album}
+                      trackId={track.id}
+                      trackName={track.name}
+                      trackFeaturing={track.featuring}
+                      trackDuration={track.track.meta.duration}
+                      trackAlbum={track.album}
                       contextMenuTrack={contextMenuTrack}
                     />
                   ))

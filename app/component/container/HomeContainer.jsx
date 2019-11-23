@@ -40,7 +40,7 @@ const HomeContainer = () => {
       store.dispatch(loading(false));
 
       const { queueInitial } = store.getState();
-      const queueInitialTrackId = queueInitial.map(queueTrack => queueTrack.track_id);
+      const queueInitialTrackId = queueInitial.map(queueTrack => queueTrack.id);
       const featuredPlaying = featured.find(featuredPlaylist => isEqual(featuredPlaylist.track, queueInitialTrackId));
 
       setState(previousState => ({

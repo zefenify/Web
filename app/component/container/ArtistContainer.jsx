@@ -107,7 +107,7 @@ const ArtistContainer = ({ match }) => {
     }).then(({ data: { artist } }) => {
       store.dispatch(loading(false));
 
-      const trackFlatten = artist.relationships.album.flatMap(album => album.relationships.track);
+      const trackFlatten = reverse(sortBy(album => album.year)(artist.relationships.album)).flatMap(album => album.relationships.track);
       const playingAlbum = artist.relationships.album.find(album => trackListSame(queueInitial, album.relationships.track) === true);
 
       setState(previousState => ({

@@ -202,7 +202,7 @@ const ArtistContainer = ({ match }) => {
   };
 
   const trackPlayPause = (trackId = 'ZEFENIFY') => {
-    if (current !== null && current.track_id === trackId) {
+    if (current !== null && current.id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });

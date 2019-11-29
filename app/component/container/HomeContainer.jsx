@@ -67,6 +67,7 @@ const HomeContainer = () => {
       return;
     }
 
+    store.dispatch(loading(true));
     gql(user, `query Playlist($id: String!) {
       playlist(id: $id) {
         id
@@ -105,6 +106,7 @@ const HomeContainer = () => {
     }`, { id: featuredId }, (cancel) => {
       requestCancel = cancel;
     }).then(({ data: { playlist } }) => {
+      store.dispatch(loading(false));
       store.dispatch({
         type: PLAY_REQUEST,
         payload: {

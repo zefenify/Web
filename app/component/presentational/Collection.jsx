@@ -65,13 +65,13 @@ const Collection = ({
         <div className="__view">
           {
             collection.map(_collection => (
-              <CollectionContainer className="d-flex flex-column flex-grow-0 py-0 px-3 mb-4" key={_collection.collection_id} to={`/collection/${_collection.collection_id}`}>
+              <CollectionContainer className="d-flex flex-column flex-grow-0 py-0 px-3 mb-4" key={_collection.id} to={`/collection/${_collection.id}`}>
                 <ImageContainer>
-                  <img alt={_collection.collection_name} src={`${BASE_S3}${_collection.collection_cover.s3_name}`} />
+                  <img alt={_collection.name} src={`${BASE_S3}${_collection.cover.name}`} />
                 </ImageContainer>
 
-                <strong className="m-0 p-0 mt-2 CollectionContainer__name">{ _collection.collection_name }</strong>
-                <small className="m-0 p-0 mt-1 CollectionContainer__count">{`${_collection.collection_playlist.length} PLAYLIST${_collection.collection_playlist.length > 1 ? 'S' : ''}`}</small>
+                <strong className="m-0 p-0 mt-2 CollectionContainer__name">{ _collection.name }</strong>
+                <small className="m-0 p-0 mt-1 CollectionContainer__count">{`${_collection.playlist.length} PLAYLIST${_collection.playlist.length > 1 ? 'S' : ''}`}</small>
               </CollectionContainer>
             ))
           }
@@ -89,19 +89,19 @@ const Collection = ({
 
       <div className="__view">
         {
-          collection.collection_playlist.map(playlist => (
+          collection.playlist.map(playlist => (
             <Playlist
               type="playlist"
-              key={playlist.playlist_id}
-              playing={playing && playlistPlayingId === playlist.playlist_id}
-              active={playlistPlayingId === playlist.playlist_id}
+              key={playlist.id}
+              playing={playing && playlistPlayingId === playlist.id}
+              active={playlistPlayingId === playlist.id}
               play={playlistPlay}
               playingId={playlistPlayingId}
-              id={playlist.playlist_id}
-              name={playlist.playlist_name}
-              description={playlist.playlist_description}
-              cover={playlist.playlist_cover}
-              trackCount={playlist.playlist_track.length}
+              id={playlist.id}
+              name={playlist.name}
+              description={playlist.description}
+              cover={playlist.cover}
+              trackCount={playlist.track.length}
             />
           ))
         }

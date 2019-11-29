@@ -58,7 +58,7 @@ const AlbumsContainer = ({ match }) => {
       return;
     }
 
-    const albumIndex = state.album.findIndex(album => album.album_id === albumId);
+    const albumIndex = state.album.findIndex(album => album.id === albumId);
 
     if (albumIndex === -1) {
       return;
@@ -82,7 +82,7 @@ const AlbumsContainer = ({ match }) => {
   };
 
   const trackPlayPause = (trackId = 'ZEFENIFY') => {
-    if (current !== null && current.track_id === trackId) {
+    if (current !== null && current.id === trackId) {
       store.dispatch({
         type: PLAY_PAUSE_REQUEST,
       });
@@ -90,7 +90,7 @@ const AlbumsContainer = ({ match }) => {
       return;
     }
 
-    const trackIdIndex = state.album[0].relationships.track.findIndex(track => track.track_id === trackId);
+    const trackIdIndex = state.album[0].relationships.track.findIndex(track => track.id === trackId);
 
     if (trackIdIndex === -1) {
       return;
@@ -124,7 +124,7 @@ const AlbumsContainer = ({ match }) => {
   };
 
   const contextMenuTrack = (trackId = 'ZEFENIFY') => {
-    const trackIndex = state.album[0].relationships.track.findIndex(track => track.track_id === trackId);
+    const trackIndex = state.album[0].relationships.track.findIndex(track => track.id === trackId);
 
     if (trackIndex === -1) {
       return;

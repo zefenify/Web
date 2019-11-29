@@ -2,10 +2,8 @@ import React, { useState, useContext } from 'react';
 import { string, shape } from 'prop-types';
 import isEqual from 'react-fast-compare';
 
-import { BASE } from '@app/config/api';
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
-import api, { error } from '@app/util/api';
-import track from '@app/util/track';
+import { gql, error } from '@app/util/api';
 import store from '@app/redux/store';
 import { loading } from '@app/redux/action/loading';
 import { urlCurrentPlaying } from '@app/redux/action/urlCurrentPlaying';
@@ -34,22 +32,24 @@ const CollectionContainer = ({ match }) => {
     }));
 
     if (match.params.id === undefined) {
-      api(`${BASE}collection`, user, (cancel) => {
-        requestCancel = cancel;
-      }).then(({ data, included }) => {
+      gql(user, `query Collections {
+        collections {
+          id
+          name
+          cover {
+            name
+          }
+          playlist {
+            id
+          }
+        }
+      }`, {}, (cancel) => { requestCancel = cancel; }).then(({ data: { collections } }) => {
         store.dispatch(loading(false));
-
-        const collection = data.map(_collection => Object.assign({}, _collection, {
-          collection_cover: included.s3[_collection.collection_cover],
-          collection_playlist: _collection.collection_playlist.map(playlistId => Object.assign({}, included.playlist[playlistId], {
-            playlist_cover: included.s3[included.playlist[playlistId].playlist_cover],
-          })),
-        }));
 
         setState(previousState => ({
           ...previousState,
           collectionName: 'Genre & Moods',
-          collection,
+          collection: collections,
           collectionId: '',
         }));
       }, error(store));
@@ -60,31 +60,37 @@ const CollectionContainer = ({ match }) => {
       };
     }
 
-    api(`${BASE}collection/${match.params.id}`, user, (cancel) => {
-      requestCancel = cancel;
-    }).then(({ data, included }) => {
+    gql(user, `query Collection($id: String!) {
+      collection(id: $id) {
+        id
+        name
+        playlist {
+          id
+          description
+          cover {
+            name
+          }
+          track {
+            id
+          }
+        }
+      }
+    }`, { id: match.params.id }, (cancel) => { requestCancel = cancel; }).then(({ data: { collection } }) => {
       store.dispatch(loading(false));
-
-      const collection = Object.assign({}, data, {
-        collection_cover: included.s3[data.collection_cover],
-        collection_playlist: data.collection_playlist.map(playlistId => Object.assign({}, included.playlist[playlistId], {
-          playlist_cover: included.s3[included.playlist[playlistId].playlist_cover],
-        })),
-      });
 
       // checking for playlist restore...
       let playlistPlayingId = '';
-      const queueInitialTrackId = queueInitial.map(queueTrack => queueTrack.track_id);
+      const queueInitialTrackId = queueInitial.map(queueTrack => queueTrack.id);
 
-      collection.collection_playlist.forEach((playlist) => {
-        if (isEqual(playlist.playlist_track, queueInitialTrackId) === true) {
-          playlistPlayingId = playlist.playlist_id;
+      collection.playlist.forEach((playlist) => {
+        if (isEqual(playlist.track.map(_track => _track.id), queueInitialTrackId) === true) {
+          playlistPlayingId = playlist.id;
         }
       });
 
       setState(previousState => ({
         ...previousState,
-        collectionName: data.collection_name,
+        collectionName: collection.name,
         collection,
         collectionId: match.params.id,
         playlistPlayingId,
@@ -103,36 +109,68 @@ const CollectionContainer = ({ match }) => {
         type: PLAY_PAUSE_REQUEST,
       });
 
-      return;
+      return () => {};
     }
 
-    api(`${BASE}playlist/${playlistId}`, user, (cancel) => {
-      requestCancel = cancel;
-    }).then(({ data, included }) => {
-      // mapping track...
-      const playlistTrack = Object.assign({}, data, {
-        playlist_track: data.playlist_track.map(trackId => included.track[trackId]),
+    store.dispatch(loading(true));
+    gql(user, `query Playlist($id: String!) {
+      playlist(id: $id) {
+        id
+        name
+        description
+        cover {
+          name
+        }
+        track {
+          id
+          name
+          featuring {
+            id
+            name
+          }
+          album {
+            id
+            name
+            artist {
+              id
+              name
+            }
+            cover {
+              name
+            }
+            year
+          }
+          track {
+            name
+            meta {
+              duration
+            }
+          }
+        }
+      }
+    }`, { id: playlistId }, (cancel) => { requestCancel = cancel; }).then(({ data: { playlist } }) => {
+      store.dispatch(loading(false));
+      store.dispatch({
+        type: PLAY_REQUEST,
+        payload: {
+          play: playlist.track[0],
+          queue: playlist.track,
+          queueInitial: playlist.track,
+        },
       });
-
-      const trackList = track(playlistTrack.playlist_track, included);
 
       setState(previousState => ({
         ...previousState,
         playlistPlayingId: playlistId,
       }));
 
-      // playing...
-      store.dispatch({
-        type: PLAY_REQUEST,
-        payload: {
-          play: trackList[0],
-          queue: trackList,
-          queueInitial: trackList,
-        },
-      });
-
       store.dispatch(urlCurrentPlaying(`/playlist/${playlistId}`));
     }, error(store));
+
+    return () => {
+      store.dispatch(loading(false));
+      requestCancel();
+    };
   };
 
   return (

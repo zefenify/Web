@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { string, shape } from 'prop-types';
 import flatten from 'lodash/flatten';
 
 import { PLAY_REQUEST, PLAY_PAUSE_REQUEST } from '@app/redux/constant/wolfCola';
@@ -53,7 +54,7 @@ const ArtistsContainer = ({ match }) => {
       return;
     }
 
-    const artistIndex = state.artist.findIndex(artist => artist.artist_id === artistId);
+    const artistIndex = state.artist.findIndex(artist => artist.id === artistId);
 
     if (artistIndex === -1) {
       return;
@@ -247,5 +248,13 @@ const ArtistsContainer = ({ match }) => {
   );
 };
 
+ArtistsContainer.propTypes = {
+  match: shape({
+    url: string,
+    params: shape({
+      id: string,
+    }),
+  }).isRequired,
+};
 
 export default ArtistsContainer;

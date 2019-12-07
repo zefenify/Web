@@ -199,6 +199,7 @@ const AlbumContainer = ({ match }) => {
       albumId={state.album.id}
       title={state.album.name}
       cover={state.album.cover}
+      year={state.album.year}
       artist={state.album.artist}
       tracks={state.album.relationships.track}
       albumPlayPause={albumPlayPause}

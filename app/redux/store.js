@@ -84,7 +84,7 @@ const store = createStore(
     current: null, // current track object, *not* the Howler object
     contextMenu: null, // context item to be rendered on `<ContextMenu />`
     // online: false,
-    loading: false,
+    loading: true,
     user: null,
     notification: null,
     urlCurrentPlaying: null,

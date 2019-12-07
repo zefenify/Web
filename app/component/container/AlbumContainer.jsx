@@ -48,6 +48,7 @@ const AlbumContainer = ({ match }) => {
         cover {
           name
         }
+        year
         relationships {
           track {
             id
